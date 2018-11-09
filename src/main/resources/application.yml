@@ -1,0 +1,52 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/qipai_wenzhoushuangkou
+      
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+          zk-nodes: localhost:2181
+          minPartitionCount: 1
+          autoCreateTopics: true
+          autoAddPartitions: false
+        bindings:
+          memberGoldsAccounting:
+            producer:
+              configuration:
+                request:
+                  timeout:
+                    ms: 30000
+                linger:
+                  ms: 5
+                batch:
+                  size: 16384
+      bindings:
+        memberGoldsAccounting:
+          destination: memberGoldsAccounting
+          contentType: application/json
+          producer:
+            partitionCount: 1
+        members:
+          destination: members
+          group: qipai-wenzhoushuangkou
+          consumer:
+            concurrency: 1
+            partitioned: false
+          contentType: application/json
+        memberGolds:
+          destination: memberGolds
+          group: qipai-wenzhoushuangkou
+          consumer:
+            concurrency: 1
+            partitioned: false
+          contentType: application/json    
+      
+server:
+  port: 2005
+
+filepath:
+  snapshotFileBasePath: /data/app/qipai_wenzhoushuangkou/server1/snapshot
+  jFileBasePath: /data/app/qipai_wenzhoushuangkou/server1/journal
