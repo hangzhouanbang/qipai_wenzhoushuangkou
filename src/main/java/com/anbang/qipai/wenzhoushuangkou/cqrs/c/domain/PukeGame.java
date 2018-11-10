@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.dml.mpgame.game.GameValueObject;
+import com.dml.mpgame.game.Playing;
 import com.dml.mpgame.game.extend.fpmpv.FixedPlayersMultipanAndVotetofinishGame;
 import com.dml.mpgame.game.player.GamePlayer;
+import com.dml.mpgame.game.player.PlayerPlaying;
 import com.dml.shuangkou.ju.Ju;
 
 public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
@@ -76,8 +78,8 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 
 	@Override
 	public void start(long currentTime) throws Exception {
-		// TODO Auto-generated method stub
-
+		state = new Playing();
+		updateAllPlayersState(new PlayerPlaying());
 	}
 
 	@Override
