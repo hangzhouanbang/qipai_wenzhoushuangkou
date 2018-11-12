@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.BianXingWanFa;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ChaPai;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.FaPai;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameDbo;
 import com.dml.mpgame.game.Canceled;
 import com.dml.mpgame.game.Finished;
@@ -17,6 +15,8 @@ import com.dml.mpgame.game.extend.multipan.WaitingNextPan;
 import com.dml.mpgame.game.extend.vote.FinishedByVote;
 import com.dml.mpgame.game.extend.vote.VoteNotPassWhenPlaying;
 import com.dml.mpgame.game.extend.vote.VotingWhenPlaying;
+import com.dml.shuangkou.preparedapai.fapai.FaPai;
+import com.dml.shuangkou.preparedapai.luanpai.ChaPai;
 
 public class GameVO {
 	private String id;// 就是gameid

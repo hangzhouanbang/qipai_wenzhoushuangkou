@@ -1,11 +1,11 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.service;
 
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.BianXingWanFa;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ChaPai;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.FaPai;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyForGameResult;
 import com.dml.mpgame.game.GameValueObject;
+import com.dml.shuangkou.preparedapai.fapai.FaPai;
+import com.dml.shuangkou.preparedapai.luanpai.ChaPai;
 
 public interface GameCmdService {
 

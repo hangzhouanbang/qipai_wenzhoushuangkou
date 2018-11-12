@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.BianXingWanFa;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ChaPai;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.FaPai;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyForGameResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.GameCmdService;
@@ -37,6 +35,8 @@ import com.dml.mpgame.game.GameNotFoundException;
 import com.dml.mpgame.game.extend.fpmpv.VoteNotPassWhenWaitingNextPan;
 import com.dml.mpgame.game.extend.vote.FinishedByVote;
 import com.dml.mpgame.game.extend.vote.VoteNotPassWhenPlaying;
+import com.dml.shuangkou.preparedapai.fapai.FaPai;
+import com.dml.shuangkou.preparedapai.luanpai.ChaPai;
 
 @RestController
 @RequestMapping("/game")

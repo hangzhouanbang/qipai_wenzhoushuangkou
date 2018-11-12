@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.BianXingWanFa;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ChaPai;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.FaPai;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyForGameResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.GameCmdService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.impl.GameCmdServiceImpl;
 import com.dml.mpgame.game.GameValueObject;
+import com.dml.shuangkou.preparedapai.fapai.FaPai;
+import com.dml.shuangkou.preparedapai.luanpai.ChaPai;
 import com.highto.framework.concurrent.DeferredResult;
 import com.highto.framework.ddd.CommonCommand;
 
