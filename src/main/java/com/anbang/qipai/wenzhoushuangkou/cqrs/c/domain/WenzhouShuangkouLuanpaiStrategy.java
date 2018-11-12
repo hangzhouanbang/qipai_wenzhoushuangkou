@@ -206,6 +206,7 @@ public class WenzhouShuangkouLuanpaiStrategy implements LuanpaiStrategy {
 			ordinalList.remove(ordinal);
 		}
 		currentPan.setAvaliablePaiList(finalPaiList);
+		seed++;
 	}
 
 	public BianXingWanFa getBx() {
