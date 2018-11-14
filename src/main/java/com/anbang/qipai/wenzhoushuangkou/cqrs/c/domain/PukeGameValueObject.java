@@ -5,8 +5,7 @@ import java.util.Map;
 
 import com.dml.mpgame.game.extend.fpmpv.FixedPlayersMultipanAndVotetofinishGameValueObject;
 import com.dml.shuangkou.ju.JuResult;
-import com.dml.shuangkou.preparedapai.fapai.FaPai;
-import com.dml.shuangkou.preparedapai.luanpai.ChaPai;
+import com.dml.shuangkou.preparedapai.luanpai.BianXingWanFa;
 
 public class PukeGameValueObject extends FixedPlayersMultipanAndVotetofinishGameValueObject {
 

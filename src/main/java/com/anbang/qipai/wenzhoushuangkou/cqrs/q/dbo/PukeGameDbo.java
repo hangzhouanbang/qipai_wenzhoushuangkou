@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.BianXingWanFa;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ChaPai;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.FaPai;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.plan.bean.PlayerInfo;
 import com.dml.mpgame.game.GamePlayerValueObject;
 import com.dml.mpgame.game.GameState;
-import com.dml.shuangkou.preparedapai.fapai.FaPai;
-import com.dml.shuangkou.preparedapai.luanpai.ChaPai;
+import com.dml.shuangkou.preparedapai.luanpai.BianXingWanFa;
 
 public class PukeGameDbo {
 	private String id;

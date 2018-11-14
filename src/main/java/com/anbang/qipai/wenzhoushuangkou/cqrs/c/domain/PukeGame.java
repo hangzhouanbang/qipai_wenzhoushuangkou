@@ -9,8 +9,7 @@ import com.dml.mpgame.game.extend.fpmpv.FixedPlayersMultipanAndVotetofinishGame;
 import com.dml.mpgame.game.player.GamePlayer;
 import com.dml.mpgame.game.player.PlayerPlaying;
 import com.dml.shuangkou.ju.Ju;
-import com.dml.shuangkou.preparedapai.fapai.FaPai;
-import com.dml.shuangkou.preparedapai.luanpai.ChaPai;
+import com.dml.shuangkou.preparedapai.luanpai.BianXingWanFa;
 
 public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 	private int panshu;

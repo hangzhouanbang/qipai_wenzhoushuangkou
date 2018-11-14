@@ -2,7 +2,8 @@ package com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.impl;
 
 import org.springframework.stereotype.Component;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.BianXingWanFa;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ChaPai;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.FaPai;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGame;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyForGameResult;
@@ -24,8 +25,7 @@ import com.dml.mpgame.game.leave.OfflineGameLeaveStrategy;
 import com.dml.mpgame.game.player.PlayerFinished;
 import com.dml.mpgame.game.ready.FixedNumberOfPlayersGameReadyStrategy;
 import com.dml.mpgame.server.GameServer;
-import com.dml.shuangkou.preparedapai.fapai.FaPai;
-import com.dml.shuangkou.preparedapai.luanpai.ChaPai;
+import com.dml.shuangkou.preparedapai.luanpai.BianXingWanFa;
 
 @Component
 public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService {
