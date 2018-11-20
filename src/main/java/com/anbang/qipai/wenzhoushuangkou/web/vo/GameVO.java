@@ -16,7 +16,7 @@ import com.dml.mpgame.game.extend.multipan.WaitingNextPan;
 import com.dml.mpgame.game.extend.vote.FinishedByVote;
 import com.dml.mpgame.game.extend.vote.VoteNotPassWhenPlaying;
 import com.dml.mpgame.game.extend.vote.VotingWhenPlaying;
-import com.dml.shuangkou.preparedapai.luanpai.BianXingWanFa;
+import com.dml.shuangkou.BianXingWanFa;
 
 public class GameVO {
 	private String id;// 就是gameid

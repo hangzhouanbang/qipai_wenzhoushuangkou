@@ -8,13 +8,10 @@ import com.dml.puke.pai.DianShu;
 import com.dml.puke.pai.PukePai;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DanzhangDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DianShuZuGenerator;
+import com.dml.shuangkou.BianXingWanFa;
+import com.dml.shuangkou.ShoupaiJiesuanPai;
 import com.dml.shuangkou.player.action.da.AllKedaPaiSolutionsGenerator;
-import com.dml.shuangkou.player.action.da.DawangDangPai;
-import com.dml.shuangkou.player.action.da.DianShuZuCalculator;
-import com.dml.shuangkou.player.action.da.ShoupaiJiesuanPai;
-import com.dml.shuangkou.player.action.da.XiaowangDangPai;
 import com.dml.shuangkou.player.action.da.solution.DaPaiDianShuSolution;
-import com.dml.shuangkou.preparedapai.luanpai.BianXingWanFa;
 
 public class WenzhouShuangkouAllKedaPaiSolutionsGenerator implements AllKedaPaiSolutionsGenerator {
 

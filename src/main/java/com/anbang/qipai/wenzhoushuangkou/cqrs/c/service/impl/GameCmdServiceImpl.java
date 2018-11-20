@@ -25,7 +25,7 @@ import com.dml.mpgame.game.leave.OfflineGameLeaveStrategy;
 import com.dml.mpgame.game.player.PlayerFinished;
 import com.dml.mpgame.game.ready.FixedNumberOfPlayersGameReadyStrategy;
 import com.dml.mpgame.server.GameServer;
-import com.dml.shuangkou.preparedapai.luanpai.BianXingWanFa;
+import com.dml.shuangkou.BianXingWanFa;
 
 @Component
 public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService {

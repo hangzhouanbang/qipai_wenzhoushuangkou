@@ -36,7 +36,7 @@ import com.dml.mpgame.game.GameNotFoundException;
 import com.dml.mpgame.game.extend.fpmpv.VoteNotPassWhenWaitingNextPan;
 import com.dml.mpgame.game.extend.vote.FinishedByVote;
 import com.dml.mpgame.game.extend.vote.VoteNotPassWhenPlaying;
-import com.dml.shuangkou.preparedapai.luanpai.BianXingWanFa;
+import com.dml.shuangkou.BianXingWanFa;
 
 @RestController
 @RequestMapping("/game")

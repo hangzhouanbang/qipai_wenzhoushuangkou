@@ -10,7 +10,7 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyForGameResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.GameCmdService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.impl.GameCmdServiceImpl;
 import com.dml.mpgame.game.GameValueObject;
-import com.dml.shuangkou.preparedapai.luanpai.BianXingWanFa;
+import com.dml.shuangkou.BianXingWanFa;
 import com.highto.framework.concurrent.DeferredResult;
 import com.highto.framework.ddd.CommonCommand;
 

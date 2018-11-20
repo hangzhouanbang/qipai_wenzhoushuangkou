@@ -5,7 +5,7 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.FaPai;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyForGameResult;
 import com.dml.mpgame.game.GameValueObject;
-import com.dml.shuangkou.preparedapai.luanpai.BianXingWanFa;
+import com.dml.shuangkou.BianXingWanFa;
 
 public interface GameCmdService {
 

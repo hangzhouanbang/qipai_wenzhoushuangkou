@@ -10,7 +10,7 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.plan.bean.PlayerInfo;
 import com.dml.mpgame.game.GamePlayerValueObject;
 import com.dml.mpgame.game.GameState;
-import com.dml.shuangkou.preparedapai.luanpai.BianXingWanFa;
+import com.dml.shuangkou.BianXingWanFa;
 
 public class PukeGameDbo {
 	private String id;
