@@ -10,6 +10,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.msg.channel.WenzhouShuangkouGameSource;
 import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.CommonMO;
+import com.dml.shuangkou.pan.PanValueObject;
 
 @EnableBinding(WenzhouShuangkouGameSource.class)
 public class WenzhouShuangkouGameMsgService {
@@ -34,5 +35,25 @@ public class WenzhouShuangkouGameMsgService {
 			mo.setData(data);
 			wenzhouShuangkouGameSource.wenzhouShuangkouGame().send(MessageBuilder.withPayload(mo).build());
 		}
+	}
+
+	public void gameFinished(String gameId) {
+		CommonMO mo = new CommonMO();
+		mo.setMsg("ju finished");
+		Map data = new HashMap();
+		data.put("gameId", gameId);
+		mo.setData(data);
+		wenzhouShuangkouGameSource.wenzhouShuangkouGame().send(MessageBuilder.withPayload(mo).build());
+	}
+
+	public void panFinished(PukeGameValueObject pukeGameValueObject, PanValueObject panAfterAction) {
+		CommonMO mo = new CommonMO();
+		mo.setMsg("pan finished");
+		Map data = new HashMap();
+		data.put("gameId", pukeGameValueObject.getId());
+		data.put("no", panAfterAction.getNo());
+		data.put("playerIds", pukeGameValueObject.allPlayerIds());
+		mo.setData(data);
+		wenzhouShuangkouGameSource.wenzhouShuangkouGame().send(MessageBuilder.withPayload(mo).build());
 	}
 }

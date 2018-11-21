@@ -2,8 +2,10 @@ package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
 
 import com.dml.shuangkou.pan.PanActionFrame;
 
-public class ReadyForGameResult {
+public class ReadyToNextPanResult {
+
 	private PukeGameValueObject pukeGame;
+
 	private PanActionFrame firstActionFrame;
 
 	public PukeGameValueObject getPukeGame() {

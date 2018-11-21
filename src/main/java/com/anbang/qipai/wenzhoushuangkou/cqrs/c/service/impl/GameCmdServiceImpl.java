@@ -26,6 +26,7 @@ import com.dml.mpgame.game.player.PlayerFinished;
 import com.dml.mpgame.game.ready.FixedNumberOfPlayersGameReadyStrategy;
 import com.dml.mpgame.server.GameServer;
 import com.dml.shuangkou.BianXingWanFa;
+import com.dml.shuangkou.pan.PanActionFrame;
 
 @Component
 public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService {
@@ -110,9 +111,8 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 		result.setPukeGame(pukeGameValueObject);
 		if (pukeGameValueObject.getState().name().equals(Playing.name)) {
 			PukeGame pukeGame = (PukeGame) gameServer.findGamePlayerPlaying(playerId);
-			// PanActionFrame firstActionFrame =
-			// majiangGame.createJuAndStartFirstPan(currentTime);
-			// result.setFirstActionFrame(firstActionFrame);
+			PanActionFrame firstActionFrame = pukeGame.createJuAndStartFirstPan(currentTime);
+			result.setFirstActionFrame(firstActionFrame);
 		}
 		return result;
 	}
