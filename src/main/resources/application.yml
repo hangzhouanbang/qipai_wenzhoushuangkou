@@ -23,9 +23,39 @@ spring:
                   ms: 5
                 batch:
                   size: 16384
+          wenzhouShuangkouGame:
+            producer:
+              configuration:
+                request:
+                  timeout:
+                    ms: 30000
+                linger:
+                  ms: 5
+                batch:
+                  size: 16384
+          wenzhouShuangkouResult:
+            producer:
+              configuration:
+                request:
+                  timeout:
+                    ms: 30000
+                linger:
+                  ms: 5
+                batch:
+                  size: 16384
       bindings:
         memberGoldsAccounting:
           destination: memberGoldsAccounting
+          contentType: application/json
+          producer:
+            partitionCount: 1
+        wenzhouShuangkouGame:
+          destination: wenzhouShuangkouGame
+          contentType: application/json
+          producer:
+            partitionCount: 1
+        wenzhouShuangkouResult:
+          destination: wenzhouShuangkouResult
           contentType: application/json
           producer:
             partitionCount: 1

@@ -253,4 +253,13 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 	public void setDanGeDianShuZuComparator(DanGeDianShuZuComparator danGeDianShuZuComparator) {
 		this.danGeDianShuZuComparator = danGeDianShuZuComparator;
 	}
+
+	public LianXuDianShuZuComparator getLianXuDianShuZuComparator() {
+		return lianXuDianShuZuComparator;
+	}
+
+	public void setLianXuDianShuZuComparator(LianXuDianShuZuComparator lianXuDianShuZuComparator) {
+		this.lianXuDianShuZuComparator = lianXuDianShuZuComparator;
+	}
+
 }

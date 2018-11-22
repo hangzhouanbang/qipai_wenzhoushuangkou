@@ -3,12 +3,12 @@ package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dml.puke.wanfa.dianshu.dianshuzu.DanGeZhadanDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DuiziDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.LianduiDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.LiansanzhangDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.SanzhangDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.ShunziDianShuZu;
-import com.dml.puke.wanfa.dianshu.dianshuzu.ZhadanDianShuZu;
 
 /**
  * 所有的点数组不包括单张点数组
@@ -22,9 +22,9 @@ public class PaiXing {
 	private List<LiansanzhangDianShuZu> liansanzhangDianShuZuList = new ArrayList<>();
 	private List<SanzhangDianShuZu> sanzhangDianShuZuList = new ArrayList<>();
 	private List<ShunziDianShuZu> shunziDianShuZuList = new ArrayList<>();
-	private List<ZhadanDianShuZu> zhadanDianShuZuList = new ArrayList<>();
+	private List<DanGeZhadanDianShuZu> zhadanDianShuZuList = new ArrayList<>();
 	private List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = new ArrayList<>();
-	private List<WangZhadanDianShuZu> wangZhadanDianShuZu = new ArrayList<>();
+	private List<WangZhadanDianShuZu> wangZhadanDianShuZuList = new ArrayList<>();
 
 	public PaiXing() {
 
@@ -32,8 +32,8 @@ public class PaiXing {
 
 	public PaiXing(List<DuiziDianShuZu> duiziDianShuZuList, List<LianduiDianShuZu> lianduiDianShuZuList,
 			List<LiansanzhangDianShuZu> liansanzhangDianShuZuList, List<SanzhangDianShuZu> sanzhangDianShuZuList,
-			List<ShunziDianShuZu> shunziDianShuZuList, List<ZhadanDianShuZu> zhadanDianShuZuList,
-			List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList, List<WangZhadanDianShuZu> wangZhadanDianShuZu) {
+			List<ShunziDianShuZu> shunziDianShuZuList, List<DanGeZhadanDianShuZu> zhadanDianShuZuList,
+			List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList, List<WangZhadanDianShuZu> wangZhadanDianShuZuList) {
 		this.duiziDianShuZuList = duiziDianShuZuList;
 		this.lianduiDianShuZuList = lianduiDianShuZuList;
 		this.liansanzhangDianShuZuList = liansanzhangDianShuZuList;
@@ -41,7 +41,7 @@ public class PaiXing {
 		this.shunziDianShuZuList = shunziDianShuZuList;
 		this.zhadanDianShuZuList = zhadanDianShuZuList;
 		this.lianXuZhadanDianShuZuList = lianXuZhadanDianShuZuList;
-		this.wangZhadanDianShuZu = wangZhadanDianShuZu;
+		this.wangZhadanDianShuZuList = wangZhadanDianShuZuList;
 	}
 
 	public List<DuiziDianShuZu> getDuiziDianShuZuList() {
@@ -84,11 +84,11 @@ public class PaiXing {
 		this.shunziDianShuZuList = shunziDianShuZuList;
 	}
 
-	public List<ZhadanDianShuZu> getZhadanDianShuZuList() {
+	public List<DanGeZhadanDianShuZu> getZhadanDianShuZuList() {
 		return zhadanDianShuZuList;
 	}
 
-	public void setZhadanDianShuZuList(List<ZhadanDianShuZu> zhadanDianShuZuList) {
+	public void setZhadanDianShuZuList(List<DanGeZhadanDianShuZu> zhadanDianShuZuList) {
 		this.zhadanDianShuZuList = zhadanDianShuZuList;
 	}
 
@@ -100,12 +100,12 @@ public class PaiXing {
 		this.lianXuZhadanDianShuZuList = lianXuZhadanDianShuZuList;
 	}
 
-	public List<WangZhadanDianShuZu> getWangZhadanDianShuZu() {
-		return wangZhadanDianShuZu;
+	public List<WangZhadanDianShuZu> getWangZhadanDianShuZuList() {
+		return wangZhadanDianShuZuList;
 	}
 
-	public void setWangZhadanDianShuZu(List<WangZhadanDianShuZu> wangZhadanDianShuZu) {
-		this.wangZhadanDianShuZu = wangZhadanDianShuZu;
+	public void setWangZhadanDianShuZuList(List<WangZhadanDianShuZu> wangZhadanDianShuZuList) {
+		this.wangZhadanDianShuZuList = wangZhadanDianShuZuList;
 	}
 
 }

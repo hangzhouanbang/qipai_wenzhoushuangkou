@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.dml.puke.pai.DianShu;
+import com.dml.puke.wanfa.dianshu.dianshuzu.DanGeZhadanDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DianShuZuGenerator;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DuiziDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.LianduiDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.LiansanzhangDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.SanzhangDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.ShunziDianShuZu;
-import com.dml.puke.wanfa.dianshu.dianshuzu.ZhadanDianShuZu;
 import com.dml.shuangkou.ShoupaiJiesuanPai;
 import com.dml.shuangkou.player.action.da.solution.DaPaiDianShuSolution;
 
@@ -49,7 +49,8 @@ public class DianShuZuCalculator {
 			shunziDianShuZuList.addAll(DianShuZuGenerator.generateAllShunziDianShuZu(dianshuCountArray, k));
 		}
 		// 炸弹
-		List<ZhadanDianShuZu> zhadanDianShuZuList = DianShuZuGenerator.generateAllZhadanDianShuZu(dianshuCountArray);
+		List<DanGeZhadanDianShuZu> zhadanDianShuZuList = DianShuZuGenerator
+				.generateAllZhadanDianShuZu(dianshuCountArray);
 		// 连续炸弹
 		List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = generateAllLianXuZhadanDianShuZu(dianshuCountArray);
 		// 王炸
@@ -125,7 +126,7 @@ public class DianShuZuCalculator {
 			solutionList.add(solution);
 		}
 		// 炸弹
-		for (ZhadanDianShuZu zhadanDianShuZu : paiXing.getZhadanDianShuZuList()) {
+		for (DanGeZhadanDianShuZu zhadanDianShuZu : paiXing.getZhadanDianShuZuList()) {
 			DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
 			solution.setDianShuZu(zhadanDianShuZu);
 			DianShu[] dachuDianShuArray = new DianShu[zhadanDianShuZu.getSize()];
@@ -154,7 +155,7 @@ public class DianShuZuCalculator {
 			solutionList.add(solution);
 		}
 		// 王炸
-		for (WangZhadanDianShuZu wangZhadanDianShuZu : paiXing.getWangZhadanDianShuZu()) {
+		for (WangZhadanDianShuZu wangZhadanDianShuZu : paiXing.getWangZhadanDianShuZuList()) {
 			DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
 			solution.setDianShuZu(wangZhadanDianShuZu);
 			List<DianShu> dachuDianShuList = new ArrayList<>();
@@ -323,7 +324,7 @@ public class DianShuZuCalculator {
 			}
 		}
 		// 炸弹
-		for (ZhadanDianShuZu zhadanDianShuZu : paiXing.getZhadanDianShuZuList()) {
+		for (DanGeZhadanDianShuZu zhadanDianShuZu : paiXing.getZhadanDianShuZuList()) {
 			dianshuCount = dianshuCountArray.clone();
 			DianShu duiziDianShuType = zhadanDianShuZu.getDianShu();
 			List<ShoupaiJiesuanPai> keYongList = new ArrayList<>();
@@ -383,7 +384,7 @@ public class DianShuZuCalculator {
 			}
 		}
 		// 王炸
-		for (WangZhadanDianShuZu wangZhadanDianShuZu : paiXing.getWangZhadanDianShuZu()) {
+		for (WangZhadanDianShuZu wangZhadanDianShuZu : paiXing.getWangZhadanDianShuZuList()) {
 			DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
 			solution.setDianShuZu(wangZhadanDianShuZu);
 			List<DianShu> dachuDianShuList = new ArrayList<>();
@@ -505,8 +506,8 @@ public class DianShuZuCalculator {
 		return solutionList;
 	}
 
-	private static boolean verifyZuHeForZhadanDianShuZu(int[] zuhe, ZhadanDianShuZu zhadanDianShuZu, int[] dianshuCount,
-			List<ShoupaiJiesuanPai> keYongList) {
+	private static boolean verifyZuHeForZhadanDianShuZu(int[] zuhe, DanGeZhadanDianShuZu zhadanDianShuZu,
+			int[] dianshuCount, List<ShoupaiJiesuanPai> keYongList) {
 		int num = 0;
 		for (int i = 0; i < zuhe.length; i++) {
 			num += zuhe[i];
@@ -516,7 +517,7 @@ public class DianShuZuCalculator {
 	}
 
 	private static List<DaPaiDianShuSolution> generateSolutionForZhadanDianShuZu(List<int[]> zuheList,
-			ZhadanDianShuZu zhadanDianShuZu, int[] dianshuCount, List<ShoupaiJiesuanPai> keYongList) {
+			DanGeZhadanDianShuZu zhadanDianShuZu, int[] dianshuCount, List<ShoupaiJiesuanPai> keYongList) {
 		List<DaPaiDianShuSolution> solutionList = new ArrayList<>();
 		for (int[] zuhe : zuheList) {
 			// 验证组合是否合法
@@ -789,22 +790,15 @@ public class DianShuZuCalculator {
 	private static List<LianXuZhadanDianShuZu> generateAllLianXuZhadanDianShuZu(int[] dianShuAmountArray) {
 		List<LianXuZhadanDianShuZu> lianXuZhadanList = new ArrayList<>();
 		for (int i = 0; i < dianShuAmountArray.length; i++) {
-			int[] dianshuZhangshuArray = new int[9];// 每种点数可能有多少张牌，最多9连
+			int[] dianshuZhangshuArray = new int[8];// 每种点数可能有多少张牌，最多8连
 			int lianXuZhadanLianXuCount = 0;
 			int length = 0;
 			int j = i;
-			while (j < 13 && dianShuAmountArray[j] >= 4) {// 任意3张或者3张以上点数相连的牌，3起最小，到2
+			while (j < 19 && dianShuAmountArray[j % 13] >= 4) {// 任意4张或者4张以上点数相连的牌，3起最小，到2
 				lianXuZhadanLianXuCount++;
 				length++;
 				j++;
-				dianshuZhangshuArray[j - i] = dianShuAmountArray[j];
-			}
-			if (j + 1 == 13 && dianShuAmountArray[13] + dianShuAmountArray[14] >= 3) {// 连三王炸或者天王炸
-				lianXuZhadanLianXuCount++;
-				length += 2;
-				j++;
-				dianshuZhangshuArray[j - i] = dianShuAmountArray[j];
-				dianshuZhangshuArray[j - i + 1] = dianShuAmountArray[j + 1];
+				dianshuZhangshuArray[j - i] = dianShuAmountArray[j % 13];
 			}
 			if (lianXuZhadanLianXuCount >= 3) {
 				DianShu[] lianXuDianShuArray = new DianShu[length];

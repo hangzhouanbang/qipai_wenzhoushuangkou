@@ -12,6 +12,8 @@ import com.dml.mpgame.game.extend.multipan.WaitingNextPan;
 import com.dml.mpgame.game.extend.vote.VoteNotPassWhenPlaying;
 import com.dml.mpgame.game.player.GamePlayer;
 import com.dml.mpgame.game.player.PlayerPlaying;
+import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.NoZhadanDanGeDianShuZuComparator;
+import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.TongDengLianXuDianShuZuComparator;
 import com.dml.shuangkou.BianXingWanFa;
 import com.dml.shuangkou.gameprocess.FixedPanNumbersJuFinishiDeterminer;
 import com.dml.shuangkou.gameprocess.OnePlayerHasPaiPanFinishiDeterminer;
@@ -90,8 +92,15 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		ju.setAllKedaPaiSolutionsGenerator(new WenzhouShuangkouAllKedaPaiSolutionsGenerator());
 		// TODO 生成外号
 		ju.setWaihaoGenerator(new ShuangkouWaihaoGenerator());
-		// ju.setDianShuZuYaPaiSolutionCalculator(dianShuZuYaPaiSolutionCalculator);
-		// ju.setZaDanYaPaiSolutionCalculator(zaDanYaPaiSolutionCalculator);
+		WenzhouShuangkouDianShuZuYaPaiSolutionCalculator dianShuZuYaPaiSolutionCalculator = new WenzhouShuangkouDianShuZuYaPaiSolutionCalculator();
+		dianShuZuYaPaiSolutionCalculator.setBx(bx);
+		dianShuZuYaPaiSolutionCalculator.setDanGeDianShuZuComparator(new NoZhadanDanGeDianShuZuComparator());
+		dianShuZuYaPaiSolutionCalculator.setLianXuDianShuZuComparator(new TongDengLianXuDianShuZuComparator());
+		ju.setDianShuZuYaPaiSolutionCalculator(dianShuZuYaPaiSolutionCalculator);
+		WenzhouShuangkouZaDanYaPaiSolutionCalculator zaDanYaPaiSolutionCalculator = new WenzhouShuangkouZaDanYaPaiSolutionCalculator();
+		zaDanYaPaiSolutionCalculator.setBx(bx);
+		zaDanYaPaiSolutionCalculator.setZhadanComparator(new WenzhouShuangkouZhadanComparator());
+		ju.setZaDanYaPaiSolutionCalculator(zaDanYaPaiSolutionCalculator);
 		// 开始第一盘
 		ju.startFirstPan(allPlayerIds(), currentTime);
 		return ju.getCurrentPan().findLatestActionFrame();

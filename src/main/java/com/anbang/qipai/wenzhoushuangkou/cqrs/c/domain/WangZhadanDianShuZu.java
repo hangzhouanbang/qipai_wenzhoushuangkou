@@ -1,7 +1,7 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
 
 import com.dml.puke.pai.DianShu;
-import com.dml.puke.wanfa.dianshu.dianshuzu.DianShuZu;
+import com.dml.puke.wanfa.dianshu.dianshuzu.ZhadanDianShuZu;
 
 /**
  * 王炸，包括三王炸和天王炸
@@ -9,7 +9,7 @@ import com.dml.puke.wanfa.dianshu.dianshuzu.DianShuZu;
  * @author lsc
  *
  */
-public class WangZhadanDianShuZu implements DianShuZu {
+public class WangZhadanDianShuZu extends ZhadanDianShuZu {
 	private DianShu[] dianShuZu = { DianShu.xiaowang, DianShu.dawang };
 	private int xiaowangCount;
 	private int dawangCount;
