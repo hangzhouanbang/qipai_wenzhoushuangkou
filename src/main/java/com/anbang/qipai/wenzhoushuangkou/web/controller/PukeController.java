@@ -19,12 +19,14 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PanResultDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.service.PukeGameQueryService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.service.PukePlayQueryService;
-import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.MajiangHistoricalJuResult;
-import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.MajiangHistoricalPanResult;
+import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.PukeHistoricalJuResult;
+import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.PukeHistoricalPanResult;
 import com.anbang.qipai.wenzhoushuangkou.msg.service.WenzhouShuangkouGameMsgService;
 import com.anbang.qipai.wenzhoushuangkou.msg.service.WenzhouShuangkouResultMsgService;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.CommonVO;
+import com.anbang.qipai.wenzhoushuangkou.web.vo.JuResultVO;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.PanActionFrameVO;
+import com.anbang.qipai.wenzhoushuangkou.web.vo.PanResultVO;
 import com.anbang.qipai.wenzhoushuangkou.websocket.GamePlayWsNotifier;
 import com.anbang.qipai.wenzhoushuangkou.websocket.QueryScope;
 import com.dml.shuangkou.pan.PanActionFrame;
@@ -85,6 +87,39 @@ public class PukeController {
 		return vo;
 	}
 
+	/**
+	 * @param gameId
+	 * @param panNo
+	 *            0代表不知道盘号，那么就取最新的一盘
+	 * @return
+	 */
+	@RequestMapping(value = "/pan_result")
+	@ResponseBody
+	public CommonVO panresult(String gameId, int panNo) {
+		CommonVO vo = new CommonVO();
+		Map data = new HashMap();
+		vo.setData(data);
+		PukeGameDbo pukeGameDbo = pukeGameQueryService.findPukeGameDboById(gameId);
+		if (panNo == 0) {
+			panNo = pukeGameDbo.getPanNo();
+		}
+		PanResultDbo panResultDbo = pukePlayQueryService.findPanResultDbo(gameId, panNo);
+		data.put("panResult", new PanResultVO(panResultDbo, pukeGameDbo));
+		return vo;
+	}
+
+	@RequestMapping(value = "/ju_result")
+	@ResponseBody
+	public CommonVO juresult(String gameId) {
+		CommonVO vo = new CommonVO();
+		Map data = new HashMap();
+		vo.setData(data);
+		PukeGameDbo pukeGameDbo = pukeGameQueryService.findPukeGameDboById(gameId);
+		JuResultDbo juResultDbo = pukePlayQueryService.findJuResultDbo(gameId);
+		data.put("juResult", new JuResultVO(juResultDbo, pukeGameDbo));
+		return vo;
+	}
+
 	@RequestMapping(value = "/action")
 	@ResponseBody
 	public CommonVO action(String token, List<Integer> paiIds, String dianshuZuheIdx) {
@@ -123,7 +158,7 @@ public class PukeController {
 			PukeGameDbo pukeGameDbo = pukeGameQueryService.findPukeGameDboById(gameId);
 			if (pukeActionResult.getJuResult() != null) {// 局也结束了
 				JuResultDbo juResultDbo = pukePlayQueryService.findJuResultDbo(gameId);
-				MajiangHistoricalJuResult juResult = new MajiangHistoricalJuResult(juResultDbo, pukeGameDbo);
+				PukeHistoricalJuResult juResult = new PukeHistoricalJuResult(juResultDbo, pukeGameDbo);
 				wenzhouShuangkouResultMsgService.recordJuResult(juResult);
 
 				gameMsgService.gameFinished(gameId);
@@ -134,7 +169,7 @@ public class PukeController {
 			}
 			PanResultDbo panResultDbo = pukePlayQueryService.findPanResultDbo(gameId,
 					pukeActionResult.getPanResult().getPan().getNo());
-			MajiangHistoricalPanResult panResult = new MajiangHistoricalPanResult(panResultDbo, pukeGameDbo);
+			PukeHistoricalPanResult panResult = new PukeHistoricalPanResult(panResultDbo, pukeGameDbo);
 			wenzhouShuangkouResultMsgService.recordPanResult(panResult);
 			gameMsgService.panFinished(pukeActionResult.getPukeGame(),
 					pukeActionResult.getPanActionFrame().getPanAfterAction());

@@ -6,8 +6,8 @@ import org.springframework.messaging.support.MessageBuilder;
 
 import com.anbang.qipai.wenzhoushuangkou.msg.channel.WenzhouShuangkouResultSource;
 import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.CommonMO;
-import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.MajiangHistoricalJuResult;
-import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.MajiangHistoricalPanResult;
+import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.PukeHistoricalJuResult;
+import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.PukeHistoricalPanResult;
 
 @EnableBinding(WenzhouShuangkouResultSource.class)
 public class WenzhouShuangkouResultMsgService {
@@ -15,14 +15,14 @@ public class WenzhouShuangkouResultMsgService {
 	@Autowired
 	private WenzhouShuangkouResultSource wenzhouShuangkouResultSource;
 
-	public void recordJuResult(MajiangHistoricalJuResult juResult) {
+	public void recordJuResult(PukeHistoricalJuResult juResult) {
 		CommonMO mo = new CommonMO();
 		mo.setMsg("wenzhoushuangkou ju result");
 		mo.setData(juResult);
 		wenzhouShuangkouResultSource.wenzhouShuangkouResult().send(MessageBuilder.withPayload(mo).build());
 	}
 
-	public void recordPanResult(MajiangHistoricalPanResult panResult) {
+	public void recordPanResult(PukeHistoricalPanResult panResult) {
 		CommonMO mo = new CommonMO();
 		mo.setMsg("wenzhoushuangkou pan result");
 		mo.setData(panResult);

@@ -1,5 +1,9 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouPanPlayerResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouPanResult;
 import com.dml.shuangkou.pan.PanActionFrame;
 
@@ -7,12 +11,27 @@ public class PanResultDbo {
 	private String id;
 	private String gameId;
 	private int panNo;
+	private boolean chaodi;
+	private List<WenzhouShuangkouPanPlayerResultDbo> playerResultList;
+	private long finishTime;
 	private PanActionFrame panActionFrame;
 
 	public PanResultDbo() {
 	}
 
-	public PanResultDbo(String gameId, WenzhouShuangkouPanResult wenzhouShuangkouPanResult) {
+	public PanResultDbo(String gameId, WenzhouShuangkouPanResult panResult) {
+		this.gameId = gameId;
+		panNo = panResult.getPan().getNo();
+		this.chaodi = panResult.isChaodi();
+		playerResultList = new ArrayList<>();
+		for (WenzhouShuangkouPanPlayerResult playerResult : panResult.getPanPlayerResultList()) {
+			WenzhouShuangkouPanPlayerResultDbo dbo = new WenzhouShuangkouPanPlayerResultDbo();
+			dbo.setPlayerId(playerResult.getPlayerId());
+			dbo.setPlayerResult(playerResult);
+			dbo.setPlayer(panResult.findPlayer(playerResult.getPlayerId()));
+			playerResultList.add(dbo);
+		}
+		finishTime = panResult.getPanFinishTime();
 	}
 
 	public String getId() {
@@ -39,6 +58,30 @@ public class PanResultDbo {
 		this.panNo = panNo;
 	}
 
+	public boolean isChaodi() {
+		return chaodi;
+	}
+
+	public void setChaodi(boolean chaodi) {
+		this.chaodi = chaodi;
+	}
+
+	public List<WenzhouShuangkouPanPlayerResultDbo> getPlayerResultList() {
+		return playerResultList;
+	}
+
+	public void setPlayerResultList(List<WenzhouShuangkouPanPlayerResultDbo> playerResultList) {
+		this.playerResultList = playerResultList;
+	}
+
+	public long getFinishTime() {
+		return finishTime;
+	}
+
+	public void setFinishTime(long finishTime) {
+		this.finishTime = finishTime;
+	}
+
 	public PanActionFrame getPanActionFrame() {
 		return panActionFrame;
 	}
@@ -46,5 +89,4 @@ public class PanResultDbo {
 	public void setPanActionFrame(PanActionFrame panActionFrame) {
 		this.panActionFrame = panActionFrame;
 	}
-
 }

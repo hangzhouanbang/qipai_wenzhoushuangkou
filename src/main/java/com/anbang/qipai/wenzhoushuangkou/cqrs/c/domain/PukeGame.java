@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.dml.mpgame.game.Finished;
-import com.dml.mpgame.game.GameValueObject;
 import com.dml.mpgame.game.Playing;
 import com.dml.mpgame.game.extend.fpmpv.FixedPlayersMultipanAndVotetofinishGame;
 import com.dml.mpgame.game.extend.multipan.WaitingNextPan;
@@ -90,7 +89,6 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		// ju.setKeyaDaPaiDianShuSolutionsGenerator(keyaDaPaiDianShuSolutionsGenerator);
 		// ju.setYaPaiSolutionsTipsFilter(yaPaiSolutionsTipsFilter);
 		ju.setAllKedaPaiSolutionsGenerator(new WenzhouShuangkouAllKedaPaiSolutionsGenerator());
-		// TODO 生成外号
 		ju.setWaihaoGenerator(new ShuangkouWaihaoGenerator());
 		WenzhouShuangkouDianShuZuYaPaiSolutionCalculator dianShuZuYaPaiSolutionCalculator = new WenzhouShuangkouDianShuZuYaPaiSolutionCalculator();
 		dianShuZuYaPaiSolutionCalculator.setBx(bx);
@@ -135,20 +133,19 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 
 	@Override
 	protected boolean checkToFinishGame() throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+		return ju.getJuResult() != null;
 	}
 
 	@Override
 	protected boolean checkToFinishCurrentPan() throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+		return ju.getCurrentPan() == null;
 	}
 
 	@Override
 	protected void startNextPan() throws Exception {
-		// TODO Auto-generated method stub
-
+		ju.startNextPan();
+		state = new Playing();
+		updateAllPlayersState(new PlayerPlaying());
 	}
 
 	@Override
@@ -181,10 +178,10 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends GameValueObject> T toValueObject() {
-		// TODO Auto-generated method stub
-		return null;
+	public PukeGameValueObject toValueObject() {
+		return new PukeGameValueObject(this);
 	}
 
 	@Override
@@ -195,8 +192,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 
 	@Override
 	public void finish() throws Exception {
-		// TODO Auto-generated method stub
-
+		ju.finish();
 	}
 
 	public int getPanshu() {

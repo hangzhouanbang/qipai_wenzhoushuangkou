@@ -16,10 +16,13 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.GameCmdService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.PlayerAuthService;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.JuResultDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.service.PukeGameQueryService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.service.PukePlayQueryService;
+import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.PukeHistoricalJuResult;
 import com.anbang.qipai.wenzhoushuangkou.msg.service.WenzhouShuangkouGameMsgService;
+import com.anbang.qipai.wenzhoushuangkou.msg.service.WenzhouShuangkouResultMsgService;
 import com.dml.mpgame.game.GameState;
 import com.dml.mpgame.game.extend.vote.FinishedByVote;
 import com.dml.mpgame.game.player.GamePlayerState;
@@ -40,10 +43,13 @@ public class GamePlayWsController extends TextWebSocketHandler {
 	private PukeGameQueryService pukeGameQueryService;
 
 	@Autowired
-	private PukePlayQueryService majiangPlayQueryService;
+	private PukePlayQueryService pukePlayQueryService;
 
 	@Autowired
 	private WenzhouShuangkouGameMsgService gameMsgService;
+
+	@Autowired
+	private WenzhouShuangkouResultMsgService wenzhouShuangkouResultMsgService;
 
 	private ExecutorService executorService = Executors.newCachedThreadPool();
 
@@ -89,13 +95,11 @@ public class GamePlayWsController extends TextWebSocketHandler {
 
 			String gameId = pukeGameValueObject.getId();
 			if (pukeGameValueObject.getState().name().equals(FinishedByVote.name)) {
-				// JuResultDbo juResultDbo = majiangPlayQueryService.findJuResultDbo(gameId);
-				// MajiangGameDbo majiangGameDbo =
-				// majiangGameQueryService.findMajiangGameDboById(gameId);
-				// MajiangHistoricalJuResult juResult = new
-				// MajiangHistoricalJuResult(juResultDbo, majiangGameDbo);
-				// wenzhouMajiangResultMsgService.recordJuResult(juResult);
-				// gameMsgService.gameFinished(gameId);
+				JuResultDbo juResultDbo = pukePlayQueryService.findJuResultDbo(gameId);
+				PukeGameDbo pukeGameDbo = pukeGameQueryService.findPukeGameDboById(gameId);
+				PukeHistoricalJuResult juResult = new PukeHistoricalJuResult(juResultDbo, pukeGameDbo);
+				wenzhouShuangkouResultMsgService.recordJuResult(juResult);
+				gameMsgService.gameFinished(gameId);
 			}
 			// 通知其他人
 			for (String otherPlayerId : pukeGameValueObject.allPlayerIds()) {
