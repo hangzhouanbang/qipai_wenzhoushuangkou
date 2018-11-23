@@ -110,4 +110,5 @@ public class PukeHistoricalJuResult {
 		this.finishTime = finishTime;
 	}
 
+	
 }
