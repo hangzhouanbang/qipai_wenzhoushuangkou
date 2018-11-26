@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ChaPai;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.FaPai;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.StartChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.VoteNotPassWhenChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.VotingWhenChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameDbo;
 import com.dml.mpgame.game.Canceled;
 import com.dml.mpgame.game.Finished;
@@ -58,6 +61,12 @@ public class GameVO {
 			state = "playing";
 		} else if (sn.equals(VoteNotPassWhenPlaying.name)) {
 			state = "playing";
+		} else if (sn.equals(StartChaodi.name)) {
+			state = "startchaodi";
+		} else if (sn.equals(VotingWhenChaodi.name)) {
+			state = "startchaodi";
+		} else if (sn.equals(VoteNotPassWhenChaodi.name)) {
+			state = "startchaodi";
 		} else if (sn.equals(VotingWhenWaitingNextPan.name)) {
 			state = "waitingNextPan";
 		} else if (sn.equals(VoteNotPassWhenWaitingNextPan.name)) {

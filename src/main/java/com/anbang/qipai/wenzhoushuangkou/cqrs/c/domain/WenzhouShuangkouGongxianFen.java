@@ -17,6 +17,20 @@ public class WenzhouShuangkouGongxianFen {
 	private int totalscore;// 总分
 	private int value;// 单人结算分
 
+	public WenzhouShuangkouGongxianFen() {
+
+	}
+
+	public WenzhouShuangkouGongxianFen(int[] xianshuCount) {
+		liuxian = xianshuCount[2];
+		qixian = xianshuCount[3];
+		baxian = xianshuCount[4];
+		jiuxian = xianshuCount[5];
+		shixian = xianshuCount[6];
+		shiyixian = xianshuCount[7];
+		shierxian = xianshuCount[8];
+	}
+
 	public void calculate() {
 		value = 4 * liuxian + 8 * qixian + 16 * baxian + 32 * jiuxian + 64 * shixian + 128 * shiyixian
 				+ 256 * shierxian;

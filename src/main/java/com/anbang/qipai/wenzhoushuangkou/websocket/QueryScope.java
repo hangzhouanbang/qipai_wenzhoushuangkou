@@ -3,6 +3,7 @@ package com.anbang.qipai.wenzhoushuangkou.websocket;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.StartChaodi;
 import com.dml.mpgame.game.Canceled;
 import com.dml.mpgame.game.Finished;
 import com.dml.mpgame.game.GameState;
@@ -19,7 +20,7 @@ import com.dml.mpgame.game.extend.vote.VotingWhenPlaying;
 import com.dml.mpgame.game.player.GamePlayerState;
 
 public enum QueryScope {
-	gameInfo, panForMe, panResult, juResult, gameFinishVote;
+	gameInfo, panForMe, panResult, juResult, gameFinishVote, chaodiInfo;
 
 	public static List<QueryScope> scopesForState(GameState gameState, GamePlayerState playerState) {
 		List<QueryScope> scopes = new ArrayList<>();
@@ -30,6 +31,9 @@ public enum QueryScope {
 		} else if (gameState.name().equals(Playing.name)) {
 			scopes.add(QueryScope.gameInfo);
 			scopes.add(QueryScope.panForMe);
+		} else if (gameState.name().equals(StartChaodi.name)) {
+			scopes.add(QueryScope.gameInfo);
+			scopes.add(QueryScope.chaodiInfo);
 		} else if (gameState.name().equals(VotingWhenPlaying.name)) {
 			scopes.add(QueryScope.gameInfo);
 			scopes.add(QueryScope.panForMe);

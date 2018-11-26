@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ChaodiResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeActionResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyToNextPanResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.PukePlayCmdService;
@@ -41,6 +42,20 @@ public class DisruptorPukePlayCmdService extends DisruptorCmdServiceBase impleme
 		DeferredResult<ReadyToNextPanResult> result = publishEvent(disruptorFactory.getCoreCmdDisruptor(), cmd, () -> {
 			ReadyToNextPanResult readyToNextPanResult = pukePlayCmdServiceImpl.readyToNextPan(cmd.getParameter());
 			return readyToNextPanResult;
+		});
+		try {
+			return result.getResult();
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	@Override
+	public ChaodiResult chaodi(String playerId, Boolean chaodi, Long actionTime) throws Exception {
+		CommonCommand cmd = new CommonCommand(PukePlayCmdServiceImpl.class.getName(), "chaodi", playerId,chaodi,actionTime);
+		DeferredResult<ChaodiResult> result = publishEvent(disruptorFactory.getCoreCmdDisruptor(), cmd, () -> {
+			ChaodiResult chaodiResult = pukePlayCmdServiceImpl.chaodi(cmd.getParameter(), cmd.getParameter(), cmd.getParameter());
+			return chaodiResult;
 		});
 		try {
 			return result.getResult();

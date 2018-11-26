@@ -11,13 +11,19 @@ import com.dml.mpgame.game.extend.multipan.WaitingNextPan;
 import com.dml.mpgame.game.extend.vote.VoteNotPassWhenPlaying;
 import com.dml.mpgame.game.player.GamePlayer;
 import com.dml.mpgame.game.player.PlayerPlaying;
+import com.dml.puke.pai.DianShu;
+import com.dml.puke.pai.PukePai;
 import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.NoZhadanDanGeDianShuZuComparator;
 import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.TongDengLianXuDianShuZuComparator;
 import com.dml.shuangkou.BianXingWanFa;
+import com.dml.shuangkou.ShoupaiJiesuanPai;
 import com.dml.shuangkou.gameprocess.FixedPanNumbersJuFinishiDeterminer;
 import com.dml.shuangkou.gameprocess.OnePlayerHasPaiPanFinishiDeterminer;
 import com.dml.shuangkou.ju.Ju;
+import com.dml.shuangkou.pan.Pan;
 import com.dml.shuangkou.pan.PanActionFrame;
+import com.dml.shuangkou.pan.PanResult;
+import com.dml.shuangkou.player.ShuangkouPlayer;
 import com.dml.shuangkou.preparedapai.avaliablepai.DoubleAvaliablePaiFiller;
 import com.dml.shuangkou.preparedapai.fapai.YiciJiuzhangFapaiStrategy;
 import com.dml.shuangkou.preparedapai.fapai.YiciSanzhangFapaiStrategy;
@@ -42,15 +48,186 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 	private FaPai fapai;
 	private Ju ju;
 	private Map<String, Integer> playeTotalScoreMap = new HashMap<>();
+	private Map<String, PukeGamePlayerChaodiState> playerChaodiStateMap = new HashMap<>();
+
+	public ChaodiResult chaodi(String playerId, boolean chaodi, long actionTime) throws Exception {
+		ChaodiResult chaodiResult = new ChaodiResult();
+		if (tryPlayerHasZhadan(playerId)) {
+			playerChaodiStateMap.put(playerId, PukeGamePlayerChaodiState.cannotchaodi);
+		} else {
+			if (chaodi) {
+				playerChaodiStateMap.put(playerId, PukeGamePlayerChaodiState.chaodi);
+			} else {
+				playerChaodiStateMap.put(playerId, PukeGamePlayerChaodiState.buchao);
+			}
+		}
+		if (state.name().equals(VoteNotPassWhenChaodi.name)) {
+			state = new StartChaodi();
+		}
+		updatePlayerState(playerId, new PlayerAfterChaodi());
+		boolean start = true;
+		boolean finish = false;
+		for (PukeGamePlayerChaodiState chaodiState : playerChaodiStateMap.values()) {
+			if (chaodiState.equals(PukeGamePlayerChaodiState.startChaodi)) {
+				start = false;
+			}
+			if (chaodiState.equals(PukeGamePlayerChaodiState.chaodi)) {
+				finish = true;
+			}
+		}
+		if (finish) {// 抄底成功
+			PanResult panResult = ju.getCurrentPanResultBuilder().buildCurrentPanResult(ju, actionTime);
+			ju.getFinishedPanResultList().add(panResult);
+			ju.setCurrentPan(null);
+			if (ju.getJuFinishiDeterminer().determineToFinishJu(ju)) {// 是否局结束
+				ju.setJuResult(ju.getJuResultBuilder().buildJuResult(ju));
+			}
+			checkAndFinishPan();
+
+			if (state.name().equals(WaitingNextPan.name) || state.name().equals(Finished.name)) {// 盘结束了
+				WenzhouShuangkouPanResult wenzhouShuangkouPanResult = (WenzhouShuangkouPanResult) ju
+						.findLatestFinishedPanResult();
+				for (WenzhouShuangkouPanPlayerResult wenzhouShuangkouPanPlayerResult : wenzhouShuangkouPanResult
+						.getPanPlayerResultList()) {
+					playeTotalScoreMap.put(wenzhouShuangkouPanPlayerResult.getPlayerId(),
+							wenzhouShuangkouPanPlayerResult.getTotalScore());
+				}
+				chaodiResult.setPanResult(wenzhouShuangkouPanResult);
+				if (state.name().equals(Finished.name)) {// 局结束了
+					chaodiResult.setJuResult((WenzhouShuangkouJuResult) ju.getJuResult());
+				}
+			}
+			chaodiResult.setPukeGame(new PukeGameValueObject(this));
+			return chaodiResult;
+		}
+		if (start) {// 未成功抄底，正常游戏
+			state = new Playing();
+			updateAllPlayersState(new PlayerPlaying());
+			PanActionFrame firstPanActionFrame = ju.getCurrentPan().findLatestActionFrame();
+			chaodiResult.setPanActionFrame(firstPanActionFrame);
+			chaodiResult.setPukeGame(new PukeGameValueObject(this));
+		}
+		return chaodiResult;
+	}
+
+	private boolean tryPlayerHasZhadan(String playerId) {
+		Pan currentPan = ju.getCurrentPan();
+		ShuangkouPlayer player = currentPan.findPlayer(playerId);
+		Map<Integer, PukePai> allShoupai = player.getAllShoupai();
+		int[] dianshuCountArray = new int[15];
+		for (PukePai pukePai : allShoupai.values()) {
+			DianShu dianShu = pukePai.getPaiMian().dianShu();
+			dianshuCountArray[dianShu.ordinal()]++;
+		}
+		int xiaowangCount = dianshuCountArray[13];
+		int dawangCount = dianshuCountArray[14];
+		int wangCount = 0;
+		if (BianXingWanFa.qianbian.equals(bx)) {// 千变
+			wangCount = xiaowangCount + dawangCount;
+			// 减去王牌的数量
+			dianshuCountArray[13] = dianshuCountArray[13] - xiaowangCount;
+			dianshuCountArray[14] = dianshuCountArray[14] - dawangCount;
+		} else if (BianXingWanFa.banqianbian.equals(bx)) {// 半千变;
+			wangCount = dawangCount;
+			// 减去王牌的数量
+			if (xiaowangCount > 0 && xiaowangCount % 2 == 0) {
+				wangCount++;
+				dianshuCountArray[13] = dianshuCountArray[13] - 2;
+			}
+			dianshuCountArray[14] = dianshuCountArray[14] - dawangCount;
+		} else if (BianXingWanFa.baibian.equals(bx)) {// 百变
+			wangCount = dawangCount;
+			// 减去王牌的数量
+			dianshuCountArray[14] = dianshuCountArray[14] - dawangCount;
+		} else {
+
+		}
+		if (wangCount > 0) {
+			// 有王牌
+			if (tryHasZhadanWithWangDang(wangCount, dianshuCountArray, xiaowangCount, dawangCount)) {
+				return true;
+			}
+		} else {
+			// 没有王牌
+			if (tryHasZhadanWithoutWangDang(dianshuCountArray)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean tryHasZhadanWithWangDang(int wangCount, int[] dianshuCountArray, int xiaowangCount,
+			int dawangCount) {
+		// 循环王的各种当法
+		int maxZuheCode = (int) Math.pow(15, wangCount);
+		int[] modArray = new int[wangCount];
+		for (int m = 0; m < wangCount; m++) {
+			modArray[m] = (int) Math.pow(15, wangCount - 1 - m);
+		}
+		for (int zuheCode = 0; zuheCode < maxZuheCode; zuheCode++) {
+			ShoupaiJiesuanPai[] wangDangPaiArray = new ShoupaiJiesuanPai[wangCount];
+			int temp = zuheCode;
+			int previousGuipaiDangIdx = 0;
+			for (int n = 0; n < wangCount; n++) {
+				int mod = modArray[n];
+				int shang = temp / mod;
+				if (shang >= previousGuipaiDangIdx) {// 计算王的各种当法，排除效果相同的当法
+					int yu = temp % mod;
+					if (BianXingWanFa.qianbian.equals(bx)) {// 千变
+						if (n < dawangCount) {
+							wangDangPaiArray[n] = new DawangDangPai(DianShu.getDianShuByOrdinal(shang));
+						} else {
+							wangDangPaiArray[n] = new XiaowangDangPai(1, DianShu.getDianShuByOrdinal(shang));
+						}
+					} else if (BianXingWanFa.banqianbian.equals(bx)) {// 半千变;
+						if (n < dawangCount) {
+							wangDangPaiArray[n] = new DawangDangPai(DianShu.getDianShuByOrdinal(shang));
+						} else {
+							wangDangPaiArray[n] = new XiaowangDangPai(2, DianShu.getDianShuByOrdinal(shang));
+						}
+					} else if (BianXingWanFa.baibian.equals(bx)) {// 百变
+						wangDangPaiArray[n] = new DawangDangPai(DianShu.getDianShuByOrdinal(shang));
+					} else {
+
+					}
+					temp = yu;
+					previousGuipaiDangIdx = shang;
+				} else {
+					wangDangPaiArray = null;
+					break;
+				}
+			}
+			if (wangDangPaiArray != null) {
+				// 加上当牌的数量
+				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
+					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]++;
+				}
+				PaiXing paiXing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
+				if (paiXing.hasZhadan()) {
+					return true;
+				}
+				// 减去当牌的数量
+				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
+					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]--;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean tryHasZhadanWithoutWangDang(int[] dianshuCountArray) {
+		PaiXing paiXing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
+		return paiXing.hasZhadan();
+	}
 
 	public PanActionFrame createJuAndStartFirstPan(Long currentTime) throws Exception {
 		Ju ju = new Ju();
 		ju.setCurrentPanFinishiDeterminer(new OnePlayerHasPaiPanFinishiDeterminer());
 		ju.setJuFinishiDeterminer(new FixedPanNumbersJuFinishiDeterminer());
-		// TODO 生成盘结果
-		// ju.setCurrentPanResultBuilder(currentPanResultBuilder);
-		// TODO 生成局结果
-		// ju.setJuResultBuilder(juResultBuilder);
+		// 生成盘结果
+		ju.setCurrentPanResultBuilder(new WenzhouShuangkouCurrentPanResultBuilder());
+		// 生成局结果
+		ju.setJuResultBuilder(new WenzhouShuangkouJuResultBuilder());
 		ju.setAvaliablePaiFiller(new DoubleAvaliablePaiFiller());
 		if (ChaPai.wuxu.equals(chapai)) {
 			ju.setLuanpaiStrategyForFirstPan(new ErliuhunHasSiwangLuanpaiStrategy(bx, currentTime));
@@ -87,7 +264,9 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		ju.setZuduiStrategyForNextPan(new HongxinbaHongxinjiuZuduiStrategy());
 		ju.setXiandaPlayerDeterminer(new DongPositionXiandaPlayerDeterminer());
 		// ju.setKeyaDaPaiDianShuSolutionsGenerator(keyaDaPaiDianShuSolutionsGenerator);
-		// ju.setYaPaiSolutionsTipsFilter(yaPaiSolutionsTipsFilter);
+		WenzhouShuangkouYaPaiSolutionsTipsFilter wenzhouShuangkouYaPaiSolutionsTipsFilter = new WenzhouShuangkouYaPaiSolutionsTipsFilter();
+		wenzhouShuangkouYaPaiSolutionsTipsFilter.setZhadanComparator(new WenzhouShuangkouZhadanComparator());
+		ju.setYaPaiSolutionsTipsFilter(wenzhouShuangkouYaPaiSolutionsTipsFilter);
 		ju.setAllKedaPaiSolutionsGenerator(new WenzhouShuangkouAllKedaPaiSolutionsGenerator());
 		ju.setWaihaoGenerator(new ShuangkouWaihaoGenerator());
 		WenzhouShuangkouDianShuZuYaPaiSolutionCalculator dianShuZuYaPaiSolutionCalculator = new WenzhouShuangkouDianShuZuYaPaiSolutionCalculator();
@@ -121,7 +300,10 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 
 		if (state.name().equals(WaitingNextPan.name) || state.name().equals(Finished.name)) {// 盘结束了
 			WenzhouShuangkouPanResult panResult = (WenzhouShuangkouPanResult) ju.findLatestFinishedPanResult();
-
+			for (WenzhouShuangkouPanPlayerResult wenzhouShuangkouPanPlayerResult : panResult.getPanPlayerResultList()) {
+				playeTotalScoreMap.put(wenzhouShuangkouPanPlayerResult.getPlayerId(),
+						wenzhouShuangkouPanPlayerResult.getTotalScore());
+			}
 			result.setPanResult(panResult);
 			if (state.name().equals(Finished.name)) {// 局结束了
 				result.setJuResult((WenzhouShuangkouJuResult) ju.getJuResult());
@@ -150,32 +332,50 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 
 	@Override
 	protected void updatePlayerToExtendedVotingState(GamePlayer player) {
-		// TODO Auto-generated method stub
-
+		if (player.getState().name().equals(PlayerChaodi.name)) {
+			player.setState(new PlayerVotingWhenChaodi());
+		} else if (player.getState().name().equals(PlayerAfterChaodi.name)) {
+			player.setState(new PlayerVotingWhenAfterChaodi());
+		}
 	}
 
 	@Override
 	protected void updateToExtendedVotingState() {
-		// TODO Auto-generated method stub
-
+		if (state.name().equals(StartChaodi.name) || state.name().equals(VoteNotPassWhenChaodi.name)) {
+			state = new VotingWhenChaodi();
+		}
 	}
 
 	@Override
 	protected void updatePlayerToExtendedVotedState(GamePlayer player) {
-		// TODO Auto-generated method stub
-
+		String stateName = player.getState().name();
+		if (stateName.equals(PlayerVotingWhenChaodi.name)) {
+			player.setState(new PlayerVotedWhenChaodi());
+		} else if (player.getState().name().equals(PlayerVotingWhenAfterChaodi.name)) {
+			player.setState(new PlayerVotedWhenAfterChaodi());
+		}
 	}
 
 	@Override
 	protected void recoveryPlayersStateFromExtendedVoting() throws Exception {
-		// TODO Auto-generated method stub
-
+		if (state.name().equals(VoteNotPassWhenChaodi.name)) {
+			for (GamePlayer player : idPlayerMap.values()) {
+				if (player.getState().name().equals(PlayerVotingWhenChaodi.name)
+						|| player.getState().name().equals(PlayerVotedWhenChaodi.name)) {
+					updatePlayerState(player.getId(), new PlayerChaodi());
+				} else if (player.getState().name().equals(PlayerVotingWhenAfterChaodi.name)
+						|| player.getState().name().equals(PlayerVotedWhenAfterChaodi.name)) {
+					updatePlayerState(player.getId(), new PlayerAfterChaodi());
+				}
+			}
+		}
 	}
 
 	@Override
 	protected void updateToVoteNotPassStateFromExtendedVoting() throws Exception {
-		// TODO Auto-generated method stub
-
+		if (state.name().equals(VotingWhenChaodi.name)) {
+			state = new VoteNotPassWhenChaodi();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -186,8 +386,22 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 
 	@Override
 	public void start(long currentTime) throws Exception {
-		state = new Playing();
-		updateAllPlayersState(new PlayerPlaying());
+		boolean hasChaodi = false;
+		if (chaodi) {
+			for (String playerId : allPlayerIds()) {
+				if (!tryPlayerHasZhadan(playerId)) {
+					hasChaodi = true;
+				}
+			}
+		}
+		if (hasChaodi) {// 能够抄底
+			allPlayerIds().forEach((pid) -> playerChaodiStateMap.put(pid, PukeGamePlayerChaodiState.startChaodi));
+			state = new StartChaodi();
+			updateAllPlayersState(new PlayerChaodi());
+		} else {
+			state = new Playing();
+			updateAllPlayersState(new PlayerPlaying());
+		}
 	}
 
 	@Override
@@ -273,6 +487,14 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 
 	public void setPlayeTotalScoreMap(Map<String, Integer> playeTotalScoreMap) {
 		this.playeTotalScoreMap = playeTotalScoreMap;
+	}
+
+	public Map<String, PukeGamePlayerChaodiState> getPlayerChaodiStateMap() {
+		return playerChaodiStateMap;
+	}
+
+	public void setPlayerChaodiStateMap(Map<String, PukeGamePlayerChaodiState> playerChaodiStateMap) {
+		this.playerChaodiStateMap = playerChaodiStateMap;
 	}
 
 }

@@ -4,10 +4,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ChaodiResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeActionResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGame;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyToNextPanResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.StartChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.VoteNotPassWhenChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.exception.CouldNotChaodiException;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.PukePlayCmdService;
 import com.dml.mpgame.game.Playing;
 import com.dml.mpgame.game.player.PlayerNotInGameException;
@@ -53,6 +57,22 @@ public class PukePlayCmdServiceImpl extends CmdServiceBase implements PukePlayCm
 		}
 		readyToNextPanResult.setPukeGame(new PukeGameValueObject(pukeGame));
 		return readyToNextPanResult;
+	}
+
+	@Override
+	public ChaodiResult chaodi(String playerId, Boolean chaodi, Long actionTime) throws Exception {
+		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
+		String gameId = gameServer.findBindGameId(playerId);
+		if (gameId == null) {
+			throw new PlayerNotInGameException();
+		}
+		PukeGame pukeGame = (PukeGame) gameServer.findGame(gameId);
+		if (!(pukeGame.getState().name().equals(StartChaodi.name)
+				|| pukeGame.getState().name().equals(VoteNotPassWhenChaodi.name))) {
+			throw new CouldNotChaodiException();
+		}
+		ChaodiResult chaodiResult = pukeGame.chaodi(playerId, chaodi, actionTime);
+		return chaodiResult;
 	}
 
 }

@@ -1,5 +1,11 @@
 package com.anbang.qipai.wenzhoushuangkou.web.vo;
 
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PlayerAfterChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PlayerChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PlayerVotedWhenAfterChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PlayerVotedWhenChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PlayerVotingWhenAfterChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PlayerVotingWhenChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGamePlayerDbo;
 import com.dml.mpgame.game.extend.fpmpv.player.PlayerPanFinishedAndVoted;
 import com.dml.mpgame.game.extend.fpmpv.player.PlayerPanFinishedAndVoting;
@@ -47,6 +53,10 @@ public class PukeGamePlayerVO {
 			state = "panFinished";
 		} else if (sn.equals(PlayerPlaying.name)) {
 			state = "playing";
+		} else if (sn.equals(PlayerChaodi.name)) {
+			state = "chaodi";
+		} else if (sn.equals(PlayerAfterChaodi.name)) {
+			state = "chaodi";
 		} else if (sn.equals(PlayerReadyToStart.name)) {
 			state = "readyToStart";
 		} else if (sn.equals(PlayerReadyToStartNextPan.name)) {
@@ -62,6 +72,14 @@ public class PukeGamePlayerVO {
 		} else if (sn.equals(PlayerReadyToStartNextPanAndVoted.name)) {
 			state = sn;
 		} else if (sn.equals(PlayerReadyToStartNextPanAndVoting.name)) {
+			state = sn;
+		} else if (sn.equals(PlayerVotedWhenChaodi.name)) {
+			state = sn;
+		} else if (sn.equals(PlayerVotedWhenAfterChaodi.name)) {
+			state = sn;
+		} else if (sn.equals(PlayerVotingWhenChaodi.name)) {
+			state = sn;
+		} else if (sn.equals(PlayerVotingWhenAfterChaodi.name)) {
 			state = sn;
 		} else {
 		}

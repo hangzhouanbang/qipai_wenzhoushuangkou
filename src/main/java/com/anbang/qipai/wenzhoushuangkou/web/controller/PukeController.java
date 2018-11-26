@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ChaodiResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeActionResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyToNextPanResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.StartChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.PlayerAuthService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.PukePlayCmdService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.JuResultDbo;
@@ -29,6 +31,7 @@ import com.anbang.qipai.wenzhoushuangkou.web.vo.PanActionFrameVO;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.PanResultVO;
 import com.anbang.qipai.wenzhoushuangkou.websocket.GamePlayWsNotifier;
 import com.anbang.qipai.wenzhoushuangkou.websocket.QueryScope;
+import com.dml.mpgame.game.Playing;
 import com.dml.shuangkou.pan.PanActionFrame;
 
 @RestController
@@ -120,6 +123,78 @@ public class PukeController {
 		return vo;
 	}
 
+	@RequestMapping(value = "/chaodi")
+	@ResponseBody
+	public CommonVO chaodi(String token, boolean chaodi) {
+		CommonVO vo = new CommonVO();
+		Map data = new HashMap();
+		List<String> queryScopes = new ArrayList<>();
+		data.put("queryScopes", queryScopes);
+		vo.setData(data);
+		String playerId = playerAuthService.getPlayerIdByToken(token);
+		if (playerId == null) {
+			vo.setSuccess(false);
+			vo.setMsg("invalid token");
+			return vo;
+		}
+
+		ChaodiResult chaodiResult;
+		try {
+			chaodiResult = pukePlayCmdService.chaodi(playerId, chaodi, System.currentTimeMillis());
+		} catch (Exception e) {
+			vo.setSuccess(false);
+			vo.setMsg(e.getClass().getName());
+			return vo;
+		}
+		try {
+			pukePlayQueryService.chaodi(chaodiResult);
+		} catch (Throwable e) {
+			vo.setSuccess(false);
+			vo.setMsg(e.getMessage());
+			return vo;
+		}
+
+		if (chaodiResult.getPanResult() == null) {// 盘没结束
+			if (chaodiResult.getPukeGame().getState().name().equals(StartChaodi.name)) {
+				queryScopes.add(QueryScope.chaodiInfo.name());
+			}
+			if (chaodiResult.getPukeGame().getState().name().equals(Playing.name)) {
+				queryScopes.add(QueryScope.panForMe.name());
+			}
+		} else {// 盘结束了
+			String gameId = chaodiResult.getPukeGame().getId();
+			PukeGameDbo pukeGameDbo = pukeGameQueryService.findPukeGameDboById(gameId);
+			if (chaodiResult.getJuResult() != null) {// 局也结束了
+				JuResultDbo juResultDbo = pukePlayQueryService.findJuResultDbo(gameId);
+				PukeHistoricalJuResult juResult = new PukeHistoricalJuResult(juResultDbo, pukeGameDbo);
+				wenzhouShuangkouResultMsgService.recordJuResult(juResult);
+
+				gameMsgService.gameFinished(gameId);
+				queryScopes.add(QueryScope.juResult.name());
+			} else {
+				queryScopes.add(QueryScope.panResult.name());
+				queryScopes.add(QueryScope.gameInfo.name());
+			}
+			PanResultDbo panResultDbo = pukePlayQueryService.findPanResultDbo(gameId,
+					chaodiResult.getPanResult().getPan().getNo());
+			PukeHistoricalPanResult panResult = new PukeHistoricalPanResult(panResultDbo, pukeGameDbo);
+			wenzhouShuangkouResultMsgService.recordPanResult(panResult);
+			gameMsgService.panFinished(chaodiResult.getPukeGame(),
+					chaodiResult.getPanActionFrame().getPanAfterAction());
+
+		}
+		// 通知其他人
+		for (String otherPlayerId : chaodiResult.getPukeGame().allPlayerIds()) {
+			if (!otherPlayerId.equals(playerId)) {
+				QueryScope.scopesForState(chaodiResult.getPukeGame().getState(),
+						chaodiResult.getPukeGame().findPlayerState(otherPlayerId)).forEach((scope) -> {
+							wsNotifier.notifyToQuery(otherPlayerId, scope.name());
+						});
+			}
+		}
+		return vo;
+	}
+
 	@RequestMapping(value = "/action")
 	@ResponseBody
 	public CommonVO action(String token, List<Integer> paiIds, String dianshuZuheIdx) {
@@ -184,7 +259,6 @@ public class PukeController {
 						});
 			}
 		}
-
 		return vo;
 	}
 

@@ -13,17 +13,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ChaPai;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.FaPai;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGamePlayerChaodiState;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyForGameResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.GameCmdService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.PlayerAuthService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.GameFinishVoteDbo;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.JuResultDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameDbo;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGamePlayerChaodiDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGamePlayerDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.service.PukeGameQueryService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.service.PukePlayQueryService;
+import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.PukeHistoricalJuResult;
 import com.anbang.qipai.wenzhoushuangkou.msg.service.MemberGoldsMsgService;
 import com.anbang.qipai.wenzhoushuangkou.msg.service.WenzhouShuangkouGameMsgService;
+import com.anbang.qipai.wenzhoushuangkou.msg.service.WenzhouShuangkouResultMsgService;
 import com.anbang.qipai.wenzhoushuangkou.plan.bean.MemberGoldBalance;
 import com.anbang.qipai.wenzhoushuangkou.plan.service.MemberGoldBalanceService;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.CommonVO;
@@ -65,6 +70,9 @@ public class GameController {
 
 	@Autowired
 	private WenzhouShuangkouGameMsgService gameMsgService;
+
+	@Autowired
+	private WenzhouShuangkouResultMsgService wenzhouShuangkouResultMsgService;
 
 	/**
 	 * 新一局游戏
@@ -354,19 +362,17 @@ public class GameController {
 		}
 		pukeGameQueryService.finish(pukeGameValueObject);
 		String gameId = pukeGameValueObject.getId();
-		// JuResultDbo juResultDbo = majiangPlayQueryService.findJuResultDbo(gameId);
-		// // 记录战绩
-		// if (juResultDbo != null) {
-		// MajiangGameDbo majiangGameDbo =
-		// majiangGameQueryService.findMajiangGameDboById(gameId);
-		// MajiangHistoricalJuResult juResult = new
-		// MajiangHistoricalJuResult(juResultDbo, majiangGameDbo);
-		// wenzhouMajiangResultMsgService.recordJuResult(juResult);
-		// }
+		JuResultDbo juResultDbo = pukePlayQueryService.findJuResultDbo(gameId);
+		// 记录战绩
+		if (juResultDbo != null) {
+			PukeGameDbo pukeGameDbo = pukeGameQueryService.findPukeGameDboById(gameId);
+			PukeHistoricalJuResult juResult = new PukeHistoricalJuResult(juResultDbo, pukeGameDbo);
+			wenzhouShuangkouResultMsgService.recordJuResult(juResult);
+		}
 
 		if (pukeGameValueObject.getState().name().equals(FinishedByVote.name)
 				|| pukeGameValueObject.getState().name().equals(Canceled.name)) {
-			// gameMsgService.gameFinished(gameId);
+			gameMsgService.gameFinished(gameId);
 			data.put("queryScope", QueryScope.gameInfo);
 		} else {
 			// 游戏没结束有两种可能：一种是发起了投票。还有一种是游戏没开始，解散发起人又不是房主，那就自己走人。
@@ -414,18 +420,16 @@ public class GameController {
 		}
 		String gameId = pukeGameValueObject.getId();
 		pukeGameQueryService.voteToFinish(pukeGameValueObject);
-		// JuResultDbo juResultDbo = majiangPlayQueryService.findJuResultDbo(gameId);
-		// // 记录战绩
-		// if (juResultDbo != null) {
-		// MajiangGameDbo majiangGameDbo =
-		// majiangGameQueryService.findMajiangGameDboById(gameId);
-		// MajiangHistoricalJuResult juResult = new
-		// MajiangHistoricalJuResult(juResultDbo, majiangGameDbo);
-		// wenzhouMajiangResultMsgService.recordJuResult(juResult);
-		// }
+		JuResultDbo juResultDbo = pukePlayQueryService.findJuResultDbo(gameId);
+		// 记录战绩
+		if (juResultDbo != null) {
+			PukeGameDbo pukeGameDbo = pukeGameQueryService.findPukeGameDboById(gameId);
+			PukeHistoricalJuResult juResult = new PukeHistoricalJuResult(juResultDbo, pukeGameDbo);
+			wenzhouShuangkouResultMsgService.recordJuResult(juResult);
+		}
 		if (pukeGameValueObject.getState().name().equals(FinishedByVote.name)
 				|| pukeGameValueObject.getState().name().equals(Canceled.name)) {
-			// gameMsgService.gameFinished(gameId);
+			gameMsgService.gameFinished(gameId);
 		}
 		data.put("queryScope", QueryScope.gameFinishVote);
 		// 通知其他人来查询投票情况
@@ -450,6 +454,22 @@ public class GameController {
 		GameFinishVoteDbo gameFinishVoteDbo = pukeGameQueryService.findGameFinishVoteDbo(gameId);
 		Map data = new HashMap();
 		data.put("vote", gameFinishVoteDbo.getVote());
+		vo.setData(data);
+		return vo;
+
+	}
+
+	@RequestMapping(value = "/chaodi_info")
+	@ResponseBody
+	public CommonVO chaodiinfo(String gameId) {
+		CommonVO vo = new CommonVO();
+		PukeGamePlayerChaodiDbo pukeGamePlayerChaodiDbo = pukePlayQueryService.findLastPlayerChaodiDboByGameId(gameId);
+		Map<String, PukeGamePlayerChaodiState> playerChaodiStateMap = new HashMap<>();
+		if (pukeGamePlayerChaodiDbo != null) {
+			playerChaodiStateMap = pukeGamePlayerChaodiDbo.getPlayerChaodiStateMap();
+		}
+		Map data = new HashMap();
+		data.put("chaodiState", playerChaodiStateMap);
 		vo.setData(data);
 		return vo;
 

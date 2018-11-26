@@ -18,6 +18,7 @@ public class PukeGameValueObject extends FixedPlayersMultipanAndVotetofinishGame
 	private ChaPai chapai;
 	private FaPai fapai;
 	private Map<String, Integer> playeTotalScoreMap = new HashMap<>();
+	private Map<String, PukeGamePlayerChaodiState> playerChaodiStateMap = new HashMap<>();
 	private JuResult juResult;
 
 	public PukeGameValueObject(PukeGame pukeGame) {
@@ -30,11 +31,11 @@ public class PukeGameValueObject extends FixedPlayersMultipanAndVotetofinishGame
 		fengding = pukeGame.isFengding();
 		chapai = pukeGame.getChapai();
 		fapai = pukeGame.getFapai();
-		playeTotalScoreMap = pukeGame.getPlayeTotalScoreMap();
+		playeTotalScoreMap.putAll(pukeGame.getPlayeTotalScoreMap());
+		playerChaodiStateMap.putAll(pukeGame.getPlayerChaodiStateMap());
 		if (pukeGame.getJu() != null) {
 			juResult = pukeGame.getJu().getJuResult();
 		}
-
 	}
 
 	public int getPanshu() {
@@ -107,6 +108,14 @@ public class PukeGameValueObject extends FixedPlayersMultipanAndVotetofinishGame
 
 	public void setPlayeTotalScoreMap(Map<String, Integer> playeTotalScoreMap) {
 		this.playeTotalScoreMap = playeTotalScoreMap;
+	}
+
+	public Map<String, PukeGamePlayerChaodiState> getPlayerChaodiStateMap() {
+		return playerChaodiStateMap;
+	}
+
+	public void setPlayerChaodiStateMap(Map<String, PukeGamePlayerChaodiState> playerChaodiStateMap) {
+		this.playerChaodiStateMap = playerChaodiStateMap;
 	}
 
 	public JuResult getJuResult() {

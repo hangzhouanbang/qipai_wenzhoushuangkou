@@ -44,6 +44,14 @@ public class PaiXing {
 		this.wangZhadanDianShuZuList = wangZhadanDianShuZuList;
 	}
 
+	public boolean hasZhadan() {
+		if (!wangZhadanDianShuZuList.isEmpty() || !lianXuZhadanDianShuZuList.isEmpty()
+				|| !zhadanDianShuZuList.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
+
 	public List<DuiziDianShuZu> getDuiziDianShuZuList() {
 		return duiziDianShuZuList;
 	}
