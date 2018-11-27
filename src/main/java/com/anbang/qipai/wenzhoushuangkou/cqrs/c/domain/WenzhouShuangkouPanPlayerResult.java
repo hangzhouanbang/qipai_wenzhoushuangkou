@@ -6,6 +6,7 @@ public class WenzhouShuangkouPanPlayerResult {
 	private WenzhouShuangkouMingcifen mingcifen;
 	private WenzhouShuangkouXianshuBeishu xianshubeishu;
 	private WenzhouShuangkouGongxianFen gongxianfen;
+	private WenzhouShuangkouChaixianbufen bufen;
 	private int score;// 一盘结算分
 	private int totalScore;// 总分
 
@@ -63,6 +64,14 @@ public class WenzhouShuangkouPanPlayerResult {
 
 	public void setTotalScore(int totalScore) {
 		this.totalScore = totalScore;
+	}
+
+	public WenzhouShuangkouChaixianbufen getBufen() {
+		return bufen;
+	}
+
+	public void setBufen(WenzhouShuangkouChaixianbufen bufen) {
+		this.bufen = bufen;
 	}
 
 }

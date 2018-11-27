@@ -11,6 +11,24 @@ public class PukeGamePlayerDbo {
 	private GamePlayerState state;// 原来是 joined, readyToStart, playing, panFinished, finished
 	private GamePlayerOnlineState onlineState;
 	private int totalScore;
+	private int gongxianfen;
+	private int totalGongxianfen;
+
+	public int getTotalGongxianfen() {
+		return totalGongxianfen;
+	}
+
+	public void setTotalGongxianfen(int totalGongxianfen) {
+		this.totalGongxianfen = totalGongxianfen;
+	}
+
+	public int getGongxianfen() {
+		return gongxianfen;
+	}
+
+	public void setGongxianfen(int gongxianfen) {
+		this.gongxianfen = gongxianfen;
+	}
 
 	public String getGender() {
 		return gender;

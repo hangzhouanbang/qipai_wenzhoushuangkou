@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.StartChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.VoteNotPassWhenChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.VotingWhenChaodi;
 import com.dml.mpgame.game.Canceled;
 import com.dml.mpgame.game.Finished;
 import com.dml.mpgame.game.GameState;
@@ -42,6 +44,14 @@ public enum QueryScope {
 			scopes.add(QueryScope.gameInfo);
 			scopes.add(QueryScope.gameFinishVote);
 			scopes.add(QueryScope.panForMe);
+		} else if (gameState.name().equals(VotingWhenChaodi.name)) {
+			scopes.add(QueryScope.gameInfo);
+			scopes.add(QueryScope.chaodiInfo);
+			scopes.add(QueryScope.gameFinishVote);
+		} else if (gameState.name().equals(VoteNotPassWhenChaodi.name)) {
+			scopes.add(QueryScope.gameInfo);
+			scopes.add(QueryScope.gameFinishVote);
+			scopes.add(QueryScope.chaodiInfo);
 		} else if (gameState.name().equals(FinishedByVote.name)) {
 			scopes.add(QueryScope.juResult);
 		} else if (gameState.name().equals(WaitingNextPan.name)) {

@@ -2,7 +2,9 @@ package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
 
 import java.util.List;
 
-public class WenzhouShuangkouJuResult {
+import com.dml.shuangkou.ju.JuResult;
+
+public class WenzhouShuangkouJuResult implements JuResult {
 	private int finishedPanCount;
 
 	private List<WenzhouShuangkouJuPlayerResult> playerResultList;

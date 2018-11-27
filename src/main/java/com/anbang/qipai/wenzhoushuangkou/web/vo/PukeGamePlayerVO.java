@@ -28,14 +28,8 @@ public class PukeGamePlayerVO {
 	private String state;
 	private String onlineState;
 	private int totalScore;
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+	private int gongxianfen;
+	private int totalGongxianfen;
 
 	public PukeGamePlayerVO(PukeGamePlayerDbo dbo) {
 		playerId = dbo.getPlayerId();
@@ -44,6 +38,8 @@ public class PukeGamePlayerVO {
 		headimgurl = dbo.getHeadimgurl();
 		onlineState = dbo.getOnlineState().name();
 		totalScore = dbo.getTotalScore();
+		gongxianfen = dbo.getGongxianfen();
+		totalGongxianfen = dbo.getTotalGongxianfen();
 		String sn = dbo.getState().name();
 		if (sn.equals(PlayerFinished.name)) {
 			state = "finished";
@@ -91,6 +87,30 @@ public class PukeGamePlayerVO {
 
 	public void setPlayerId(String playerId) {
 		this.playerId = playerId;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public int getGongxianfen() {
+		return gongxianfen;
+	}
+
+	public void setGongxianfen(int gongxianfen) {
+		this.gongxianfen = gongxianfen;
+	}
+
+	public int getTotalGongxianfen() {
+		return totalGongxianfen;
+	}
+
+	public void setTotalGongxianfen(int totalGongxianfen) {
+		this.totalGongxianfen = totalGongxianfen;
 	}
 
 	public String getNickname() {

@@ -8,6 +8,28 @@ public class WenzhouShuangkouJuPlayerResult {
 	private int maxXianshu;
 	private int totalScore;
 
+	public void increaseShuangkouCount() {
+		shuangkouCount++;
+	}
+
+	public void increaseDankouCount() {
+		dankouCount++;
+	}
+
+	public void increasePingkouCount() {
+		pingkouCount++;
+	}
+
+	public void increaseTotalScore(int score) {
+		totalScore += score;
+	}
+
+	public void tryAndUpdateMaxXianshu(int xianshu) {
+		if (xianshu > maxXianshu) {
+			maxXianshu = xianshu;
+		}
+	}
+
 	public String getPlayerId() {
 		return playerId;
 	}

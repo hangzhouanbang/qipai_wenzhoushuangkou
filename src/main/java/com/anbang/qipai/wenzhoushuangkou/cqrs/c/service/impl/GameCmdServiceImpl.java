@@ -111,7 +111,7 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 		result.setPukeGame(pukeGameValueObject);
 		if (pukeGameValueObject.getState().name().equals(Playing.name)) {
 			PukeGame pukeGame = (PukeGame) gameServer.findGamePlayerPlaying(playerId);
-			PanActionFrame firstActionFrame = pukeGame.createJuAndStartFirstPan(currentTime);
+			PanActionFrame firstActionFrame = pukeGame.findFirstPanActionFrame();
 			result.setFirstActionFrame(firstActionFrame);
 		}
 		return result;

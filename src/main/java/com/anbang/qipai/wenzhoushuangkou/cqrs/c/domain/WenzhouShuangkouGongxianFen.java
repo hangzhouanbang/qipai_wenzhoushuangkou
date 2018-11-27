@@ -31,9 +31,10 @@ public class WenzhouShuangkouGongxianFen {
 		shierxian = xianshuCount[8];
 	}
 
-	public void calculate() {
+	public void calculate(int renshu) {
 		value = 4 * liuxian + 8 * qixian + 16 * baxian + 32 * jiuxian + 64 * shixian + 128 * shiyixian
 				+ 256 * shierxian;
+		totalscore = value * (renshu - 1);
 	}
 
 	public int jiesuan(int delta) {
