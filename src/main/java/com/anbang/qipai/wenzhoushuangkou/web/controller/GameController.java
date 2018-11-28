@@ -41,6 +41,7 @@ import com.dml.mpgame.game.GameNotFoundException;
 import com.dml.mpgame.game.extend.fpmpv.VoteNotPassWhenWaitingNextPan;
 import com.dml.mpgame.game.extend.vote.FinishedByVote;
 import com.dml.mpgame.game.extend.vote.VoteNotPassWhenPlaying;
+import com.dml.mpgame.game.player.GamePlayerOnlineState;
 import com.dml.shuangkou.BianXingWanFa;
 
 @RestController
@@ -386,12 +387,15 @@ public class GameController {
 		// 通知其他人来查询
 		for (String otherPlayerId : pukeGameValueObject.allPlayerIds()) {
 			if (!otherPlayerId.equals(playerId)) {
-				List<QueryScope> scopes = QueryScope.scopesForState(pukeGameValueObject.getState(),
-						pukeGameValueObject.findPlayerState(otherPlayerId));
-				scopes.remove(QueryScope.panResult);
-				scopes.forEach((scope) -> {
-					wsNotifier.notifyToQuery(otherPlayerId, scope.name());
-				});
+				GamePlayerOnlineState onlineState = pukeGameValueObject.findPlayerOnlineState(otherPlayerId);
+				if (onlineState.equals(GamePlayerOnlineState.online)) {
+					List<QueryScope> scopes = QueryScope.scopesForState(pukeGameValueObject.getState(),
+							pukeGameValueObject.findPlayerState(otherPlayerId));
+					scopes.remove(QueryScope.panResult);
+					scopes.forEach((scope) -> {
+						wsNotifier.notifyToQuery(otherPlayerId, scope.name());
+					});
+				}
 			}
 		}
 		return vo;
@@ -435,12 +439,15 @@ public class GameController {
 		// 通知其他人来查询投票情况
 		for (String otherPlayerId : pukeGameValueObject.allPlayerIds()) {
 			if (!otherPlayerId.equals(playerId)) {
-				List<QueryScope> scopes = QueryScope.scopesForState(pukeGameValueObject.getState(),
-						pukeGameValueObject.findPlayerState(otherPlayerId));
-				scopes.remove(QueryScope.panResult);
-				scopes.forEach((scope) -> {
-					wsNotifier.notifyToQuery(otherPlayerId, scope.name());
-				});
+				GamePlayerOnlineState onlineState = pukeGameValueObject.findPlayerOnlineState(otherPlayerId);
+				if (onlineState.equals(GamePlayerOnlineState.online)) {
+					List<QueryScope> scopes = QueryScope.scopesForState(pukeGameValueObject.getState(),
+							pukeGameValueObject.findPlayerState(otherPlayerId));
+					scopes.remove(QueryScope.panResult);
+					scopes.forEach((scope) -> {
+						wsNotifier.notifyToQuery(otherPlayerId, scope.name());
+					});
+				}
 			}
 		}
 		return vo;

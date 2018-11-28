@@ -1,8 +1,10 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import com.dml.puke.pai.DianShu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DanGeZhadanDianShuZu;
@@ -32,13 +34,21 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 	public List<DaPaiDianShuSolution> filter(List<DaPaiDianShuSolution> YaPaiSolutions) {
 		List<DaPaiDianShuSolution> filtedSolutionList = new LinkedList<>();
 		List<DaPaiDianShuSolution> noWangSolutionList = new ArrayList<>();
+		Set<String> dianshuZuSet = new HashSet<>();
 		f1: for (DaPaiDianShuSolution solution : YaPaiSolutions) {
+			DianShuZu dianshuZu = solution.getDianShuZu();
+			if (!(dianshuZu instanceof ZhadanDianShuZu)) {
+				dianshuZuSet.add(dianshuZu.getClass().getName());
+			}
 			for (DianShu dianshu : solution.getDachuDianShuArray()) {
 				if (DianShu.xiaowang.equals(dianshu) || DianShu.dawang.equals(dianshu)) {
 					continue f1;
 				}
 			}
 			noWangSolutionList.add(solution);
+		}
+		if (dianshuZuSet.size() > 1) {
+			return YaPaiSolutions;
 		}
 		List<DaPaiDianShuSolution> danGeZhadanSolutionList = new LinkedList<>();
 		for (DaPaiDianShuSolution solution : noWangSolutionList) {
