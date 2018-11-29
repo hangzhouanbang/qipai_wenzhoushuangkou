@@ -686,7 +686,9 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 
 	@Override
 	public void finish() throws Exception {
-		ju.finish();
+		if (ju != null) {
+			ju.finish();
+		}
 	}
 
 	public int getPanshu() {
