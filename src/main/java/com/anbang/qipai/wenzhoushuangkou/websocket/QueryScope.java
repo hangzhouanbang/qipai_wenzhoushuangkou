@@ -35,6 +35,7 @@ public enum QueryScope {
 			scopes.add(QueryScope.panForMe);
 		} else if (gameState.name().equals(StartChaodi.name)) {
 			scopes.add(QueryScope.gameInfo);
+			scopes.add(QueryScope.panForMe);
 			scopes.add(QueryScope.chaodiInfo);
 		} else if (gameState.name().equals(VotingWhenPlaying.name)) {
 			scopes.add(QueryScope.gameInfo);

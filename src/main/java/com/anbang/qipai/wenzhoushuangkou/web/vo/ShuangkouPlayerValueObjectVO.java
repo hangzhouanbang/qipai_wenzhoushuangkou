@@ -30,7 +30,7 @@ public class ShuangkouPlayerValueObjectVO {
 		position = shuangkouPlayerValueObject.getPosition();
 		couldChaodi = shuangkouPlayerValueObject.isCouldChaodi();
 		allShoupai = shuangkouPlayerValueObject.getAllShoupai();
-		shoupaiDianShuAmountArray = shuangkouPlayerValueObject.getShoupaiDianShuAmountArray().clone();
+		shoupaiDianShuAmountArray = shuangkouPlayerValueObject.getShoupaiDianShuAmountArray();
 		shoupaiIdListForSortList = shuangkouPlayerValueObject.getShoupaiIdListForSortList();
 		lishiDachuPaiZuList = shuangkouPlayerValueObject.getLishiDachuPaiZuList();
 		publicDachuPaiZu = shuangkouPlayerValueObject.getPublicDachuPaiZu();

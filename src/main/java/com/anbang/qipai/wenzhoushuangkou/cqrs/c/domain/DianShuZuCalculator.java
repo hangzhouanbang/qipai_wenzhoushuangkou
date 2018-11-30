@@ -803,7 +803,7 @@ public class DianShuZuCalculator {
 			if (lianXuZhadanLianXuCount >= 3) {
 				DianShu[] lianXuDianShuArray = new DianShu[length];
 				for (int k = 0; k < lianXuZhadanLianXuCount; k++) {
-					lianXuDianShuArray[k] = DianShu.getDianShuByOrdinal(i + k);
+					lianXuDianShuArray[k] = DianShu.getDianShuByOrdinal((i + k) % 13);
 				}
 				LianXuZhadanDianShuZu lianXuZhadan = new LianXuZhadanDianShuZu(lianXuDianShuArray,
 						dianshuZhangshuArray);

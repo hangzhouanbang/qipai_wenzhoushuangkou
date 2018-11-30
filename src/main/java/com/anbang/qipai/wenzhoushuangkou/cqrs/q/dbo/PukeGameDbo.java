@@ -45,6 +45,8 @@ public class PukeGameDbo {
 		chaodiPlayerIdList = new ArrayList<>(pukeGame.getChaodiPlayerIdList());
 		players = new ArrayList<>();
 		Map<String, Integer> playeTotalScoreMap = pukeGame.getPlayeTotalScoreMap();
+		Map<String, Integer> playerMaxXianshuMap = pukeGame.getPlayerMaxXianshuMap();
+		Map<String, Integer> playerOtherMaxXianshuMap = pukeGame.getPlayerOtherMaxXianshuMap();
 		Map<String, Integer> playeGongxianfenMap = pukeGame.getPlayeGongxianfenMap();
 		Map<String, Integer> playeTotalGongxianfenMap = pukeGame.getPlayeTotalGongxianfenMap();
 		for (GamePlayerValueObject playerValueObject : pukeGame.getPlayers()) {
@@ -65,6 +67,12 @@ public class PukeGameDbo {
 			}
 			if (playeTotalGongxianfenMap.get(playerId) != null) {
 				playerDbo.setTotalGongxianfen(playeTotalGongxianfenMap.get(playerId));
+			}
+			if (playerMaxXianshuMap.get(playerId) != null) {
+				playerDbo.setMaxXianshu(playerMaxXianshuMap.get(playerId));
+			}
+			if (playerOtherMaxXianshuMap.get(playerId) != null) {
+				playerDbo.setOtherMaxXianshu(playerOtherMaxXianshuMap.get(playerId));
 			}
 			players.add(playerDbo);
 		}

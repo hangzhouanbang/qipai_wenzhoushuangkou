@@ -29,6 +29,8 @@ public class PukeGamePlayerVO {
 	private String onlineState;
 	private int totalScore;
 	private int gongxianfen;
+	private int maxXianshu;
+	private int otherMaxXianshu;
 	private int totalGongxianfen;
 
 	public PukeGamePlayerVO(PukeGamePlayerDbo dbo) {
@@ -40,6 +42,8 @@ public class PukeGamePlayerVO {
 		totalScore = dbo.getTotalScore();
 		gongxianfen = dbo.getGongxianfen();
 		totalGongxianfen = dbo.getTotalGongxianfen();
+		maxXianshu = dbo.getMaxXianshu();
+		otherMaxXianshu = dbo.getOtherMaxXianshu();
 		String sn = dbo.getState().name();
 		if (sn.equals(PlayerFinished.name)) {
 			state = "finished";
@@ -151,6 +155,22 @@ public class PukeGamePlayerVO {
 
 	public void setTotalScore(int totalScore) {
 		this.totalScore = totalScore;
+	}
+
+	public int getMaxXianshu() {
+		return maxXianshu;
+	}
+
+	public void setMaxXianshu(int maxXianshu) {
+		this.maxXianshu = maxXianshu;
+	}
+
+	public int getOtherMaxXianshu() {
+		return otherMaxXianshu;
+	}
+
+	public void setOtherMaxXianshu(int otherMaxXianshu) {
+		this.otherMaxXianshu = otherMaxXianshu;
 	}
 
 }

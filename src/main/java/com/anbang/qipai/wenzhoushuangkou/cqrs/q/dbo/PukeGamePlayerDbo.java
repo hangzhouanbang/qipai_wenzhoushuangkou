@@ -12,7 +12,25 @@ public class PukeGamePlayerDbo {
 	private GamePlayerOnlineState onlineState;
 	private int totalScore;
 	private int gongxianfen;
+	private int maxXianshu;
+	private int otherMaxXianshu;
 	private int totalGongxianfen;
+
+	public int getOtherMaxXianshu() {
+		return otherMaxXianshu;
+	}
+
+	public void setOtherMaxXianshu(int otherMaxXianshu) {
+		this.otherMaxXianshu = otherMaxXianshu;
+	}
+
+	public int getMaxXianshu() {
+		return maxXianshu;
+	}
+
+	public void setMaxXianshu(int maxXianshu) {
+		this.maxXianshu = maxXianshu;
+	}
 
 	public int getTotalGongxianfen() {
 		return totalGongxianfen;

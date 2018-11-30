@@ -22,6 +22,8 @@ public class PukeGameValueObject extends FixedPlayersMultipanAndVotetofinishGame
 	private Map<String, Integer> playeTotalScoreMap = new HashMap<>();
 	private Map<String, Integer> playeGongxianfenMap = new HashMap<>();
 	private Map<String, Integer> playeTotalGongxianfenMap = new HashMap<>();
+	private Map<String, Integer> playerMaxXianshuMap = new HashMap<>();
+	private Map<String, Integer> playerOtherMaxXianshuMap = new HashMap<>();
 	private Map<String, PukeGamePlayerChaodiState> playerChaodiStateMap = new HashMap<>();
 	private List<String> chaodiPlayerIdList = new ArrayList<>();
 	private JuResult juResult;
@@ -36,10 +38,12 @@ public class PukeGameValueObject extends FixedPlayersMultipanAndVotetofinishGame
 		fengding = pukeGame.isFengding();
 		chapai = pukeGame.getChapai();
 		fapai = pukeGame.getFapai();
-		playeTotalScoreMap.putAll(pukeGame.getPlayeTotalScoreMap());
-		playeGongxianfenMap.putAll(pukeGame.getPlayeGongxianfenMap());
+		playeTotalScoreMap.putAll(pukeGame.getPlayerTotalScoreMap());
+		playeGongxianfenMap.putAll(pukeGame.getPlayerGongxianfenMap());
 		playerChaodiStateMap.putAll(pukeGame.getPlayerChaodiStateMap());
-		playeTotalGongxianfenMap.putAll(pukeGame.getPlayeTotalGongxianfenMap());
+		playeTotalGongxianfenMap.putAll(pukeGame.getPlayerTotalGongxianfenMap());
+		playerMaxXianshuMap.putAll(pukeGame.getPlayerMaxXianshuMap());
+		playerOtherMaxXianshuMap.putAll(pukeGame.getPlayerOtherMaxXianshuMap());
 		chaodiPlayerIdList = new ArrayList<>(pukeGame.getChaodiPlayerIdList());
 		if (pukeGame.getJu() != null) {
 			juResult = pukeGame.getJu().getJuResult();
@@ -118,6 +122,14 @@ public class PukeGameValueObject extends FixedPlayersMultipanAndVotetofinishGame
 		this.fapai = fapai;
 	}
 
+	public Map<String, Integer> getPlayerOtherMaxXianshuMap() {
+		return playerOtherMaxXianshuMap;
+	}
+
+	public void setPlayerOtherMaxXianshuMap(Map<String, Integer> playerOtherMaxXianshuMap) {
+		this.playerOtherMaxXianshuMap = playerOtherMaxXianshuMap;
+	}
+
 	public Map<String, Integer> getPlayeTotalScoreMap() {
 		return playeTotalScoreMap;
 	}
@@ -156,6 +168,14 @@ public class PukeGameValueObject extends FixedPlayersMultipanAndVotetofinishGame
 
 	public void setPlayeTotalGongxianfenMap(Map<String, Integer> playeTotalGongxianfenMap) {
 		this.playeTotalGongxianfenMap = playeTotalGongxianfenMap;
+	}
+
+	public Map<String, Integer> getPlayerMaxXianshuMap() {
+		return playerMaxXianshuMap;
+	}
+
+	public void setPlayerMaxXianshuMap(Map<String, Integer> playerMaxXianshuMap) {
+		this.playerMaxXianshuMap = playerMaxXianshuMap;
 	}
 
 }

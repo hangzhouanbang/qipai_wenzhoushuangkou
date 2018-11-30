@@ -4,6 +4,7 @@ import com.dml.shuangkou.pan.PanActionFrame;
 import com.dml.shuangkou.player.action.ShuangkouPlayerAction;
 
 public class PanActionFrameVO {
+	private int no;
 	private ShuangkouPlayerAction action;
 	private PanValueObjectVO panAfterAction;
 	private long actionTime;
@@ -13,9 +14,18 @@ public class PanActionFrameVO {
 	}
 
 	public PanActionFrameVO(PanActionFrame panActionFrame) {
+		no = panActionFrame.getNo();
 		action = panActionFrame.getAction();
 		panAfterAction = new PanValueObjectVO(panActionFrame.getPanAfterAction());
 		actionTime = panActionFrame.getActionTime();
+	}
+
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
 	}
 
 	public ShuangkouPlayerAction getAction() {
