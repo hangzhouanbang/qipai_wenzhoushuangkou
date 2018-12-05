@@ -15,7 +15,7 @@ public class XiaowangDangPai extends ShoupaiJiesuanPai {
 	}
 
 	public XiaowangDangPai(int num, DianShu dangPai) {
-		DianShu[] yuanPai = new DianShu[num];
+		yuanPai = new DianShu[num];
 		for (int i = 0; i < num; i++) {
 			yuanPai[i] = DianShu.xiaowang;
 		}

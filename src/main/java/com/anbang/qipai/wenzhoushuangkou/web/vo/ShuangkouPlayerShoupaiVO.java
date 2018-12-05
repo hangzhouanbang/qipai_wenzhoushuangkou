@@ -1,6 +1,8 @@
 package com.anbang.qipai.wenzhoushuangkou.web.vo;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.dml.puke.pai.PukePai;
 
@@ -12,8 +14,13 @@ public class ShuangkouPlayerShoupaiVO {
 
 	}
 
-	public ShuangkouPlayerShoupaiVO(List<PukePai> allShoupai, int totalShoupai) {
-		this.allShoupai = allShoupai;
+	public ShuangkouPlayerShoupaiVO(Map<Integer, PukePai> allShoupai, int totalShoupai, List<Integer> sortIds) {
+		this.allShoupai = new ArrayList<>();
+		if (sortIds != null) {
+			for (int id : sortIds) {
+				this.allShoupai.add(allShoupai.get(id));
+			}
+		}
 		this.totalShoupai = totalShoupai;
 	}
 

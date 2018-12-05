@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dml.puke.pai.PaiListValueObject;
+import com.dml.puke.wanfa.dianshu.dianshuzu.DianShuZu;
+import com.dml.puke.wanfa.dianshu.dianshuzu.ZhadanDianShuZu;
 import com.dml.puke.wanfa.dianshu.paizu.DianShuZuPaiZu;
 import com.dml.puke.wanfa.position.Position;
 import com.dml.shuangkou.pan.PanValueObject;
+import com.dml.shuangkou.player.action.da.solution.DaPaiDianShuSolution;
 
 public class PanValueObjectVO {
 	private int no;
@@ -24,6 +27,19 @@ public class PanValueObjectVO {
 		shuangkouPlayerList = new ArrayList<>();
 		panValueObject.getShuangkouPlayerList().forEach(
 				(shuangkouPlayer) -> shuangkouPlayerList.add(new ShuangkouPlayerValueObjectVO(shuangkouPlayer)));
+		for (ShuangkouPlayerValueObjectVO player : shuangkouPlayerList) {
+			if (player.getAllShoupai().getAllShoupai() != null && player.getAllShoupai().getTotalShoupai() == 27) {// 未打牌
+				boolean couldChaodi = true;
+				for (DaPaiDianShuSolution solution : player.getYaPaiSolutionCandidates()) {
+					DianShuZu dianShuZu = solution.getDianShuZu();
+					if (dianShuZu instanceof ZhadanDianShuZu) {
+						couldChaodi = false;
+						break;
+					}
+				}
+				player.setCouldChaodi(couldChaodi);
+			}
+		}
 		paiListValueObject = panValueObject.getPaiListValueObject();
 		dachuPaiZuList = panValueObject.getDachuPaiZuList();
 		actionPosition = panValueObject.getActionPosition();

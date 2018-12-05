@@ -172,10 +172,10 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 	private boolean tryHasZhadanWithWangDang(int wangCount, int[] dianshuCountArray, int xiaowangCount,
 			int dawangCount) {
 		// 循环王的各种当法
-		int maxZuheCode = (int) Math.pow(15, wangCount);
+		int maxZuheCode = (int) Math.pow(13, wangCount);
 		int[] modArray = new int[wangCount];
 		for (int m = 0; m < wangCount; m++) {
-			modArray[m] = (int) Math.pow(15, wangCount - 1 - m);
+			modArray[m] = (int) Math.pow(13, wangCount - 1 - m);
 		}
 		for (int zuheCode = 0; zuheCode < maxZuheCode; zuheCode++) {
 			ShoupaiJiesuanPai[] wangDangPaiArray = new ShoupaiJiesuanPai[wangCount];
@@ -400,10 +400,10 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 			int dawangCount) {
 		int bestScore = 0;
 		// 循环王的各种当法
-		int maxZuheCode = (int) Math.pow(15, wangCount);
+		int maxZuheCode = (int) Math.pow(13, wangCount);
 		int[] modArray = new int[wangCount];
 		for (int m = 0; m < wangCount; m++) {
-			modArray[m] = (int) Math.pow(15, wangCount - 1 - m);
+			modArray[m] = (int) Math.pow(13, wangCount - 1 - m);
 		}
 		for (int zuheCode = 0; zuheCode < maxZuheCode; zuheCode++) {
 			ShoupaiJiesuanPai[] wangDangPaiArray = new ShoupaiJiesuanPai[wangCount];
@@ -460,7 +460,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 	private void createJuAndStartFirstPan(long currentTime) throws Exception {
 		ju = new Ju();
 		ju.setCurrentPanFinishiDeterminer(new OnePlayerHasPaiPanFinishiDeterminer());
-		ju.setJuFinishiDeterminer(new FixedPanNumbersJuFinishiDeterminer());
+		ju.setJuFinishiDeterminer(new FixedPanNumbersJuFinishiDeterminer(panshu));
 		// 生成盘结果
 		WenzhouShuangkouCurrentPanResultBuilder panResultBuilder = new WenzhouShuangkouCurrentPanResultBuilder();
 		Map<String, Integer> totalGongxianfenMap = new HashMap<>();

@@ -91,10 +91,10 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 			int xiaowangCount, int dawangCount, DianShuZu beiYaDianShuZu) {
 		List<DaPaiDianShuSolution> solutionList = new ArrayList<>();
 		// 循环王的各种当法
-		int maxZuheCode = (int) Math.pow(15, wangCount);
+		int maxZuheCode = (int) Math.pow(13, wangCount);
 		int[] modArray = new int[wangCount];
 		for (int m = 0; m < wangCount; m++) {
-			modArray[m] = (int) Math.pow(15, wangCount - 1 - m);
+			modArray[m] = (int) Math.pow(13, wangCount - 1 - m);
 		}
 		for (int zuheCode = 0; zuheCode < maxZuheCode; zuheCode++) {
 			ShoupaiJiesuanPai[] wangDangPaiArray = new ShoupaiJiesuanPai[wangCount];

@@ -21,6 +21,7 @@ public class ShuangkouPlayerValueObjectVO {
 	// private List<DaPaiDianShuSolution> daPaiSolutionsForTips;
 	private List<DaPaiDianShuSolution> yaPaiSolutionCandidates;
 	private List<DaPaiDianShuSolution> yaPaiSolutionsForTips;
+	private boolean guo;
 
 	public ShuangkouPlayerValueObjectVO() {
 
@@ -29,16 +30,21 @@ public class ShuangkouPlayerValueObjectVO {
 	public ShuangkouPlayerValueObjectVO(ShuangkouPlayerValueObject shuangkouPlayerValueObject) {
 		id = shuangkouPlayerValueObject.getId();
 		position = shuangkouPlayerValueObject.getPosition();
-		couldChaodi = shuangkouPlayerValueObject.isCouldChaodi();
-		allShoupai = new ShuangkouPlayerShoupaiVO(shuangkouPlayerValueObject.getAllShoupai(),
-				shuangkouPlayerValueObject.getTotalShoupai());
+		shoupaiIdListForSortList = shuangkouPlayerValueObject.getShoupaiIdListForSortList();
+		if (shoupaiIdListForSortList.isEmpty()) {
+			allShoupai = new ShuangkouPlayerShoupaiVO(shuangkouPlayerValueObject.getAllShoupai(),
+					shuangkouPlayerValueObject.getTotalShoupai(), null);
+		} else {
+			allShoupai = new ShuangkouPlayerShoupaiVO(shuangkouPlayerValueObject.getAllShoupai(),
+					shuangkouPlayerValueObject.getTotalShoupai(), shoupaiIdListForSortList.get(0));
+		}
 		liangPaiList = shuangkouPlayerValueObject.getLiangPaiList();
 		shoupaiDianShuAmountArray = shuangkouPlayerValueObject.getShoupaiDianShuAmountArray();
-		shoupaiIdListForSortList = shuangkouPlayerValueObject.getShoupaiIdListForSortList();
 		lishiDachuPaiZuList = shuangkouPlayerValueObject.getLishiDachuPaiZuList();
 		publicDachuPaiZu = shuangkouPlayerValueObject.getPublicDachuPaiZu();
 		yaPaiSolutionCandidates = shuangkouPlayerValueObject.getYaPaiSolutionCandidates();
 		yaPaiSolutionsForTips = shuangkouPlayerValueObject.getYaPaiSolutionCandidates();
+		guo = shuangkouPlayerValueObject.isGuo();
 	}
 
 	public List<PukePai> getLiangPaiList() {
@@ -127,6 +133,14 @@ public class ShuangkouPlayerValueObjectVO {
 
 	public void setYaPaiSolutionsForTips(List<DaPaiDianShuSolution> yaPaiSolutionsForTips) {
 		this.yaPaiSolutionsForTips = yaPaiSolutionsForTips;
+	}
+
+	public boolean isGuo() {
+		return guo;
+	}
+
+	public void setGuo(boolean guo) {
+		this.guo = guo;
 	}
 
 }

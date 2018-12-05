@@ -14,6 +14,10 @@ import com.dml.shuangkou.player.action.da.solution.DaPaiDianShuSolution;
 import com.dml.shuangkou.player.action.da.solution.ZaDanYaPaiSolutionCalculator;
 
 public class WenzhouShuangkouZaDanYaPaiSolutionCalculator implements ZaDanYaPaiSolutionCalculator {
+	// public class WenzhouShuangkouZaDanYaPaiSolutionCalculator {
+	// private static BianXingWanFa bx = BianXingWanFa.baibian;
+	// private static ZhadanComparator zhadanComparator = new
+	// WenzhouShuangkouZhadanComparator();
 	private BianXingWanFa bx;
 	private ZhadanComparator zhadanComparator;
 
@@ -55,14 +59,22 @@ public class WenzhouShuangkouZaDanYaPaiSolutionCalculator implements ZaDanYaPaiS
 		return solutionList;
 	}
 
+	// public static void main(String[] args) {
+	// DianShuZu beiYaDianShuZu = new DanzhangDianShuZu(DianShu.wu);
+	// int[] dianShuAmountArray = { 0, 1, 2, 4, 0, 0, 3, 0, 1, 1, 6, 3, 5, 0, 1 };
+	// List<DaPaiDianShuSolution> solutionList = calculate(beiYaDianShuZu,
+	// dianShuAmountArray);
+	// System.out.println(solutionList);
+	// }
+
 	private List<DaPaiDianShuSolution> calculateDaPaiDianShuSolutionWithWangDang(int wangCount, int[] dianshuCountArray,
 			int xiaowangCount, int dawangCount, DianShuZu beiYaDianShuZu) {
 		List<DaPaiDianShuSolution> solutionList = new ArrayList<>();
 		// 循环王的各种当法
-		int maxZuheCode = (int) Math.pow(15, wangCount);
+		int maxZuheCode = (int) Math.pow(13, wangCount);
 		int[] modArray = new int[wangCount];
 		for (int m = 0; m < wangCount; m++) {
-			modArray[m] = (int) Math.pow(15, wangCount - 1 - m);
+			modArray[m] = (int) Math.pow(13, wangCount - 1 - m);
 		}
 		for (int zuheCode = 0; zuheCode < maxZuheCode; zuheCode++) {
 			ShoupaiJiesuanPai[] wangDangPaiArray = new ShoupaiJiesuanPai[wangCount];

@@ -14,6 +14,7 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyForGameResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyToNextPanResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.StartChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.VoteNotPassWhenChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.VotingWhenChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouPanResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.GameLatestPanActionFrameDboDao;
@@ -31,6 +32,7 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGamePlayerChaodiDbo;
 import com.anbang.qipai.wenzhoushuangkou.plan.bean.PlayerInfo;
 import com.anbang.qipai.wenzhoushuangkou.plan.dao.PlayerInfoDao;
 import com.dml.mpgame.game.Playing;
+import com.dml.mpgame.game.extend.vote.VoteNotPassWhenPlaying;
 import com.dml.mpgame.game.extend.vote.VotingWhenPlaying;
 import com.dml.shuangkou.pan.PanActionFrame;
 
@@ -64,8 +66,10 @@ public class PukePlayQueryService {
 		PukeGameDbo pukeGameDbo = pukeGameDboDao.findById(gameId);
 		if (!(pukeGameDbo.getState().name().equals(Playing.name)
 				|| pukeGameDbo.getState().name().equals(VotingWhenPlaying.name)
+				|| pukeGameDbo.getState().name().equals(VoteNotPassWhenPlaying.name)
 				|| pukeGameDbo.getState().name().equals(StartChaodi.name)
-				|| pukeGameDbo.getState().name().equals(VotingWhenChaodi.name))) {
+				|| pukeGameDbo.getState().name().equals(VotingWhenChaodi.name)
+				|| pukeGameDbo.getState().name().equals(VoteNotPassWhenChaodi.name))) {
 			throw new Exception("game not playing");
 		}
 
