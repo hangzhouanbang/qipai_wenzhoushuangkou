@@ -1,12 +1,6 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.GameLatestPanActionFrameDbo;
-import com.dml.puke.pai.PukePai;
-import com.dml.puke.pai.QiShouLiangPaiMark;
-import com.dml.puke.pai.ZuDuiLiangPaiMark;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.ZhadanDianShuZu;
 import com.dml.puke.wanfa.position.Position;
@@ -46,15 +40,7 @@ public class PanActionFramePlayerViewFilter {
 					}
 					// 什么都不过滤，全要看
 				} else {// 是其他玩家
-					List<PukePai> allShoupaiVO = new ArrayList<>();
-					List<PukePai> allShoupai = player.getAllShoupai();
-					for (PukePai pukePai : allShoupai) {
-						if (pukePai.getMark() != null && pukePai.getMark() instanceof ZuDuiLiangPaiMark
-								|| pukePai.getMark() instanceof QiShouLiangPaiMark) {
-							allShoupaiVO.add(pukePai);
-						}
-					}
-					player.setAllShoupai(allShoupaiVO);
+					player.setAllShoupai(null);
 					player.setShoupaiDianShuAmountArray(null);
 					player.setShoupaiIdListForSortList(null);
 					player.setYaPaiSolutionCandidates(null);
@@ -79,15 +65,8 @@ public class PanActionFramePlayerViewFilter {
 					}
 					// 什么都不过滤，全要看
 				} else {// 是其他玩家
-					List<PukePai> allShoupaiVO = new ArrayList<>();
-					List<PukePai> allShoupai = player.getAllShoupai();
-					for (PukePai pukePai : allShoupai) {
-						if (pukePai.getMark() != null && pukePai.getMark() instanceof ZuDuiLiangPaiMark
-								|| pukePai.getMark() instanceof QiShouLiangPaiMark) {
-							allShoupaiVO.add(pukePai);
-						}
-					}
-					player.setAllShoupai(allShoupaiVO);
+					player.setAllShoupai(null);
+					player.setLiangPaiList(null);
 					player.setShoupaiDianShuAmountArray(null);
 					player.setShoupaiIdListForSortList(null);
 					player.setYaPaiSolutionCandidates(null);

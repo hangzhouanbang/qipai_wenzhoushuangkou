@@ -96,9 +96,11 @@ public class GamePlayWsController extends TextWebSocketHandler {
 			String gameId = pukeGameValueObject.getId();
 			if (pukeGameValueObject.getState().name().equals(FinishedByVote.name)) {
 				JuResultDbo juResultDbo = pukePlayQueryService.findJuResultDbo(gameId);
-				PukeGameDbo pukeGameDbo = pukeGameQueryService.findPukeGameDboById(gameId);
-				PukeHistoricalJuResult juResult = new PukeHistoricalJuResult(juResultDbo, pukeGameDbo);
-				wenzhouShuangkouResultMsgService.recordJuResult(juResult);
+				if (juResultDbo != null) {
+					PukeGameDbo pukeGameDbo = pukeGameQueryService.findPukeGameDboById(gameId);
+					PukeHistoricalJuResult juResult = new PukeHistoricalJuResult(juResultDbo, pukeGameDbo);
+					wenzhouShuangkouResultMsgService.recordJuResult(juResult);
+				}
 				gameMsgService.gameFinished(gameId);
 			}
 			// 通知其他人
@@ -107,9 +109,7 @@ public class GamePlayWsController extends TextWebSocketHandler {
 					List<QueryScope> scopes = QueryScope.scopesForState(pukeGameValueObject.getState(),
 							pukeGameValueObject.findPlayerState(otherPlayerId));
 					scopes.remove(QueryScope.panResult);
-					scopes.forEach((scope) -> {
-						wsNotifier.notifyToQuery(otherPlayerId, scope.name());
-					});
+					wsNotifier.notifyToQuery(otherPlayerId, scopes);
 				}
 			}
 		}
@@ -165,9 +165,7 @@ public class GamePlayWsController extends TextWebSocketHandler {
 			GamePlayerState playerState = pukeGameDbo.findPlayer(playerId).getState();
 
 			List<QueryScope> scopes = QueryScope.scopesForState(gameState, playerState);
-			scopes.forEach((scope) -> {
-				wsNotifier.notifyToQuery(playerId, scope.name());
-			});
+			wsNotifier.notifyToQuery(playerId, scopes);
 
 		}
 	}

@@ -22,7 +22,7 @@ import com.dml.shuangkou.pan.PanActionFrame;
 public class PukePlayCmdServiceImpl extends CmdServiceBase implements PukePlayCmdService {
 
 	@Override
-	public PukeActionResult action(String playerId, List<Integer> paiIds, String dianshuZuheIdx, Long actionTime)
+	public PukeActionResult da(String playerId, List<Integer> paiIds, String dianshuZuheIdx, Long actionTime)
 			throws Exception {
 		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
 		String gameId = gameServer.findBindGameId(playerId);
@@ -31,7 +31,7 @@ public class PukePlayCmdServiceImpl extends CmdServiceBase implements PukePlayCm
 		}
 
 		PukeGame pukeGame = (PukeGame) gameServer.findGame(gameId);
-		PukeActionResult pukeActionResult = pukeGame.action(playerId, paiIds, dianshuZuheIdx, actionTime);
+		PukeActionResult pukeActionResult = pukeGame.da(playerId, paiIds, dianshuZuheIdx, actionTime);
 
 		if (pukeActionResult.getJuResult() != null) {// 全部结束
 			gameServer.finishGame(gameId);
@@ -73,6 +73,20 @@ public class PukePlayCmdServiceImpl extends CmdServiceBase implements PukePlayCm
 		}
 		ChaodiResult chaodiResult = pukeGame.chaodi(playerId, chaodi, actionTime);
 		return chaodiResult;
+	}
+
+	@Override
+	public PukeActionResult guo(String playerId, Long actionTime) throws Exception {
+		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
+		String gameId = gameServer.findBindGameId(playerId);
+		if (gameId == null) {
+			throw new PlayerNotInGameException();
+		}
+
+		PukeGame pukeGame = (PukeGame) gameServer.findGame(gameId);
+		PukeActionResult pukeActionResult = pukeGame.guo(playerId, actionTime);
+
+		return pukeActionResult;
 	}
 
 }

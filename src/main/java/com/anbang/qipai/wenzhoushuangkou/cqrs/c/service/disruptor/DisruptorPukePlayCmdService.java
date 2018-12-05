@@ -20,12 +20,12 @@ public class DisruptorPukePlayCmdService extends DisruptorCmdServiceBase impleme
 	private PukePlayCmdServiceImpl pukePlayCmdServiceImpl;
 
 	@Override
-	public PukeActionResult action(String playerId, List<Integer> paiIds, String dianshuZuheIdx, Long actionTime)
+	public PukeActionResult da(String playerId, List<Integer> paiIds, String dianshuZuheIdx, Long actionTime)
 			throws Exception {
-		CommonCommand cmd = new CommonCommand(PukePlayCmdServiceImpl.class.getName(), "action", playerId, paiIds,
+		CommonCommand cmd = new CommonCommand(PukePlayCmdServiceImpl.class.getName(), "da", playerId, paiIds,
 				dianshuZuheIdx, actionTime);
 		DeferredResult<PukeActionResult> result = publishEvent(disruptorFactory.getCoreCmdDisruptor(), cmd, () -> {
-			PukeActionResult pukeActionResult = pukePlayCmdServiceImpl.action(cmd.getParameter(), cmd.getParameter(),
+			PukeActionResult pukeActionResult = pukePlayCmdServiceImpl.da(cmd.getParameter(), cmd.getParameter(),
 					cmd.getParameter(), cmd.getParameter());
 			return pukeActionResult;
 		});
@@ -52,10 +52,26 @@ public class DisruptorPukePlayCmdService extends DisruptorCmdServiceBase impleme
 
 	@Override
 	public ChaodiResult chaodi(String playerId, Boolean chaodi, Long actionTime) throws Exception {
-		CommonCommand cmd = new CommonCommand(PukePlayCmdServiceImpl.class.getName(), "chaodi", playerId,chaodi,actionTime);
+		CommonCommand cmd = new CommonCommand(PukePlayCmdServiceImpl.class.getName(), "chaodi", playerId, chaodi,
+				actionTime);
 		DeferredResult<ChaodiResult> result = publishEvent(disruptorFactory.getCoreCmdDisruptor(), cmd, () -> {
-			ChaodiResult chaodiResult = pukePlayCmdServiceImpl.chaodi(cmd.getParameter(), cmd.getParameter(), cmd.getParameter());
+			ChaodiResult chaodiResult = pukePlayCmdServiceImpl.chaodi(cmd.getParameter(), cmd.getParameter(),
+					cmd.getParameter());
 			return chaodiResult;
+		});
+		try {
+			return result.getResult();
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	@Override
+	public PukeActionResult guo(String playerId, Long actionTime) throws Exception {
+		CommonCommand cmd = new CommonCommand(PukePlayCmdServiceImpl.class.getName(), "guo", playerId, actionTime);
+		DeferredResult<PukeActionResult> result = publishEvent(disruptorFactory.getCoreCmdDisruptor(), cmd, () -> {
+			PukeActionResult pukeActionResult = pukePlayCmdServiceImpl.guo(cmd.getParameter(), cmd.getParameter());
+			return pukeActionResult;
 		});
 		try {
 			return result.getResult();

@@ -59,10 +59,20 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			}
 			yingPlayerResult.setMingcifen(mingcifen);
 			int[] xianshuCount = playerXianshuMap.get(yingPlayerId);
-			WenzhouShuangkouXianshuBeishu xianshubeishu = new WenzhouShuangkouXianshuBeishu(xianshuCount);
+			WenzhouShuangkouXianshuBeishu xianshubeishu = null;
+			if (xianshuCount != null) {
+				xianshubeishu = new WenzhouShuangkouXianshuBeishu(xianshuCount);
+			} else {
+				xianshubeishu = new WenzhouShuangkouXianshuBeishu();
+			}
 			xianshubeishu.calculate();
 			yingPlayerResult.setXianshubeishu(xianshubeishu);
-			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
+			WenzhouShuangkouGongxianFen gongxianfen = null;
+			if (xianshuCount != null) {
+				gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
+			} else {
+				gongxianfen = new WenzhouShuangkouGongxianFen();
+			}
 			gongxianfen.calculate(renshu);
 			yingPlayerResult.setGongxianfen(gongxianfen);
 			WenzhouShuangkouChaixianbufen bufen = new WenzhouShuangkouChaixianbufen();
@@ -228,8 +238,8 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 		} else {
 			List<WenzhouShuangkouPanPlayerResult> panPlayerResultList = new ArrayList<>();
 			String yingPlayerId = noPaiPlayerIdList.get(0);
-			String shuPlayerId = noPaiPlayerIdList.get(1);
-			ShuangkouPlayer shuPlayer = currentPan.findPlayer(shuPlayerId);
+			ShuangkouPlayer shuPlayer = currentPan.findDuijiaPlayer(yingPlayerId);
+			String shuPlayerId = shuPlayer.getId();
 			// 赢家
 			WenzhouShuangkouPanPlayerResult yingPlayerResult = new WenzhouShuangkouPanPlayerResult();
 			yingPlayerResult.setPlayerId(yingPlayerId);

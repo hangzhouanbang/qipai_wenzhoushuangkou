@@ -149,7 +149,7 @@ public class DianShuZuCalculator {
 					dachuDianShuList.add(lianXuDianShuArray[i]);
 				}
 			}
-			DianShu[] dachuDianShuArray = (DianShu[]) dachuDianShuList.toArray();
+			DianShu[] dachuDianShuArray = dachuDianShuList.toArray(new DianShu[dachuDianShuList.size()]);
 			solution.setDachuDianShuArray(dachuDianShuArray);
 			solution.calculateDianshuZuheIdx();
 			solutionList.add(solution);
@@ -166,7 +166,7 @@ public class DianShuZuCalculator {
 			for (int count = 0; count < wangZhadanDianShuZu.getDawangCount(); count++) {
 				dachuDianShuList.add(lianXuDianShuArray[1]);
 			}
-			DianShu[] dachuDianShuArray = (DianShu[]) dachuDianShuList.toArray();
+			DianShu[] dachuDianShuArray = dachuDianShuList.toArray(new DianShu[dachuDianShuList.size()]);
 			solution.setDachuDianShuArray(dachuDianShuArray);
 			solution.calculateDianshuZuheIdx();
 			solutionList.add(solution);
@@ -377,7 +377,7 @@ public class DianShuZuCalculator {
 						dachuDianShuList.add(lianXuDianShuArray[i]);
 					}
 				}
-				DianShu[] dachuDianShuArray = (DianShu[]) dachuDianShuList.toArray();
+				DianShu[] dachuDianShuArray = dachuDianShuList.toArray(new DianShu[dachuDianShuList.size()]);
 				solution.setDachuDianShuArray(dachuDianShuArray);
 				solution.calculateDianshuZuheIdx();
 				solutionList.add(solution);
@@ -395,7 +395,7 @@ public class DianShuZuCalculator {
 			for (int count = 0; count < wangZhadanDianShuZu.getDawangCount(); count++) {
 				dachuDianShuList.add(lianXuDianShuArray[1]);
 			}
-			DianShu[] dachuDianShuArray = (DianShu[]) dachuDianShuList.toArray();
+			DianShu[] dachuDianShuArray = dachuDianShuList.toArray(new DianShu[dachuDianShuList.size()]);
 			solution.setDachuDianShuArray(dachuDianShuArray);
 			solution.calculateDianshuZuheIdx();
 			solutionList.add(solution);
@@ -459,7 +459,7 @@ public class DianShuZuCalculator {
 					dachuDianShuList.add(duiziDianShuZu.getDianShu());
 					k++;
 				}
-				solution.setDachuDianShuArray((DianShu[]) dachuDianShuList.toArray());
+				solution.setDachuDianShuArray(dachuDianShuList.toArray(new DianShu[dachuDianShuList.size()]));
 				solution.calculateDianshuZuheIdx();
 				solutionList.add(solution);
 			}
@@ -498,7 +498,7 @@ public class DianShuZuCalculator {
 					dachuDianShuList.add(sanzhangDianShuZu.getDianShu());
 					k++;
 				}
-				solution.setDachuDianShuArray((DianShu[]) dachuDianShuList.toArray());
+				solution.setDachuDianShuArray(dachuDianShuList.toArray(new DianShu[dachuDianShuList.size()]));
 				solution.calculateDianshuZuheIdx();
 				solutionList.add(solution);
 			}
@@ -537,7 +537,7 @@ public class DianShuZuCalculator {
 					dachuDianShuList.add(zhadanDianShuZu.getDianShu());
 					k++;
 				}
-				solution.setDachuDianShuArray((DianShu[]) dachuDianShuList.toArray());
+				solution.setDachuDianShuArray(dachuDianShuList.toArray(new DianShu[dachuDianShuList.size()]));
 				solution.calculateDianshuZuheIdx();
 				solutionList.add(solution);
 			}
@@ -589,7 +589,7 @@ public class DianShuZuCalculator {
 						dachuDianShuList.add(dianshu);
 					}
 				}
-				solution.setDachuDianShuArray((DianShu[]) dachuDianShuList.toArray());
+				solution.setDachuDianShuArray(dachuDianShuList.toArray(new DianShu[dachuDianShuList.size()]));
 				solution.calculateDianshuZuheIdx();
 				solutionList.add(solution);
 			}
@@ -646,7 +646,7 @@ public class DianShuZuCalculator {
 						dachuDianShuList.add(dianshu);
 					}
 				}
-				solution.setDachuDianShuArray((DianShu[]) dachuDianShuList.toArray());
+				solution.setDachuDianShuArray(dachuDianShuList.toArray(new DianShu[dachuDianShuList.size()]));
 				solution.calculateDianshuZuheIdx();
 				solutionList.add(solution);
 			}
@@ -707,7 +707,7 @@ public class DianShuZuCalculator {
 						dachuDianShuList.add(dianshu);
 					}
 				}
-				solution.setDachuDianShuArray((DianShu[]) dachuDianShuList.toArray());
+				solution.setDachuDianShuArray(dachuDianShuList.toArray(new DianShu[dachuDianShuList.size()]));
 				solution.calculateDianshuZuheIdx();
 				solutionList.add(solution);
 			}
@@ -757,29 +757,34 @@ public class DianShuZuCalculator {
 				solution.setDianShuZu(lianXuZhadanDianShuZu);
 				List<DianShu> dachuDianShuList = new ArrayList<>();
 				Map<DianShu, Integer> dianshuCountMap = new HashMap<>();
-				for (int i = 0; i < zuhe.length; i++) {
-					if (zuhe[i] == 1) {
-						ShoupaiJiesuanPai pai = keYongList.get(i);
-						dachuDianShuList.addAll(Arrays.asList(pai.getAllYuanPai()));
-						Integer count = dianshuCountMap.get(pai.getDangPaiType());
-						if (count == null) {
-							dianshuCountMap.put(pai.getDangPaiType(), 1);
-						} else {
-							dianshuCountMap.put(pai.getDangPaiType(), count + 1);
+				DianShu[] lianXuDianShuArray = lianXuZhadanDianShuZu.getLianXuDianShuArray();
+				for (DianShu dianshu : lianXuDianShuArray) {
+					for (int i = 0; i < zuhe.length; i++) {
+						if (zuhe[i] == 1 && dianshu.equals(keYongList.get(i).getDangPaiType())) {
+							ShoupaiJiesuanPai pai = keYongList.get(i);
+							dachuDianShuList.addAll(Arrays.asList(pai.getAllYuanPai()));
+							Integer count = dianshuCountMap.get(pai.getDangPaiType());
+							if (count == null) {
+								dianshuCountMap.put(pai.getDangPaiType(), 1);
+							} else {
+								dianshuCountMap.put(pai.getDangPaiType(), count + 1);
+							}
 						}
 					}
 				}
-				DianShu[] lianXuDianShuArray = lianXuZhadanDianShuZu.getLianXuDianShuArray();
 				int[] lianXuDianShuSizeArray = lianXuZhadanDianShuZu.getLianXuDianShuSizeArray();
 				for (int i = 0; i < lianXuDianShuSizeArray.length; i++) {
 					int size = lianXuDianShuSizeArray[i];
 					DianShu dianshu = lianXuDianShuArray[i];
 					Integer count = dianshuCountMap.get(dianshu);
+					if (count == null) {
+						count = 0;
+					}
 					for (int k = 0; k < size - count; k++) {
 						dachuDianShuList.add(dianshu);
 					}
 				}
-				solution.setDachuDianShuArray((DianShu[]) dachuDianShuList.toArray());
+				solution.setDachuDianShuArray(dachuDianShuList.toArray(new DianShu[dachuDianShuList.size()]));
 				solution.calculateDianshuZuheIdx();
 				solutionList.add(solution);
 			}

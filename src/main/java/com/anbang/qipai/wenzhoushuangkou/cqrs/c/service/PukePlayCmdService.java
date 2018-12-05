@@ -8,8 +8,9 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyToNextPanResult;
 
 public interface PukePlayCmdService {
 
-	PukeActionResult action(String playerId, List<Integer> paiIds, String dianshuZuheIdx, Long actionTime)
-			throws Exception;
+	PukeActionResult da(String playerId, List<Integer> paiIds, String dianshuZuheIdx, Long actionTime) throws Exception;
+
+	PukeActionResult guo(String playerId, Long actionTime) throws Exception;
 
 	ReadyToNextPanResult readyToNextPan(String playerId) throws Exception;
 

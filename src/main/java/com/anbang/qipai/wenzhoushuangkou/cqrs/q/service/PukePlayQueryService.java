@@ -13,6 +13,8 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeActionResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyForGameResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyToNextPanResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.StartChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.VotingWhenChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouPanResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.GameLatestPanActionFrameDboDao;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.JuResultDboDao;
@@ -61,7 +63,9 @@ public class PukePlayQueryService {
 	public PanActionFrame findAndFilterCurrentPanValueObjectForPlayer(String gameId, String playerId) throws Exception {
 		PukeGameDbo pukeGameDbo = pukeGameDboDao.findById(gameId);
 		if (!(pukeGameDbo.getState().name().equals(Playing.name)
-				|| pukeGameDbo.getState().name().equals(VotingWhenPlaying.name))) {
+				|| pukeGameDbo.getState().name().equals(VotingWhenPlaying.name)
+				|| pukeGameDbo.getState().name().equals(StartChaodi.name)
+				|| pukeGameDbo.getState().name().equals(VotingWhenChaodi.name))) {
 			throw new Exception("game not playing");
 		}
 

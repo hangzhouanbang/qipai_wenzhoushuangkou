@@ -27,13 +27,14 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 
 	@Override
 	public List<DaPaiDianShuSolution> calculate(DianShuZu beiYaDianShuZu, int[] dianShuAmountArray) {
+		int[] dianShuAmount = dianShuAmountArray.clone();
 		List<DaPaiDianShuSolution> solutionList = new ArrayList<>();
 		// 单张
 		if (beiYaDianShuZu instanceof DanzhangDianShuZu) {
 			DanzhangDianShuZu beiYaDanzhangDianShuZu = (DanzhangDianShuZu) beiYaDianShuZu;
 			// 大小王做单张牌打出必定是作为本身的牌的点数
 			List<DanzhangDianShuZu> danzhangDianShuZuList = DianShuZuGenerator
-					.generateAllDanzhangDianShuZu(dianShuAmountArray);
+					.generateAllDanzhangDianShuZu(dianShuAmount);
 			for (DanzhangDianShuZu danzhangDianShuZu : danzhangDianShuZuList) {
 				try {
 					if (danGeDianShuZuComparator.compare(danzhangDianShuZu, beiYaDanzhangDianShuZu) > 0) {
@@ -52,36 +53,36 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 			}
 			return solutionList;
 		}
-		int xiaowangCount = dianShuAmountArray[13];
-		int dawangCount = dianShuAmountArray[14];
+		int xiaowangCount = dianShuAmount[13];
+		int dawangCount = dianShuAmount[14];
 		int wangCount = 0;
 		if (BianXingWanFa.qianbian.equals(bx)) {// 千变
 			wangCount = xiaowangCount + dawangCount;
 			// 减去王牌的数量
-			dianShuAmountArray[13] = dianShuAmountArray[13] - xiaowangCount;
-			dianShuAmountArray[14] = dianShuAmountArray[14] - dawangCount;
+			dianShuAmount[13] = dianShuAmount[13] - xiaowangCount;
+			dianShuAmount[14] = dianShuAmount[14] - dawangCount;
 		} else if (BianXingWanFa.banqianbian.equals(bx)) {// 半千变;
 			wangCount = dawangCount;
 			// 减去王牌的数量
 			if (xiaowangCount > 0 && xiaowangCount % 2 == 0) {
 				wangCount++;
-				dianShuAmountArray[13] = dianShuAmountArray[13] - 2;
+				dianShuAmount[13] = dianShuAmount[13] - 2;
 			}
-			dianShuAmountArray[14] = dianShuAmountArray[14] - dawangCount;
+			dianShuAmount[14] = dianShuAmount[14] - dawangCount;
 		} else if (BianXingWanFa.baibian.equals(bx)) {// 百变
 			wangCount = dawangCount;
 			// 减去王牌的数量
-			dianShuAmountArray[14] = dianShuAmountArray[14] - dawangCount;
+			dianShuAmount[14] = dianShuAmount[14] - dawangCount;
 		} else {
 
 		}
 		if (wangCount > 0) {
 			// 有王牌
-			solutionList.addAll(calculateDaPaiDianShuSolutionWithWangDang(wangCount, dianShuAmountArray, xiaowangCount,
+			solutionList.addAll(calculateDaPaiDianShuSolutionWithWangDang(wangCount, dianShuAmount, xiaowangCount,
 					dawangCount, beiYaDianShuZu));
 		} else {
 			// 没有王牌
-			solutionList.addAll(calculateDaPaiDianShuSolutionWithoutWangDang(dianShuAmountArray, beiYaDianShuZu));
+			solutionList.addAll(calculateDaPaiDianShuSolutionWithoutWangDang(dianShuAmount, beiYaDianShuZu));
 		}
 		return solutionList;
 	}

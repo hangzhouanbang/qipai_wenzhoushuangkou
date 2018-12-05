@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -186,18 +187,16 @@ public class PukeController {
 		// 通知其他人
 		for (String otherPlayerId : chaodiResult.getPukeGame().allPlayerIds()) {
 			if (!otherPlayerId.equals(playerId)) {
-				QueryScope.scopesForState(chaodiResult.getPukeGame().getState(),
-						chaodiResult.getPukeGame().findPlayerState(otherPlayerId)).forEach((scope) -> {
-							wsNotifier.notifyToQuery(otherPlayerId, scope.name());
-						});
+				wsNotifier.notifyToQuery(otherPlayerId, QueryScope.scopesForState(chaodiResult.getPukeGame().getState(),
+						chaodiResult.getPukeGame().findPlayerState(otherPlayerId)));
 			}
 		}
 		return vo;
 	}
 
-	@RequestMapping(value = "/action")
+	@RequestMapping(value = "/da")
 	@ResponseBody
-	public CommonVO action(String token, List<Integer> paiIds, String dianshuZuheIdx) {
+	public CommonVO da(String token, @RequestBody List<Integer> paiIds, String dianshuZuheIdx) {
 		CommonVO vo = new CommonVO();
 		Map data = new HashMap();
 		List<String> queryScopes = new ArrayList<>();
@@ -212,7 +211,7 @@ public class PukeController {
 
 		PukeActionResult pukeActionResult;
 		try {
-			pukeActionResult = pukePlayCmdService.action(playerId, paiIds, dianshuZuheIdx, System.currentTimeMillis());
+			pukeActionResult = pukePlayCmdService.da(playerId, paiIds, dianshuZuheIdx, System.currentTimeMillis());
 		} catch (Exception e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getClass().getName());
@@ -253,10 +252,53 @@ public class PukeController {
 		// 通知其他人
 		for (String otherPlayerId : pukeActionResult.getPukeGame().allPlayerIds()) {
 			if (!otherPlayerId.equals(playerId)) {
-				QueryScope.scopesForState(pukeActionResult.getPukeGame().getState(),
-						pukeActionResult.getPukeGame().findPlayerState(otherPlayerId)).forEach((scope) -> {
-							wsNotifier.notifyToQuery(otherPlayerId, scope.name());
-						});
+				wsNotifier.notifyToQuery(otherPlayerId,
+						QueryScope.scopesForState(pukeActionResult.getPukeGame().getState(),
+								pukeActionResult.getPukeGame().findPlayerState(otherPlayerId)));
+			}
+		}
+		return vo;
+	}
+
+	@RequestMapping(value = "/guo")
+	@ResponseBody
+	public CommonVO guo(String token) {
+		CommonVO vo = new CommonVO();
+		Map data = new HashMap();
+		List<String> queryScopes = new ArrayList<>();
+		data.put("queryScopes", queryScopes);
+		vo.setData(data);
+		String playerId = playerAuthService.getPlayerIdByToken(token);
+		if (playerId == null) {
+			vo.setSuccess(false);
+			vo.setMsg("invalid token");
+			return vo;
+		}
+
+		PukeActionResult pukeActionResult;
+		try {
+			pukeActionResult = pukePlayCmdService.guo(playerId, System.currentTimeMillis());
+		} catch (Exception e) {
+			vo.setSuccess(false);
+			vo.setMsg(e.getClass().getName());
+			return vo;
+		}
+		try {
+			pukePlayQueryService.action(pukeActionResult);
+		} catch (Throwable e) {
+			vo.setSuccess(false);
+			vo.setMsg(e.getMessage());
+			return vo;
+		}
+
+		queryScopes.add(QueryScope.panForMe.name());
+
+		// 通知其他人
+		for (String otherPlayerId : pukeActionResult.getPukeGame().allPlayerIds()) {
+			if (!otherPlayerId.equals(playerId)) {
+				wsNotifier.notifyToQuery(otherPlayerId,
+						QueryScope.scopesForState(pukeActionResult.getPukeGame().getState(),
+								pukeActionResult.getPukeGame().findPlayerState(otherPlayerId)));
 			}
 		}
 		return vo;
@@ -306,9 +348,7 @@ public class PukeController {
 				List<QueryScope> scopes = QueryScope.scopesForState(readyToNextPanResult.getPukeGame().getState(),
 						readyToNextPanResult.getPukeGame().findPlayerState(otherPlayerId));
 				scopes.remove(QueryScope.panResult);
-				scopes.forEach((scope) -> {
-					wsNotifier.notifyToQuery(otherPlayerId, scope.name());
-				});
+				wsNotifier.notifyToQuery(otherPlayerId, scopes);
 			}
 		}
 		return vo;

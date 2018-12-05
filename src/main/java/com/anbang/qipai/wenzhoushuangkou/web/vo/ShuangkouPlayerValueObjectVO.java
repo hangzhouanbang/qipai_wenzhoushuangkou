@@ -12,7 +12,8 @@ public class ShuangkouPlayerValueObjectVO {
 	private String id;
 	private Position position;
 	private boolean couldChaodi;
-	private List<PukePai> allShoupai;
+	private ShuangkouPlayerShoupaiVO allShoupai;
+	private List<PukePai> liangPaiList;
 	private int[] shoupaiDianShuAmountArray;
 	private List<List<Integer>> shoupaiIdListForSortList;
 	private List<DianShuZuPaiZu> lishiDachuPaiZuList;
@@ -29,13 +30,23 @@ public class ShuangkouPlayerValueObjectVO {
 		id = shuangkouPlayerValueObject.getId();
 		position = shuangkouPlayerValueObject.getPosition();
 		couldChaodi = shuangkouPlayerValueObject.isCouldChaodi();
-		allShoupai = shuangkouPlayerValueObject.getAllShoupai();
+		allShoupai = new ShuangkouPlayerShoupaiVO(shuangkouPlayerValueObject.getAllShoupai(),
+				shuangkouPlayerValueObject.getTotalShoupai());
+		liangPaiList = shuangkouPlayerValueObject.getLiangPaiList();
 		shoupaiDianShuAmountArray = shuangkouPlayerValueObject.getShoupaiDianShuAmountArray();
 		shoupaiIdListForSortList = shuangkouPlayerValueObject.getShoupaiIdListForSortList();
 		lishiDachuPaiZuList = shuangkouPlayerValueObject.getLishiDachuPaiZuList();
 		publicDachuPaiZu = shuangkouPlayerValueObject.getPublicDachuPaiZu();
 		yaPaiSolutionCandidates = shuangkouPlayerValueObject.getYaPaiSolutionCandidates();
 		yaPaiSolutionsForTips = shuangkouPlayerValueObject.getYaPaiSolutionCandidates();
+	}
+
+	public List<PukePai> getLiangPaiList() {
+		return liangPaiList;
+	}
+
+	public void setLiangPaiList(List<PukePai> liangPaiList) {
+		this.liangPaiList = liangPaiList;
 	}
 
 	public String getId() {
@@ -62,11 +73,11 @@ public class ShuangkouPlayerValueObjectVO {
 		this.couldChaodi = couldChaodi;
 	}
 
-	public List<PukePai> getAllShoupai() {
+	public ShuangkouPlayerShoupaiVO getAllShoupai() {
 		return allShoupai;
 	}
 
-	public void setAllShoupai(List<PukePai> allShoupai) {
+	public void setAllShoupai(ShuangkouPlayerShoupaiVO allShoupai) {
 		this.allShoupai = allShoupai;
 	}
 

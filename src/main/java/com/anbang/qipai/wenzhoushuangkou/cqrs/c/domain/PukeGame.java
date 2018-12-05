@@ -519,6 +519,8 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		zaDanYaPaiSolutionCalculator.setBx(bx);
 		zaDanYaPaiSolutionCalculator.setZhadanComparator(new WenzhouShuangkouZhadanComparator());
 		ju.setZaDanYaPaiSolutionCalculator(zaDanYaPaiSolutionCalculator);
+
+		ju.addDaListener(new XianshuCountDaActionStatisticsListener());
 		// 开始第一盘
 		ju.startFirstPan(allPlayerIds(), currentTime);
 		allPlayerIds().forEach((pid) -> {
@@ -531,14 +533,11 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		return ju.getCurrentPan().findLatestActionFrame();
 	}
 
-	public PukeActionResult action(String playerId, List<Integer> paiIds, String dianshuZuheIdx, long actionTime)
+	public PukeActionResult da(String playerId, List<Integer> paiIds, String dianshuZuheIdx, long actionTime)
 			throws Exception {
 		PanActionFrame panActionFrame = null;
-		if (paiIds.isEmpty()) {
-			panActionFrame = ju.guo(playerId, actionTime);
-		} else {
-			panActionFrame = ju.da(playerId, paiIds, dianshuZuheIdx, actionTime);
-		}
+
+		panActionFrame = ju.da(playerId, paiIds, dianshuZuheIdx, actionTime);
 		// 记录贡献分
 		XianshuCountDaActionStatisticsListener wenzhouShuangkouListener = ju.getActionStatisticsListenerManager()
 				.findDaListener(XianshuCountDaActionStatisticsListener.class);
@@ -548,10 +547,20 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		List<WenzhouShuangkouGongxianFen> panPlayerGongxianfenList = new ArrayList<>();
 		allPlayerIds().forEach((pid) -> {
 			int[] xianshuCount = playerXianshuMap.get(pid);
-			WenzhouShuangkouXianshuBeishu xianshubeishu = new WenzhouShuangkouXianshuBeishu(xianshuCount);
+			WenzhouShuangkouXianshuBeishu xianshubeishu = null;
+			if (xianshuCount != null) {
+				xianshubeishu = new WenzhouShuangkouXianshuBeishu(xianshuCount);
+			} else {
+				xianshubeishu = new WenzhouShuangkouXianshuBeishu();
+			}
 			xianshubeishu.calculate();
 			maxXianshuMap.put(pid, xianshubeishu);
-			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
+			WenzhouShuangkouGongxianFen gongxianfen = null;
+			if (xianshuCount != null) {
+				gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
+			} else {
+				gongxianfen = new WenzhouShuangkouGongxianFen();
+			}
 			gongxianfen.calculate(renshu);
 			panPlayerGongxianfenList.add(gongxianfen);
 			gongxianfenMap.put(pid, gongxianfen);
@@ -627,6 +636,19 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 			if (state.name().equals(Finished.name)) {// 局结束了
 				result.setJuResult((WenzhouShuangkouJuResult) ju.getJuResult());
 			}
+		}
+		result.setPukeGame(new PukeGameValueObject(this));
+		return result;
+	}
+
+	public PukeActionResult guo(String playerId, long actionTime) throws Exception {
+		PanActionFrame panActionFrame = null;
+		panActionFrame = ju.guo(playerId, actionTime);
+
+		PukeActionResult result = new PukeActionResult();
+		result.setPanActionFrame(panActionFrame);
+		if (state.name().equals(VoteNotPassWhenPlaying.name)) {
+			state = new Playing();
 		}
 		result.setPukeGame(new PukeGameValueObject(this));
 		return result;
