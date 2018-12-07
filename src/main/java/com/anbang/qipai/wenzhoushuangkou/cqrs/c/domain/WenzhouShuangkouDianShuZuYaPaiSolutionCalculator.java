@@ -1,7 +1,9 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.dml.puke.pai.DianShu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DanzhangDianShuZu;
@@ -108,7 +110,7 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 
 	private List<DaPaiDianShuSolution> calculateDaPaiDianShuSolutionWithWangDang(int wangCount, int[] dianshuCountArray,
 			int xiaowangCount, int dawangCount, DianShuZu beiYaDianShuZu) {
-		List<DaPaiDianShuSolution> solutionList = new ArrayList<>();
+		Set<DaPaiDianShuSolution> solutionSet = new HashSet<>();
 		// 循环王的各种当法
 		int maxZuheCode = (int) Math.pow(13, wangCount);
 		int[] modArray = new int[wangCount];
@@ -155,7 +157,7 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 				}
 				PaiXing paiXing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
 				paiXing = paiXingFilter(paiXing, beiYaDianShuZu);
-				solutionList.addAll(DianShuZuCalculator.calculateAllDaPaiDianShuSolutionWithWangDang(paiXing,
+				solutionSet.addAll(DianShuZuCalculator.calculateAllDaPaiDianShuSolutionWithWangDang(paiXing,
 						wangDangPaiArray, dianshuCountArray));
 				// 减去当牌的数量
 				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
@@ -163,14 +165,16 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 				}
 			}
 		}
-		return solutionList;
+		return new ArrayList<>(solutionSet);
 	}
 
 	private List<DaPaiDianShuSolution> calculateDaPaiDianShuSolutionWithoutWangDang(int[] dianshuCountArray,
 			DianShuZu beiYaDianShuZu) {
+		Set<DaPaiDianShuSolution> solutionSet = new HashSet<>();
 		PaiXing paiXing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
 		paiXing = paiXingFilter(paiXing, beiYaDianShuZu);
-		return DianShuZuCalculator.calculateAllDaPaiDianShuSolutionWithoutWangDang(paiXing);
+		solutionSet.addAll(DianShuZuCalculator.calculateAllDaPaiDianShuSolutionWithoutWangDang(paiXing));
+		return new ArrayList<>(solutionSet);
 	}
 
 	private PaiXing paiXingFilter(PaiXing paiXing, DianShuZu beiYaDianShuZu) {

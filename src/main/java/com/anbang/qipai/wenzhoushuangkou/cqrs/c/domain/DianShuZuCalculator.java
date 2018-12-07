@@ -228,8 +228,8 @@ public class DianShuZuCalculator {
 				solution.setDianShuZu(lianduiDianShuZu);
 				DianShu[] dachuDianShuArray = new DianShu[lianduiDianShuZu.length() * 2];
 				for (int i = 0; i < lianduiDianShuZu.length(); i++) {
-					dachuDianShuArray[i] = lianduiDianShuZu.getLianXuDianShuArray()[i];
-					dachuDianShuArray[i + 1] = lianduiDianShuZu.getLianXuDianShuArray()[i];
+					dachuDianShuArray[2 * i] = lianduiDianShuZu.getLianXuDianShuArray()[i];
+					dachuDianShuArray[2 * i + 1] = lianduiDianShuZu.getLianXuDianShuArray()[i];
 				}
 				solution.setDachuDianShuArray(dachuDianShuArray);
 				solution.calculateDianshuZuheIdx();
@@ -258,9 +258,9 @@ public class DianShuZuCalculator {
 				solution.setDianShuZu(liansanzhangDianShuZu);
 				DianShu[] dachuDianShuArray = new DianShu[liansanzhangDianShuZu.length() * 3];
 				for (int i = 0; i < liansanzhangDianShuZu.length(); i++) {
-					dachuDianShuArray[i] = liansanzhangDianShuZu.getLianXuDianShuArray()[i];
-					dachuDianShuArray[i + 1] = liansanzhangDianShuZu.getLianXuDianShuArray()[i];
-					dachuDianShuArray[i + 2] = liansanzhangDianShuZu.getLianXuDianShuArray()[i];
+					dachuDianShuArray[3 * i] = liansanzhangDianShuZu.getLianXuDianShuArray()[i];
+					dachuDianShuArray[3 * i + 1] = liansanzhangDianShuZu.getLianXuDianShuArray()[i];
+					dachuDianShuArray[3 * i + 2] = liansanzhangDianShuZu.getLianXuDianShuArray()[i];
 				}
 				solution.setDachuDianShuArray(dachuDianShuArray);
 				solution.calculateDianshuZuheIdx();

@@ -64,12 +64,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			mingcifen.calculate();
 			yingPlayerResult.setMingcifen(mingcifen);
 			int[] xianshuCount = playerXianshuMap.get(yingPlayerId);
-			WenzhouShuangkouGongxianFen gongxianfen = null;
-			if (xianshuCount != null) {
-				gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
-			} else {
-				gongxianfen = new WenzhouShuangkouGongxianFen();
-			}
+			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
 			gongxianfen.calculate(renshu);
 			yingPlayerResult.setGongxianfen(gongxianfen);
 			WenzhouShuangkouChaixianbufen bufen = new WenzhouShuangkouChaixianbufen();
