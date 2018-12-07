@@ -28,7 +28,8 @@ public class PanValueObjectVO {
 		panValueObject.getShuangkouPlayerList().forEach(
 				(shuangkouPlayer) -> shuangkouPlayerList.add(new ShuangkouPlayerValueObjectVO(shuangkouPlayer)));
 		for (ShuangkouPlayerValueObjectVO player : shuangkouPlayerList) {
-			if (player.getAllShoupai().getAllShoupai() != null && player.getAllShoupai().getTotalShoupai() == 27) {// 未打牌
+			if (player.getYaPaiSolutionCandidates() != null && player.getAllShoupai().getAllShoupai() != null
+					&& player.getAllShoupai().getTotalShoupai() == 27) {// 未打牌
 				boolean couldChaodi = true;
 				for (DaPaiDianShuSolution solution : player.getYaPaiSolutionCandidates()) {
 					DianShuZu dianShuZu = solution.getDianShuZu();

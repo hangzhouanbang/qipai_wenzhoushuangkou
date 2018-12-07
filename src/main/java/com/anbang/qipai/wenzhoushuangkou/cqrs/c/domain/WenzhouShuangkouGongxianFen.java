@@ -22,6 +22,9 @@ public class WenzhouShuangkouGongxianFen {
 	}
 
 	public WenzhouShuangkouGongxianFen(int[] xianshuCount) {
+		if (xianshuCount == null) {
+			xianshuCount = new int[8];
+		}
 		liuxian = xianshuCount[2];
 		qixian = xianshuCount[3];
 		baxian = xianshuCount[4];

@@ -1,6 +1,7 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
 
 public class WenzhouShuangkouMingcifen {
+	private int mingci;
 	private boolean ying;
 	private boolean shuangkou;
 	private boolean dankou;
@@ -23,6 +24,14 @@ public class WenzhouShuangkouMingcifen {
 			score = 1;
 		}
 		value = beishu * score;
+	}
+
+	public int getMingci() {
+		return mingci;
+	}
+
+	public void setMingci(int mingci) {
+		this.mingci = mingci;
 	}
 
 	public boolean isYing() {

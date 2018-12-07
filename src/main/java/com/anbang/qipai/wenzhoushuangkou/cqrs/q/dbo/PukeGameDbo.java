@@ -49,6 +49,7 @@ public class PukeGameDbo {
 		Map<String, Integer> playerOtherMaxXianshuMap = pukeGame.getPlayerOtherMaxXianshuMap();
 		Map<String, Integer> playeGongxianfenMap = pukeGame.getPlayeGongxianfenMap();
 		Map<String, Integer> playeTotalGongxianfenMap = pukeGame.getPlayeTotalGongxianfenMap();
+		Map<String, Integer> playerMingciMap = pukeGame.getPlayerMingciMap();
 		for (GamePlayerValueObject playerValueObject : pukeGame.getPlayers()) {
 			String playerId = playerValueObject.getId();
 			PlayerInfo playerInfo = playerInfoMap.get(playerId);
@@ -59,6 +60,10 @@ public class PukeGameDbo {
 			playerDbo.setOnlineState(playerValueObject.getOnlineState());
 			playerDbo.setPlayerId(playerId);
 			playerDbo.setState(playerValueObject.getState());
+			if (playerMingciMap.get(playerId) != null) {
+				playerDbo.setMingci(playerMingciMap.get(playerId));
+				playerDbo.setNopai(true);
+			}
 			if (playeTotalScoreMap.get(playerId) != null) {
 				playerDbo.setTotalScore(playeTotalScoreMap.get(playerId));
 			}

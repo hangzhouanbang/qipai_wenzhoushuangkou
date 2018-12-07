@@ -55,6 +55,25 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 		}
 		int xiaowangCount = dianShuAmount[13];
 		int dawangCount = dianShuAmount[14];
+		// 对子，当有大小王个一张时可以当一对大王打出
+		if (beiYaDianShuZu instanceof DuiziDianShuZu && xiaowangCount > 0 && dawangCount > 0) {
+			DuiziDianShuZu beiYaDuiziDianShuZu = (DuiziDianShuZu) beiYaDianShuZu;
+			DuiziDianShuZu duiziDianShuZu = new DuiziDianShuZu(DianShu.dawang);
+			try {
+				if (danGeDianShuZuComparator.compare(duiziDianShuZu, beiYaDuiziDianShuZu) > 0) {
+					DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
+					solution.setDianShuZu(new DuiziDianShuZu(DianShu.dawang));
+					DianShu[] dachuDianShuArray = { DianShu.xiaowang, DianShu.dawang };
+					solution.setDachuDianShuArray(dachuDianShuArray);
+					solution.calculateDianshuZuheIdx();
+					solutionList.add(solution);
+				}
+			} catch (CanNotCompareException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		int wangCount = 0;
 		if (BianXingWanFa.qianbian.equals(bx)) {// 千变
 			wangCount = xiaowangCount + dawangCount;

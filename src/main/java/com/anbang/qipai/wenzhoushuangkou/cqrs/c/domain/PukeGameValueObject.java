@@ -25,6 +25,7 @@ public class PukeGameValueObject extends FixedPlayersMultipanAndVotetofinishGame
 	private Map<String, Integer> playerMaxXianshuMap = new HashMap<>();
 	private Map<String, Integer> playerOtherMaxXianshuMap = new HashMap<>();
 	private Map<String, PukeGamePlayerChaodiState> playerChaodiStateMap = new HashMap<>();
+	private Map<String, Integer> playerMingciMap = new HashMap<>();
 	private List<String> chaodiPlayerIdList = new ArrayList<>();
 	private JuResult juResult;
 
@@ -45,6 +46,7 @@ public class PukeGameValueObject extends FixedPlayersMultipanAndVotetofinishGame
 		playerMaxXianshuMap.putAll(pukeGame.getPlayerMaxXianshuMap());
 		playerOtherMaxXianshuMap.putAll(pukeGame.getPlayerOtherMaxXianshuMap());
 		chaodiPlayerIdList = new ArrayList<>(pukeGame.getChaodiPlayerIdList());
+		playerMingciMap.putAll(pukeGame.getPlayerMingciMap());
 		if (pukeGame.getJu() != null) {
 			juResult = pukeGame.getJu().getJuResult();
 		}
@@ -176,6 +178,14 @@ public class PukeGameValueObject extends FixedPlayersMultipanAndVotetofinishGame
 
 	public void setPlayerMaxXianshuMap(Map<String, Integer> playerMaxXianshuMap) {
 		this.playerMaxXianshuMap = playerMaxXianshuMap;
+	}
+
+	public Map<String, Integer> getPlayerMingciMap() {
+		return playerMingciMap;
+	}
+
+	public void setPlayerMingciMap(Map<String, Integer> playerMingciMap) {
+		this.playerMingciMap = playerMingciMap;
 	}
 
 }

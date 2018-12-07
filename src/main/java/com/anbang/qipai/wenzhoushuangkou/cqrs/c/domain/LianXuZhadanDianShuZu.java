@@ -11,7 +11,7 @@ import com.dml.puke.wanfa.dianshu.dianshuzu.ZhadanDianShuZu;
  */
 public class LianXuZhadanDianShuZu extends ZhadanDianShuZu {
 	private DianShu[] lianXuDianShuArray;
-	private int[] lianXuDianShuSizeArray;
+	private int[] lianXuDianShuSizeArray;// 这是长度固定为8的数组
 
 	public LianXuZhadanDianShuZu() {
 	}
@@ -23,12 +23,22 @@ public class LianXuZhadanDianShuZu extends ZhadanDianShuZu {
 
 	public int getMinXianShu() {
 		int xianshu = lianXuDianShuSizeArray[0];
-		for (int i = 1; i < lianXuDianShuSizeArray.length; i++) {
+		for (int i = 1; i < lianXuDianShuArray.length; i++) {
 			if (xianshu > lianXuDianShuSizeArray[i]) {
 				xianshu = lianXuDianShuSizeArray[i];
 			}
 		}
 		return xianshu;
+	}
+
+	public int getXianShu() {
+		int xianshu = lianXuDianShuSizeArray[0];
+		for (int i = 1; i < lianXuDianShuArray.length; i++) {
+			if (xianshu > lianXuDianShuSizeArray[i]) {
+				xianshu = lianXuDianShuSizeArray[i];
+			}
+		}
+		return xianshu + lianXuDianShuArray.length;
 	}
 
 	public int getLastOrdinal() {

@@ -32,6 +32,8 @@ public class PukeGamePlayerVO {
 	private int maxXianshu;
 	private int otherMaxXianshu;
 	private int totalGongxianfen;
+	private boolean nopai;
+	private int mingci;
 
 	public PukeGamePlayerVO(PukeGamePlayerDbo dbo) {
 		playerId = dbo.getPlayerId();
@@ -44,6 +46,8 @@ public class PukeGamePlayerVO {
 		totalGongxianfen = dbo.getTotalGongxianfen();
 		maxXianshu = dbo.getMaxXianshu();
 		otherMaxXianshu = dbo.getOtherMaxXianshu();
+		nopai = dbo.isNopai();
+		mingci = dbo.getMingci();
 		String sn = dbo.getState().name();
 		if (sn.equals(PlayerFinished.name)) {
 			state = "finished";
@@ -83,6 +87,22 @@ public class PukeGamePlayerVO {
 			state = sn;
 		} else {
 		}
+	}
+
+	public boolean isNopai() {
+		return nopai;
+	}
+
+	public void setNopai(boolean nopai) {
+		this.nopai = nopai;
+	}
+
+	public int getMingci() {
+		return mingci;
+	}
+
+	public void setMingci(int mingci) {
+		this.mingci = mingci;
 	}
 
 	public String getPlayerId() {

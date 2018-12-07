@@ -7,15 +7,14 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouJuResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.JuResultDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameDbo;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.PanResultVO;
-import com.anbang.qipai.wenzhoushuangkou.web.vo.WenzhouShuangkouJuPlayerResultVO;
 
 public class PukeHistoricalJuResult {
 	private String gameId;
 	private String dayingjiaId;
 	private String datuhaoId;
 	private int panshu;
-	private int finishedPanCount;
-	private List<WenzhouShuangkouJuPlayerResultVO> playerResultList;
+	private int lastPanNo;
+	private List<WenzhouShuangkouJuPlayerResultMO> playerResultList;
 
 	private PanResultVO lastPanResult;
 	private long finishTime;
@@ -34,15 +33,15 @@ public class PukeHistoricalJuResult {
 		}
 		finishTime = juResultDbo.getFinishTime();
 		this.panshu = pukeGameDbo.getPanshu();
-		finishedPanCount = juResult.getFinishedPanCount();
+		lastPanNo = juResult.getFinishedPanCount();
 		playerResultList = new ArrayList<>();
 		if (juResult.getPlayerResultList() != null) {
 			juResult.getPlayerResultList().forEach(
-					(juPlayerResult) -> playerResultList.add(new WenzhouShuangkouJuPlayerResultVO(juPlayerResult,
+					(juPlayerResult) -> playerResultList.add(new WenzhouShuangkouJuPlayerResultMO(juPlayerResult,
 							pukeGameDbo.findPlayer(juPlayerResult.getPlayerId()))));
 		} else {
 			pukeGameDbo.getPlayers().forEach((pukeGamePlayerDbo) -> playerResultList
-					.add(new WenzhouShuangkouJuPlayerResultVO(pukeGamePlayerDbo)));
+					.add(new WenzhouShuangkouJuPlayerResultMO(pukeGamePlayerDbo)));
 		}
 	}
 
@@ -78,19 +77,19 @@ public class PukeHistoricalJuResult {
 		this.panshu = panshu;
 	}
 
-	public int getFinishedPanCount() {
-		return finishedPanCount;
+	public int getLastPanNo() {
+		return lastPanNo;
 	}
 
-	public void setFinishedPanCount(int finishedPanCount) {
-		this.finishedPanCount = finishedPanCount;
+	public void setLastPanNo(int lastPanNo) {
+		this.lastPanNo = lastPanNo;
 	}
 
-	public List<WenzhouShuangkouJuPlayerResultVO> getPlayerResultList() {
+	public List<WenzhouShuangkouJuPlayerResultMO> getPlayerResultList() {
 		return playerResultList;
 	}
 
-	public void setPlayerResultList(List<WenzhouShuangkouJuPlayerResultVO> playerResultList) {
+	public void setPlayerResultList(List<WenzhouShuangkouJuPlayerResultMO> playerResultList) {
 		this.playerResultList = playerResultList;
 	}
 
@@ -110,5 +109,4 @@ public class PukeHistoricalJuResult {
 		this.finishTime = finishTime;
 	}
 
-	
 }

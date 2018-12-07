@@ -16,6 +16,8 @@ import com.dml.shuangkou.player.ShuangkouPlayer;
 public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResultBuilder {
 	private int renshu;
 	private Map<String, Integer> playeTotalGongxianfenMap = new HashMap<>();
+	private Map<String, Integer> playerMaxXianshuMap = new HashMap<>();
+	private Map<String, Integer> playerOtherMaxXianshuMap = new HashMap<>();
 	private List<String> chaodiPlayerIdList = new ArrayList<>();
 
 	@Override
@@ -49,7 +51,9 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			WenzhouShuangkouPanPlayerResult yingPlayerResult = new WenzhouShuangkouPanPlayerResult();
 			yingPlayerResult.setPlayerId(yingPlayerId);
 			WenzhouShuangkouMingcifen mingcifen = new WenzhouShuangkouMingcifen();
+			yingPlayerResult.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
 			mingcifen.setYing(true);
+			mingcifen.setMingci(1);
 			if (playerId1.equals(duijiaPlayer.getId())) {
 				mingcifen.setShuangkou(true);
 			} else if (playerId2.equals(duijiaPlayer.getId())) {
@@ -57,16 +61,9 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			} else {
 				mingcifen.setPingkou(true);
 			}
+			mingcifen.calculate();
 			yingPlayerResult.setMingcifen(mingcifen);
 			int[] xianshuCount = playerXianshuMap.get(yingPlayerId);
-			WenzhouShuangkouXianshuBeishu xianshubeishu = null;
-			if (xianshuCount != null) {
-				xianshubeishu = new WenzhouShuangkouXianshuBeishu(xianshuCount);
-			} else {
-				xianshubeishu = new WenzhouShuangkouXianshuBeishu();
-			}
-			xianshubeishu.calculate();
-			yingPlayerResult.setXianshubeishu(xianshubeishu);
 			WenzhouShuangkouGongxianFen gongxianfen = null;
 			if (xianshuCount != null) {
 				gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
@@ -88,19 +85,23 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			WenzhouShuangkouMingcifen mingcifen1 = new WenzhouShuangkouMingcifen();
 			if (playerId1.equals(duijiaPlayer.getId())) {
 				mingcifen1.setYing(true);
+				playerResult1.setXianshubeishu(playerMaxXianshuMap.get(playerId1));
 				mingcifen1.setShuangkou(true);
+				mingcifen1.setMingci(2);
 			} else if (playerId2.equals(duijiaPlayer.getId())) {
 				mingcifen1.setYing(false);
+				playerResult1.setXianshubeishu(playerOtherMaxXianshuMap.get(playerId1));
 				mingcifen1.setDankou(true);
+				mingcifen1.setMingci(3);
 			} else {
 				mingcifen1.setYing(false);
+				playerResult1.setXianshubeishu(playerOtherMaxXianshuMap.get(playerId1));
 				mingcifen1.setPingkou(true);
+				mingcifen1.setMingci(4);
 			}
+			mingcifen1.calculate();
 			playerResult1.setMingcifen(mingcifen1);
 			int[] xianshuCount1 = playerXianshuMap.get(playerId1);
-			WenzhouShuangkouXianshuBeishu xianshubeishu1 = new WenzhouShuangkouXianshuBeishu(xianshuCount1);
-			xianshubeishu1.calculate();
-			playerResult1.setXianshubeishu(xianshubeishu1);
 			WenzhouShuangkouGongxianFen gongxianfen1 = new WenzhouShuangkouGongxianFen(xianshuCount1);
 			gongxianfen1.calculate(renshu);
 			yingPlayerResult.setGongxianfen(gongxianfen1);
@@ -117,19 +118,23 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			WenzhouShuangkouMingcifen mingcifen2 = new WenzhouShuangkouMingcifen();
 			if (playerId1.equals(duijiaPlayer.getId())) {
 				mingcifen2.setYing(false);
+				playerResult2.setXianshubeishu(playerOtherMaxXianshuMap.get(playerId2));
 				mingcifen2.setShuangkou(true);
+				mingcifen2.setMingci(2);
 			} else if (playerId2.equals(duijiaPlayer.getId())) {
 				mingcifen2.setYing(true);
+				playerResult2.setXianshubeishu(playerMaxXianshuMap.get(playerId2));
 				mingcifen2.setDankou(true);
+				mingcifen2.setMingci(3);
 			} else {
 				mingcifen2.setYing(false);
+				playerResult2.setXianshubeishu(playerOtherMaxXianshuMap.get(playerId2));
 				mingcifen2.setPingkou(true);
+				mingcifen2.setMingci(4);
 			}
+			mingcifen2.calculate();
 			playerResult2.setMingcifen(mingcifen2);
 			int[] xianshuCount2 = playerXianshuMap.get(playerId2);
-			WenzhouShuangkouXianshuBeishu xianshubeishu2 = new WenzhouShuangkouXianshuBeishu(xianshuCount2);
-			xianshubeishu2.calculate();
-			playerResult2.setXianshubeishu(xianshubeishu2);
 			WenzhouShuangkouGongxianFen gongxianfen2 = new WenzhouShuangkouGongxianFen(xianshuCount2);
 			gongxianfen2.calculate(renshu);
 			yingPlayerResult.setGongxianfen(gongxianfen2);
@@ -146,19 +151,23 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			WenzhouShuangkouMingcifen mingcifen3 = new WenzhouShuangkouMingcifen();
 			if (playerId1.equals(duijiaPlayer.getId())) {
 				mingcifen3.setYing(false);
+				playerResult3.setXianshubeishu(playerOtherMaxXianshuMap.get(playerId3));
 				mingcifen3.setShuangkou(true);
+				mingcifen3.setMingci(2);
 			} else if (playerId2.equals(duijiaPlayer.getId())) {
 				mingcifen3.setYing(false);
+				playerResult3.setXianshubeishu(playerOtherMaxXianshuMap.get(playerId3));
 				mingcifen3.setDankou(true);
+				mingcifen3.setMingci(3);
 			} else {
 				mingcifen3.setYing(true);
+				playerResult3.setXianshubeishu(playerMaxXianshuMap.get(playerId3));
 				mingcifen3.setPingkou(true);
+				mingcifen3.setMingci(4);
 			}
+			mingcifen3.calculate();
 			playerResult3.setMingcifen(mingcifen3);
 			int[] xianshuCount3 = playerXianshuMap.get(playerId3);
-			WenzhouShuangkouXianshuBeishu xianshubeishu3 = new WenzhouShuangkouXianshuBeishu(xianshuCount3);
-			xianshubeishu3.calculate();
-			playerResult3.setXianshubeishu(xianshubeishu3);
 			WenzhouShuangkouGongxianFen gongxianfen3 = new WenzhouShuangkouGongxianFen(xianshuCount3);
 			gongxianfen3.calculate(renshu);
 			yingPlayerResult.setGongxianfen(gongxianfen3);
@@ -221,7 +230,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			panPlayerResultList.forEach((playerResult) -> {
 				// 计算当盘总分
 				playerResult.setScore(playerResult.getGongxianfen().getTotalscore() + playerResult.getBufen().getValue()
-						+ playerResult.getMingcifen().getValue() * playerResult.getXianshubeishu().getValue());
+						+ playerResult.getMingcifen().getValue() * playerResult.getXianshubeishu());
 				// 计算累计总分
 				if (latestFinishedPanResult != null) {
 					playerResult.setTotalScore(
@@ -244,6 +253,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			WenzhouShuangkouPanPlayerResult yingPlayerResult = new WenzhouShuangkouPanPlayerResult();
 			yingPlayerResult.setPlayerId(yingPlayerId);
 			WenzhouShuangkouMingcifen mingcifen = new WenzhouShuangkouMingcifen();
+			mingcifen.setMingci(1);
 			mingcifen.setYing(true);
 			if (shuPlayer.getAllShoupai().size() > 10) {
 				mingcifen.setShuangkou(true);
@@ -252,11 +262,12 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			} else {
 				mingcifen.setPingkou(true);
 			}
+			mingcifen.calculate();
 			yingPlayerResult.setMingcifen(mingcifen);
 			int[] xianshuCount = playerXianshuMap.get(yingPlayerId);
 			WenzhouShuangkouXianshuBeishu xianshubeishu = new WenzhouShuangkouXianshuBeishu(xianshuCount);
 			xianshubeishu.calculate();
-			yingPlayerResult.setXianshubeishu(xianshubeishu);
+			yingPlayerResult.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
 			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
 			gongxianfen.calculate(renshu);
 			yingPlayerResult.setGongxianfen(gongxianfen);
@@ -267,6 +278,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			WenzhouShuangkouPanPlayerResult shuPlayerResult = new WenzhouShuangkouPanPlayerResult();
 			shuPlayerResult.setPlayerId(shuPlayerId);
 			WenzhouShuangkouMingcifen mingcifen1 = new WenzhouShuangkouMingcifen();
+			mingcifen1.setMingci(2);
 			mingcifen1.setYing(false);
 			if (shuPlayer.getAllShoupai().size() > 10) {
 				mingcifen1.setShuangkou(true);
@@ -275,11 +287,12 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			} else {
 				mingcifen1.setPingkou(true);
 			}
+			mingcifen1.calculate();
 			shuPlayerResult.setMingcifen(mingcifen1);
 			int[] xianshuCount1 = playerXianshuMap.get(shuPlayerId);
 			WenzhouShuangkouXianshuBeishu xianshubeishu1 = new WenzhouShuangkouXianshuBeishu(xianshuCount1);
 			xianshubeishu1.calculate();
-			shuPlayerResult.setXianshubeishu(xianshubeishu1);
+			shuPlayerResult.setXianshubeishu(playerOtherMaxXianshuMap.get(shuPlayerId));
 			WenzhouShuangkouGongxianFen gongxianfen1 = new WenzhouShuangkouGongxianFen(xianshuCount1);
 			gongxianfen1.calculate(renshu);
 			shuPlayerResult.setGongxianfen(gongxianfen1);
@@ -306,7 +319,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 				// 计算当盘总分
 				playerResult.setScore(playerResult.getScore() + playerResult.getGongxianfen().getTotalscore()
 						+ playerResult.getBufen().getValue()
-						+ playerResult.getMingcifen().getValue() * playerResult.getXianshubeishu().getValue());
+						+ playerResult.getMingcifen().getValue() * playerResult.getXianshubeishu());
 				// 计算累计总分
 				if (latestFinishedPanResult != null) {
 					playerResult.setTotalScore(
@@ -340,8 +353,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			playerResult.setPlayerId(playerId);
 			WenzhouShuangkouMingcifen mingcifen = new WenzhouShuangkouMingcifen();
 			playerResult.setMingcifen(mingcifen);
-			WenzhouShuangkouXianshuBeishu xianshubeishu = new WenzhouShuangkouXianshuBeishu();
-			playerResult.setXianshubeishu(xianshubeishu);
+			playerResult.setXianshubeishu(1);
 			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen();
 			if (chaodiPlayerIdList.contains(playerId)) {
 				gongxianfen.setValue(playeTotalGongxianfenMap.get(playerId) + 4);
@@ -373,7 +385,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 		panPlayerResultList.forEach((playerResult) -> {
 			// 计算当盘总分
 			playerResult.setScore(playerResult.getGongxianfen().getTotalscore() + playerResult.getBufen().getValue()
-					+ playerResult.getMingcifen().getValue() * playerResult.getXianshubeishu().getValue());
+					+ playerResult.getMingcifen().getValue() * playerResult.getXianshubeishu());
 			// 计算累计总分
 			if (latestFinishedPanResult != null) {
 				playerResult
@@ -411,6 +423,22 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 
 	public void setChaodiPlayerIdList(List<String> chaodiPlayerIdList) {
 		this.chaodiPlayerIdList = chaodiPlayerIdList;
+	}
+
+	public Map<String, Integer> getPlayerMaxXianshuMap() {
+		return playerMaxXianshuMap;
+	}
+
+	public void setPlayerMaxXianshuMap(Map<String, Integer> playerMaxXianshuMap) {
+		this.playerMaxXianshuMap = playerMaxXianshuMap;
+	}
+
+	public Map<String, Integer> getPlayerOtherMaxXianshuMap() {
+		return playerOtherMaxXianshuMap;
+	}
+
+	public void setPlayerOtherMaxXianshuMap(Map<String, Integer> playerOtherMaxXianshuMap) {
+		this.playerOtherMaxXianshuMap = playerOtherMaxXianshuMap;
 	}
 
 }

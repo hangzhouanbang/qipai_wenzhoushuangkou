@@ -58,6 +58,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 	private Map<String, Integer> playerTotalGongxianfenMap = new HashMap<>();
 	private Map<String, Integer> playerMaxXianshuMap = new HashMap<>();
 	private Map<String, Integer> playerOtherMaxXianshuMap = new HashMap<>();
+	private Map<String, Integer> playerMingciMap = new HashMap<>();
 	private List<String> chaodiPlayerIdList = new ArrayList<>();
 	private Map<String, PukeGamePlayerChaodiState> playerChaodiStateMap = new HashMap<>();
 
@@ -280,14 +281,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 			return danGeZhadan.getSize();
 		} else if (zhadan instanceof LianXuZhadanDianShuZu) {
 			LianXuZhadanDianShuZu lianXuZhadan = (LianXuZhadanDianShuZu) zhadan;
-			int[] lianXuDianShuSizeArray = lianXuZhadan.getLianXuDianShuSizeArray();
-			int xianshu = lianXuDianShuSizeArray[0];
-			for (int i = 1; i < lianXuDianShuSizeArray.length; i++) {
-				if (xianshu > lianXuDianShuSizeArray[i]) {
-					xianshu = lianXuDianShuSizeArray[i];
-				}
-			}
-			return xianshu + lianXuZhadan.getLianXuDianShuArray().length;
+			return lianXuZhadan.getXianShu();
 		} else {
 			WangZhadanDianShuZu wangZhadan = (WangZhadanDianShuZu) zhadan;
 			int xiaowangCount = wangZhadan.getXiaowangCount();
@@ -538,6 +532,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		PanActionFrame panActionFrame = null;
 
 		panActionFrame = ju.da(playerId, paiIds, dianshuZuheIdx, actionTime);
+
 		// 记录贡献分
 		XianshuCountDaActionStatisticsListener wenzhouShuangkouListener = ju.getActionStatisticsListenerManager()
 				.findDaListener(XianshuCountDaActionStatisticsListener.class);
@@ -545,26 +540,16 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		Map<String, WenzhouShuangkouXianshuBeishu> maxXianshuMap = new HashMap<>();
 		Map<String, WenzhouShuangkouGongxianFen> gongxianfenMap = new HashMap<>();
 		List<WenzhouShuangkouGongxianFen> panPlayerGongxianfenList = new ArrayList<>();
-		allPlayerIds().forEach((pid) -> {
+		for (String pid : allPlayerIds()) {
 			int[] xianshuCount = playerXianshuMap.get(pid);
-			WenzhouShuangkouXianshuBeishu xianshubeishu = null;
-			if (xianshuCount != null) {
-				xianshubeishu = new WenzhouShuangkouXianshuBeishu(xianshuCount);
-			} else {
-				xianshubeishu = new WenzhouShuangkouXianshuBeishu();
-			}
+			WenzhouShuangkouXianshuBeishu xianshubeishu = new WenzhouShuangkouXianshuBeishu(xianshuCount);
 			xianshubeishu.calculate();
 			maxXianshuMap.put(pid, xianshubeishu);
-			WenzhouShuangkouGongxianFen gongxianfen = null;
-			if (xianshuCount != null) {
-				gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
-			} else {
-				gongxianfen = new WenzhouShuangkouGongxianFen();
-			}
+			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
 			gongxianfen.calculate(renshu);
 			panPlayerGongxianfenList.add(gongxianfen);
 			gongxianfenMap.put(pid, gongxianfen);
-		});
+		}
 
 		// 两两结算贡献分
 		for (int i = 0; i < renshu; i++) {
@@ -579,10 +564,10 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 			}
 		}
 		// 计算贡献分
-		allPlayerIds().forEach((pid) -> {
+		for (String pid : allPlayerIds()) {
 			WenzhouShuangkouGongxianFen gongxianfen = gongxianfenMap.get(pid);
 			playerGongxianfenMap.put(pid, gongxianfen.getTotalscore());
-		});
+		}
 		// 计算胜负分
 		List<String> playerIds = allPlayerIds();
 		Pan currentPan = ju.getCurrentPan();
@@ -619,6 +604,10 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 				}
 			}
 		});
+		WenzhouShuangkouCurrentPanResultBuilder panResultBuilder = (WenzhouShuangkouCurrentPanResultBuilder) ju
+				.getCurrentPanResultBuilder();
+		panResultBuilder.getPlayerMaxXianshuMap().putAll(playerMaxXianshuMap);
+		panResultBuilder.getPlayerOtherMaxXianshuMap().putAll(playerOtherMaxXianshuMap);
 		PukeActionResult result = new PukeActionResult();
 		result.setPanActionFrame(panActionFrame);
 		if (state.name().equals(VoteNotPassWhenPlaying.name)) {
@@ -632,9 +621,18 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 				playerTotalScoreMap.put(wenzhouShuangkouPanPlayerResult.getPlayerId(),
 						wenzhouShuangkouPanPlayerResult.getTotalScore());
 			}
+
 			result.setPanResult(panResult);
 			if (state.name().equals(Finished.name)) {// 局结束了
 				result.setJuResult((WenzhouShuangkouJuResult) ju.getJuResult());
+			}
+		} else {
+			// 记录名次
+			List<String> noPaiPlayerIdList = ju.getCurrentPan().getNoPaiPlayerIdList();
+			if (!noPaiPlayerIdList.isEmpty()) {
+				for (int i = 0; i < noPaiPlayerIdList.size(); i++) {
+					playerMingciMap.put(noPaiPlayerIdList.get(i), i);
+				}
 			}
 		}
 		result.setPukeGame(new PukeGameValueObject(this));
@@ -666,7 +664,23 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 
 	@Override
 	protected void startNextPan() throws Exception {
+		playerGongxianfenMap = new HashMap<>();
+		playerMaxXianshuMap = new HashMap<>();
+		playerOtherMaxXianshuMap = new HashMap<>();
+		playerMingciMap = new HashMap<>();
 		ju.startNextPan();
+		Map<String, Integer> totalGongxianfenMap = new HashMap<>();
+		Map<String, Integer> maxXianshuMap = new HashMap<>();
+		Map<String, Integer> otherMaxXianshuMap = new HashMap<>();
+		WenzhouShuangkouCurrentPanResultBuilder panResultBuilder = (WenzhouShuangkouCurrentPanResultBuilder) ju
+				.getCurrentPanResultBuilder();
+		panResultBuilder.setPlayeTotalGongxianfenMap(totalGongxianfenMap);
+		panResultBuilder.setPlayerMaxXianshuMap(maxXianshuMap);
+		panResultBuilder.setPlayerOtherMaxXianshuMap(otherMaxXianshuMap);
+		allPlayerIds().forEach((pid) -> {
+			playerTotalGongxianfenMap.put(pid, calculateTotalGongxianfenForPlayer(pid));
+		});
+		totalGongxianfenMap.putAll(playerTotalGongxianfenMap);
 		boolean hasChaodi = false;
 		Set<String> cannotChaodiSet = new HashSet<>();
 		if (chaodi) {
@@ -921,6 +935,14 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 
 	public void setPlayerOtherMaxXianshuMap(Map<String, Integer> playerOtherMaxXianshuMap) {
 		this.playerOtherMaxXianshuMap = playerOtherMaxXianshuMap;
+	}
+
+	public Map<String, Integer> getPlayerMingciMap() {
+		return playerMingciMap;
+	}
+
+	public void setPlayerMingciMap(Map<String, Integer> playerMingciMap) {
+		this.playerMingciMap = playerMingciMap;
 	}
 
 }

@@ -247,7 +247,6 @@ public class PukeController {
 			wenzhouShuangkouResultMsgService.recordPanResult(panResult);
 			gameMsgService.panFinished(pukeActionResult.getPukeGame(),
 					pukeActionResult.getPanActionFrame().getPanAfterAction());
-
 		}
 		// 通知其他人
 		for (String otherPlayerId : pukeActionResult.getPukeGame().allPlayerIds()) {

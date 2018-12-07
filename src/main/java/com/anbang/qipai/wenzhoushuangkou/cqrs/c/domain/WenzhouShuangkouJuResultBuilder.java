@@ -38,7 +38,7 @@ public class WenzhouShuangkouJuResultBuilder implements JuResultBuilder {
 					if (mingcifen.isPingkou()) {
 						juPlayerResult.increasePingkouCount();
 					}
-					juPlayerResult.tryAndUpdateMaxXianshu(panPlayerResult.getXianshubeishu().getValue());
+					juPlayerResult.tryAndUpdateMaxXianshu(panPlayerResult.getXianshubeishu());
 					juPlayerResult.increaseTotalScore(panPlayerResult.getScore());
 				}
 			}

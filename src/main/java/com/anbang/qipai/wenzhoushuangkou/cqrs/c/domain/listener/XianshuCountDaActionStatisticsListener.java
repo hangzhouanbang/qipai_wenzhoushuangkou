@@ -48,14 +48,7 @@ public class XianshuCountDaActionStatisticsListener implements DaActionStatistic
 			return danGeZhadan.getSize();
 		} else if (zhadan instanceof LianXuZhadanDianShuZu) {
 			LianXuZhadanDianShuZu lianXuZhadan = (LianXuZhadanDianShuZu) zhadan;
-			int[] lianXuDianShuSizeArray = lianXuZhadan.getLianXuDianShuSizeArray();
-			int xianshu = lianXuDianShuSizeArray[0];
-			for (int i = 1; i < lianXuDianShuSizeArray.length; i++) {
-				if (xianshu > lianXuDianShuSizeArray[i]) {
-					xianshu = lianXuDianShuSizeArray[i];
-				}
-			}
-			return xianshu + lianXuZhadan.getLianXuDianShuArray().length;
+			return lianXuZhadan.getXianShu();
 		} else {
 			WangZhadanDianShuZu wangZhadan = (WangZhadanDianShuZu) zhadan;
 			int xiaowangCount = wangZhadan.getXiaowangCount();

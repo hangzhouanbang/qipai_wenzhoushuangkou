@@ -4,7 +4,7 @@ public class WenzhouShuangkouPanPlayerResult {
 	private String playerId;
 	private boolean chaodi;
 	private WenzhouShuangkouMingcifen mingcifen;
-	private WenzhouShuangkouXianshuBeishu xianshubeishu;
+	private int xianshubeishu;
 	private WenzhouShuangkouGongxianFen gongxianfen;
 	private WenzhouShuangkouChaixianbufen bufen;
 	private int score;// 一盘结算分
@@ -34,11 +34,11 @@ public class WenzhouShuangkouPanPlayerResult {
 		this.mingcifen = mingcifen;
 	}
 
-	public WenzhouShuangkouXianshuBeishu getXianshubeishu() {
+	public int getXianshubeishu() {
 		return xianshubeishu;
 	}
 
-	public void setXianshubeishu(WenzhouShuangkouXianshuBeishu xianshubeishu) {
+	public void setXianshubeishu(int xianshubeishu) {
 		this.xianshubeishu = xianshubeishu;
 	}
 

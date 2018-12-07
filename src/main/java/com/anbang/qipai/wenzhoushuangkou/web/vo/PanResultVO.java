@@ -6,6 +6,7 @@ import java.util.List;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PanResultDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.WenzhouShuangkouPanPlayerResultDbo;
+import com.dml.shuangkou.player.ShuangkouPlayerValueObject;
 
 public class PanResultVO {
 
@@ -17,20 +18,42 @@ public class PanResultVO {
 
 	private long finishTime;
 
+	private PanActionFrameVO lastPanActionFrame;
+
 	public PanResultVO() {
 
 	}
 
 	public PanResultVO(PanResultDbo panResultDbo, PukeGameDbo pukeGameDbo) {
 		List<WenzhouShuangkouPanPlayerResultDbo> list = panResultDbo.getPlayerResultList();
+		List<ShuangkouPlayerValueObject> players = panResultDbo.getPanActionFrame().getPanAfterAction()
+				.getShuangkouPlayerList();
 		if (list != null) {
 			playerResultList = new ArrayList<>(list.size());
-			list.forEach((panPlayerResult) -> playerResultList.add(new WenzhouShuangkouPanPlayerResultVO(
-					pukeGameDbo.findPlayer(panPlayerResult.getPlayerId()), panPlayerResult)));
+			list.forEach((panPlayerResult) -> {
+				ShuangkouPlayerValueObject shuangkouPlayer = null;
+				for (ShuangkouPlayerValueObject player : players) {
+					if (player.getId().equals(panPlayerResult.getPlayerId())) {
+						shuangkouPlayer = player;
+						break;
+					}
+				}
+				playerResultList.add(new WenzhouShuangkouPanPlayerResultVO(
+						pukeGameDbo.findPlayer(panPlayerResult.getPlayerId()), panPlayerResult, shuangkouPlayer));
+			});
 		}
 		chaodi = panResultDbo.isChaodi();
 		panNo = panResultDbo.getPanNo();
 		finishTime = panResultDbo.getFinishTime();
+		lastPanActionFrame = new PanActionFrameVO(panResultDbo.getPanActionFrame());
+	}
+
+	public PanActionFrameVO getLastPanActionFrame() {
+		return lastPanActionFrame;
+	}
+
+	public void setLastPanActionFrame(PanActionFrameVO lastPanActionFrame) {
+		this.lastPanActionFrame = lastPanActionFrame;
 	}
 
 	public List<WenzhouShuangkouPanPlayerResultVO> getPlayerResultList() {

@@ -26,7 +26,7 @@ public class WenzhouShuangkouPanPlayerResultMO {
 		headimgurl = playerDbo.getHeadimgurl();
 		chaodi = panPlayerResult.getPlayerResult().isChaodi();
 		mingcifen = new WenzhouShuangkouMingcifenVO(panPlayerResult.getPlayerResult().getMingcifen());
-		xianshubeishu = panPlayerResult.getPlayerResult().getXianshubeishu().getValue();
+		xianshubeishu = panPlayerResult.getPlayerResult().getXianshubeishu();
 		gongxianfen = panPlayerResult.getPlayerResult().getGongxianfen().getTotalscore();
 		score = panPlayerResult.getPlayerResult().getScore();
 		totalScore = panPlayerResult.getPlayerResult().getTotalScore();

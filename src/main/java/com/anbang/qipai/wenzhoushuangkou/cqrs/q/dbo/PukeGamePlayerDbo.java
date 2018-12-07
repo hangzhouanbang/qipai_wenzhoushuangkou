@@ -15,6 +15,24 @@ public class PukeGamePlayerDbo {
 	private int maxXianshu;
 	private int otherMaxXianshu;
 	private int totalGongxianfen;
+	private boolean nopai;
+	private int mingci;
+
+	public boolean isNopai() {
+		return nopai;
+	}
+
+	public void setNopai(boolean nopai) {
+		this.nopai = nopai;
+	}
+
+	public int getMingci() {
+		return mingci;
+	}
+
+	public void setMingci(int mingci) {
+		this.mingci = mingci;
+	}
 
 	public int getOtherMaxXianshu() {
 		return otherMaxXianshu;

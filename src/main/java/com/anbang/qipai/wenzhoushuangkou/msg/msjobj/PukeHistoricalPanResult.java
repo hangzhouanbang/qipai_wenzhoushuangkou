@@ -8,13 +8,14 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.WenzhouShuangkouPanPlayerResultDbo;
 
 public class PukeHistoricalPanResult {
-	private List<WenzhouShuangkouPanPlayerResultMO> playerResultList;
 
-	private boolean chaodi;
+	private String gameId;
 
-	private int panNo;
+	private int no;// 盘数
 
 	private long finishTime;
+
+	private List<WenzhouShuangkouPanPlayerResultMO> playerResultList;
 
 	public PukeHistoricalPanResult() {
 
@@ -27,33 +28,25 @@ public class PukeHistoricalPanResult {
 			list.forEach((panPlayerResult) -> playerResultList.add(new WenzhouShuangkouPanPlayerResultMO(
 					pukeGameDbo.findPlayer(panPlayerResult.getPlayerId()), panPlayerResult)));
 		}
-		chaodi = panResultDbo.isChaodi();
-		panNo = panResultDbo.getPanNo();
+		gameId = pukeGameDbo.getId();
+		no = panResultDbo.getPanNo();
 		finishTime = panResultDbo.getFinishTime();
 	}
 
-	public List<WenzhouShuangkouPanPlayerResultMO> getPlayerResultList() {
-		return playerResultList;
+	public String getGameId() {
+		return gameId;
 	}
 
-	public void setPlayerResultList(List<WenzhouShuangkouPanPlayerResultMO> playerResultList) {
-		this.playerResultList = playerResultList;
+	public void setGameId(String gameId) {
+		this.gameId = gameId;
 	}
 
-	public boolean isChaodi() {
-		return chaodi;
+	public int getNo() {
+		return no;
 	}
 
-	public void setChaodi(boolean chaodi) {
-		this.chaodi = chaodi;
-	}
-
-	public int getPanNo() {
-		return panNo;
-	}
-
-	public void setPanNo(int panNo) {
-		this.panNo = panNo;
+	public void setNo(int no) {
+		this.no = no;
 	}
 
 	public long getFinishTime() {
@@ -64,4 +57,11 @@ public class PukeHistoricalPanResult {
 		this.finishTime = finishTime;
 	}
 
+	public List<WenzhouShuangkouPanPlayerResultMO> getPlayerResultList() {
+		return playerResultList;
+	}
+
+	public void setPlayerResultList(List<WenzhouShuangkouPanPlayerResultMO> playerResultList) {
+		this.playerResultList = playerResultList;
+	}
 }

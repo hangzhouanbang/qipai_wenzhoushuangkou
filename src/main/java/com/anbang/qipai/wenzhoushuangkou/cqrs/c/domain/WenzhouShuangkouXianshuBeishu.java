@@ -17,6 +17,9 @@ public class WenzhouShuangkouXianshuBeishu {
 	}
 
 	public WenzhouShuangkouXianshuBeishu(int[] xianshuCount) {
+		if (xianshuCount == null) {
+			xianshuCount = new int[8];
+		}
 		sixian = xianshuCount[0];
 		wuxian = xianshuCount[1];
 		liuxian = xianshuCount[2];

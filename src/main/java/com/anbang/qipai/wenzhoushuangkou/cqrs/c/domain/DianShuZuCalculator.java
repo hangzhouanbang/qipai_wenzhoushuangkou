@@ -789,16 +789,16 @@ public class DianShuZuCalculator {
 
 	private static void cacluateLianXuZhadanDianShuZu(DianShu[] lianXuDianShuArray, int[] dianshuZhangshuArray,
 			List<LianXuZhadanDianShuZu> lianXuZhadanList, int n) {
-		if (n < 8) {
-			n++;
-			for (int m = 4; m <= dianshuZhangshuArray[n - 1]; m++) {
-				int[] dianshuZhangshuArray1 = dianshuZhangshuArray.clone();
-				dianshuZhangshuArray1[n - 1] = m;
-				cacluateLianXuZhadanDianShuZu(lianXuDianShuArray, dianshuZhangshuArray1, lianXuZhadanList, n);
-			}
+		for (int m = 4; m <= dianshuZhangshuArray[n]; m++) {
+			int[] dianshuZhangshuArray1 = dianshuZhangshuArray.clone();
+			dianshuZhangshuArray1[n] = m;
+			cacluateLianXuZhadanDianShuZu(lianXuDianShuArray, dianshuZhangshuArray1, lianXuZhadanList, n + 1);
 		}
-		LianXuZhadanDianShuZu lianXuZhadan = new LianXuZhadanDianShuZu(lianXuDianShuArray, dianshuZhangshuArray);
-		lianXuZhadanList.add(lianXuZhadan);
+		if (n >= lianXuDianShuArray.length) {
+			LianXuZhadanDianShuZu lianXuZhadan = new LianXuZhadanDianShuZu(lianXuDianShuArray,
+					dianshuZhangshuArray.clone());
+			lianXuZhadanList.add(lianXuZhadan);
+		}
 	}
 
 	private static List<LianXuZhadanDianShuZu> generateAllLianXuZhadanDianShuZu(int[] dianShuAmountArray) {

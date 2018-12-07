@@ -22,6 +22,7 @@ public class ShuangkouPlayerValueObjectVO {
 	private List<DaPaiDianShuSolution> yaPaiSolutionCandidates;
 	private List<DaPaiDianShuSolution> yaPaiSolutionsForTips;
 	private boolean guo;
+	private boolean watingForMe = false;
 
 	public ShuangkouPlayerValueObjectVO() {
 
@@ -31,7 +32,7 @@ public class ShuangkouPlayerValueObjectVO {
 		id = shuangkouPlayerValueObject.getId();
 		position = shuangkouPlayerValueObject.getPosition();
 		shoupaiIdListForSortList = shuangkouPlayerValueObject.getShoupaiIdListForSortList();
-		if (shoupaiIdListForSortList.isEmpty()) {
+		if (shoupaiIdListForSortList == null || shoupaiIdListForSortList.isEmpty()) {
 			allShoupai = new ShuangkouPlayerShoupaiVO(shuangkouPlayerValueObject.getAllShoupai(),
 					shuangkouPlayerValueObject.getTotalShoupai(), null);
 		} else {
@@ -43,8 +44,19 @@ public class ShuangkouPlayerValueObjectVO {
 		lishiDachuPaiZuList = shuangkouPlayerValueObject.getLishiDachuPaiZuList();
 		publicDachuPaiZu = shuangkouPlayerValueObject.getPublicDachuPaiZu();
 		yaPaiSolutionCandidates = shuangkouPlayerValueObject.getYaPaiSolutionCandidates();
+		if (yaPaiSolutionCandidates != null && !yaPaiSolutionCandidates.isEmpty()) {
+			watingForMe = true;
+		}
 		yaPaiSolutionsForTips = shuangkouPlayerValueObject.getYaPaiSolutionCandidates();
 		guo = shuangkouPlayerValueObject.isGuo();
+	}
+
+	public boolean isWatingForMe() {
+		return watingForMe;
+	}
+
+	public void setWatingForMe(boolean watingForMe) {
+		this.watingForMe = watingForMe;
 	}
 
 	public List<PukePai> getLiangPaiList() {
