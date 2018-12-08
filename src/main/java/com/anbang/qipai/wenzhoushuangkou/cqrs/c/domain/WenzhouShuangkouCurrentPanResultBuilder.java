@@ -78,19 +78,17 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			WenzhouShuangkouPanPlayerResult playerResult1 = new WenzhouShuangkouPanPlayerResult();
 			playerResult1.setPlayerId(playerId1);
 			WenzhouShuangkouMingcifen mingcifen1 = new WenzhouShuangkouMingcifen();
+			playerResult1.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
 			if (playerId1.equals(duijiaPlayer.getId())) {
 				mingcifen1.setYing(true);
-				playerResult1.setXianshubeishu(playerMaxXianshuMap.get(playerId1));
 				mingcifen1.setShuangkou(true);
 				mingcifen1.setMingci(2);
 			} else if (playerId2.equals(duijiaPlayer.getId())) {
 				mingcifen1.setYing(false);
-				playerResult1.setXianshubeishu(playerOtherMaxXianshuMap.get(playerId1));
 				mingcifen1.setDankou(true);
 				mingcifen1.setMingci(3);
 			} else {
 				mingcifen1.setYing(false);
-				playerResult1.setXianshubeishu(playerOtherMaxXianshuMap.get(playerId1));
 				mingcifen1.setPingkou(true);
 				mingcifen1.setMingci(4);
 			}
@@ -111,14 +109,13 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			WenzhouShuangkouPanPlayerResult playerResult2 = new WenzhouShuangkouPanPlayerResult();
 			playerResult2.setPlayerId(playerId2);
 			WenzhouShuangkouMingcifen mingcifen2 = new WenzhouShuangkouMingcifen();
+			playerResult2.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
 			if (playerId1.equals(duijiaPlayer.getId())) {
 				mingcifen2.setYing(false);
-				playerResult2.setXianshubeishu(playerOtherMaxXianshuMap.get(playerId2));
 				mingcifen2.setShuangkou(true);
 				mingcifen2.setMingci(2);
 			} else if (playerId2.equals(duijiaPlayer.getId())) {
 				mingcifen2.setYing(true);
-				playerResult2.setXianshubeishu(playerMaxXianshuMap.get(playerId2));
 				mingcifen2.setDankou(true);
 				mingcifen2.setMingci(3);
 			} else {
@@ -144,14 +141,13 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			WenzhouShuangkouPanPlayerResult playerResult3 = new WenzhouShuangkouPanPlayerResult();
 			playerResult3.setPlayerId(playerId3);
 			WenzhouShuangkouMingcifen mingcifen3 = new WenzhouShuangkouMingcifen();
+			playerResult3.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
 			if (playerId1.equals(duijiaPlayer.getId())) {
 				mingcifen3.setYing(false);
-				playerResult3.setXianshubeishu(playerOtherMaxXianshuMap.get(playerId3));
 				mingcifen3.setShuangkou(true);
 				mingcifen3.setMingci(2);
 			} else if (playerId2.equals(duijiaPlayer.getId())) {
 				mingcifen3.setYing(false);
-				playerResult3.setXianshubeishu(playerOtherMaxXianshuMap.get(playerId3));
 				mingcifen3.setDankou(true);
 				mingcifen3.setMingci(3);
 			} else {
@@ -259,10 +255,8 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			}
 			mingcifen.calculate();
 			yingPlayerResult.setMingcifen(mingcifen);
-			int[] xianshuCount = playerXianshuMap.get(yingPlayerId);
-			WenzhouShuangkouXianshuBeishu xianshubeishu = new WenzhouShuangkouXianshuBeishu(xianshuCount);
-			xianshubeishu.calculate();
 			yingPlayerResult.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
+			int[] xianshuCount = playerXianshuMap.get(yingPlayerId);
 			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
 			gongxianfen.calculate(renshu);
 			yingPlayerResult.setGongxianfen(gongxianfen);
@@ -285,9 +279,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			mingcifen1.calculate();
 			shuPlayerResult.setMingcifen(mingcifen1);
 			int[] xianshuCount1 = playerXianshuMap.get(shuPlayerId);
-			WenzhouShuangkouXianshuBeishu xianshubeishu1 = new WenzhouShuangkouXianshuBeishu(xianshuCount1);
-			xianshubeishu1.calculate();
-			shuPlayerResult.setXianshubeishu(playerOtherMaxXianshuMap.get(shuPlayerId));
+			shuPlayerResult.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
 			WenzhouShuangkouGongxianFen gongxianfen1 = new WenzhouShuangkouGongxianFen(xianshuCount1);
 			gongxianfen1.calculate(renshu);
 			shuPlayerResult.setGongxianfen(gongxianfen1);

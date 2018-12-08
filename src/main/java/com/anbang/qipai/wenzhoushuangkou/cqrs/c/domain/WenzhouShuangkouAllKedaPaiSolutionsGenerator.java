@@ -50,6 +50,22 @@ public class WenzhouShuangkouAllKedaPaiSolutionsGenerator implements AllKedaPaiS
 			solution.calculateDianshuZuheIdx();
 			solutionList.add(solution);
 		}
+		if (dawangCount > 1) {
+			DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
+			solution.setDianShuZu(new DuiziDianShuZu(DianShu.dawang));
+			DianShu[] dachuDianShuArray = { DianShu.dawang, DianShu.dawang };
+			solution.setDachuDianShuArray(dachuDianShuArray);
+			solution.calculateDianshuZuheIdx();
+			solutionList.add(solution);
+		}
+		if (xiaowangCount > 1) {
+			DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
+			solution.setDianShuZu(new DuiziDianShuZu(DianShu.xiaowang));
+			DianShu[] dachuDianShuArray = { DianShu.xiaowang, DianShu.xiaowang };
+			solution.setDachuDianShuArray(dachuDianShuArray);
+			solution.calculateDianshuZuheIdx();
+			solutionList.add(solution);
+		}
 		int wangCount = 0;
 		if (BianXingWanFa.qianbian.equals(bx)) {// 千变
 			wangCount = xiaowangCount + dawangCount;

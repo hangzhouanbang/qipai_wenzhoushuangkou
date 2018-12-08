@@ -225,6 +225,7 @@ public class PukeController {
 			return vo;
 		}
 
+		queryScopes.add(QueryScope.gameInfo.name());
 		if (pukeActionResult.getPanResult() == null) {// 盘没结束
 			queryScopes.add(QueryScope.panForMe.name());
 		} else {// 盘结束了
@@ -239,7 +240,6 @@ public class PukeController {
 				queryScopes.add(QueryScope.juResult.name());
 			} else {
 				queryScopes.add(QueryScope.panResult.name());
-				queryScopes.add(QueryScope.gameInfo.name());
 			}
 			PanResultDbo panResultDbo = pukePlayQueryService.findPanResultDbo(gameId,
 					pukeActionResult.getPanResult().getPan().getNo());
@@ -291,6 +291,7 @@ public class PukeController {
 		}
 
 		queryScopes.add(QueryScope.panForMe.name());
+		queryScopes.add(QueryScope.gameInfo.name());
 
 		// 通知其他人
 		for (String otherPlayerId : pukeActionResult.getPukeGame().allPlayerIds()) {

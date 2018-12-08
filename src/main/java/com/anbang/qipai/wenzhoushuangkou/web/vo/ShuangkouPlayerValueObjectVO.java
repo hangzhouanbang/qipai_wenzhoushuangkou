@@ -47,7 +47,7 @@ public class ShuangkouPlayerValueObjectVO {
 		if (yaPaiSolutionCandidates != null && !yaPaiSolutionCandidates.isEmpty()) {
 			watingForMe = true;
 		}
-		yaPaiSolutionsForTips = shuangkouPlayerValueObject.getYaPaiSolutionCandidates();
+		yaPaiSolutionsForTips = shuangkouPlayerValueObject.getYaPaiSolutionsForTips();
 		guo = shuangkouPlayerValueObject.isGuo();
 	}
 

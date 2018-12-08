@@ -479,6 +479,10 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		} else {
 
 		}
+		// ju.setLuanpaiStrategyForFirstPan(new NoZhadanLuanpaiStrategy());
+		// ju.setLuanpaiStrategyForNextPan(new NoZhadanLuanpaiStrategy());
+		// ju.setFapaiStrategyForFirstPan(new ShiSanZhangFapaiStrategy());
+		// ju.setFapaiStrategyForNextPan(new ShiSanZhangFapaiStrategy());
 		if (FaPai.san.equals(fapai)) {
 			ju.setFapaiStrategyForFirstPan(new YiciSanzhangFapaiStrategy());
 			ju.setFapaiStrategyForNextPan(new YiciSanzhangFapaiStrategy());

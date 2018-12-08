@@ -49,30 +49,52 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 						solutionList.add(solution);
 					}
 				} catch (CanNotCompareException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+
 				}
 			}
 			return solutionList;
 		}
 		int xiaowangCount = dianShuAmount[13];
 		int dawangCount = dianShuAmount[14];
-		// 对子，当有大小王个一张时可以当一对大王打出
-		if (beiYaDianShuZu instanceof DuiziDianShuZu && xiaowangCount > 0 && dawangCount > 0) {
+		if (beiYaDianShuZu instanceof DuiziDianShuZu) {
 			DuiziDianShuZu beiYaDuiziDianShuZu = (DuiziDianShuZu) beiYaDianShuZu;
-			DuiziDianShuZu duiziDianShuZu = new DuiziDianShuZu(DianShu.dawang);
 			try {
-				if (danGeDianShuZuComparator.compare(duiziDianShuZu, beiYaDuiziDianShuZu) > 0) {
-					DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
-					solution.setDianShuZu(new DuiziDianShuZu(DianShu.dawang));
-					DianShu[] dachuDianShuArray = { DianShu.xiaowang, DianShu.dawang };
-					solution.setDachuDianShuArray(dachuDianShuArray);
-					solution.calculateDianshuZuheIdx();
-					solutionList.add(solution);
+				// 对子，当有大小王个一张时可以当一对大王打出
+				if (xiaowangCount > 0 && dawangCount > 0) {
+					DuiziDianShuZu duiziDianShuZu = new DuiziDianShuZu(DianShu.dawang);
+					if (danGeDianShuZuComparator.compare(duiziDianShuZu, beiYaDuiziDianShuZu) > 0) {
+						DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
+						solution.setDianShuZu(duiziDianShuZu);
+						DianShu[] dachuDianShuArray = { DianShu.xiaowang, DianShu.dawang };
+						solution.setDachuDianShuArray(dachuDianShuArray);
+						solution.calculateDianshuZuheIdx();
+						solutionList.add(solution);
+					}
+				}
+				if (dawangCount > 1) {
+					DuiziDianShuZu duiziDianShuZu = new DuiziDianShuZu(DianShu.dawang);
+					if (danGeDianShuZuComparator.compare(duiziDianShuZu, beiYaDuiziDianShuZu) > 0) {
+						DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
+						solution.setDianShuZu(duiziDianShuZu);
+						DianShu[] dachuDianShuArray = { DianShu.dawang, DianShu.dawang };
+						solution.setDachuDianShuArray(dachuDianShuArray);
+						solution.calculateDianshuZuheIdx();
+						solutionList.add(solution);
+					}
+				}
+				if (xiaowangCount > 1) {
+					DuiziDianShuZu duiziDianShuZu = new DuiziDianShuZu(DianShu.xiaowang);
+					if (danGeDianShuZuComparator.compare(duiziDianShuZu, beiYaDuiziDianShuZu) > 0) {
+						DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
+						solution.setDianShuZu(duiziDianShuZu);
+						DianShu[] dachuDianShuArray = { DianShu.xiaowang, DianShu.xiaowang };
+						solution.setDachuDianShuArray(dachuDianShuArray);
+						solution.calculateDianshuZuheIdx();
+						solutionList.add(solution);
+					}
 				}
 			} catch (CanNotCompareException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
 			}
 		}
 
@@ -189,8 +211,7 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 						filtedDuiziDianShuZuList.add(duiziDianShuZu);
 					}
 				} catch (CanNotCompareException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+
 				}
 			}
 			return filtedPaiXing;
@@ -205,8 +226,7 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 						filtedSanzhangDianShuZu.add(sanzhangDianShuZu);
 					}
 				} catch (CanNotCompareException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+
 				}
 			}
 			return filtedPaiXing;
@@ -221,8 +241,7 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 						filtedShunziDianShuZu.add(shunziDianShuZu);
 					}
 				} catch (CanNotCompareException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+
 				}
 			}
 			return filtedPaiXing;
@@ -237,8 +256,7 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 						filtedLianduiDianShuZu.add(lianduiDianShuZu);
 					}
 				} catch (CanNotCompareException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+
 				}
 			}
 			return filtedPaiXing;
@@ -253,8 +271,7 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 						filtedLiansanzhangDianShuZu.add(liansanzhangDianShuZu);
 					}
 				} catch (CanNotCompareException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+
 				}
 			}
 			return filtedPaiXing;
