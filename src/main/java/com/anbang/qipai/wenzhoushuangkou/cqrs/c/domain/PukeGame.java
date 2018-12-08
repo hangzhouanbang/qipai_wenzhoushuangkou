@@ -526,6 +526,12 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		allPlayerIds().forEach((pid) -> {
 			playerTotalGongxianfenMap.put(pid, calculateTotalGongxianfenForPlayer(pid));
 		});
+		allPlayerIds().forEach((pid) -> {
+			playerMaxXianshuMap.put(pid, 1);
+		});
+		allPlayerIds().forEach((pid) -> {
+			playerOtherMaxXianshuMap.put(pid, 1);
+		});
 		totalGongxianfenMap.putAll(playerTotalGongxianfenMap);
 	}
 
@@ -602,10 +608,10 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 				for (String id : playerIds) {
 					if (id.equals(pid)) {
 						WenzhouShuangkouXianshuBeishu xianshubeishu = maxXianshuMap.get(id);
-						playerMaxXianshuMap.put(id, xianshubeishu.getValue());
+						playerMaxXianshuMap.put(pid, xianshubeishu.getValue());
 					} else {
 						WenzhouShuangkouXianshuBeishu xianshubeishu = maxXianshuMap.get(id);
-						playerOtherMaxXianshuMap.put(id, xianshubeishu.getValue());
+						playerOtherMaxXianshuMap.put(pid, xianshubeishu.getValue());
 					}
 				}
 			}
@@ -686,7 +692,15 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		allPlayerIds().forEach((pid) -> {
 			playerTotalGongxianfenMap.put(pid, calculateTotalGongxianfenForPlayer(pid));
 		});
+		allPlayerIds().forEach((pid) -> {
+			playerMaxXianshuMap.put(pid, 1);
+		});
+		allPlayerIds().forEach((pid) -> {
+			playerOtherMaxXianshuMap.put(pid, 1);
+		});
 		totalGongxianfenMap.putAll(playerTotalGongxianfenMap);
+		maxXianshuMap.putAll(playerMaxXianshuMap);
+		otherMaxXianshuMap.putAll(playerOtherMaxXianshuMap);
 		boolean hasChaodi = false;
 		Set<String> cannotChaodiSet = new HashSet<>();
 		if (chaodi) {
