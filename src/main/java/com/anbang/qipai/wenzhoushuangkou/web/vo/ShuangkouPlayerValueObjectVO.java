@@ -11,7 +11,6 @@ import com.dml.shuangkou.player.action.da.solution.DaPaiDianShuSolution;
 public class ShuangkouPlayerValueObjectVO {
 	private String id;
 	private Position position;
-	private boolean couldChaodi;
 	private ShuangkouPlayerShoupaiVO allShoupai;
 	private List<PukePai> liangPaiList;
 	private int[] shoupaiDianShuAmountArray;
@@ -81,14 +80,6 @@ public class ShuangkouPlayerValueObjectVO {
 
 	public void setPosition(Position position) {
 		this.position = position;
-	}
-
-	public boolean isCouldChaodi() {
-		return couldChaodi;
-	}
-
-	public void setCouldChaodi(boolean couldChaodi) {
-		this.couldChaodi = couldChaodi;
 	}
 
 	public ShuangkouPlayerShoupaiVO getAllShoupai() {

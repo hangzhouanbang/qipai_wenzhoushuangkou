@@ -50,7 +50,7 @@ public class GameVO {
 		panNo = pukeGameDbo.getPanNo();
 		String sn = pukeGameDbo.getState().name();
 		if (sn.equals(Canceled.name)) {
-			state = "finished";
+			state = "canceled";
 		} else if (sn.equals(Finished.name)) {
 			state = "finished";
 		} else if (sn.equals(FinishedByVote.name)) {
