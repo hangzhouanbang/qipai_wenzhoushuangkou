@@ -97,7 +97,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			int[] xianshuCount1 = playerXianshuMap.get(playerId1);
 			WenzhouShuangkouGongxianFen gongxianfen1 = new WenzhouShuangkouGongxianFen(xianshuCount1);
 			gongxianfen1.calculate(renshu);
-			yingPlayerResult.setGongxianfen(gongxianfen1);
+			playerResult1.setGongxianfen(gongxianfen1);
 			WenzhouShuangkouChaixianbufen bufen1 = new WenzhouShuangkouChaixianbufen();
 			bufen1.setTotalScore(playeTotalGongxianfenMap.get(playerId1));
 			bufen1.setScore(gongxianfen1.getValue());
@@ -129,7 +129,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			int[] xianshuCount2 = playerXianshuMap.get(playerId2);
 			WenzhouShuangkouGongxianFen gongxianfen2 = new WenzhouShuangkouGongxianFen(xianshuCount2);
 			gongxianfen2.calculate(renshu);
-			yingPlayerResult.setGongxianfen(gongxianfen2);
+			playerResult2.setGongxianfen(gongxianfen2);
 			WenzhouShuangkouChaixianbufen bufen2 = new WenzhouShuangkouChaixianbufen();
 			bufen2.setTotalScore(playeTotalGongxianfenMap.get(playerId2));
 			bufen2.setScore(gongxianfen2.getValue());
@@ -161,7 +161,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			int[] xianshuCount3 = playerXianshuMap.get(playerId3);
 			WenzhouShuangkouGongxianFen gongxianfen3 = new WenzhouShuangkouGongxianFen(xianshuCount3);
 			gongxianfen3.calculate(renshu);
-			yingPlayerResult.setGongxianfen(gongxianfen3);
+			playerResult3.setGongxianfen(gongxianfen3);
 			WenzhouShuangkouChaixianbufen bufen3 = new WenzhouShuangkouChaixianbufen();
 			bufen3.setTotalScore(playeTotalGongxianfenMap.get(playerId3));
 			bufen3.setScore(gongxianfen3.getValue());
@@ -191,8 +191,8 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 					WenzhouShuangkouChaixianbufen chaixianBufen1 = playerResulti.getBufen();
 					int bufeni = chaixianBufen1.getValue();
 					for (int j = 0; j < panPlayerResultList.size(); j++) {
-						if (duijiaPlayer.getId().equals(playerResulti.getPlayerId())) {
-							WenzhouShuangkouPanPlayerResult playerResultj = panPlayerResultList.get(j);
+						WenzhouShuangkouPanPlayerResult playerResultj = panPlayerResultList.get(j);
+						if (duijiaPlayer.getId().equals(playerResultj.getPlayerId())) {
 							WenzhouShuangkouChaixianbufen chaixianBufen2 = playerResultj.getBufen();
 							int bufenj = chaixianBufen2.getValue();
 							// 结算补分
@@ -206,8 +206,8 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 					int bufeni = chaixianBufen1.getValue();
 					ShuangkouPlayer duijiaPlayer1 = currentPan.findDuijiaPlayer(playerId3);
 					for (int j = 0; j < panPlayerResultList.size(); j++) {
-						if (duijiaPlayer1.getId().equals(playerResulti.getPlayerId())) {
-							WenzhouShuangkouPanPlayerResult playerResultj = panPlayerResultList.get(j);
+						WenzhouShuangkouPanPlayerResult playerResultj = panPlayerResultList.get(j);
+						if (duijiaPlayer1.getId().equals(playerResultj.getPlayerId())) {
 							WenzhouShuangkouChaixianbufen chaixianBufen2 = playerResultj.getBufen();
 							int bufenj = chaixianBufen2.getValue();
 							// 结算补分
