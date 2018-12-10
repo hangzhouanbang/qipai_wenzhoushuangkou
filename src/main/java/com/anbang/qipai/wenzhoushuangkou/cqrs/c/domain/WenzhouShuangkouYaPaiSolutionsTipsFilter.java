@@ -111,7 +111,7 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 				}
 			}
 		}
-		if (maxDanGeZhadanSolution != null) {
+		if (maxDanGeZhadanSolution != null && !zhadanSolutionList.isEmpty()) {
 			DaPaiDianShuSolution solution = zhadanSolutionList.getLast();
 			if (!solution.getDianshuZuheIdx().equals(maxDanGeZhadanSolution.getDianshuZuheIdx())) {
 				zhadanSolutionList.add(maxDanGeZhadanSolution);
