@@ -1,6 +1,7 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.q.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -213,5 +214,9 @@ public class PukePlayQueryService {
 
 	public PukeGamePlayerChaodiDbo findPlayerChaodiDboByGameIdAndPanNo(String gameId, int panNo) {
 		return pukeGamePlayerChaodiDboDao.findByGameIdAndPanNo(gameId, panNo);
+	}
+
+	public List<PanActionFrameDbo> findPanActionFrameDboForBackPlay(String gameId, int panNo) {
+		return panActionFrameDboDao.findByGameIdAndPanNo(gameId, panNo);
 	}
 }

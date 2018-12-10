@@ -21,6 +21,8 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.GameCmdService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.PlayerAuthService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.GameFinishVoteDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.JuResultDbo;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PanActionFrameDbo;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PanResultDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGamePlayerChaodiDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGamePlayerDbo;
@@ -34,6 +36,8 @@ import com.anbang.qipai.wenzhoushuangkou.plan.bean.MemberGoldBalance;
 import com.anbang.qipai.wenzhoushuangkou.plan.service.MemberGoldBalanceService;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.CommonVO;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.GameVO;
+import com.anbang.qipai.wenzhoushuangkou.web.vo.PanActionFrameVO;
+import com.anbang.qipai.wenzhoushuangkou.web.vo.PanResultVO;
 import com.anbang.qipai.wenzhoushuangkou.websocket.GamePlayWsNotifier;
 import com.anbang.qipai.wenzhoushuangkou.websocket.QueryScope;
 import com.dml.mpgame.game.Canceled;
@@ -548,7 +552,28 @@ public class GameController {
 	@ResponseBody
 	public CommonVO playback(String gameId, int panNo) {
 		CommonVO vo = new CommonVO();
-
+		Map data = new HashMap();
+		vo.setData(data);
+		List<PanActionFrameDbo> frameList = pukePlayQueryService.findPanActionFrameDboForBackPlay(gameId, panNo);
+		List<PanActionFrameVO> frameVOList = new ArrayList<>();
+		for (PanActionFrameDbo frame : frameList) {
+			frame.getPanActionFrame().getPanAfterAction().getPaiListValueObject().setPaiList(null);
+			frameVOList.add(new PanActionFrameVO(frame.getPanActionFrame()));
+		}
+		PukeGameDbo pukeGameDbo = pukeGameQueryService.findPukeGameDboById(gameId);
+		pukeGameDbo.setPanNo(panNo);
+		GameVO gameVO = new GameVO(pukeGameDbo);
+		PukeGamePlayerChaodiDbo pukeGamePlayerChaodiDbo = pukePlayQueryService
+				.findPlayerChaodiDboByGameIdAndPanNo(gameId, panNo);
+		Map<String, PukeGamePlayerChaodiState> playerChaodiStateMap = new HashMap<>();
+		if (pukeGamePlayerChaodiDbo != null) {
+			playerChaodiStateMap = pukeGamePlayerChaodiDbo.getPlayerChaodiStateMap();
+		}
+		PanResultDbo panResultDbo = pukePlayQueryService.findPanResultDbo(gameId, panNo);
+		data.put("panResult", new PanResultVO(panResultDbo, pukeGameDbo));
+		data.put("chaodiState", playerChaodiStateMap);
+		data.put("game", gameVO);
+		data.put("framelist", frameVOList);
 		return vo;
 	}
 
