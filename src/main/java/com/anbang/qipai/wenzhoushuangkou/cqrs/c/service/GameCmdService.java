@@ -1,9 +1,9 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.service;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ChaPai;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.FaPai;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyForGameResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ReadyForGameResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.wanfa.ChaPai;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.wanfa.FaPai;
 import com.dml.mpgame.game.GameValueObject;
 import com.dml.shuangkou.wanfa.BianXingWanFa;
 

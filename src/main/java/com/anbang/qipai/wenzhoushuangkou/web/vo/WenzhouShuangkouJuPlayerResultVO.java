@@ -1,6 +1,6 @@
 package com.anbang.qipai.wenzhoushuangkou.web.vo;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouJuPlayerResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.WenzhouShuangkouJuPlayerResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGamePlayerDbo;
 
 public class WenzhouShuangkouJuPlayerResultVO {

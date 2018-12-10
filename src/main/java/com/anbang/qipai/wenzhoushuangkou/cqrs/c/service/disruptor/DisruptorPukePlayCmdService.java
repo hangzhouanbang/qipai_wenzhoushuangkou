@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ChaodiResult;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeActionResult;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyToNextPanResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ChaodiResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.PukeActionResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ReadyToNextPanResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.PukePlayCmdService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.impl.PukePlayCmdServiceImpl;
 import com.highto.framework.concurrent.DeferredResult;

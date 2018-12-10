@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ChaodiResult;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeActionResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGame;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyToNextPanResult;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.StartChaodi;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.VoteNotPassWhenChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.exception.CouldNotChaodiException;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ChaodiResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.PukeActionResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ReadyToNextPanResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.StartChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.VoteNotPassWhenChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.PukePlayCmdService;
 import com.dml.mpgame.game.Playing;
 import com.dml.mpgame.game.player.PlayerNotInGameException;

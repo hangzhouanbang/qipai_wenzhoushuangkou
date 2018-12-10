@@ -1,11 +1,10 @@
-package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
+package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result;
 
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.dml.shuangkou.pan.PanActionFrame;
 
-public class ReadyToNextPanResult {
-
+public class ReadyForGameResult {
 	private PukeGameValueObject pukeGame;
-
 	private PanActionFrame firstActionFrame;
 
 	public PukeGameValueObject getPukeGame() {

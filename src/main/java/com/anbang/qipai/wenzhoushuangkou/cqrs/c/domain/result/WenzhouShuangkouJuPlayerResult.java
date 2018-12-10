@@ -1,4 +1,4 @@
-package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
+package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result;
 
 public class WenzhouShuangkouJuPlayerResult {
 	private String playerId;

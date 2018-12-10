@@ -3,9 +3,9 @@ package com.anbang.qipai.wenzhoushuangkou.websocket;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.StartChaodi;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.VoteNotPassWhenChaodi;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.VotingWhenChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.StartChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.VoteNotPassWhenChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.VotingWhenChaodi;
 import com.dml.mpgame.game.Canceled;
 import com.dml.mpgame.game.Finished;
 import com.dml.mpgame.game.GameState;

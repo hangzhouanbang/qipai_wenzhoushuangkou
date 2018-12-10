@@ -1,4 +1,4 @@
-package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
+package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state;
 
 import com.dml.mpgame.game.GameState;
 

@@ -1,4 +1,8 @@
-package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
+package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result;
+
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouChaixianbufen;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouGongxianFen;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouMingcifen;
 
 public class WenzhouShuangkouPanPlayerResult {
 	private String playerId;

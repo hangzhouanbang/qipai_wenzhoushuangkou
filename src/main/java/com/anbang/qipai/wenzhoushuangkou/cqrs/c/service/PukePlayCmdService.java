@@ -2,9 +2,9 @@ package com.anbang.qipai.wenzhoushuangkou.cqrs.c.service;
 
 import java.util.List;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ChaodiResult;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeActionResult;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ReadyToNextPanResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ChaodiResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.PukeActionResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ReadyToNextPanResult;
 
 public interface PukePlayCmdService {
 

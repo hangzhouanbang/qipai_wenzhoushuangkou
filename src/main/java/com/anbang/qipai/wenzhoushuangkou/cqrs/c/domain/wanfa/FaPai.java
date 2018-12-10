@@ -1,4 +1,4 @@
-package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
+package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.wanfa;
 
 /**
  * 发牌方式

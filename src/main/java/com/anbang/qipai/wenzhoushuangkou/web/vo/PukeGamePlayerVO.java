@@ -1,11 +1,11 @@
 package com.anbang.qipai.wenzhoushuangkou.web.vo;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PlayerAfterChaodi;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PlayerChaodi;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PlayerVotedWhenAfterChaodi;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PlayerVotedWhenChaodi;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PlayerVotingWhenAfterChaodi;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PlayerVotingWhenChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.PlayerAfterChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.PlayerChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.PlayerVotedWhenAfterChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.PlayerVotedWhenChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.PlayerVotingWhenAfterChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.PlayerVotingWhenChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGamePlayerDbo;
 import com.dml.mpgame.game.extend.fpmpv.player.PlayerPanFinishedAndVoted;
 import com.dml.mpgame.game.extend.fpmpv.player.PlayerPanFinishedAndVoting;

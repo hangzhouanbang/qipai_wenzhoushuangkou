@@ -1,8 +1,9 @@
-package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
+package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result;
 
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.dml.shuangkou.pan.PanActionFrame;
 
-public class ChaodiResult {
+public class PukeActionResult {
 	private PukeGameValueObject pukeGame;
 	private PanActionFrame panActionFrame;
 	private WenzhouShuangkouPanResult panResult;

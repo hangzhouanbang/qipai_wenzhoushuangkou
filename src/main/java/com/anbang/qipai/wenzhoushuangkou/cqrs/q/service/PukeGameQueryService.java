@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouJuResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.WenzhouShuangkouJuResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.GameFinishVoteDboDao;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.JuResultDboDao;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.PukeGameDboDao;

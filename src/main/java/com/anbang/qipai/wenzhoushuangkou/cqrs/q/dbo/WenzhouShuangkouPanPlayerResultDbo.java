@@ -1,6 +1,6 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouPanPlayerResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.WenzhouShuangkouPanPlayerResult;
 import com.dml.shuangkou.player.ShuangkouPlayerValueObject;
 
 public class WenzhouShuangkouPanPlayerResultDbo {

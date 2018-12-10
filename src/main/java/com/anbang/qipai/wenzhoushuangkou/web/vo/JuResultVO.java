@@ -3,7 +3,7 @@ package com.anbang.qipai.wenzhoushuangkou.web.vo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouJuResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.WenzhouShuangkouJuResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.JuResultDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameDbo;
 

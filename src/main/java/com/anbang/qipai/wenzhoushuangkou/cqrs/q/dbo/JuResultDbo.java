@@ -1,6 +1,6 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouJuResult;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.WenzhouShuangkouJuResult;
 
 public class JuResultDbo {
 

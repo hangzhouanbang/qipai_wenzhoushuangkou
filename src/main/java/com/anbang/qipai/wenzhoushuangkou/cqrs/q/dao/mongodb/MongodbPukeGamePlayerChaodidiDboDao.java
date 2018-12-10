@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGamePlayerChaodiState;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.PukeGamePlayerChaodiState;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.PukeGamePlayerChaodiDboDao;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGamePlayerChaodiDbo;
 

@@ -3,11 +3,11 @@ package com.anbang.qipai.wenzhoushuangkou.web.vo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.ChaPai;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.FaPai;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.StartChaodi;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.VoteNotPassWhenChaodi;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.VotingWhenChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.StartChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.VoteNotPassWhenChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.VotingWhenChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.wanfa.ChaPai;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.wanfa.FaPai;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameDbo;
 import com.dml.mpgame.game.Canceled;
 import com.dml.mpgame.game.Finished;

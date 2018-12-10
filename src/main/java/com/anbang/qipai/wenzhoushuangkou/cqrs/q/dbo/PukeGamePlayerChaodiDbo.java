@@ -2,7 +2,7 @@ package com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo;
 
 import java.util.Map;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGamePlayerChaodiState;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.PukeGamePlayerChaodiState;
 
 public class PukeGamePlayerChaodiDbo {
 
