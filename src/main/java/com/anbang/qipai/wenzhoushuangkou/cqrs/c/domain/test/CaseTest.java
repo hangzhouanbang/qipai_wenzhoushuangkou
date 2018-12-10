@@ -42,8 +42,8 @@ public class CaseTest {
 
 	// 炸弹压牌
 	// public static void main(String[] args) {
-	// DianShuZu beiYaDianShuZu = new DanGeZhadanDianShuZu(DianShu.jiu, 4);
-	// int[] dianShuAmountArray = { 2, 0, 2, 6, 0, 2, 0, 1, 1, 3, 0, 5, 2, 0, 1 };
+	// DianShuZu beiYaDianShuZu = new DanzhangDianShuZu(DianShu.A);
+	// int[] dianShuAmountArray = { 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 4, 0, 0 };
 	// List<DaPaiDianShuSolution> solutionList = calculateZhadan(beiYaDianShuZu,
 	// dianShuAmountArray);
 	// solutionList = filter(solutionList);
@@ -51,23 +51,23 @@ public class CaseTest {
 	// }
 
 	// 普通压牌
-	public static void main(String[] args) {
-		DianShuZu beiYaDianShuZu = new DanGeZhadanDianShuZu(DianShu.jiu, 4);
-		int[] dianShuAmountArray = { 0, 0, 0, 6, 0, 0, 3, 0, 3, 3, 0, 0, 6, 0, 0 };
-		List<DaPaiDianShuSolution> solutionList = calculate(beiYaDianShuZu, dianShuAmountArray);
-		solutionList.addAll(calculateZhadan(beiYaDianShuZu, dianShuAmountArray));
-		solutionList = filter(solutionList);
-		System.out.println(solutionList);
-	}
-
-	// 所有可打的牌
 	// public static void main(String[] args) {
-	// int[] dianShuAmountArray = { 2, 5, 1, 0, 8, 0, 0, 4, 0, 0, 0, 7, 0, 0, 0 };
-	// List<DaPaiDianShuSolution> solutionList =
-	// generateAllKedaPaiSolutions(dianShuAmountArray);
+	// DianShuZu beiYaDianShuZu = new DanzhangDianShuZu(DianShu.A);
+	// int[] dianShuAmountArray = { 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 4, 0, 0 };
+	// List<DaPaiDianShuSolution> solutionList = calculate(beiYaDianShuZu,
+	// dianShuAmountArray);
+	// solutionList.addAll(calculateZhadan(beiYaDianShuZu, dianShuAmountArray));
 	// solutionList = filter(solutionList);
 	// System.out.println(solutionList);
 	// }
+
+	// 所有可打的牌
+	public static void main(String[] args) {
+		int[] dianShuAmountArray = { 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0 };
+		List<DaPaiDianShuSolution> solutionList = generateAllKedaPaiSolutions(dianShuAmountArray);
+		solutionList = filter(solutionList);
+		System.out.println(solutionList);
+	}
 
 	public static List<DaPaiDianShuSolution> calculateZhadan(DianShuZu beiYaDianShuZu, int[] dianShuAmountArray) {
 		int[] dianShuAmount = dianShuAmountArray.clone();

@@ -38,6 +38,21 @@ public class WenzhouShuangkouGongxianFen {
 		shierxian = xianshuCount[8];
 	}
 
+	public void calculateShouPaiXianshu(int[] xianshuCount) {
+		if (xianshuCount == null) {
+			xianshuCount = new int[9];
+		}
+		sixian += xianshuCount[0];
+		wuxian += xianshuCount[1];
+		liuxian += xianshuCount[2];
+		qixian += xianshuCount[3];
+		baxian += xianshuCount[4];
+		jiuxian += xianshuCount[5];
+		shixian += xianshuCount[6];
+		shiyixian += xianshuCount[7];
+		shierxian += xianshuCount[8];
+	}
+
 	public void calculateXianshu() {
 		if (shixian >= 2) {
 			int shang = shixian / 2;
