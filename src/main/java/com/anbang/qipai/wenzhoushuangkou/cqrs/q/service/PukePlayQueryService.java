@@ -13,7 +13,6 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.PukeActionResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ReadyForGameResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ReadyToNextPanResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.WenzhouShuangkouPanResult;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.PlayerChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.StartChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.VoteNotPassWhenChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.VotingWhenChaodi;
@@ -85,15 +84,15 @@ public class PukePlayQueryService {
 		PukeGameDbo pukeGameDbo = new PukeGameDbo(pukeGame, playerInfoMap);
 		pukeGameDboDao.save(pukeGameDbo);
 
-		if (pukeGame.getState().name().equals(PlayerChaodi.name)) {
+		if (pukeGame.getState().name().equals(StartChaodi.name)) {
 			PukeGamePlayerChaodiDbo dbo = new PukeGamePlayerChaodiDbo();
 			dbo.setGameId(pukeGame.getId());
-			dbo.setPanNO(pukeGame.getPanNo());
+			dbo.setPanNo(pukeGame.getPanNo());
 			dbo.setPlayerChaodiStateMap(pukeGame.getPlayerChaodiStateMap());
 			pukeGamePlayerChaodiDboDao.addPukeGamePlayerChaodiDbo(dbo);
 		}
 
-		if (pukeGame.getState().name().equals(Playing.name)) {
+		if (readyForGameResult.getFirstActionFrame() != null) {
 			PanActionFrame panActionFrame = readyForGameResult.getFirstActionFrame();
 			gameLatestPanActionFrameDboDao.save(pukeGame.getId(), panActionFrame);
 			// 记录一条Frame，回放的时候要做
@@ -178,6 +177,13 @@ public class PukePlayQueryService {
 		pukeGame.allPlayerIds().forEach((pid) -> playerInfoMap.put(pid, playerInfoDao.findById(pid)));
 		PukeGameDbo pukeGameDbo = new PukeGameDbo(pukeGame, playerInfoMap);
 		pukeGameDboDao.save(pukeGameDbo);
+		if (pukeGame.getState().name().equals(StartChaodi.name)) {
+			PukeGamePlayerChaodiDbo dbo = new PukeGamePlayerChaodiDbo();
+			dbo.setGameId(pukeGame.getId());
+			dbo.setPanNo(pukeGame.getPanNo());
+			dbo.setPlayerChaodiStateMap(pukeGame.getPlayerChaodiStateMap());
+			pukeGamePlayerChaodiDboDao.addPukeGamePlayerChaodiDbo(dbo);
+		}
 
 		if (readyToNextPanResult.getFirstActionFrame() != null) {
 			String gameId = pukeGameDbo.getId();

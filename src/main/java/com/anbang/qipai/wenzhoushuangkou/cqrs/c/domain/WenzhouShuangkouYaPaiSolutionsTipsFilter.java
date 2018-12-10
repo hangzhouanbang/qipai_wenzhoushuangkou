@@ -13,6 +13,7 @@ import com.dml.puke.wanfa.dianshu.dianshuzu.LianduiDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.LiansanzhangDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.SanzhangDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.ShunziDianShuZu;
+import com.dml.puke.wanfa.dianshu.dianshuzu.ZhadanDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.ZhadanComparator;
 import com.dml.shuangkou.player.action.da.YaPaiSolutionsTipsFilter;
 import com.dml.shuangkou.player.action.da.solution.DaPaiDianShuSolution;
@@ -95,6 +96,25 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 						zhadanSolutionList.add(zhadanSolution);
 					}
 				}
+			}
+		}
+		DaPaiDianShuSolution maxDanGeZhadanSolution = null;
+		for (DaPaiDianShuSolution solution : YaPaiSolutions) {
+			DianShuZu dianshuZu = solution.getDianShuZu();
+			if (dianshuZu instanceof DanGeZhadanDianShuZu) {
+				DanGeZhadanDianShuZu danGeZhadanDianShuZu1 = (DanGeZhadanDianShuZu) dianshuZu;
+				if (maxDanGeZhadanSolution != null && zhadanComparator.compare(danGeZhadanDianShuZu1,
+						(ZhadanDianShuZu) maxDanGeZhadanSolution.getDianShuZu()) > 0) {
+					maxDanGeZhadanSolution = solution;
+				} else {
+					maxDanGeZhadanSolution = solution;
+				}
+			}
+		}
+		if (maxDanGeZhadanSolution != null) {
+			DaPaiDianShuSolution solution = zhadanSolutionList.getLast();
+			if (!solution.getDianshuZuheIdx().equals(maxDanGeZhadanSolution.getDianshuZuheIdx())) {
+				zhadanSolutionList.add(maxDanGeZhadanSolution);
 			}
 		}
 		List<DaPaiDianShuSolution> danzhangSolutionList = new LinkedList<>();

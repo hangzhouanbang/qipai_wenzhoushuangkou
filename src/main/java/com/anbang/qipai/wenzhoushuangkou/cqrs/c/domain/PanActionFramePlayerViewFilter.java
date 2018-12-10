@@ -7,6 +7,12 @@ import com.dml.shuangkou.pan.PanActionFrame;
 import com.dml.shuangkou.pan.PanValueObject;
 import com.dml.shuangkou.player.ShuangkouPlayerValueObject;
 
+/**
+ * 双明的过滤
+ * 
+ * @author lsc
+ *
+ */
 public class PanActionFramePlayerViewFilter {
 	public PanActionFrame filter(GameLatestPanActionFrameDbo frame, String playerId, boolean shuangming) {
 

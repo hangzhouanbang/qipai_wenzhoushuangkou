@@ -82,7 +82,6 @@ public class PukeController {
 		try {
 			panActionFrame = pukePlayQueryService.findAndFilterCurrentPanValueObjectForPlayer(gameId, playerId);
 		} catch (Exception e) {
-			e.printStackTrace();
 			vo.setSuccess(false);
 			vo.setMsg(e.getMessage());
 			return vo;
@@ -161,6 +160,7 @@ public class PukeController {
 			}
 			if (chaodiResult.getPukeGame().getState().name().equals(Playing.name)) {
 				queryScopes.add(QueryScope.panForMe.name());
+				queryScopes.add(QueryScope.gameInfo.name());
 			}
 		} else {// 盘结束了
 			String gameId = chaodiResult.getPukeGame().getId();
@@ -225,7 +225,6 @@ public class PukeController {
 			return vo;
 		}
 
-		queryScopes.add(QueryScope.gameInfo.name());
 		if (pukeActionResult.getPanResult() == null) {// 盘没结束
 			queryScopes.add(QueryScope.panForMe.name());
 		} else {// 盘结束了
@@ -239,6 +238,7 @@ public class PukeController {
 				gameMsgService.gameFinished(gameId);
 				queryScopes.add(QueryScope.juResult.name());
 			} else {
+				queryScopes.add(QueryScope.gameInfo.name());
 				queryScopes.add(QueryScope.panResult.name());
 			}
 			PanResultDbo panResultDbo = pukePlayQueryService.findPanResultDbo(gameId,
@@ -334,23 +334,25 @@ public class PukeController {
 			return vo;
 		}
 
-		PanActionFrame firstActionFrame = readyToNextPanResult.getFirstActionFrame();
-		List<QueryScope> queryScopes = new ArrayList<>();
-		queryScopes.add(QueryScope.gameInfo);
-		if (firstActionFrame != null) {
-			queryScopes.add(QueryScope.panForMe);
-		}
-		data.put("queryScopes", queryScopes);
-
 		// 通知其他人
 		for (String otherPlayerId : readyToNextPanResult.getPukeGame().allPlayerIds()) {
 			if (!otherPlayerId.equals(playerId)) {
-				List<QueryScope> scopes = QueryScope.scopesForState(readyToNextPanResult.getPukeGame().getState(),
-						readyToNextPanResult.getPukeGame().findPlayerState(otherPlayerId));
-				scopes.remove(QueryScope.panResult);
-				wsNotifier.notifyToQuery(otherPlayerId, scopes);
+				wsNotifier.notifyToQuery(otherPlayerId,
+						QueryScope.scopesForState(readyToNextPanResult.getPukeGame().getState(),
+								readyToNextPanResult.getPukeGame().findPlayerState(otherPlayerId)));
 			}
 		}
+
+		List<QueryScope> queryScopes = new ArrayList<>();
+		queryScopes.add(QueryScope.gameInfo);
+		if (readyToNextPanResult.getPukeGame().getState().name().equals(Playing.name)) {
+			queryScopes.add(QueryScope.panForMe);
+		}
+		if (readyToNextPanResult.getPukeGame().getState().name().equals(StartChaodi.name)) {
+			queryScopes.add(QueryScope.chaodiInfo);
+			queryScopes.add(QueryScope.panForMe);
+		}
+		data.put("queryScopes", queryScopes);
 		return vo;
 	}
 }

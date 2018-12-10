@@ -6,9 +6,9 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.PukeGamePlayerChaod
 
 public class PukeGamePlayerChaodiDbo {
 
-	private String id;
+	private String id;// gameid
 	private String gameId;
-	private int panNO;
+	private int panNo;
 	private Map<String, PukeGamePlayerChaodiState> playerChaodiStateMap;
 
 	public String getId() {
@@ -27,12 +27,12 @@ public class PukeGamePlayerChaodiDbo {
 		this.gameId = gameId;
 	}
 
-	public int getPanNO() {
-		return panNO;
+	public int getPanNo() {
+		return panNo;
 	}
 
-	public void setPanNO(int panNO) {
-		this.panNO = panNO;
+	public void setPanNo(int panNo) {
+		this.panNo = panNo;
 	}
 
 	public Map<String, PukeGamePlayerChaodiState> getPlayerChaodiStateMap() {

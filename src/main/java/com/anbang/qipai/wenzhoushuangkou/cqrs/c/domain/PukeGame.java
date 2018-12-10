@@ -23,8 +23,6 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.PukeGamePlayerChaod
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.StartChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.VoteNotPassWhenChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.VotingWhenChaodi;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.test.NoZhadanLuanpaiStrategy;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.test.ShiSanZhangFapaiStrategy;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.wanfa.ChaPai;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.wanfa.FaPai;
 import com.dml.mpgame.game.Finished;
@@ -56,7 +54,15 @@ import com.dml.shuangkou.pan.PanActionFrame;
 import com.dml.shuangkou.pan.PanResult;
 import com.dml.shuangkou.player.ShuangkouPlayer;
 import com.dml.shuangkou.preparedapai.avaliablepai.DoubleAvaliablePaiFiller;
+import com.dml.shuangkou.preparedapai.fapai.YiciJiuzhangFapaiStrategy;
+import com.dml.shuangkou.preparedapai.fapai.YiciSanzhangFapaiStrategy;
+import com.dml.shuangkou.preparedapai.fapai.YiliuSanqiFapaiStrategy;
+import com.dml.shuangkou.preparedapai.fapai.YisanSiliuFapaiStrategy;
 import com.dml.shuangkou.preparedapai.lipai.DianshuOrPaishuShoupaiSortStrategy;
+import com.dml.shuangkou.preparedapai.luanpai.BazhangHasSiwangLuanpaiStrategy;
+import com.dml.shuangkou.preparedapai.luanpai.ErliuhunHasSiwangLuanpaiStrategy;
+import com.dml.shuangkou.preparedapai.luanpai.LastPanChuPaiOrdinalLuanpaiStrategy;
+import com.dml.shuangkou.preparedapai.luanpai.SanwuHasSiwangLuanpaiStrategy;
 import com.dml.shuangkou.preparedapai.xianda.DongPositionXiandaPlayerDeterminer;
 import com.dml.shuangkou.preparedapai.zudui.HongxinbaHongxinjiuZuduiStrategy;
 import com.dml.shuangkou.wanfa.BianXingWanFa;
@@ -105,6 +111,9 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 				finish = true;
 			}
 		}
+		PanActionFrame firstPanActionFrame = ju.getCurrentPan().findLatestActionFrame();
+		chaodiResult.setPanActionFrame(firstPanActionFrame);
+
 		if (finish) {// 抄底成功
 			WenzhouShuangkouCurrentPanResultBuilder wenzhouShuangkouCurrentPanResultBuilder = (WenzhouShuangkouCurrentPanResultBuilder) ju
 					.getCurrentPanResultBuilder();
@@ -135,10 +144,8 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		if (start) {// 未成功抄底，正常游戏
 			state = new Playing();
 			updateAllPlayersState(new PlayerPlaying());
-			PanActionFrame firstPanActionFrame = ju.getCurrentPan().findLatestActionFrame();
-			chaodiResult.setPanActionFrame(firstPanActionFrame);
-			chaodiResult.setPukeGame(new PukeGameValueObject(this));
 		}
+		chaodiResult.setPukeGame(new PukeGameValueObject(this));
 		return chaodiResult;
 	}
 
@@ -366,8 +373,10 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 					dianshuCountArray[14] -= wangZhadanDianShuZu.getDawangCount();
 				}
 			} else {
-				bestScore = 4 * xianshuCount[2] + 8 * xianshuCount[3] + 16 * xianshuCount[4] + 32 * xianshuCount[5]
-						+ 64 * xianshuCount[6] + 128 * xianshuCount[7] + 256 * xianshuCount[8];
+				WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
+				gongxianfen.calculateXianshu();
+				gongxianfen.calculate(renshu);
+				bestScore = gongxianfen.getValue();
 				return bestScore;
 			}
 		}
@@ -482,47 +491,40 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		// 生成局结果
 		ju.setJuResultBuilder(new WenzhouShuangkouJuResultBuilder());
 		ju.setAvaliablePaiFiller(new DoubleAvaliablePaiFiller());
-		// if (ChaPai.wuxu.equals(chapai)) {
-		// ju.setLuanpaiStrategyForFirstPan(new ErliuhunHasSiwangLuanpaiStrategy(bx,
-		// currentTime));
-		// ju.setLuanpaiStrategyForNextPan(new LastPanChuPaiOrdinalLuanpaiStrategy());
-		// } else if (ChaPai.erliuhun.equals(chapai)) {
-		// ju.setLuanpaiStrategyForFirstPan(new ErliuhunHasSiwangLuanpaiStrategy(bx,
-		// currentTime));
-		// ju.setLuanpaiStrategyForNextPan(new ErliuhunHasSiwangLuanpaiStrategy(bx,
-		// currentTime + 1));
-		// } else if (ChaPai.sanwu.equals(chapai)) {
-		// ju.setLuanpaiStrategyForFirstPan(new SanwuHasSiwangLuanpaiStrategy(bx,
-		// currentTime));
-		// ju.setLuanpaiStrategyForNextPan(new SanwuHasSiwangLuanpaiStrategy(bx,
-		// currentTime + 2));
-		// } else if (ChaPai.ba.equals(chapai)) {
-		// ju.setLuanpaiStrategyForFirstPan(new BazhangHasSiwangLuanpaiStrategy(bx,
-		// currentTime));
-		// ju.setLuanpaiStrategyForNextPan(new BazhangHasSiwangLuanpaiStrategy(bx,
-		// currentTime + 3));
-		// } else {
-		//
-		// }
-		ju.setLuanpaiStrategyForFirstPan(new NoZhadanLuanpaiStrategy());
-		ju.setLuanpaiStrategyForNextPan(new NoZhadanLuanpaiStrategy());
-		ju.setFapaiStrategyForFirstPan(new ShiSanZhangFapaiStrategy());
-		ju.setFapaiStrategyForNextPan(new ShiSanZhangFapaiStrategy());
-		// if (FaPai.san.equals(fapai)) {
-		// ju.setFapaiStrategyForFirstPan(new YiciSanzhangFapaiStrategy());
-		// ju.setFapaiStrategyForNextPan(new YiciSanzhangFapaiStrategy());
-		// } else if (FaPai.sanliu.equals(fapai)) {
-		// ju.setFapaiStrategyForFirstPan(new YisanSiliuFapaiStrategy());
-		// ju.setFapaiStrategyForNextPan(new YisanSiliuFapaiStrategy());
-		// } else if (FaPai.liuqi.equals(fapai)) {
-		// ju.setFapaiStrategyForFirstPan(new YiliuSanqiFapaiStrategy());
-		// ju.setFapaiStrategyForNextPan(new YiliuSanqiFapaiStrategy());
-		// } else if (FaPai.jiu.equals(fapai)) {
-		// ju.setFapaiStrategyForFirstPan(new YiciJiuzhangFapaiStrategy());
-		// ju.setFapaiStrategyForNextPan(new YiciJiuzhangFapaiStrategy());
-		// } else {
-		//
-		// }
+		if (ChaPai.wuxu.equals(chapai)) {
+			ju.setLuanpaiStrategyForFirstPan(new ErliuhunHasSiwangLuanpaiStrategy(bx, currentTime));
+			ju.setLuanpaiStrategyForNextPan(new LastPanChuPaiOrdinalLuanpaiStrategy());
+		} else if (ChaPai.erliuhun.equals(chapai)) {
+			ju.setLuanpaiStrategyForFirstPan(new ErliuhunHasSiwangLuanpaiStrategy(bx, currentTime));
+			ju.setLuanpaiStrategyForNextPan(new ErliuhunHasSiwangLuanpaiStrategy(bx, currentTime + 1));
+		} else if (ChaPai.sanwu.equals(chapai)) {
+			ju.setLuanpaiStrategyForFirstPan(new SanwuHasSiwangLuanpaiStrategy(bx, currentTime));
+			ju.setLuanpaiStrategyForNextPan(new SanwuHasSiwangLuanpaiStrategy(bx, currentTime + 2));
+		} else if (ChaPai.ba.equals(chapai)) {
+			ju.setLuanpaiStrategyForFirstPan(new BazhangHasSiwangLuanpaiStrategy(bx, currentTime));
+			ju.setLuanpaiStrategyForNextPan(new BazhangHasSiwangLuanpaiStrategy(bx, currentTime + 3));
+		} else {
+
+		}
+		// ju.setLuanpaiStrategyForFirstPan(new NoZhadanLuanpaiStrategy());
+		// ju.setLuanpaiStrategyForNextPan(new NoZhadanLuanpaiStrategy());
+		// ju.setFapaiStrategyForFirstPan(new ShiSanZhangFapaiStrategy());
+		// ju.setFapaiStrategyForNextPan(new ShiSanZhangFapaiStrategy());
+		if (FaPai.san.equals(fapai)) {
+			ju.setFapaiStrategyForFirstPan(new YiciSanzhangFapaiStrategy());
+			ju.setFapaiStrategyForNextPan(new YiciSanzhangFapaiStrategy());
+		} else if (FaPai.sanliu.equals(fapai)) {
+			ju.setFapaiStrategyForFirstPan(new YisanSiliuFapaiStrategy());
+			ju.setFapaiStrategyForNextPan(new YisanSiliuFapaiStrategy());
+		} else if (FaPai.liuqi.equals(fapai)) {
+			ju.setFapaiStrategyForFirstPan(new YiliuSanqiFapaiStrategy());
+			ju.setFapaiStrategyForNextPan(new YiliuSanqiFapaiStrategy());
+		} else if (FaPai.jiu.equals(fapai)) {
+			ju.setFapaiStrategyForFirstPan(new YiciJiuzhangFapaiStrategy());
+			ju.setFapaiStrategyForNextPan(new YiciJiuzhangFapaiStrategy());
+		} else {
+
+		}
 		ju.setShoupaiSortStrategy(new DianshuOrPaishuShoupaiSortStrategy());
 		ju.setZuduiStrategyForFirstPan(new HongxinbaHongxinjiuZuduiStrategy());
 		ju.setZuduiStrategyForNextPan(new HongxinbaHongxinjiuZuduiStrategy());
@@ -728,6 +730,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		maxXianshuMap.putAll(playerMaxXianshuMap);
 		otherMaxXianshuMap.putAll(playerOtherMaxXianshuMap);
 		boolean hasChaodi = false;
+		chaodiPlayerIdList = new ArrayList<>();
 		Set<String> cannotChaodiSet = new HashSet<>();
 		if (chaodi) {
 			for (String playerId : allPlayerIds()) {

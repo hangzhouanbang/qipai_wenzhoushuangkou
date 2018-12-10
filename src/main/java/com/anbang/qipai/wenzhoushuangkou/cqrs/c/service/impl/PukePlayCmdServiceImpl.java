@@ -51,7 +51,7 @@ public class PukePlayCmdServiceImpl extends CmdServiceBase implements PukePlayCm
 
 		ReadyToNextPanResult readyToNextPanResult = new ReadyToNextPanResult();
 		pukeGame.readyToNextPan(playerId);
-		if (pukeGame.getState().name().equals(Playing.name)) {// 开始下一盘了
+		if (pukeGame.getState().name().equals(Playing.name) || pukeGame.getState().name().equals(StartChaodi.name)) {// 开始下一盘了
 			PanActionFrame firstActionFrame = pukeGame.getJu().getCurrentPan().findLatestActionFrame();
 			readyToNextPanResult.setFirstActionFrame(firstActionFrame);
 		}

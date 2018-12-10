@@ -360,6 +360,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			playerResult.setGongxianfen(gongxianfen);
 			WenzhouShuangkouChaixianbufen bufen = new WenzhouShuangkouChaixianbufen();
 			playerResult.setBufen(bufen);
+			playerResult.setChaodi(true);
 			panPlayerResultList.add(playerResult);
 		});
 
@@ -391,6 +392,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			}
 		});
 		WenzhouShuangkouPanResult wenzhouShuangkouPanResult = new WenzhouShuangkouPanResult();
+		wenzhouShuangkouPanResult.setChaodi(true);
 		wenzhouShuangkouPanResult.setPan(new PanValueObject(currentPan));
 		wenzhouShuangkouPanResult.setPanFinishTime(panFinishTime);
 		wenzhouShuangkouPanResult.setPanPlayerResultList(panPlayerResultList);
