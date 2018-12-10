@@ -7,6 +7,8 @@ package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
  *
  */
 public class WenzhouShuangkouGongxianFen {
+	private int sixian;
+	private int wuxian;
 	private int liuxian;
 	private int qixian;
 	private int baxian;
@@ -25,6 +27,8 @@ public class WenzhouShuangkouGongxianFen {
 		if (xianshuCount == null) {
 			xianshuCount = new int[9];
 		}
+		sixian = xianshuCount[0];
+		wuxian = xianshuCount[1];
 		liuxian = xianshuCount[2];
 		qixian = xianshuCount[3];
 		baxian = xianshuCount[4];
@@ -32,6 +36,112 @@ public class WenzhouShuangkouGongxianFen {
 		shixian = xianshuCount[6];
 		shiyixian = xianshuCount[7];
 		shierxian = xianshuCount[8];
+	}
+
+	public void calculateXianshu() {
+		if (shixian >= 2) {
+			int shang = shixian / 2;
+			shiyixian += shang;
+			int yu = shixian % 2;
+			shixian = yu;
+		}
+		if (jiuxian >= 2 || baxian >= 3 || qixian >= 4) {
+			int shangjiu = jiuxian / 2;
+			shixian += shangjiu;
+			int yujiu = jiuxian % 2;
+			jiuxian = yujiu;
+
+			int shangba = baxian / 3;
+			shixian += shangba;
+			int yuba = baxian % 3;
+			baxian = yuba;
+
+			int shangqi = qixian / 4;
+			shixian += shangqi;
+			int yuqi = qixian % 4;
+			qixian = yuqi;
+		}
+		if (baxian >= 2 || qixian >= 3 || liuxian >= 4 || wuxian >= 5 || sixian >= 7) {
+			int shangba = baxian / 2;
+			jiuxian += shangba;
+			int yuba = baxian % 2;
+			baxian = yuba;
+
+			int shangqi = qixian / 3;
+			jiuxian += shangqi;
+			int yuqi = qixian % 3;
+			qixian = yuqi;
+
+			int shangliu = liuxian / 4;
+			jiuxian += shangliu;
+			int yuliu = liuxian % 4;
+			liuxian = yuliu;
+
+			int shangwu = wuxian / 5;
+			jiuxian += shangwu;
+			int yuwu = wuxian % 5;
+			wuxian = yuwu;
+
+			int shangsi = sixian / 7;
+			jiuxian += shangsi;
+			int yusi = sixian % 7;
+			sixian = yusi;
+		}
+		if (qixian >= 2 || liuxian >= 3 || wuxian >= 4 || sixian >= 6) {
+
+			int shangqi = qixian / 2;
+			baxian += shangqi;
+			int yuqi = qixian % 2;
+			qixian = yuqi;
+
+			int shangliu = liuxian / 3;
+			baxian += shangliu;
+			int yuliu = liuxian % 3;
+			liuxian = yuliu;
+
+			int shangwu = wuxian / 4;
+			baxian += shangwu;
+			int yuwu = wuxian % 4;
+			wuxian = yuwu;
+
+			int shangsi = sixian / 6;
+			baxian += shangsi;
+			int yusi = sixian % 6;
+			sixian = yusi;
+		}
+		if (liuxian >= 2 || wuxian >= 3 || sixian >= 5) {
+			int shangliu = liuxian / 2;
+			qixian += shangliu;
+			int yuliu = liuxian % 2;
+			liuxian = yuliu;
+
+			int shangwu = wuxian / 3;
+			qixian += shangwu;
+			int yuwu = wuxian % 3;
+			wuxian = yuwu;
+
+			int shangsi = sixian / 5;
+			qixian += shangsi;
+			int yusi = sixian % 5;
+			sixian = yusi;
+		}
+		if (wuxian >= 2 || sixian >= 4) {
+			int shangwu = wuxian / 2;
+			liuxian += shangwu;
+			int yuwu = wuxian % 2;
+			wuxian = yuwu;
+
+			int shangsi = sixian / 4;
+			liuxian += shangsi;
+			int yusi = sixian % 4;
+			sixian = yusi;
+		}
+		if (sixian >= 3) {
+			int shangsi = sixian / 3;
+			wuxian += shangsi;
+			int yusi = baxian % 3;
+			sixian = yusi;
+		}
 	}
 
 	public void calculate(int renshu) {
@@ -42,6 +152,22 @@ public class WenzhouShuangkouGongxianFen {
 
 	public int jiesuan(int delta) {
 		return totalscore += delta;
+	}
+
+	public int getSixian() {
+		return sixian;
+	}
+
+	public void setSixian(int sixian) {
+		this.sixian = sixian;
+	}
+
+	public int getWuxian() {
+		return wuxian;
+	}
+
+	public void setWuxian(int wuxian) {
+		this.wuxian = wuxian;
 	}
 
 	public int getLiuxian() {

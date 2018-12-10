@@ -3,12 +3,12 @@ package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.listener;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.LianXuZhadanDianShuZu;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WangZhadanDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DanGeZhadanDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.ZhadanDianShuZu;
 import com.dml.shuangkou.ju.Ju;
+import com.dml.shuangkou.pai.dianshuzu.LianXuZhadanDianShuZu;
+import com.dml.shuangkou.pai.dianshuzu.WangZhadanDianShuZu;
 import com.dml.shuangkou.player.action.da.DaAction;
 import com.dml.shuangkou.player.action.da.DaActionStatisticsListener;
 

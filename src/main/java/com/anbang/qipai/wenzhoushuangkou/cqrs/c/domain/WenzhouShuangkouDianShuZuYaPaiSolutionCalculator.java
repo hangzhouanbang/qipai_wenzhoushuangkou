@@ -17,10 +17,14 @@ import com.dml.puke.wanfa.dianshu.dianshuzu.ShunziDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.CanNotCompareException;
 import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.DanGeDianShuZuComparator;
 import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.LianXuDianShuZuComparator;
-import com.dml.shuangkou.BianXingWanFa;
-import com.dml.shuangkou.ShoupaiJiesuanPai;
+import com.dml.shuangkou.pai.dianshuzu.DianShuZuCalculator;
+import com.dml.shuangkou.pai.dianshuzu.PaiXing;
+import com.dml.shuangkou.pai.jiesuanpai.DawangDangPai;
+import com.dml.shuangkou.pai.jiesuanpai.ShoupaiJiesuanPai;
+import com.dml.shuangkou.pai.jiesuanpai.XiaowangDangPai;
 import com.dml.shuangkou.player.action.da.solution.DaPaiDianShuSolution;
 import com.dml.shuangkou.player.action.da.solution.DianShuZuYaPaiSolutionCalculator;
+import com.dml.shuangkou.wanfa.BianXingWanFa;
 
 public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShuZuYaPaiSolutionCalculator {
 	private BianXingWanFa bx;

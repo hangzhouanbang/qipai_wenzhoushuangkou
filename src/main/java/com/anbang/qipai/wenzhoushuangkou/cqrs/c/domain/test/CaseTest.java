@@ -6,13 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.DawangDangPai;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.DianShuZuCalculator;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.LianXuZhadanDianShuZu;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PaiXing;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WangZhadanDianShuZu;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouZhadanComparator;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.XiaowangDangPai;
 import com.dml.puke.pai.DianShu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DanGeZhadanDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DanzhangDianShuZu;
@@ -30,9 +24,15 @@ import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.LianXuDianShuZuComparator
 import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.NoZhadanDanGeDianShuZuComparator;
 import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.TongDengLianXuDianShuZuComparator;
 import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.ZhadanComparator;
-import com.dml.shuangkou.BianXingWanFa;
-import com.dml.shuangkou.ShoupaiJiesuanPai;
+import com.dml.shuangkou.pai.dianshuzu.DianShuZuCalculator;
+import com.dml.shuangkou.pai.dianshuzu.LianXuZhadanDianShuZu;
+import com.dml.shuangkou.pai.dianshuzu.PaiXing;
+import com.dml.shuangkou.pai.dianshuzu.WangZhadanDianShuZu;
+import com.dml.shuangkou.pai.jiesuanpai.DawangDangPai;
+import com.dml.shuangkou.pai.jiesuanpai.ShoupaiJiesuanPai;
+import com.dml.shuangkou.pai.jiesuanpai.XiaowangDangPai;
 import com.dml.shuangkou.player.action.da.solution.DaPaiDianShuSolution;
+import com.dml.shuangkou.wanfa.BianXingWanFa;
 
 public class CaseTest {
 	private static BianXingWanFa bx = BianXingWanFa.banqianbian;
@@ -42,9 +42,8 @@ public class CaseTest {
 
 	// 炸弹压牌
 	// public static void main(String[] args) {
-	// DianShuZu beiYaDianShuZu = new LianduiDianShuZu(new DianShu[] { DianShu.shi,
-	// DianShu.J, DianShu.Q });
-	// int[] dianShuAmountArray = { 0, 0, 2, 0, 0, 2, 5, 1, 4, 2, 2, 4, 4, 0, 1 };
+	// DianShuZu beiYaDianShuZu = new DanGeZhadanDianShuZu(DianShu.jiu, 4);
+	// int[] dianShuAmountArray = { 2, 0, 2, 6, 0, 2, 0, 1, 1, 3, 0, 5, 2, 0, 1 };
 	// List<DaPaiDianShuSolution> solutionList = calculateZhadan(beiYaDianShuZu,
 	// dianShuAmountArray);
 	// solutionList = filter(solutionList);
@@ -52,23 +51,23 @@ public class CaseTest {
 	// }
 
 	// 普通压牌
-	// public static void main(String[] args) {
-	// DianShuZu beiYaDianShuZu = new DanzhangDianShuZu(DianShu.shi);
-	// int[] dianShuAmountArray = { 5, 1, 3, 0, 0, 0, 1, 4, 6, 0, 3, 0, 0, 0, 1 };
-	// List<DaPaiDianShuSolution> solutionList = calculate(beiYaDianShuZu,
-	// dianShuAmountArray);
-	// solutionList.addAll(calculateZhadan(beiYaDianShuZu, dianShuAmountArray));
-	// solutionList = filter(solutionList);
-	// System.out.println(solutionList);
-	// }
-
-	// 所有可打的牌
 	public static void main(String[] args) {
-		int[] dianShuAmountArray = { 2, 5, 1, 0, 8, 0, 0, 4, 0, 0, 0, 7, 0, 0, 0 };
-		List<DaPaiDianShuSolution> solutionList = generateAllKedaPaiSolutions(dianShuAmountArray);
+		DianShuZu beiYaDianShuZu = new DanGeZhadanDianShuZu(DianShu.jiu, 4);
+		int[] dianShuAmountArray = { 0, 0, 0, 6, 0, 0, 3, 0, 3, 3, 0, 0, 6, 0, 0 };
+		List<DaPaiDianShuSolution> solutionList = calculate(beiYaDianShuZu, dianShuAmountArray);
+		solutionList.addAll(calculateZhadan(beiYaDianShuZu, dianShuAmountArray));
 		solutionList = filter(solutionList);
 		System.out.println(solutionList);
 	}
+
+	// 所有可打的牌
+	// public static void main(String[] args) {
+	// int[] dianShuAmountArray = { 2, 5, 1, 0, 8, 0, 0, 4, 0, 0, 0, 7, 0, 0, 0 };
+	// List<DaPaiDianShuSolution> solutionList =
+	// generateAllKedaPaiSolutions(dianShuAmountArray);
+	// solutionList = filter(solutionList);
+	// System.out.println(solutionList);
+	// }
 
 	public static List<DaPaiDianShuSolution> calculateZhadan(DianShuZu beiYaDianShuZu, int[] dianShuAmountArray) {
 		int[] dianShuAmount = dianShuAmountArray.clone();

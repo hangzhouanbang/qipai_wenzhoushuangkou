@@ -44,7 +44,7 @@ import com.dml.mpgame.game.extend.fpmpv.VoteNotPassWhenWaitingNextPan;
 import com.dml.mpgame.game.extend.vote.FinishedByVote;
 import com.dml.mpgame.game.extend.vote.VoteNotPassWhenPlaying;
 import com.dml.mpgame.game.player.GamePlayerOnlineState;
-import com.dml.shuangkou.BianXingWanFa;
+import com.dml.shuangkou.wanfa.BianXingWanFa;
 
 @RestController
 @RequestMapping("/game")

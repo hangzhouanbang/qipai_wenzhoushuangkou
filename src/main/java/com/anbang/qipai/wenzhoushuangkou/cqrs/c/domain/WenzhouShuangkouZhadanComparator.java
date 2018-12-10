@@ -3,6 +3,8 @@ package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DanGeZhadanDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.ZhadanDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.ZhadanComparator;
+import com.dml.shuangkou.pai.dianshuzu.LianXuZhadanDianShuZu;
+import com.dml.shuangkou.pai.dianshuzu.WangZhadanDianShuZu;
 
 public class WenzhouShuangkouZhadanComparator implements ZhadanComparator {
 

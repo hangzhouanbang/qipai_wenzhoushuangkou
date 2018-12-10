@@ -26,7 +26,7 @@ public class ShiSanZhangFapaiStrategy implements FapaiStrategy {
 			}
 		}
 		for (ShuangkouPlayer player : shuangkouPlayerIdMajiangPlayerMap.values()) {
-			for (int j = 0; j < 2; j++) {
+			for (int j = 0; j < 1; j++) {
 				PukePai pukePai = avaliablePaiList.remove(0);
 				player.addShouPai(pukePai);
 			}

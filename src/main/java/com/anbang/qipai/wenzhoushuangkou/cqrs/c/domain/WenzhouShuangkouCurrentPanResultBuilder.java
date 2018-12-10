@@ -65,6 +65,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			yingPlayerResult.setMingcifen(mingcifen);
 			int[] xianshuCount = playerXianshuMap.get(yingPlayerId);
 			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
+			gongxianfen.calculateXianshu();
 			gongxianfen.calculate(renshu);
 			yingPlayerResult.setGongxianfen(gongxianfen);
 			WenzhouShuangkouChaixianbufen bufen = new WenzhouShuangkouChaixianbufen();
@@ -128,6 +129,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			playerResult2.setMingcifen(mingcifen2);
 			int[] xianshuCount2 = playerXianshuMap.get(playerId2);
 			WenzhouShuangkouGongxianFen gongxianfen2 = new WenzhouShuangkouGongxianFen(xianshuCount2);
+			gongxianfen2.calculateXianshu();
 			gongxianfen2.calculate(renshu);
 			playerResult2.setGongxianfen(gongxianfen2);
 			WenzhouShuangkouChaixianbufen bufen2 = new WenzhouShuangkouChaixianbufen();
@@ -160,6 +162,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			playerResult3.setMingcifen(mingcifen3);
 			int[] xianshuCount3 = playerXianshuMap.get(playerId3);
 			WenzhouShuangkouGongxianFen gongxianfen3 = new WenzhouShuangkouGongxianFen(xianshuCount3);
+			gongxianfen3.calculateXianshu();
 			gongxianfen3.calculate(renshu);
 			playerResult3.setGongxianfen(gongxianfen3);
 			WenzhouShuangkouChaixianbufen bufen3 = new WenzhouShuangkouChaixianbufen();
@@ -198,6 +201,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 							// 结算补分
 							chaixianBufen1.jiesuan(-bufenj);
 							chaixianBufen2.jiesuan(-bufeni);
+							break;
 						}
 					}
 				}
@@ -213,6 +217,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 							// 结算补分
 							chaixianBufen1.jiesuan(-bufenj);
 							chaixianBufen2.jiesuan(-bufeni);
+							break;
 						}
 					}
 				}
@@ -258,6 +263,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			yingPlayerResult.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
 			int[] xianshuCount = playerXianshuMap.get(yingPlayerId);
 			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
+			gongxianfen.calculateXianshu();
 			gongxianfen.calculate(renshu);
 			yingPlayerResult.setGongxianfen(gongxianfen);
 			WenzhouShuangkouChaixianbufen bufen = new WenzhouShuangkouChaixianbufen();
@@ -281,6 +287,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			int[] xianshuCount1 = playerXianshuMap.get(shuPlayerId);
 			shuPlayerResult.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
 			WenzhouShuangkouGongxianFen gongxianfen1 = new WenzhouShuangkouGongxianFen(xianshuCount1);
+			gongxianfen1.calculateXianshu();
 			gongxianfen1.calculate(renshu);
 			shuPlayerResult.setGongxianfen(gongxianfen1);
 			WenzhouShuangkouChaixianbufen bufen1 = new WenzhouShuangkouChaixianbufen();
