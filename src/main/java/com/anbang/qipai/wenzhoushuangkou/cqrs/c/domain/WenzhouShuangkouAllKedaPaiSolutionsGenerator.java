@@ -13,6 +13,7 @@ import com.dml.puke.wanfa.dianshu.dianshuzu.DianShuZuGenerator;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DuiziDianShuZu;
 import com.dml.shuangkou.pai.dianshuzu.DianShuZuCalculator;
 import com.dml.shuangkou.pai.dianshuzu.PaiXing;
+import com.dml.shuangkou.pai.dianshuzu.WangZhadanDianShuZu;
 import com.dml.shuangkou.pai.jiesuanpai.DawangDangPai;
 import com.dml.shuangkou.pai.jiesuanpai.ShoupaiJiesuanPai;
 import com.dml.shuangkou.pai.jiesuanpai.XiaowangDangPai;
@@ -66,6 +67,26 @@ public class WenzhouShuangkouAllKedaPaiSolutionsGenerator implements AllKedaPaiS
 			DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
 			solution.setDianShuZu(new DuiziDianShuZu(DianShu.xiaowang));
 			DianShu[] dachuDianShuArray = { DianShu.xiaowang, DianShu.xiaowang };
+			solution.setDachuDianShuArray(dachuDianShuArray);
+			solution.calculateDianshuZuheIdx();
+			solutionList.add(solution);
+		}
+		// 王炸
+		List<WangZhadanDianShuZu> wangZhadanDianShuZuList = DianShuZuCalculator
+				.generateAllWangZhadanDianShuZu(dianshuCountArray);
+
+		for (WangZhadanDianShuZu wangZhadanDianShuZu : wangZhadanDianShuZuList) {
+			DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
+			solution.setDianShuZu(wangZhadanDianShuZu);
+			List<DianShu> dachuDianShuList = new ArrayList<>();
+			DianShu[] lianXuDianShuArray = wangZhadanDianShuZu.getDianShuZu();
+			for (int count = 0; count < wangZhadanDianShuZu.getXiaowangCount(); count++) {
+				dachuDianShuList.add(lianXuDianShuArray[0]);
+			}
+			for (int count = 0; count < wangZhadanDianShuZu.getDawangCount(); count++) {
+				dachuDianShuList.add(lianXuDianShuArray[1]);
+			}
+			DianShu[] dachuDianShuArray = dachuDianShuList.toArray(new DianShu[dachuDianShuList.size()]);
 			solution.setDachuDianShuArray(dachuDianShuArray);
 			solution.calculateDianshuZuheIdx();
 			solutionList.add(solution);

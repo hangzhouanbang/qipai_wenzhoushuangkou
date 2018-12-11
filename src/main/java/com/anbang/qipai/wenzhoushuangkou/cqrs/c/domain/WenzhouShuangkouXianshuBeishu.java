@@ -31,6 +31,82 @@ public class WenzhouShuangkouXianshuBeishu {
 		shierxian = xianshuCount[8];
 	}
 
+	public void calculateXianshu() {
+		// 四线
+		if (sixian == 7) {
+			jiuxian += 1;
+			sixian -= 7;
+		} else if (sixian == 6) {
+			baxian += 1;
+			sixian -= 6;
+		} else if (sixian == 5) {
+			qixian += 1;
+			sixian -= 5;
+		} else if (sixian == 4) {
+			liuxian += 1;
+			sixian -= 4;
+		} else if (sixian == 3) {
+			wuxian += 1;
+			sixian -= 3;
+		}
+		// 五线
+		if (wuxian == 5) {
+			jiuxian += 1;
+			wuxian -= 5;
+		} else if (wuxian == 4) {
+			baxian += 1;
+			wuxian -= 4;
+		} else if (wuxian == 3) {
+			qixian += 1;
+			wuxian -= 3;
+		} else if (wuxian == 2) {
+			liuxian += 1;
+			wuxian -= 2;
+		}
+		// 六线
+		if (liuxian == 4) {
+			jiuxian += 1;
+			liuxian -= 4;
+		} else if (liuxian == 3) {
+			baxian += 1;
+			liuxian -= 3;
+		} else if (liuxian == 2) {
+			qixian += 1;
+			liuxian -= 2;
+		}
+		// 七线
+		if (qixian == 4) {
+			shixian += 1;
+			qixian -= 4;
+		} else if (qixian == 3) {
+			jiuxian += 1;
+			qixian -= 3;
+		} else if (qixian == 2) {
+			baxian += 1;
+			qixian -= 2;
+		}
+		// 八线
+		if (baxian == 3) {
+			shixian += 1;
+			baxian -= 3;
+		} else if (baxian == 2) {
+			jiuxian += 1;
+			baxian -= 2;
+		}
+		// 九线
+		if (jiuxian == 2) {
+			shixian += 1;
+			jiuxian -= 2;
+		}
+
+		// 十线
+		if (shixian == 2) {
+			shiyixian += 1;
+			shixian -= 2;
+		}
+
+	}
+
 	public void calculate() {
 		int beishu = 1;
 		if (shierxian > 0) {

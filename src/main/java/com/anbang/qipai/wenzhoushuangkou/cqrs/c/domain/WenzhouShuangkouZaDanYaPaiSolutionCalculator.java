@@ -31,6 +31,26 @@ public class WenzhouShuangkouZaDanYaPaiSolutionCalculator implements ZaDanYaPaiS
 		List<DaPaiDianShuSolution> solutionList = new ArrayList<>();
 		int xiaowangCount = dianShuAmount[13];
 		int dawangCount = dianShuAmount[14];
+		// 王炸
+		List<WangZhadanDianShuZu> wangZhadanDianShuZuList = DianShuZuCalculator
+				.generateAllWangZhadanDianShuZu(dianShuAmountArray);
+
+		for (WangZhadanDianShuZu wangZhadanDianShuZu : wangZhadanDianShuZuList) {
+			DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
+			solution.setDianShuZu(wangZhadanDianShuZu);
+			List<DianShu> dachuDianShuList = new ArrayList<>();
+			DianShu[] lianXuDianShuArray = wangZhadanDianShuZu.getDianShuZu();
+			for (int count = 0; count < wangZhadanDianShuZu.getXiaowangCount(); count++) {
+				dachuDianShuList.add(lianXuDianShuArray[0]);
+			}
+			for (int count = 0; count < wangZhadanDianShuZu.getDawangCount(); count++) {
+				dachuDianShuList.add(lianXuDianShuArray[1]);
+			}
+			DianShu[] dachuDianShuArray = dachuDianShuList.toArray(new DianShu[dachuDianShuList.size()]);
+			solution.setDachuDianShuArray(dachuDianShuArray);
+			solution.calculateDianshuZuheIdx();
+			solutionList.add(solution);
+		}
 		int wangCount = 0;
 		if (BianXingWanFa.qianbian.equals(bx)) {// 千变
 			wangCount = xiaowangCount + dawangCount;

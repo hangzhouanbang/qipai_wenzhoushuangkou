@@ -54,119 +54,223 @@ public class WenzhouShuangkouGongxianFen {
 	}
 
 	public void calculateXianshu() {
-		if (shixian >= 2) {
-			int shang = shixian / 2;
-			shiyixian += shang;
-			int yu = shixian % 2;
-			shixian = yu;
-		}
-		if (jiuxian >= 2 || baxian >= 3 || qixian >= 4) {
-			int shangjiu = jiuxian / 2;
-			shixian += shangjiu;
-			int yujiu = jiuxian % 2;
-			jiuxian = yujiu;
+		int[] xianshuAmountArray = new int[9];
+		xianshuAmountArray[0] = sixian;
+		xianshuAmountArray[1] = wuxian;
+		xianshuAmountArray[2] = liuxian;
+		xianshuAmountArray[3] = qixian;
+		xianshuAmountArray[4] = baxian;
+		xianshuAmountArray[5] = jiuxian;
+		xianshuAmountArray[6] = shixian;
+		xianshuAmountArray[7] = shiyixian;
+		xianshuAmountArray[8] = shierxian;
 
-			int shangba = baxian / 3;
-			shixian += shangba;
-			int yuba = baxian % 3;
-			baxian = yuba;
-
-			int shangqi = qixian / 4;
-			shixian += shangqi;
-			int yuqi = qixian % 4;
-			qixian = yuqi;
-		}
-		if (baxian >= 2 || qixian >= 3 || liuxian >= 4 || wuxian >= 5 || sixian >= 7) {
-			int shangba = baxian / 2;
-			jiuxian += shangba;
-			int yuba = baxian % 2;
-			baxian = yuba;
-
-			int shangqi = qixian / 3;
-			jiuxian += shangqi;
-			int yuqi = qixian % 3;
-			qixian = yuqi;
-
-			int shangliu = liuxian / 4;
-			jiuxian += shangliu;
-			int yuliu = liuxian % 4;
-			liuxian = yuliu;
-
-			int shangwu = wuxian / 5;
-			jiuxian += shangwu;
-			int yuwu = wuxian % 5;
-			wuxian = yuwu;
-
-			int shangsi = sixian / 7;
-			jiuxian += shangsi;
-			int yusi = sixian % 7;
-			sixian = yusi;
-		}
-		if (qixian >= 2 || liuxian >= 3 || wuxian >= 4 || sixian >= 6) {
-
-			int shangqi = qixian / 2;
-			baxian += shangqi;
-			int yuqi = qixian % 2;
-			qixian = yuqi;
-
-			int shangliu = liuxian / 3;
-			baxian += shangliu;
-			int yuliu = liuxian % 3;
-			liuxian = yuliu;
-
-			int shangwu = wuxian / 4;
-			baxian += shangwu;
-			int yuwu = wuxian % 4;
-			wuxian = yuwu;
-
-			int shangsi = sixian / 6;
-			baxian += shangsi;
-			int yusi = sixian % 6;
-			sixian = yusi;
-		}
-		if (liuxian >= 2 || wuxian >= 3 || sixian >= 5) {
-			int shangliu = liuxian / 2;
-			qixian += shangliu;
-			int yuliu = liuxian % 2;
-			liuxian = yuliu;
-
-			int shangwu = wuxian / 3;
-			qixian += shangwu;
-			int yuwu = wuxian % 3;
-			wuxian = yuwu;
-
-			int shangsi = sixian / 5;
-			qixian += shangsi;
-			int yusi = sixian % 5;
-			sixian = yusi;
-		}
-		if (wuxian >= 2 || sixian >= 4) {
-			int shangwu = wuxian / 2;
-			liuxian += shangwu;
-			int yuwu = wuxian % 2;
-			wuxian = yuwu;
-
-			int shangsi = sixian / 4;
-			liuxian += shangsi;
-			int yusi = sixian % 4;
-			sixian = yusi;
-		}
-		if (sixian >= 3) {
-			int shangsi = sixian / 3;
-			wuxian += shangsi;
-			int yusi = baxian % 3;
-			sixian = yusi;
-		}
+		value = countSiXian(xianshuAmountArray);
 	}
 
 	public void calculate(int renshu) {
-		value = 4 * liuxian + 8 * qixian + 16 * baxian + 32 * jiuxian + 64 * shixian + 128 * shiyixian
-				+ 256 * shierxian;
 		totalscore = value * (renshu - 1);
 	}
 
 	public int jiesuan(int delta) {
 		return totalscore += delta;
+	}
+
+	private int countSiXian(int[] xianshuAmountArray) {
+		int bestScore = 0;
+		if (xianshuAmountArray[0] >= 7) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[5] += 1;
+			xianshuAmountArray[0] -= 7;
+			int score = countWuXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		if (xianshuAmountArray[0] >= 6) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[4] += 1;
+			xianshuAmountArray[0] -= 6;
+			int score = countWuXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		if (xianshuAmountArray[0] >= 5) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[3] += 1;
+			xianshuAmountArray[0] -= 5;
+			int score = countWuXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		if (xianshuAmountArray[0] >= 4) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[2] += 1;
+			xianshuAmountArray[0] -= 4;
+			int score = countWuXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		if (xianshuAmountArray[0] >= 3) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[1] += 1;
+			xianshuAmountArray[0] -= 3;
+			int score = countWuXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		return bestScore;
+	}
+
+	private int countWuXian(int[] xianshuAmountArray) {
+		int bestScore = 0;
+		if (xianshuAmountArray[1] >= 5) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[5] += 1;
+			xianshuAmountArray[1] -= 5;
+			int score = countLiuXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		if (xianshuAmountArray[1] >= 4) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[4] += 1;
+			xianshuAmountArray[1] -= 4;
+			int score = countLiuXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		if (xianshuAmountArray[1] >= 3) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[3] += 1;
+			xianshuAmountArray[1] -= 3;
+			int score = countLiuXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		if (xianshuAmountArray[1] >= 2) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[2] += 1;
+			xianshuAmountArray[1] -= 2;
+			int score = countLiuXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		return bestScore;
+	}
+
+	private int countLiuXian(int[] xianshuAmountArray) {
+		int bestScore = 0;
+		if (xianshuAmountArray[2] >= 4) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[5] += 1;
+			xianshuAmountArray[2] -= 4;
+			int score = countQiXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		if (xianshuAmountArray[2] >= 3) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[4] += 1;
+			xianshuAmountArray[2] -= 3;
+			int score = countQiXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		if (xianshuAmountArray[2] >= 2) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[3] += 1;
+			xianshuAmountArray[2] -= 2;
+			int score = countQiXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		return bestScore;
+	}
+
+	private int countQiXian(int[] xianshuAmountArray) {
+		int bestScore = 0;
+		if (xianshuAmountArray[3] >= 4) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[6] += 1;
+			xianshuAmountArray[3] -= 4;
+			int score = countBaXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		if (xianshuAmountArray[3] >= 3) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[5] += 1;
+			xianshuAmountArray[3] -= 3;
+			int score = countBaXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		if (xianshuAmountArray[3] >= 2) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[4] += 1;
+			xianshuAmountArray[3] -= 2;
+			int score = countBaXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		return bestScore;
+	}
+
+	private int countBaXian(int[] xianshuAmountArray) {
+		int bestScore = 0;
+		if (xianshuAmountArray[4] >= 3) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[6] += 1;
+			xianshuAmountArray[4] -= 3;
+			int score = countJiuXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		if (xianshuAmountArray[4] >= 2) {
+			int[] copyArray = xianshuAmountArray.clone();
+			xianshuAmountArray[5] += 1;
+			xianshuAmountArray[4] -= 2;
+			int score = countJiuXian(copyArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		return bestScore;
+	}
+
+	private int countJiuXian(int[] xianshuAmountArray) {
+		xianshuAmountArray[6] += 1;
+		xianshuAmountArray[5] -= 2;
+		return countShiXian(xianshuAmountArray);
+	}
+
+	private int countShiXian(int[] xianshuAmountArray) {
+		xianshuAmountArray[7] += 1;
+		xianshuAmountArray[6] -= 2;
+		return calculateBestScore(xianshuAmountArray);
+	}
+
+	public int calculateBestScore(int[] xianshuAmountArray) {
+		int score = 4 * xianshuAmountArray[2] + 8 * xianshuAmountArray[3] + 16 * xianshuAmountArray[4]
+				+ 32 * xianshuAmountArray[5] + 64 * xianshuAmountArray[6] + 128 * xianshuAmountArray[7]
+				+ 256 * xianshuAmountArray[8];
+		return score;
 	}
 
 	public int getSixian() {

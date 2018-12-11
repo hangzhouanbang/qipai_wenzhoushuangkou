@@ -226,6 +226,7 @@ public class PukeController {
 		}
 
 		if (pukeActionResult.getPanResult() == null) {// 盘没结束
+			queryScopes.add(QueryScope.gameInfo.name());
 			queryScopes.add(QueryScope.panForMe.name());
 		} else {// 盘结束了
 			String gameId = pukeActionResult.getPukeGame().getId();
@@ -337,9 +338,10 @@ public class PukeController {
 		// 通知其他人
 		for (String otherPlayerId : readyToNextPanResult.getPukeGame().allPlayerIds()) {
 			if (!otherPlayerId.equals(playerId)) {
-				wsNotifier.notifyToQuery(otherPlayerId,
-						QueryScope.scopesForState(readyToNextPanResult.getPukeGame().getState(),
-								readyToNextPanResult.getPukeGame().findPlayerState(otherPlayerId)));
+				List<QueryScope> scopes = QueryScope.scopesForState(readyToNextPanResult.getPukeGame().getState(),
+						readyToNextPanResult.getPukeGame().findPlayerState(otherPlayerId));
+				scopes.remove(QueryScope.panResult);
+				wsNotifier.notifyToQuery(otherPlayerId, scopes);
 			}
 		}
 
