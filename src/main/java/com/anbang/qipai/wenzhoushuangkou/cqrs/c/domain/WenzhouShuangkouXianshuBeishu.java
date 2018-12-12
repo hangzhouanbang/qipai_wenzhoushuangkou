@@ -11,6 +11,10 @@ public class WenzhouShuangkouXianshuBeishu {
 	private int shiyixian;
 	private int shierxian;
 	private int value;// 单人线数倍数
+	private int[] bestXianshuAmountArray = new int[9];
+	private int[][] fenTable = new int[][] { { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 4, 8, 16, 32, 64, 128, 256 },
+			{ 0, 4, 8, 16, 32, 64, 128, 0, 0 }, { 0, 8, 16, 32, 64, 128, 0, 0, 0 }, { 4, 16, 32, 64, 0, 0, 0, 0, 0 },
+			{ 8, 32, 0, 0, 0, 0, 0, 0, 0, }, { 16, 0, 0, 0, 0, 0, 0, 0, 0 }, { 32, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
 	public WenzhouShuangkouXianshuBeishu() {
 
@@ -31,80 +35,52 @@ public class WenzhouShuangkouXianshuBeishu {
 		shierxian = xianshuCount[8];
 	}
 
+	private void calculateBestXianshu(int[] xianshuAmountArray, int index, int size, int length) {
+		if (length >= 8) {
+			int score = fenTable[xianshuAmountArray[0]][0] + fenTable[xianshuAmountArray[1]][1]
+					+ fenTable[xianshuAmountArray[2]][2] + fenTable[xianshuAmountArray[3]][3]
+					+ fenTable[xianshuAmountArray[4]][4] + fenTable[xianshuAmountArray[5]][5]
+					+ fenTable[xianshuAmountArray[6]][6] + fenTable[xianshuAmountArray[7]][7]
+					+ fenTable[xianshuAmountArray[8]][8];
+			if (score > value) {
+				value = score;
+				bestXianshuAmountArray = xianshuAmountArray;
+			}
+		} else {
+			for (int i = 0; i <= 8 - index; i++) {
+				for (int j = 0; j <= size; j++) {
+					int[] copyArray = xianshuAmountArray.clone();
+					copyArray[8 - index] -= j;
+					copyArray[i] += j;
+					calculateBestXianshu(copyArray, index + i, copyArray[8 - index - i], length + 1);
+				}
+			}
+		}
+	}
+
 	public void calculateXianshu() {
-		// 四线
-		if (sixian == 7) {
-			jiuxian += 1;
-			sixian -= 7;
-		} else if (sixian == 6) {
-			baxian += 1;
-			sixian -= 6;
-		} else if (sixian == 5) {
-			qixian += 1;
-			sixian -= 5;
-		} else if (sixian == 4) {
-			liuxian += 1;
-			sixian -= 4;
-		} else if (sixian == 3) {
-			wuxian += 1;
-			sixian -= 3;
-		}
-		// 五线
-		if (wuxian == 5) {
-			jiuxian += 1;
-			wuxian -= 5;
-		} else if (wuxian == 4) {
-			baxian += 1;
-			wuxian -= 4;
-		} else if (wuxian == 3) {
-			qixian += 1;
-			wuxian -= 3;
-		} else if (wuxian == 2) {
-			liuxian += 1;
-			wuxian -= 2;
-		}
-		// 六线
-		if (liuxian == 4) {
-			jiuxian += 1;
-			liuxian -= 4;
-		} else if (liuxian == 3) {
-			baxian += 1;
-			liuxian -= 3;
-		} else if (liuxian == 2) {
-			qixian += 1;
-			liuxian -= 2;
-		}
-		// 七线
-		if (qixian == 4) {
-			shixian += 1;
-			qixian -= 4;
-		} else if (qixian == 3) {
-			jiuxian += 1;
-			qixian -= 3;
-		} else if (qixian == 2) {
-			baxian += 1;
-			qixian -= 2;
-		}
-		// 八线
-		if (baxian == 3) {
-			shixian += 1;
-			baxian -= 3;
-		} else if (baxian == 2) {
-			jiuxian += 1;
-			baxian -= 2;
-		}
-		// 九线
-		if (jiuxian == 2) {
-			shixian += 1;
-			jiuxian -= 2;
-		}
+		int[] xianshuAmountArray = new int[9];
+		xianshuAmountArray[0] = sixian;
+		xianshuAmountArray[1] = wuxian;
+		xianshuAmountArray[2] = liuxian;
+		xianshuAmountArray[3] = qixian;
+		xianshuAmountArray[4] = baxian;
+		xianshuAmountArray[5] = jiuxian;
+		xianshuAmountArray[6] = shixian;
+		xianshuAmountArray[7] = shiyixian;
+		xianshuAmountArray[8] = shierxian;
 
-		// 十线
-		if (shixian == 2) {
-			shiyixian += 1;
-			shixian -= 2;
-		}
+		calculateBestXianshu(xianshuAmountArray.clone(), 0, xianshuAmountArray[8], 0);
 
+		sixian = bestXianshuAmountArray[0];
+		wuxian = bestXianshuAmountArray[1];
+		liuxian = bestXianshuAmountArray[2];
+		qixian = bestXianshuAmountArray[3];
+		baxian = bestXianshuAmountArray[4];
+		jiuxian = bestXianshuAmountArray[5];
+		shixian = bestXianshuAmountArray[6];
+		shiyixian = bestXianshuAmountArray[7];
+		shierxian = bestXianshuAmountArray[8];
 	}
 
 	public void calculate() {
@@ -129,6 +105,22 @@ public class WenzhouShuangkouXianshuBeishu {
 			beishu = 1;
 		}
 		value = beishu;
+	}
+
+	public int[] getBestXianshuAmountArray() {
+		return bestXianshuAmountArray;
+	}
+
+	public void setBestXianshuAmountArray(int[] bestXianshuAmountArray) {
+		this.bestXianshuAmountArray = bestXianshuAmountArray;
+	}
+
+	public int[][] getFenTable() {
+		return fenTable;
+	}
+
+	public void setFenTable(int[][] fenTable) {
+		this.fenTable = fenTable;
 	}
 
 	public int getSixian() {

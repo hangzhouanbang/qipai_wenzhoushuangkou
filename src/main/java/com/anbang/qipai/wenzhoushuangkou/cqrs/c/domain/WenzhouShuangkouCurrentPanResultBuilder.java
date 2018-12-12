@@ -148,19 +148,17 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			WenzhouShuangkouPanPlayerResult playerResult1 = new WenzhouShuangkouPanPlayerResult();
 			playerResult1.setPlayerId(playerId1);
 			WenzhouShuangkouMingcifen mingcifen1 = new WenzhouShuangkouMingcifen();
+			mingcifen1.setMingci(2);
 			playerResult1.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
 			if (playerId1.equals(duijiaPlayer.getId())) {
 				mingcifen1.setYing(true);
 				mingcifen1.setShuangkou(true);
-				mingcifen1.setMingci(2);
 			} else if (playerId2.equals(duijiaPlayer.getId())) {
 				mingcifen1.setYing(false);
 				mingcifen1.setDankou(true);
-				mingcifen1.setMingci(3);
 			} else {
 				mingcifen1.setYing(false);
 				mingcifen1.setPingkou(true);
-				mingcifen1.setMingci(4);
 			}
 			mingcifen1.calculate();
 			playerResult1.setMingcifen(mingcifen1);
@@ -181,20 +179,18 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			WenzhouShuangkouPanPlayerResult playerResult2 = new WenzhouShuangkouPanPlayerResult();
 			playerResult2.setPlayerId(playerId2);
 			WenzhouShuangkouMingcifen mingcifen2 = new WenzhouShuangkouMingcifen();
+			mingcifen2.setMingci(3);
 			playerResult2.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
 			if (playerId1.equals(duijiaPlayer.getId())) {
 				mingcifen2.setYing(false);
 				mingcifen2.setShuangkou(true);
-				mingcifen2.setMingci(2);
 			} else if (playerId2.equals(duijiaPlayer.getId())) {
 				mingcifen2.setYing(true);
 				mingcifen2.setDankou(true);
-				mingcifen2.setMingci(3);
 			} else {
 				mingcifen2.setYing(false);
 				playerResult2.setXianshubeishu(playerOtherMaxXianshuMap.get(playerId2));
 				mingcifen2.setPingkou(true);
-				mingcifen2.setMingci(4);
 			}
 			mingcifen2.calculate();
 			playerResult2.setMingcifen(mingcifen2);
@@ -215,20 +211,18 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			WenzhouShuangkouPanPlayerResult playerResult3 = new WenzhouShuangkouPanPlayerResult();
 			playerResult3.setPlayerId(playerId3);
 			WenzhouShuangkouMingcifen mingcifen3 = new WenzhouShuangkouMingcifen();
+			mingcifen3.setMingci(4);
 			playerResult3.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
 			if (playerId1.equals(duijiaPlayer.getId())) {
 				mingcifen3.setYing(false);
 				mingcifen3.setShuangkou(true);
-				mingcifen3.setMingci(2);
 			} else if (playerId2.equals(duijiaPlayer.getId())) {
 				mingcifen3.setYing(false);
 				mingcifen3.setDankou(true);
-				mingcifen3.setMingci(3);
 			} else {
 				mingcifen3.setYing(true);
 				playerResult3.setXianshubeishu(playerMaxXianshuMap.get(playerId3));
 				mingcifen3.setPingkou(true);
-				mingcifen3.setMingci(4);
 			}
 			mingcifen3.calculate();
 			playerResult3.setMingcifen(mingcifen3);
@@ -513,127 +507,36 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 		}
 	}
 
-	private int calculateXianShu(ZhadanDianShuZu zhadan) {
-		if (zhadan instanceof DanGeZhadanDianShuZu) {
-			DanGeZhadanDianShuZu danGeZhadan = (DanGeZhadanDianShuZu) zhadan;
-			return danGeZhadan.getSize();
-		} else if (zhadan instanceof LianXuZhadanDianShuZu) {
-			LianXuZhadanDianShuZu lianXuZhadan = (LianXuZhadanDianShuZu) zhadan;
-			return lianXuZhadan.getXianShu();
-		} else {
-			WangZhadanDianShuZu wangZhadan = (WangZhadanDianShuZu) zhadan;
-			int xiaowangCount = wangZhadan.getXiaowangCount();
-			int dawangCount = wangZhadan.getDawangCount();
-			if (xiaowangCount + dawangCount == 4) {
-				return 7;
-			} else {
-				return 6;
-			}
-		}
-	}
-
-	/**
-	 * 根据牌型和牌数计算最佳贡献分
-	 */
-	private int[] calculateBestGongxianfen(int[] dianshuCountArray, PaiXing paixing) {
-		int[] xianshuCount = new int[9];
-		List<ZhadanDianShuZu> zhadanDianShuZuList = new ArrayList<>();
-		List<DanGeZhadanDianShuZu> danGeZhadanDianShuZuList = paixing.getZhadanDianShuZuList();
-		zhadanDianShuZuList.addAll(danGeZhadanDianShuZuList);
-		List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paixing.getLianXuZhadanDianShuZuList();
-		zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
-		List<WangZhadanDianShuZu> wangZhadanDianShuZuList = paixing.getWangZhadanDianShuZuList();
-		zhadanDianShuZuList.addAll(wangZhadanDianShuZuList);
-
-		while (true) {//
-			ZhadanDianShuZu bestZhadanDianShuZu = null;
-			int bestXianShu = 0;
-			for (ZhadanDianShuZu zhadanDianShuZu : zhadanDianShuZuList) {
-				if (verifyZhadanConflict(dianshuCountArray, zhadanDianShuZu)) {
-					int xianshu = calculateXianShu(zhadanDianShuZu);
-					if (bestZhadanDianShuZu == null || xianshu >= bestXianShu) {// 相同线数优先取非连续牌组
-						if (xianshu > bestXianShu) {
-							bestZhadanDianShuZu = zhadanDianShuZu;
-							bestXianShu = xianshu;
-						} else {
-							if (!(zhadanDianShuZu instanceof LianXuZhadanDianShuZu)) {
-								bestZhadanDianShuZu = zhadanDianShuZu;
-								bestXianShu = xianshu;
-							}
-						}
-					}
-				}
-			}
-			if (bestZhadanDianShuZu != null) {
-				zhadanDianShuZuList.remove(bestZhadanDianShuZu);
-				xianshuCount[bestXianShu - 4]++;
-				if (bestZhadanDianShuZu instanceof DanGeZhadanDianShuZu) {
-					DanGeZhadanDianShuZu danGeZhadanDianShuZu = (DanGeZhadanDianShuZu) bestZhadanDianShuZu;
-					dianshuCountArray[danGeZhadanDianShuZu.getDianShu().ordinal()] -= danGeZhadanDianShuZu.getSize();
-				}
-				if (bestZhadanDianShuZu instanceof LianXuZhadanDianShuZu) {
-					LianXuZhadanDianShuZu lianXuZhadanDianShuZu = (LianXuZhadanDianShuZu) bestZhadanDianShuZu;
-					DianShu[] lianXuDianShuArray = lianXuZhadanDianShuZu.getLianXuDianShuArray();
-					int[] lianXuDianShuSizeArray = lianXuZhadanDianShuZu.getLianXuDianShuSizeArray();
-					for (int i = 0; i < lianXuDianShuArray.length; i++) {
-						dianshuCountArray[lianXuDianShuArray[i].ordinal()] -= lianXuDianShuSizeArray[i];
-					}
-				}
-				if (bestZhadanDianShuZu instanceof WangZhadanDianShuZu) {
-					WangZhadanDianShuZu wangZhadanDianShuZu = (WangZhadanDianShuZu) bestZhadanDianShuZu;
-					dianshuCountArray[13] -= wangZhadanDianShuZu.getXiaowangCount();
-					dianshuCountArray[14] -= wangZhadanDianShuZu.getDawangCount();
-				}
-			} else {
-				return xianshuCount;
-			}
-		}
-	}
-
-	/**
-	 * 验算炸弹是否合理
-	 */
-	private boolean verifyZhadanConflict(int[] dianshuCountArray, ZhadanDianShuZu zhadanDianShuZu) {
-		if (zhadanDianShuZu instanceof DanGeZhadanDianShuZu) {
-			DanGeZhadanDianShuZu danGeZhadanDianShuZu = (DanGeZhadanDianShuZu) zhadanDianShuZu;
-			if (dianshuCountArray[danGeZhadanDianShuZu.getDianShu().ordinal()] - danGeZhadanDianShuZu.getSize() < 0) {
-				return false;
-			}
-		}
-		if (zhadanDianShuZu instanceof LianXuZhadanDianShuZu) {
-			LianXuZhadanDianShuZu lianXuZhadanDianShuZu = (LianXuZhadanDianShuZu) zhadanDianShuZu;
-			DianShu[] lianXuDianShuArray = lianXuZhadanDianShuZu.getLianXuDianShuArray();
-			int[] lianXuDianShuSizeArray = lianXuZhadanDianShuZu.getLianXuDianShuSizeArray();
-			for (int i = 0; i < lianXuDianShuArray.length; i++) {
-				if (dianshuCountArray[lianXuDianShuArray[i].ordinal()] - lianXuDianShuSizeArray[i] < 0) {
-					return false;
-				}
-			}
-		}
-		if (zhadanDianShuZu instanceof WangZhadanDianShuZu) {
-			WangZhadanDianShuZu wangZhadanDianShuZu = (WangZhadanDianShuZu) zhadanDianShuZu;
-			if (dianshuCountArray[13] - wangZhadanDianShuZu.getXiaowangCount() < 0
-					|| dianshuCountArray[14] - wangZhadanDianShuZu.getDawangCount() < 0) {
-				return false;
-			}
-		}
-		return true;
-	}
-
 	private int[] calculatePaiXingWithoutWangDang(int[] dianshuCountArray) {
 		PaiXing paiXing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
 		return calculateBestGongxianfen(dianshuCountArray.clone(), paiXing);
+	}
+
+	private List<DianShu> verifyDangFa(int wangCount, int[] dianshuCountArray) {
+		List<DianShu> kedangDianShuList = new ArrayList<>();
+		for (int i = 0; i < 15; i++) {
+			if (dianshuCountArray[i] + wangCount >= 4) {
+				kedangDianShuList.add(DianShu.getDianShuByOrdinal(i));
+			}
+		}
+		return kedangDianShuList;
 	}
 
 	private int[] calculatePaiXingWithWangDang(int wangCount, int[] dianshuCountArray, int xiaowangCount,
 			int dawangCount) {
 		int bestScore = 0;
 		int[] bestXianshuCount = new int[9];
+		// 计算王可以当哪些牌，提高性能
+		List<DianShu> kedangDianShuList = verifyDangFa(dawangCount, dianshuCountArray);
 		// 循环王的各种当法
-		int maxZuheCode = (int) Math.pow(13, wangCount);
+		if (kedangDianShuList.isEmpty()) {
+			return bestXianshuCount;
+		}
+		int size = kedangDianShuList.size();
+		int maxZuheCode = (int) Math.pow(size, wangCount);
 		int[] modArray = new int[wangCount];
 		for (int m = 0; m < wangCount; m++) {
-			modArray[m] = (int) Math.pow(13, wangCount - 1 - m);
+			modArray[m] = (int) Math.pow(size, wangCount - 1 - m);
 		}
 		for (int zuheCode = 0; zuheCode < maxZuheCode; zuheCode++) {
 			ShoupaiJiesuanPai[] wangDangPaiArray = new ShoupaiJiesuanPai[wangCount];
@@ -646,18 +549,18 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 					int yu = temp % mod;
 					if (BianXingWanFa.qianbian.equals(bx)) {// 千变
 						if (n < dawangCount) {
-							wangDangPaiArray[n] = new DawangDangPai(DianShu.getDianShuByOrdinal(shang));
+							wangDangPaiArray[n] = new DawangDangPai(kedangDianShuList.get(shang));
 						} else {
-							wangDangPaiArray[n] = new XiaowangDangPai(1, DianShu.getDianShuByOrdinal(shang));
+							wangDangPaiArray[n] = new XiaowangDangPai(1, kedangDianShuList.get(shang));
 						}
 					} else if (BianXingWanFa.banqianbian.equals(bx)) {// 半千变;
 						if (n < dawangCount) {
-							wangDangPaiArray[n] = new DawangDangPai(DianShu.getDianShuByOrdinal(shang));
+							wangDangPaiArray[n] = new DawangDangPai(kedangDianShuList.get(shang));
 						} else {
-							wangDangPaiArray[n] = new XiaowangDangPai(2, DianShu.getDianShuByOrdinal(shang));
+							wangDangPaiArray[n] = new XiaowangDangPai(2, kedangDianShuList.get(shang));
 						}
 					} else if (BianXingWanFa.baibian.equals(bx)) {// 百变
-						wangDangPaiArray[n] = new DawangDangPai(DianShu.getDianShuByOrdinal(shang));
+						wangDangPaiArray[n] = new DawangDangPai(kedangDianShuList.get(shang));
 					} else {
 
 					}
@@ -690,6 +593,210 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			}
 		}
 		return bestXianshuCount;
+	}
+
+	private int calculateXianShu(ZhadanDianShuZu zhadan) {
+		if (zhadan instanceof DanGeZhadanDianShuZu) {
+			DanGeZhadanDianShuZu danGeZhadan = (DanGeZhadanDianShuZu) zhadan;
+			return danGeZhadan.getSize();
+		} else if (zhadan instanceof LianXuZhadanDianShuZu) {
+			LianXuZhadanDianShuZu lianXuZhadan = (LianXuZhadanDianShuZu) zhadan;
+			return lianXuZhadan.getXianShu();
+		} else {
+			WangZhadanDianShuZu wangZhadan = (WangZhadanDianShuZu) zhadan;
+			int xiaowangCount = wangZhadan.getXiaowangCount();
+			int dawangCount = wangZhadan.getDawangCount();
+			if (xiaowangCount + dawangCount == 4) {
+				return 7;
+			} else {
+				return 6;
+			}
+		}
+	}
+
+	private void calculateGongxianfen(int[] dianshuCountArray, int[] xianshuArray,
+			List<ZhadanDianShuZu> zhadanDianShuZuList, Map<Integer, int[]> scoreXianshuMap) {
+		if (zhadanDianShuZuList.isEmpty()) {
+			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuArray);
+			gongxianfen.calculateXianshu();
+			gongxianfen.calculate(renshu);
+			int score = gongxianfen.getValue();
+			scoreXianshuMap.put(score, xianshuArray);
+		} else {
+			for (int i = 0; i < zhadanDianShuZuList.size(); i++) {
+				int[] xianshuArray1 = xianshuArray.clone();
+				ZhadanDianShuZu zhadanDianShuZu = zhadanDianShuZuList.get(i);
+				int xianshu = calculateXianShu(zhadanDianShuZu);
+				xianshuArray1[xianshu - 4]++;
+				int[] dianshuCountArray1 = removeZhadan(dianshuCountArray.clone(), zhadanDianShuZu);
+				List<ZhadanDianShuZu> zhadanDianShuZuList1 = calculateTotalGongxianfenForDianshuCountArray(
+						dianshuCountArray1);
+				calculateGongxianfen(dianshuCountArray1, xianshuArray1, zhadanDianShuZuList1, scoreXianshuMap);
+			}
+		}
+	}
+
+	/**
+	 * 根据牌型和牌数计算最佳贡献分
+	 */
+	private int[] calculateBestGongxianfen(int[] dianshuCountArray, PaiXing paixing) {
+		int bestScore = 0;
+		List<ZhadanDianShuZu> zhadanDianShuZuList = new ArrayList<>();
+		List<DanGeZhadanDianShuZu> danGeZhadanDianShuZuList = paixing.getZhadanDianShuZuList();
+		zhadanDianShuZuList.addAll(danGeZhadanDianShuZuList);
+		List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paixing.getLianXuZhadanDianShuZuList();
+		zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
+		List<WangZhadanDianShuZu> wangZhadanDianShuZuList = paixing.getWangZhadanDianShuZuList();
+		zhadanDianShuZuList.addAll(wangZhadanDianShuZuList);
+
+		Map<Integer, int[]> scoreXianshuMap = new HashMap<>();
+		int[] xianshuArray = new int[9];
+		calculateGongxianfen(dianshuCountArray, xianshuArray, zhadanDianShuZuList, scoreXianshuMap);
+
+		for (int score : scoreXianshuMap.keySet()) {
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
+		return scoreXianshuMap.get(bestScore);
+	}
+
+	private List<ZhadanDianShuZu> calculateTotalGongxianfenForDianshuCountArray(int[] dianshuCountArray) {
+		int xiaowangCount = dianshuCountArray[13];
+		int dawangCount = dianshuCountArray[14];
+		int wangCount = 0;
+		if (BianXingWanFa.qianbian.equals(bx)) {// 千变
+			wangCount = xiaowangCount + dawangCount;
+			// 减去王牌的数量
+			dianshuCountArray[13] = dianshuCountArray[13] - xiaowangCount;
+			dianshuCountArray[14] = dianshuCountArray[14] - dawangCount;
+		} else if (BianXingWanFa.banqianbian.equals(bx)) {// 半千变;
+			wangCount = dawangCount;
+			// 减去王牌的数量
+			if (xiaowangCount > 0 && xiaowangCount % 2 == 0) {
+				wangCount++;
+				dianshuCountArray[13] = dianshuCountArray[13] - 2;
+			}
+			dianshuCountArray[14] = dianshuCountArray[14] - dawangCount;
+		} else if (BianXingWanFa.baibian.equals(bx)) {// 百变
+			wangCount = dawangCount;
+			// 减去王牌的数量
+			dianshuCountArray[14] = dianshuCountArray[14] - dawangCount;
+		} else {
+
+		}
+		if (wangCount > 0) {
+			// 有王牌
+			return calculateZhadanDianShuZuWithWangDang(wangCount, dianshuCountArray, xiaowangCount, dawangCount);
+		} else {
+			// 没有王牌
+			return calculateListZhadanDianShuZuWithoutWangDang(dianshuCountArray);
+		}
+	}
+
+	private List<ZhadanDianShuZu> calculateListZhadanDianShuZuWithoutWangDang(int[] dianshuCountArray) {
+		PaiXing paixing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
+		List<ZhadanDianShuZu> zhadanDianShuZuList = new ArrayList<>();
+		List<DanGeZhadanDianShuZu> danGeZhadanDianShuZuList = paixing.getZhadanDianShuZuList();
+		zhadanDianShuZuList.addAll(danGeZhadanDianShuZuList);
+		List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paixing.getLianXuZhadanDianShuZuList();
+		zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
+		List<WangZhadanDianShuZu> wangZhadanDianShuZuList = paixing.getWangZhadanDianShuZuList();
+		zhadanDianShuZuList.addAll(wangZhadanDianShuZuList);
+		return zhadanDianShuZuList;
+	}
+
+	private List<ZhadanDianShuZu> calculateZhadanDianShuZuWithWangDang(int wangCount, int[] dianshuCountArray,
+			int xiaowangCount, int dawangCount) {
+		List<ZhadanDianShuZu> zhadanDianShuZuList = new ArrayList<>();
+		// 计算王可以当哪些牌，提高性能
+		List<DianShu> kedangDianShuList = verifyDangFa(dawangCount, dianshuCountArray);
+		// 循环王的各种当法
+		if (kedangDianShuList.isEmpty()) {
+			return zhadanDianShuZuList;
+		}
+		int size = kedangDianShuList.size();
+		int maxZuheCode = (int) Math.pow(size, wangCount);
+		int[] modArray = new int[wangCount];
+		for (int m = 0; m < wangCount; m++) {
+			modArray[m] = (int) Math.pow(size, wangCount - 1 - m);
+		}
+		for (int zuheCode = 0; zuheCode < maxZuheCode; zuheCode++) {
+			ShoupaiJiesuanPai[] wangDangPaiArray = new ShoupaiJiesuanPai[wangCount];
+			int temp = zuheCode;
+			int previousGuipaiDangIdx = 0;
+			for (int n = 0; n < wangCount; n++) {
+				int mod = modArray[n];
+				int shang = temp / mod;
+				if (shang >= previousGuipaiDangIdx) {// 计算王的各种当法，排除效果相同的当法
+					int yu = temp % mod;
+					if (BianXingWanFa.qianbian.equals(bx)) {// 千变
+						if (n < dawangCount) {
+							wangDangPaiArray[n] = new DawangDangPai(kedangDianShuList.get(shang));
+						} else {
+							wangDangPaiArray[n] = new XiaowangDangPai(1, kedangDianShuList.get(shang));
+						}
+					} else if (BianXingWanFa.banqianbian.equals(bx)) {// 半千变;
+						if (n < dawangCount) {
+							wangDangPaiArray[n] = new DawangDangPai(kedangDianShuList.get(shang));
+						} else {
+							wangDangPaiArray[n] = new XiaowangDangPai(2, kedangDianShuList.get(shang));
+						}
+					} else if (BianXingWanFa.baibian.equals(bx)) {// 百变
+						wangDangPaiArray[n] = new DawangDangPai(kedangDianShuList.get(shang));
+					} else {
+
+					}
+					temp = yu;
+					previousGuipaiDangIdx = shang;
+				} else {
+					wangDangPaiArray = null;
+					break;
+				}
+			}
+			if (wangDangPaiArray != null) {
+				// 加上当牌的数量
+				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
+					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]++;
+				}
+				PaiXing paixing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
+				List<DanGeZhadanDianShuZu> danGeZhadanDianShuZuList = paixing.getZhadanDianShuZuList();
+				zhadanDianShuZuList.addAll(danGeZhadanDianShuZuList);
+				List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paixing.getLianXuZhadanDianShuZuList();
+				zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
+				List<WangZhadanDianShuZu> wangZhadanDianShuZuList = paixing.getWangZhadanDianShuZuList();
+				zhadanDianShuZuList.addAll(wangZhadanDianShuZuList);
+				// 减去当牌的数量
+				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
+					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]--;
+				}
+			}
+		}
+		return zhadanDianShuZuList;
+	}
+
+	/**
+	 * 从手牌中移除打出的炸弹
+	 */
+	private int[] removeZhadan(int[] dianshuCountArray, ZhadanDianShuZu zhadanDianShuZu) {
+		if (zhadanDianShuZu instanceof DanGeZhadanDianShuZu) {
+			DanGeZhadanDianShuZu danGeZhadanDianShuZu = (DanGeZhadanDianShuZu) zhadanDianShuZu;
+			dianshuCountArray[danGeZhadanDianShuZu.getDianShu().ordinal()] -= danGeZhadanDianShuZu.getSize();
+		}
+		if (zhadanDianShuZu instanceof LianXuZhadanDianShuZu) {
+			LianXuZhadanDianShuZu lianXuZhadanDianShuZu = (LianXuZhadanDianShuZu) zhadanDianShuZu;
+			DianShu[] lianXuDianShuArray = lianXuZhadanDianShuZu.getLianXuDianShuArray();
+			int[] lianXuDianShuSizeArray = lianXuZhadanDianShuZu.getLianXuDianShuSizeArray();
+			for (int i = 0; i < lianXuDianShuArray.length; i++) {
+				dianshuCountArray[lianXuDianShuArray[i].ordinal()] -= lianXuDianShuSizeArray[i];
+			}
+		}
+		if (zhadanDianShuZu instanceof WangZhadanDianShuZu) {
+			WangZhadanDianShuZu wangZhadanDianShuZu = (WangZhadanDianShuZu) zhadanDianShuZu;
+			dianshuCountArray[13] -= wangZhadanDianShuZu.getXiaowangCount();
+			dianshuCountArray[14] -= wangZhadanDianShuZu.getDawangCount();
+		}
+		return dianshuCountArray;
 	}
 
 	public int getRenshu() {
