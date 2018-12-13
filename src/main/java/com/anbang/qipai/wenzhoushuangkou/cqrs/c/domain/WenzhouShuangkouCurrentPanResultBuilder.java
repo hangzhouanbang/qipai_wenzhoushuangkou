@@ -54,7 +54,6 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 		for (String pid : playerIds) {
 			int[] xianshuCount = playerXianshuMap.get(pid);
 			WenzhouShuangkouXianshuBeishu xianshubeishu = new WenzhouShuangkouXianshuBeishu(xianshuCount);
-			xianshubeishu.calculateXianshu();
 			xianshubeishu.calculate();
 			maxXianshuMap.put(pid, xianshubeishu);
 		}

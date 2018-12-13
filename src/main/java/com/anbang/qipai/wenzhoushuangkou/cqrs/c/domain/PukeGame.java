@@ -693,7 +693,6 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		for (String pid : allPlayerIds()) {
 			int[] xianshuCount = playerXianshuMap.get(pid);
 			WenzhouShuangkouXianshuBeishu xianshubeishu = new WenzhouShuangkouXianshuBeishu(xianshuCount);
-			xianshubeishu.calculateXianshu();
 			xianshubeishu.calculate();
 			maxXianshuMap.put(pid, xianshubeishu);
 			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);

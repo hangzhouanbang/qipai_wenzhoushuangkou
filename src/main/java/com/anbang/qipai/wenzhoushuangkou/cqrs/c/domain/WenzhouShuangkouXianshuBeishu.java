@@ -1,5 +1,7 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
 
+import com.anbang.qipai.wenzhoushuangkou.init.XianshuCalculatorHelper;
+
 public class WenzhouShuangkouXianshuBeishu {
 	private int sixian;
 	private int wuxian;
@@ -11,10 +13,6 @@ public class WenzhouShuangkouXianshuBeishu {
 	private int shiyixian;
 	private int shierxian;
 	private int value;// 单人线数倍数
-	private int[] bestXianshuAmountArray = new int[9];
-	private int[][] fenTable = new int[][] { { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 4, 8, 16, 32, 64, 128, 256 },
-			{ 0, 4, 8, 16, 32, 64, 128, 0, 0 }, { 0, 8, 16, 32, 64, 128, 0, 0, 0 }, { 4, 16, 32, 64, 0, 0, 0, 0, 0 },
-			{ 8, 32, 0, 0, 0, 0, 0, 0, 0, }, { 16, 0, 0, 0, 0, 0, 0, 0, 0 }, { 32, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
 	public WenzhouShuangkouXianshuBeishu() {
 
@@ -35,92 +33,14 @@ public class WenzhouShuangkouXianshuBeishu {
 		shierxian = xianshuCount[8];
 	}
 
-	private void calculateBestXianshu(int[] xianshuAmountArray, int index, int size, int length) {
-		if (length >= 8) {
-			int score = fenTable[xianshuAmountArray[0]][0] + fenTable[xianshuAmountArray[1]][1]
-					+ fenTable[xianshuAmountArray[2]][2] + fenTable[xianshuAmountArray[3]][3]
-					+ fenTable[xianshuAmountArray[4]][4] + fenTable[xianshuAmountArray[5]][5]
-					+ fenTable[xianshuAmountArray[6]][6] + fenTable[xianshuAmountArray[7]][7]
-					+ fenTable[xianshuAmountArray[8]][8];
-			if (score > value) {
-				value = score;
-				bestXianshuAmountArray = xianshuAmountArray;
-			}
-		} else {
-			for (int i = 0; i <= 8 - index; i++) {
-				for (int j = 0; j <= size; j++) {
-					int[] copyArray = xianshuAmountArray.clone();
-					copyArray[8 - index] -= j;
-					copyArray[i] += j;
-					calculateBestXianshu(copyArray, index + i, copyArray[8 - index - i], length + 1);
-				}
-			}
-		}
-	}
-
-	public void calculateXianshu() {
-		int[] xianshuAmountArray = new int[9];
-		xianshuAmountArray[0] = sixian;
-		xianshuAmountArray[1] = wuxian;
-		xianshuAmountArray[2] = liuxian;
-		xianshuAmountArray[3] = qixian;
-		xianshuAmountArray[4] = baxian;
-		xianshuAmountArray[5] = jiuxian;
-		xianshuAmountArray[6] = shixian;
-		xianshuAmountArray[7] = shiyixian;
-		xianshuAmountArray[8] = shierxian;
-
-		calculateBestXianshu(xianshuAmountArray.clone(), 0, xianshuAmountArray[8], 0);
-
-		sixian = bestXianshuAmountArray[0];
-		wuxian = bestXianshuAmountArray[1];
-		liuxian = bestXianshuAmountArray[2];
-		qixian = bestXianshuAmountArray[3];
-		baxian = bestXianshuAmountArray[4];
-		jiuxian = bestXianshuAmountArray[5];
-		shixian = bestXianshuAmountArray[6];
-		shiyixian = bestXianshuAmountArray[7];
-		shierxian = bestXianshuAmountArray[8];
-	}
-
 	public void calculate() {
 		int beishu = 1;
-		if (shierxian > 0) {
-			beishu = 256;
-		} else if (shiyixian > 0 || shixian >= 2) {
-			beishu = 128;
-		} else if (shixian > 0 || jiuxian >= 2 || baxian >= 3 || qixian >= 4) {
-			beishu = 64;
-		} else if (jiuxian > 0 || baxian >= 2 || qixian >= 3 || liuxian >= 4 || wuxian >= 5 || sixian >= 7) {
-			beishu = 32;
-		} else if (baxian > 0 || qixian >= 2 || liuxian >= 3 || wuxian >= 4 || sixian >= 6) {
-			beishu = 16;
-		} else if (qixian > 0 || liuxian >= 2 || wuxian >= 3 || sixian >= 5) {
-			beishu = 8;
-		} else if (liuxian > 0 || wuxian >= 2 || sixian >= 4) {
-			beishu = 4;
-		} else if (wuxian > 0 || sixian >= 3) {
-			beishu = 2;
-		} else if (sixian > 0) {
-			beishu = 1;
+		String key = "" + sixian + wuxian + liuxian + qixian + baxian + jiuxian + shixian + shiyixian + shierxian;
+		Integer score = XianshuCalculatorHelper.getXianshuCountMap().get(key);
+		if (score != null) {
+			beishu = score;
 		}
 		value = beishu;
-	}
-
-	public int[] getBestXianshuAmountArray() {
-		return bestXianshuAmountArray;
-	}
-
-	public void setBestXianshuAmountArray(int[] bestXianshuAmountArray) {
-		this.bestXianshuAmountArray = bestXianshuAmountArray;
-	}
-
-	public int[][] getFenTable() {
-		return fenTable;
-	}
-
-	public void setFenTable(int[][] fenTable) {
-		this.fenTable = fenTable;
 	}
 
 	public int getSixian() {

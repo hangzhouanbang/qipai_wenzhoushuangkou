@@ -63,8 +63,7 @@ public class InitProcessor {
 			e.printStackTrace();
 		}
 
-		// 内存共享模式要注释次行
-		// GouXingCalculatorHelper.gouXingCalculator = new GouXingCalculator(17, 3);
+		XianshuCalculatorHelper.calculateXianshu();
 
 		try {
 			recover();

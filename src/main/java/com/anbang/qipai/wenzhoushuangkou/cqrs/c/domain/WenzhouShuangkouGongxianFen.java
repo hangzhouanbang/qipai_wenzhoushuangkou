@@ -1,5 +1,7 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
 
+import com.anbang.qipai.wenzhoushuangkou.init.XianshuCalculatorHelper;
+
 /**
  * 贡献分
  * 
@@ -18,9 +20,6 @@ public class WenzhouShuangkouGongxianFen {
 	private int shierxian;
 	private int totalscore;// 总分
 	private int value;// 单人结算分
-	private int[][] fenTable = new int[][] { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, }, { 0, 0, 4, 8, 16, 32, 64, 128, 256 },
-			{ 0, 4, 8, 16, 32, 64, 128, 0, 0 }, { 0, 8, 16, 32, 64, 128, 0, 0, 0 }, { 4, 16, 32, 64, 0, 0, 0, 0, 0 },
-			{ 8, 32, 0, 0, 0, 0, 0, 0, 0, }, { 16, 0, 0, 0, 0, 0, 0, 0, 0 }, { 32, 0, 0, 0, 0, 0, 0, 0 } };
 
 	public WenzhouShuangkouGongxianFen() {
 
@@ -56,42 +55,12 @@ public class WenzhouShuangkouGongxianFen {
 		shierxian += xianshuCount[8];
 	}
 
-	private void calculateBestXianshu(int[] xianshuAmountArray, int index, int size, int length) {
-
-		if (length >= 8) {
-			int score = fenTable[xianshuAmountArray[0]][0] + fenTable[xianshuAmountArray[1]][1]
-					+ fenTable[xianshuAmountArray[2]][2] + fenTable[xianshuAmountArray[3]][3]
-					+ fenTable[xianshuAmountArray[4]][4] + fenTable[xianshuAmountArray[5]][5]
-					+ fenTable[xianshuAmountArray[6]][6] + fenTable[xianshuAmountArray[7]][7]
-					+ fenTable[xianshuAmountArray[8]][8];
-			if (score > value) {
-				value = score;
-			}
-		} else {
-			for (int i = 0; i <= 8 - index; i++) {
-				for (int j = 0; j <= size; j++) {
-					int[] copyArray = xianshuAmountArray.clone();
-					copyArray[8 - index] -= j;
-					copyArray[i] += j;
-					calculateBestXianshu(copyArray, index + i, copyArray[8 - index - i], length + 1);
-				}
-			}
-		}
-	}
-
 	public void calculateXianshu() {
-		int[] xianshuAmountArray = new int[9];
-		xianshuAmountArray[0] = sixian;
-		xianshuAmountArray[1] = wuxian;
-		xianshuAmountArray[2] = liuxian;
-		xianshuAmountArray[3] = qixian;
-		xianshuAmountArray[4] = baxian;
-		xianshuAmountArray[5] = jiuxian;
-		xianshuAmountArray[6] = shixian;
-		xianshuAmountArray[7] = shiyixian;
-		xianshuAmountArray[8] = shierxian;
-
-		calculateBestXianshu(xianshuAmountArray.clone(), 0, xianshuAmountArray[8], 0);
+		String key = "" + sixian + wuxian + liuxian + qixian + baxian + jiuxian + shixian + shiyixian + shierxian;
+		Integer score = XianshuCalculatorHelper.getGongxianFenCountMap().get(key);
+		if (score != null) {
+			value = score;
+		}
 	}
 
 	public void calculate(int renshu) {
@@ -100,13 +69,6 @@ public class WenzhouShuangkouGongxianFen {
 
 	public int jiesuan(int delta) {
 		return totalscore += delta;
-	}
-
-	public int calculateBestScore(int[] xianshuAmountArray) {
-		int score = 4 * xianshuAmountArray[2] + 8 * xianshuAmountArray[3] + 16 * xianshuAmountArray[4]
-				+ 32 * xianshuAmountArray[5] + 64 * xianshuAmountArray[6] + 128 * xianshuAmountArray[7]
-				+ 256 * xianshuAmountArray[8];
-		return score;
 	}
 
 	public int getSixian() {

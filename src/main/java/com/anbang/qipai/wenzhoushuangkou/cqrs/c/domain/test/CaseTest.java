@@ -35,7 +35,7 @@ import com.dml.shuangkou.player.action.da.solution.DaPaiDianShuSolution;
 import com.dml.shuangkou.wanfa.BianXingWanFa;
 
 public class CaseTest {
-	private static BianXingWanFa bx = BianXingWanFa.baibian;
+	private static BianXingWanFa bx = BianXingWanFa.qianbian;
 	private static ZhadanComparator zhadanComparator = new WenzhouShuangkouZhadanComparator();
 	private static DanGeDianShuZuComparator danGeDianShuZuComparator = new NoZhadanDanGeDianShuZuComparator();
 	private static LianXuDianShuZuComparator lianXuDianShuZuComparator = new TongDengLianXuDianShuZuComparator();
@@ -63,7 +63,7 @@ public class CaseTest {
 
 	// 所有可打的牌
 	public static void main(String[] args) {
-		int[] dianShuAmountArray = { 0, 0, 6, 0, 0, 5, 0, 6, 6, 0, 0, 0, 0, 2, 2 };
+		int[] dianShuAmountArray = { 0, 0, 0, 0, 0, 2, 0, 1, 2, 0, 0, 0, 0, 1, 2 };
 		long s1 = System.currentTimeMillis();
 		List<DaPaiDianShuSolution> solutionList = generateAllKedaPaiSolutions(dianShuAmountArray);
 		solutionList = filter(solutionList);

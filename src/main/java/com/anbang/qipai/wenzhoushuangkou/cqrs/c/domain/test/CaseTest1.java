@@ -61,7 +61,6 @@ public class CaseTest1 {
 		xianshuAmountArray[7] = 0;
 		xianshuAmountArray[8] = 0;
 		WenzhouShuangkouXianshuBeishu beishu = new WenzhouShuangkouXianshuBeishu(xianshuAmountArray);
-		beishu.calculateXianshu();
 		beishu.calculate();
 		WenzhouShuangkouGongxianFen fen = new WenzhouShuangkouGongxianFen(xianshuAmountArray);
 		fen.calculateXianshu();
