@@ -1,6 +1,7 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +10,16 @@ import java.util.Set;
 import com.dml.puke.pai.DianShu;
 import com.dml.puke.pai.PukePai;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DanzhangDianShuZu;
+import com.dml.puke.wanfa.dianshu.dianshuzu.DianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DianShuZuGenerator;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DuiziDianShuZu;
+import com.dml.puke.wanfa.dianshu.dianshuzu.LianXuDianShuZu;
+import com.dml.puke.wanfa.dianshu.dianshuzu.ZhadanDianShuZu;
+import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.CanNotCompareException;
+import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.LianXuDianShuZuComparator;
+import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.ZhadanComparator;
 import com.dml.shuangkou.pai.dianshuzu.DianShuZuCalculator;
+import com.dml.shuangkou.pai.dianshuzu.LianXuZhadanDianShuZu;
 import com.dml.shuangkou.pai.dianshuzu.PaiXing;
 import com.dml.shuangkou.pai.dianshuzu.WangZhadanDianShuZu;
 import com.dml.shuangkou.pai.jiesuanpai.DawangDangPai;
@@ -25,8 +33,13 @@ public class WenzhouShuangkouAllKedaPaiSolutionsGenerator implements AllKedaPaiS
 
 	private BianXingWanFa bx;
 
+	private ZhadanComparator zhadanComparator;
+
+	private LianXuDianShuZuComparator lianXuDianShuZuComparator;
+
 	@Override
-	public List<DaPaiDianShuSolution> generateAllKedaPaiSolutions(Map<Integer, PukePai> allShoupai) {
+	public Map<String, DaPaiDianShuSolution> generateAllKedaPaiSolutions(Map<Integer, PukePai> allShoupai) {
+		Map<String, DaPaiDianShuSolution> yaPaiSolutionCandidates = new HashMap<>();
 		List<DaPaiDianShuSolution> solutionList = new ArrayList<>();
 		int[] dianshuCountArray = new int[15];
 		for (PukePai pukePai : allShoupai.values()) {
@@ -120,7 +133,29 @@ public class WenzhouShuangkouAllKedaPaiSolutionsGenerator implements AllKedaPaiS
 			// 没有王牌
 			solutionList.addAll(calculateDaPaiDianShuSolutionWithoutWangDang(dianshuCountArray));
 		}
-		return solutionList;
+		solutionList.forEach((solution) -> {
+			DaPaiDianShuSolution daPaiDianShuSolution = yaPaiSolutionCandidates.get(solution.getDianshuZuheIdx());
+			if (daPaiDianShuSolution != null) {
+				DianShuZu dianShuZu = daPaiDianShuSolution.getDianShuZu();
+				if (dianShuZu instanceof LianXuDianShuZu) {
+					try {
+						if (lianXuDianShuZuComparator.compare((LianXuDianShuZu) solution.getDianShuZu(),
+								(LianXuDianShuZu) dianShuZu) > 0) {
+							yaPaiSolutionCandidates.put(solution.getDianshuZuheIdx(), solution);
+						}
+					} catch (CanNotCompareException e) {
+					}
+				} else if (dianShuZu instanceof LianXuZhadanDianShuZu) {
+					if (zhadanComparator.compare((ZhadanDianShuZu) solution.getDianShuZu(),
+							(ZhadanDianShuZu) dianShuZu) > 0) {
+						yaPaiSolutionCandidates.put(solution.getDianshuZuheIdx(), solution);
+					}
+				}
+			} else {
+				yaPaiSolutionCandidates.put(solution.getDianshuZuheIdx(), solution);
+			}
+		});
+		return yaPaiSolutionCandidates;
 	}
 
 	private List<DaPaiDianShuSolution> calculateDaPaiDianShuSolutionWithWangDang(int wangCount, int[] dianshuCountArray,
@@ -195,6 +230,22 @@ public class WenzhouShuangkouAllKedaPaiSolutionsGenerator implements AllKedaPaiS
 
 	public void setBx(BianXingWanFa bx) {
 		this.bx = bx;
+	}
+
+	public ZhadanComparator getZhadanComparator() {
+		return zhadanComparator;
+	}
+
+	public void setZhadanComparator(ZhadanComparator zhadanComparator) {
+		this.zhadanComparator = zhadanComparator;
+	}
+
+	public LianXuDianShuZuComparator getLianXuDianShuZuComparator() {
+		return lianXuDianShuZuComparator;
+	}
+
+	public void setLianXuDianShuZuComparator(LianXuDianShuZuComparator lianXuDianShuZuComparator) {
+		this.lianXuDianShuZuComparator = lianXuDianShuZuComparator;
 	}
 
 }

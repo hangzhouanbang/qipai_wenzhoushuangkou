@@ -36,8 +36,11 @@ import com.dml.puke.pai.DianShu;
 import com.dml.puke.pai.PukePai;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DanGeZhadanDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.ZhadanDianShuZu;
+import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.DanGeDianShuZuComparator;
+import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.LianXuDianShuZuComparator;
 import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.NoZhadanDanGeDianShuZuComparator;
 import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.TongDengLianXuDianShuZuComparator;
+import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.ZhadanComparator;
 import com.dml.shuangkou.gameprocess.FixedPanNumbersJuFinishiDeterminer;
 import com.dml.shuangkou.gameprocess.OnePlayerHasPaiPanFinishiDeterminer;
 import com.dml.shuangkou.ju.Ju;
@@ -639,21 +642,31 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		ju.setZuduiStrategyForNextPan(new HongxinbaHongxinjiuZuduiStrategy());
 		ju.setXiandaPlayerDeterminer(new DongPositionXiandaPlayerDeterminer());
 		// ju.setKeyaDaPaiDianShuSolutionsGenerator(keyaDaPaiDianShuSolutionsGenerator);
+		DanGeDianShuZuComparator danGeDianShuZuComparator = new NoZhadanDanGeDianShuZuComparator();
+		LianXuDianShuZuComparator lianXuDianShuZuComparator = new TongDengLianXuDianShuZuComparator();
+		ZhadanComparator zhadanComparator = new WenzhouShuangkouZhadanComparator();
+
 		WenzhouShuangkouYaPaiSolutionsTipsFilter wenzhouShuangkouYaPaiSolutionsTipsFilter = new WenzhouShuangkouYaPaiSolutionsTipsFilter();
-		wenzhouShuangkouYaPaiSolutionsTipsFilter.setZhadanComparator(new WenzhouShuangkouZhadanComparator());
+		wenzhouShuangkouYaPaiSolutionsTipsFilter.setZhadanComparator(zhadanComparator);
 		ju.setYaPaiSolutionsTipsFilter(wenzhouShuangkouYaPaiSolutionsTipsFilter);
+
 		WenzhouShuangkouAllKedaPaiSolutionsGenerator WenzhouShuangkouAllKedaPaiSolutionsGenerator = new WenzhouShuangkouAllKedaPaiSolutionsGenerator();
 		WenzhouShuangkouAllKedaPaiSolutionsGenerator.setBx(bx);
+		WenzhouShuangkouAllKedaPaiSolutionsGenerator.setLianXuDianShuZuComparator(lianXuDianShuZuComparator);
+		WenzhouShuangkouAllKedaPaiSolutionsGenerator.setZhadanComparator(zhadanComparator);
 		ju.setAllKedaPaiSolutionsGenerator(WenzhouShuangkouAllKedaPaiSolutionsGenerator);
+
 		ju.setWaihaoGenerator(new ShuangkouWaihaoGenerator());
+
 		WenzhouShuangkouDianShuZuYaPaiSolutionCalculator dianShuZuYaPaiSolutionCalculator = new WenzhouShuangkouDianShuZuYaPaiSolutionCalculator();
 		dianShuZuYaPaiSolutionCalculator.setBx(bx);
-		dianShuZuYaPaiSolutionCalculator.setDanGeDianShuZuComparator(new NoZhadanDanGeDianShuZuComparator());
-		dianShuZuYaPaiSolutionCalculator.setLianXuDianShuZuComparator(new TongDengLianXuDianShuZuComparator());
+		dianShuZuYaPaiSolutionCalculator.setDanGeDianShuZuComparator(danGeDianShuZuComparator);
+		dianShuZuYaPaiSolutionCalculator.setLianXuDianShuZuComparator(lianXuDianShuZuComparator);
 		ju.setDianShuZuYaPaiSolutionCalculator(dianShuZuYaPaiSolutionCalculator);
+
 		WenzhouShuangkouZaDanYaPaiSolutionCalculator zaDanYaPaiSolutionCalculator = new WenzhouShuangkouZaDanYaPaiSolutionCalculator();
 		zaDanYaPaiSolutionCalculator.setBx(bx);
-		zaDanYaPaiSolutionCalculator.setZhadanComparator(new WenzhouShuangkouZhadanComparator());
+		zaDanYaPaiSolutionCalculator.setZhadanComparator(zhadanComparator);
 		ju.setZaDanYaPaiSolutionCalculator(zaDanYaPaiSolutionCalculator);
 
 		ju.addDaListener(new XianshuCountDaActionStatisticsListener());

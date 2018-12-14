@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouGongxianFen;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouXianshuBeishu;
+import com.anbang.qipai.wenzhoushuangkou.init.XianshuCalculatorHelper;
 import com.dml.puke.pai.DianShu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DanGeZhadanDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.ZhadanDianShuZu;
@@ -23,49 +24,21 @@ public class CaseTest1 {
 	private static int renshu = 4;
 	private static BianXingWanFa bx = BianXingWanFa.qianbian;
 
-	// public static void main(String[] args) {
-	// long s1 = System.currentTimeMillis();
-	// int[] xianshuCountArray = calculateShouPaiTotalGongxianfenForPlayer();
-	// System.out.println("最佳线数组合：");
-	// for (int i = 0; i < xianshuCountArray.length; i++) {
-	// System.out.print(xianshuCountArray[i]);
-	// }
-	// WenzhouShuangkouGongxianFen fen = new
-	// WenzhouShuangkouGongxianFen(xianshuCountArray);
-	// fen.calculateXianshu();
-	// fen.calculate(renshu);
-	// WenzhouShuangkouXianshuBeishu beishu = new
-	// WenzhouShuangkouXianshuBeishu(xianshuCountArray);
-	// beishu.calculateXianshu();
-	// beishu.calculate();
-	// long s2 = System.currentTimeMillis();
-	// System.out.println("");
-	// System.out.println("最佳倍数：");
-	// System.out.println(beishu.getValue());
-	// System.out.println("最佳线数组合得分：");
-	// System.out.println(fen.getValue());
-	// System.out.println("耗时：");
-	// System.out.println(s2 - s1 + "ms");
-	// }
-
 	public static void main(String[] args) {
 		long s1 = System.currentTimeMillis();
-		int[] xianshuAmountArray = new int[9];
-		xianshuAmountArray[0] = 0;
-		xianshuAmountArray[1] = 3;
-		xianshuAmountArray[2] = 1;
-		xianshuAmountArray[3] = 1;
-		xianshuAmountArray[4] = 0;
-		xianshuAmountArray[5] = 0;
-		xianshuAmountArray[6] = 0;
-		xianshuAmountArray[7] = 0;
-		xianshuAmountArray[8] = 0;
-		WenzhouShuangkouXianshuBeishu beishu = new WenzhouShuangkouXianshuBeishu(xianshuAmountArray);
-		beishu.calculate();
-		WenzhouShuangkouGongxianFen fen = new WenzhouShuangkouGongxianFen(xianshuAmountArray);
+		XianshuCalculatorHelper.calculateXianshu();
+		int[] xianshuCountArray = calculateShouPaiTotalGongxianfenForPlayer();
+		System.out.println("最佳线数组合：");
+		for (int i = 0; i < xianshuCountArray.length; i++) {
+			System.out.print(xianshuCountArray[i]);
+		}
+		WenzhouShuangkouGongxianFen fen = new WenzhouShuangkouGongxianFen(xianshuCountArray);
 		fen.calculateXianshu();
 		fen.calculate(renshu);
+		WenzhouShuangkouXianshuBeishu beishu = new WenzhouShuangkouXianshuBeishu(xianshuCountArray);
+		beishu.calculate();
 		long s2 = System.currentTimeMillis();
+		System.out.println("");
 		System.out.println("最佳倍数：");
 		System.out.println(beishu.getValue());
 		System.out.println("最佳线数组合得分：");
@@ -74,9 +47,37 @@ public class CaseTest1 {
 		System.out.println(s2 - s1 + "ms");
 	}
 
+	// public static void main(String[] args) {
+	// long s1 = System.currentTimeMillis();
+	// int[] xianshuAmountArray = new int[9];
+	// xianshuAmountArray[0] = 0;
+	// xianshuAmountArray[1] = 3;
+	// xianshuAmountArray[2] = 1;
+	// xianshuAmountArray[3] = 1;
+	// xianshuAmountArray[4] = 0;
+	// xianshuAmountArray[5] = 0;
+	// xianshuAmountArray[6] = 0;
+	// xianshuAmountArray[7] = 0;
+	// xianshuAmountArray[8] = 0;
+	// WenzhouShuangkouXianshuBeishu beishu = new
+	// WenzhouShuangkouXianshuBeishu(xianshuAmountArray);
+	// beishu.calculate();
+	// WenzhouShuangkouGongxianFen fen = new
+	// WenzhouShuangkouGongxianFen(xianshuAmountArray);
+	// fen.calculateXianshu();
+	// fen.calculate(renshu);
+	// long s2 = System.currentTimeMillis();
+	// System.out.println("最佳倍数：");
+	// System.out.println(beishu.getValue());
+	// System.out.println("最佳线数组合得分：");
+	// System.out.println(fen.getValue());
+	// System.out.println("耗时：");
+	// System.out.println(s2 - s1 + "ms");
+	// }
+
 	private static int[] calculateShouPaiTotalGongxianfenForPlayer() {
 
-		int[] dianshuCountArray = { 2, 0, 0, 0, 4, 0, 8, 0, 5, 0, 0, 6, 0, 1, 1 };
+		int[] dianshuCountArray = { 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 6, 1, 0 };
 
 		int xiaowangCount = dianshuCountArray[13];
 		int dawangCount = dianshuCountArray[14];

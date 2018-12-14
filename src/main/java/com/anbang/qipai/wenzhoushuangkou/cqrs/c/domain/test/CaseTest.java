@@ -51,25 +51,27 @@ public class CaseTest {
 	// }
 
 	// 普通压牌
-	// public static void main(String[] args) {
-	// DianShuZu beiYaDianShuZu = new DuiziDianShuZu(DianShu.shi);
-	// int[] dianShuAmountArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1 };
-	// List<DaPaiDianShuSolution> solutionList = calculate(beiYaDianShuZu,
-	// dianShuAmountArray);
-	// // solutionList.addAll(calculateZhadan(beiYaDianShuZu, dianShuAmountArray));
-	// solutionList = filter(solutionList);
-	// System.out.println(solutionList);
-	// }
-
-	// 所有可打的牌
 	public static void main(String[] args) {
-		int[] dianShuAmountArray = { 0, 0, 0, 0, 0, 2, 0, 1, 2, 0, 0, 0, 0, 1, 2 };
 		long s1 = System.currentTimeMillis();
-		List<DaPaiDianShuSolution> solutionList = generateAllKedaPaiSolutions(dianShuAmountArray);
+		DianShuZu beiYaDianShuZu = new DuiziDianShuZu(DianShu.J);
+		int[] dianShuAmountArray = { 0, 2, 0, 4, 0, 2, 3, 7, 0, 0, 0, 5, 1, 1, 2 };
+		List<DaPaiDianShuSolution> solutionList = calculate(beiYaDianShuZu, dianShuAmountArray);
+		solutionList.addAll(calculateZhadan(beiYaDianShuZu, dianShuAmountArray));
 		solutionList = filter(solutionList);
 		long s2 = System.currentTimeMillis();
-		System.out.println(s2 - s1);
+		System.out.println(s2 - s1 + "ms");
 	}
+
+	// 所有可打的牌
+	// public static void main(String[] args) {
+	// int[] dianShuAmountArray = { 0, 2, 0, 4, 0, 2, 3, 7, 0, 0, 0, 5, 1, 1, 2 };
+	// long s1 = System.currentTimeMillis();
+	// List<DaPaiDianShuSolution> solutionList =
+	// generateAllKedaPaiSolutions(dianShuAmountArray);
+	// solutionList = filter(solutionList);
+	// long s2 = System.currentTimeMillis();
+	// System.out.println(s2 - s1);
+	// }
 
 	public static List<DaPaiDianShuSolution> calculateZhadan(DianShuZu beiYaDianShuZu, int[] dianShuAmountArray) {
 		int[] dianShuAmount = dianShuAmountArray.clone();
@@ -857,7 +859,7 @@ public class CaseTest {
 
 	private static List<DaPaiDianShuSolution> calculateDaPaiDianShuSolutionWithWangDang(int wangCount,
 			int[] dianshuCountArray, int xiaowangCount, int dawangCount, DianShuZu beiYaDianShuZu) {
-		List<DaPaiDianShuSolution> solutionList = new ArrayList<>();
+		Set<DaPaiDianShuSolution> solutionSet = new HashSet<>();
 		// 循环王的各种当法
 		int maxZuheCode = (int) Math.pow(13, wangCount);
 		int[] modArray = new int[wangCount];
@@ -904,7 +906,7 @@ public class CaseTest {
 				}
 				PaiXing paiXing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
 				paiXing = paiXingFilter(paiXing, beiYaDianShuZu);
-				solutionList.addAll(DianShuZuCalculator.calculateAllDaPaiDianShuSolutionWithWangDang(paiXing,
+				solutionSet.addAll(DianShuZuCalculator.calculateAllDaPaiDianShuSolutionWithWangDang(paiXing,
 						wangDangPaiArray, dianshuCountArray));
 				// 减去当牌的数量
 				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
@@ -912,14 +914,16 @@ public class CaseTest {
 				}
 			}
 		}
-		return solutionList;
+		return new ArrayList<>(solutionSet);
 	}
 
 	private static List<DaPaiDianShuSolution> calculateDaPaiDianShuSolutionWithoutWangDang(int[] dianshuCountArray,
 			DianShuZu beiYaDianShuZu) {
+		Set<DaPaiDianShuSolution> solutionSet = new HashSet<>();
 		PaiXing paiXing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
 		paiXing = paiXingFilter(paiXing, beiYaDianShuZu);
-		return DianShuZuCalculator.calculateAllDaPaiDianShuSolutionWithoutWangDang(paiXing);
+		solutionSet.addAll(DianShuZuCalculator.calculateAllDaPaiDianShuSolutionWithoutWangDang(paiXing));
+		return new ArrayList<>(solutionSet);
 	}
 
 	private static PaiXing paiXingFilter(PaiXing paiXing, DianShuZu beiYaDianShuZu) {

@@ -1,8 +1,10 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.dml.puke.pai.DianShu;
@@ -26,7 +28,7 @@ public class WenzhouShuangkouZaDanYaPaiSolutionCalculator implements ZaDanYaPaiS
 	private ZhadanComparator zhadanComparator;
 
 	@Override
-	public List<DaPaiDianShuSolution> calculate(DianShuZu beiYaDianShuZu, int[] dianShuAmountArray) {
+	public Map<String, DaPaiDianShuSolution> calculate(DianShuZu beiYaDianShuZu, int[] dianShuAmountArray) {
 		int[] dianShuAmount = dianShuAmountArray.clone();
 		List<DaPaiDianShuSolution> solutionList = new ArrayList<>();
 		int xiaowangCount = dianShuAmount[13];
@@ -80,7 +82,23 @@ public class WenzhouShuangkouZaDanYaPaiSolutionCalculator implements ZaDanYaPaiS
 			// 没有王牌
 			solutionList.addAll(calculateDaPaiDianShuSolutionWithoutWangDang(dianShuAmount, beiYaDianShuZu));
 		}
-		return solutionList;
+		Map<String, DaPaiDianShuSolution> yaPaiSolutionCandidates = new HashMap<>();
+		solutionList.forEach((solution) -> {
+			DaPaiDianShuSolution daPaiDianShuSolution = yaPaiSolutionCandidates.get(solution.getDianshuZuheIdx());
+			if (daPaiDianShuSolution != null) {
+				DianShuZu dianShuZu = daPaiDianShuSolution.getDianShuZu();
+				if (dianShuZu instanceof LianXuZhadanDianShuZu) {
+					if (zhadanComparator.compare((ZhadanDianShuZu) solution.getDianShuZu(),
+							(ZhadanDianShuZu) dianShuZu) > 0) {
+						yaPaiSolutionCandidates.put(solution.getDianshuZuheIdx(), solution);
+					}
+
+				}
+			} else {
+				yaPaiSolutionCandidates.put(solution.getDianshuZuheIdx(), solution);
+			}
+		});
+		return yaPaiSolutionCandidates;
 	}
 
 	private List<DaPaiDianShuSolution> calculateDaPaiDianShuSolutionWithWangDang(int wangCount, int[] dianshuCountArray,
