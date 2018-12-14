@@ -53,8 +53,8 @@ public class CaseTest {
 	// 普通压牌
 	public static void main(String[] args) {
 		long s1 = System.currentTimeMillis();
-		DianShuZu beiYaDianShuZu = new DuiziDianShuZu(DianShu.J);
-		int[] dianShuAmountArray = { 0, 2, 0, 4, 0, 2, 3, 7, 0, 0, 0, 5, 1, 1, 2 };
+		DianShuZu beiYaDianShuZu = new DanzhangDianShuZu(DianShu.wu);
+		int[] dianShuAmountArray = { 4, 0, 0, 8, 0, 0, 0, 1, 0, 0, 5, 8, 1, 0, 0 };
 		List<DaPaiDianShuSolution> solutionList = calculate(beiYaDianShuZu, dianShuAmountArray);
 		solutionList.addAll(calculateZhadan(beiYaDianShuZu, dianShuAmountArray));
 		solutionList = filter(solutionList);

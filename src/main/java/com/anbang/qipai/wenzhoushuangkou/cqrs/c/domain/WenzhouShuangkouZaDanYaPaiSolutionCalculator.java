@@ -30,6 +30,7 @@ public class WenzhouShuangkouZaDanYaPaiSolutionCalculator implements ZaDanYaPaiS
 	@Override
 	public Map<String, DaPaiDianShuSolution> calculate(DianShuZu beiYaDianShuZu, int[] dianShuAmountArray) {
 		int[] dianShuAmount = dianShuAmountArray.clone();
+		Map<String, DaPaiDianShuSolution> yaPaiSolutionCandidates = new HashMap<>();
 		List<DaPaiDianShuSolution> solutionList = new ArrayList<>();
 		int xiaowangCount = dianShuAmount[13];
 		int dawangCount = dianShuAmount[14];
@@ -82,7 +83,7 @@ public class WenzhouShuangkouZaDanYaPaiSolutionCalculator implements ZaDanYaPaiS
 			// 没有王牌
 			solutionList.addAll(calculateDaPaiDianShuSolutionWithoutWangDang(dianShuAmount, beiYaDianShuZu));
 		}
-		Map<String, DaPaiDianShuSolution> yaPaiSolutionCandidates = new HashMap<>();
+
 		solutionList.forEach((solution) -> {
 			DaPaiDianShuSolution daPaiDianShuSolution = yaPaiSolutionCandidates.get(solution.getDianshuZuheIdx());
 			if (daPaiDianShuSolution != null) {

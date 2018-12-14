@@ -60,6 +60,7 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 
 				}
 			}
+			solutionList.forEach((solution) -> yaPaiSolutionCandidates.put(solution.getDianshuZuheIdx(), solution));
 			return yaPaiSolutionCandidates;
 		}
 		int xiaowangCount = dianShuAmount[13];

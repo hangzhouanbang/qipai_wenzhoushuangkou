@@ -161,12 +161,6 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("121000000", 7);
 		gongxianFenCountMap.put("121000000", 8);
 
-		xianshuCountMap.put("120100000", 7);
-		gongxianFenCountMap.put("120100000", 8);
-
-		xianshuCountMap.put("122000000", 7);
-		gongxianFenCountMap.put("122000000", 8);
-
 		xianshuCountMap.put("112000000", 7);
 		gongxianFenCountMap.put("112000000", 8);
 
@@ -196,6 +190,9 @@ public class XianshuCalculatorHelper {
 
 		xianshuCountMap.put("000100000", 7);
 		gongxianFenCountMap.put("000100000", 8);
+
+		xianshuCountMap.put("120100000", 7);
+		gongxianFenCountMap.put("120100000", 12);
 
 		xianshuCountMap.put("111100000", 7);
 		gongxianFenCountMap.put("111100000", 12);
@@ -403,17 +400,41 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("402000000", 8);
 		gongxianFenCountMap.put("402000000", 20);
 
+		xianshuCountMap.put("400200000", 8);
+		gongxianFenCountMap.put("400200000", 20);
+
 		xianshuCountMap.put("022000000", 8);
 		gongxianFenCountMap.put("022000000", 20);
+
+		xianshuCountMap.put("020200000", 8);
+		gongxianFenCountMap.put("020200000", 20);
 
 		xianshuCountMap.put("001010000", 8);
 		gongxianFenCountMap.put("001010000", 20);
 
+		xianshuCountMap.put("001200000", 8);
+		gongxianFenCountMap.put("001200000", 20);
+
 		xianshuCountMap.put("211010000", 8);
 		gongxianFenCountMap.put("211010000", 20);
 
+		xianshuCountMap.put("201200000", 8);
+		gongxianFenCountMap.put("201200000", 20);
+
+		xianshuCountMap.put("120200000", 8);
+		gongxianFenCountMap.put("120200000", 20);
+
 		xianshuCountMap.put("111010000", 8);
 		gongxianFenCountMap.put("111010000", 20);
+
+		xianshuCountMap.put("111200000", 8);
+		gongxianFenCountMap.put("111200000", 20);
+
+		xianshuCountMap.put("101200000", 8);
+		gongxianFenCountMap.put("101200000", 20);
+
+		xianshuCountMap.put("011200000", 8);
+		gongxianFenCountMap.put("011200000", 20);
 
 		xianshuCountMap.put("011010000", 8);
 		gongxianFenCountMap.put("011010000", 20);
@@ -1227,25 +1248,15 @@ public class XianshuCalculatorHelper {
 
 		xianshuCountMap.put("000101010", 11);
 		gongxianFenCountMap.put("000101010", 168);
-
-		xianshuCountMap.put("100000110", 11);
-		gongxianFenCountMap.put("100000110", 192);
-
-		xianshuCountMap.put("010000110", 11);
-		gongxianFenCountMap.put("010000110", 192);
-
-		xianshuCountMap.put("000000110", 11);
-		gongxianFenCountMap.put("000000110", 192);
-
-		xianshuCountMap.put("000100110", 11);
-		gongxianFenCountMap.put("000100110", 200);
-
 	}
 
 	/**
 	 * 计算十二线倍数及贡献分
 	 */
 	private static void calculateShierXian() {
+		xianshuCountMap.put("000000001", 12);
+		gongxianFenCountMap.put("000000001", 256);
+
 		xianshuCountMap.put("300000001", 12);
 		gongxianFenCountMap.put("300000001", 256);
 
@@ -1315,9 +1326,6 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("010010001", 12);
 		gongxianFenCountMap.put("010010001", 272);
 
-		xianshuCountMap.put("003000001", 12);
-		gongxianFenCountMap.put("003000001", 272);
-
 		xianshuCountMap.put("000200001", 12);
 		gongxianFenCountMap.put("000200001", 272);
 
@@ -1329,47 +1337,5 @@ public class XianshuCalculatorHelper {
 
 		xianshuCountMap.put("000110001", 12);
 		gongxianFenCountMap.put("000110001", 280);
-
-		xianshuCountMap.put("100001001", 12);
-		gongxianFenCountMap.put("100001001", 288);
-
-		xianshuCountMap.put("010001001", 12);
-		gongxianFenCountMap.put("010001001", 288);
-
-		xianshuCountMap.put("000001001", 12);
-		gongxianFenCountMap.put("000001001", 288);
-
-		xianshuCountMap.put("001001001", 12);
-		gongxianFenCountMap.put("001001001", 292);
-
-		xianshuCountMap.put("000101001", 12);
-		gongxianFenCountMap.put("000101001", 296);
-
-		xianshuCountMap.put("010000101", 12);
-		gongxianFenCountMap.put("010000101", 320);
-
-		xianshuCountMap.put("000000101", 12);
-		gongxianFenCountMap.put("000000101", 320);
-
-		xianshuCountMap.put("100000101", 12);
-		gongxianFenCountMap.put("100000101", 320);
-
-		xianshuCountMap.put("001000101", 12);
-		gongxianFenCountMap.put("001000101", 324);
-
-		xianshuCountMap.put("000100101", 12);
-		gongxianFenCountMap.put("000100101", 328);
-
-		xianshuCountMap.put("000000011", 12);
-		gongxianFenCountMap.put("000000011", 384);
-
-		xianshuCountMap.put("100000011", 12);
-		gongxianFenCountMap.put("100000011", 384);
-
-		xianshuCountMap.put("001000011", 12);
-		gongxianFenCountMap.put("001000011", 388);
-
-		xianshuCountMap.put("000100011", 12);
-		gongxianFenCountMap.put("000100011", 392);
 	}
 }

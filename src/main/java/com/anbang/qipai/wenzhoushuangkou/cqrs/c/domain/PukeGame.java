@@ -650,11 +650,11 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		wenzhouShuangkouYaPaiSolutionsTipsFilter.setZhadanComparator(zhadanComparator);
 		ju.setYaPaiSolutionsTipsFilter(wenzhouShuangkouYaPaiSolutionsTipsFilter);
 
-		WenzhouShuangkouAllKedaPaiSolutionsGenerator WenzhouShuangkouAllKedaPaiSolutionsGenerator = new WenzhouShuangkouAllKedaPaiSolutionsGenerator();
-		WenzhouShuangkouAllKedaPaiSolutionsGenerator.setBx(bx);
-		WenzhouShuangkouAllKedaPaiSolutionsGenerator.setLianXuDianShuZuComparator(lianXuDianShuZuComparator);
-		WenzhouShuangkouAllKedaPaiSolutionsGenerator.setZhadanComparator(zhadanComparator);
-		ju.setAllKedaPaiSolutionsGenerator(WenzhouShuangkouAllKedaPaiSolutionsGenerator);
+		WenzhouShuangkouAllKedaPaiSolutionsGenerator wenzhouShuangkouAllKedaPaiSolutionsGenerator = new WenzhouShuangkouAllKedaPaiSolutionsGenerator();
+		wenzhouShuangkouAllKedaPaiSolutionsGenerator.setBx(bx);
+		wenzhouShuangkouAllKedaPaiSolutionsGenerator.setLianXuDianShuZuComparator(lianXuDianShuZuComparator);
+		wenzhouShuangkouAllKedaPaiSolutionsGenerator.setZhadanComparator(zhadanComparator);
+		ju.setAllKedaPaiSolutionsGenerator(wenzhouShuangkouAllKedaPaiSolutionsGenerator);
 
 		ju.setWaihaoGenerator(new ShuangkouWaihaoGenerator());
 

@@ -2,8 +2,10 @@ package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.listener.XianshuCountDaActionStatisticsListener;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.WenzhouShuangkouPanPlayerResult;
@@ -254,6 +256,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			}
 
 			// 计算补分
+			Set<String> yingjiaPlayerId = new HashSet<>();
 			for (int i = 0; i < panPlayerResultList.size(); i++) {
 				WenzhouShuangkouPanPlayerResult playerResulti = panPlayerResultList.get(i);
 				if (yingPlayerId.equals(playerResulti.getPlayerId())) {
@@ -267,14 +270,19 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 							// 结算补分
 							chaixianBufen1.jiesuan(-bufenj);
 							chaixianBufen2.jiesuan(-bufeni);
+							yingjiaPlayerId.add(yingPlayerId);
+							yingjiaPlayerId.add(duijiaPlayer.getId());
 							break;
 						}
 					}
 				}
-				if (playerId3.equals(playerResulti.getPlayerId())) {
+			}
+			for (int i = 0; i < panPlayerResultList.size(); i++) {
+				WenzhouShuangkouPanPlayerResult playerResulti = panPlayerResultList.get(i);
+				if (!yingjiaPlayerId.contains(playerResulti.getPlayerId())) {
 					WenzhouShuangkouChaixianbufen chaixianBufen1 = playerResulti.getBufen();
 					int bufeni = chaixianBufen1.getValue();
-					ShuangkouPlayer duijiaPlayer1 = currentPan.findDuijiaPlayer(playerId3);
+					ShuangkouPlayer duijiaPlayer1 = currentPan.findDuijiaPlayer(playerResulti.getPlayerId());
 					for (int j = 0; j < panPlayerResultList.size(); j++) {
 						WenzhouShuangkouPanPlayerResult playerResultj = panPlayerResultList.get(j);
 						if (duijiaPlayer1.getId().equals(playerResultj.getPlayerId())) {
@@ -286,9 +294,9 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 							break;
 						}
 					}
+					break;
 				}
 			}
-
 			panPlayerResultList.forEach((playerResult) -> {
 				// 计算当盘总分
 				playerResult.setScore(playerResult.getGongxianfen().getTotalscore() + playerResult.getBufen().getValue()
