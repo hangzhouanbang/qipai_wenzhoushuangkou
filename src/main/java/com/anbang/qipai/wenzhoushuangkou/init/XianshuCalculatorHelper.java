@@ -115,8 +115,6 @@ public class XianshuCalculatorHelper {
 	 * 计算七线倍数及贡献分
 	 */
 	private static void calculateQiXian() {
-		xianshuCountMap.put("501000000", 7);
-		gongxianFenCountMap.put("501000000", 12);
 
 		xianshuCountMap.put("500000000", 7);
 		gongxianFenCountMap.put("500000000", 8);
@@ -127,23 +125,14 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("401000000", 7);
 		gongxianFenCountMap.put("401000000", 8);
 
-		xianshuCountMap.put("400100000", 7);
-		gongxianFenCountMap.put("400100000", 12);
-
 		xianshuCountMap.put("320000000", 7);
 		gongxianFenCountMap.put("320000000", 8);
 
 		xianshuCountMap.put("311000000", 7);
 		gongxianFenCountMap.put("311000000", 8);
 
-		xianshuCountMap.put("310100000", 7);
-		gongxianFenCountMap.put("310100000", 12);
-
 		xianshuCountMap.put("302000000", 7);
 		gongxianFenCountMap.put("302000000", 8);
-
-		xianshuCountMap.put("301100000", 7);
-		gongxianFenCountMap.put("301100000", 12);
 
 		xianshuCountMap.put("300100000", 7);
 		gongxianFenCountMap.put("300100000", 8);
@@ -154,14 +143,8 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("221000000", 7);
 		gongxianFenCountMap.put("221000000", 8);
 
-		xianshuCountMap.put("220100000", 7);
-		gongxianFenCountMap.put("220100000", 12);
-
 		xianshuCountMap.put("212000000", 7);
 		gongxianFenCountMap.put("212000000", 8);
-
-		xianshuCountMap.put("211100000", 7);
-		gongxianFenCountMap.put("211100000", 12);
 
 		xianshuCountMap.put("210100000", 7);
 		gongxianFenCountMap.put("210100000", 8);
@@ -169,17 +152,11 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("202000000", 7);
 		gongxianFenCountMap.put("202000000", 8);
 
-		xianshuCountMap.put("201100000", 7);
-		gongxianFenCountMap.put("201100000", 12);
-
 		xianshuCountMap.put("200100000", 7);
 		gongxianFenCountMap.put("200100000", 8);
 
 		xianshuCountMap.put("130000000", 7);
 		gongxianFenCountMap.put("130000000", 8);
-
-		xianshuCountMap.put("121100000", 7);
-		gongxianFenCountMap.put("121100000", 16);
 
 		xianshuCountMap.put("121000000", 7);
 		gongxianFenCountMap.put("121000000", 8);
@@ -193,17 +170,11 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("112000000", 7);
 		gongxianFenCountMap.put("112000000", 8);
 
-		xianshuCountMap.put("111100000", 7);
-		gongxianFenCountMap.put("111100000", 12);
-
 		xianshuCountMap.put("110100000", 7);
 		gongxianFenCountMap.put("110100000", 8);
 
 		xianshuCountMap.put("102000000", 7);
 		gongxianFenCountMap.put("102000000", 8);
-
-		xianshuCountMap.put("101100000", 7);
-		gongxianFenCountMap.put("101100000", 12);
 
 		xianshuCountMap.put("100100000", 7);
 		gongxianFenCountMap.put("100100000", 8);
@@ -214,14 +185,8 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("021000000", 7);
 		gongxianFenCountMap.put("021000000", 8);
 
-		xianshuCountMap.put("020100000", 7);
-		gongxianFenCountMap.put("020100000", 12);
-
 		xianshuCountMap.put("012000000", 7);
 		gongxianFenCountMap.put("012000000", 8);
-
-		xianshuCountMap.put("011100000", 7);
-		gongxianFenCountMap.put("011100000", 12);
 
 		xianshuCountMap.put("010100000", 7);
 		gongxianFenCountMap.put("010100000", 8);
@@ -229,11 +194,47 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("002000000", 7);
 		gongxianFenCountMap.put("002000000", 8);
 
+		xianshuCountMap.put("000100000", 7);
+		gongxianFenCountMap.put("000100000", 8);
+
+		xianshuCountMap.put("111100000", 7);
+		gongxianFenCountMap.put("111100000", 12);
+
+		xianshuCountMap.put("101100000", 7);
+		gongxianFenCountMap.put("101100000", 12);
+
+		xianshuCountMap.put("020100000", 7);
+		gongxianFenCountMap.put("020100000", 12);
+
+		xianshuCountMap.put("011100000", 7);
+		gongxianFenCountMap.put("011100000", 12);
+
 		xianshuCountMap.put("001100000", 7);
 		gongxianFenCountMap.put("001100000", 12);
 
-		xianshuCountMap.put("000100000", 7);
-		gongxianFenCountMap.put("000100000", 8);
+		xianshuCountMap.put("501000000", 7);
+		gongxianFenCountMap.put("501000000", 12);
+
+		xianshuCountMap.put("400100000", 7);
+		gongxianFenCountMap.put("400100000", 12);
+
+		xianshuCountMap.put("310100000", 7);
+		gongxianFenCountMap.put("310100000", 12);
+
+		xianshuCountMap.put("301100000", 7);
+		gongxianFenCountMap.put("301100000", 12);
+
+		xianshuCountMap.put("220100000", 7);
+		gongxianFenCountMap.put("220100000", 12);
+
+		xianshuCountMap.put("211100000", 7);
+		gongxianFenCountMap.put("211100000", 12);
+
+		xianshuCountMap.put("201100000", 7);
+		gongxianFenCountMap.put("201100000", 12);
+
+		xianshuCountMap.put("121100000", 7);
+		gongxianFenCountMap.put("121100000", 16);
 	}
 
 	/**
@@ -384,12 +385,6 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("410100000", 8);
 		gongxianFenCountMap.put("410100000", 16);
 
-		xianshuCountMap.put("402000000", 8);
-		gongxianFenCountMap.put("402000000", 20);
-
-		xianshuCountMap.put("022000000", 8);
-		gongxianFenCountMap.put("022000000", 20);
-
 		xianshuCountMap.put("312000000", 8);
 		gongxianFenCountMap.put("312000000", 16);
 
@@ -398,6 +393,18 @@ public class XianshuCalculatorHelper {
 
 		xianshuCountMap.put("122000000", 8);
 		gongxianFenCountMap.put("122000000", 16);
+
+		xianshuCountMap.put("201010000", 8);
+		gongxianFenCountMap.put("201010000", 16);
+
+		xianshuCountMap.put("101010000", 8);
+		gongxianFenCountMap.put("101010000", 16);
+
+		xianshuCountMap.put("402000000", 8);
+		gongxianFenCountMap.put("402000000", 20);
+
+		xianshuCountMap.put("022000000", 8);
+		gongxianFenCountMap.put("022000000", 20);
 
 		xianshuCountMap.put("001010000", 8);
 		gongxianFenCountMap.put("001010000", 20);
@@ -414,11 +421,8 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("301010000", 8);
 		gongxianFenCountMap.put("301010000", 20);
 
-		xianshuCountMap.put("201010000", 8);
-		gongxianFenCountMap.put("201010000", 16);
-
-		xianshuCountMap.put("101010000", 8);
-		gongxianFenCountMap.put("101010000", 16);
+		xianshuCountMap.put("120010000", 8);
+		gongxianFenCountMap.put("120010000", 20);
 
 		xianshuCountMap.put("400010000", 8);
 		gongxianFenCountMap.put("400010000", 20);
@@ -431,9 +435,6 @@ public class XianshuCalculatorHelper {
 
 		xianshuCountMap.put("220010000", 8);
 		gongxianFenCountMap.put("220010000", 20);
-
-		xianshuCountMap.put("120010000", 8);
-		gongxianFenCountMap.put("120010000", 16);
 
 		xianshuCountMap.put("000110000", 8);
 		gongxianFenCountMap.put("000110000", 24);
@@ -492,6 +493,9 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("501010000", 8);
 		gongxianFenCountMap.put("501010000", 24);
 
+		xianshuCountMap.put("100110000", 8);
+		gongxianFenCountMap.put("100110000", 24);
+
 		xianshuCountMap.put("211110000", 8);
 		gongxianFenCountMap.put("211110000", 28);
 
@@ -506,9 +510,6 @@ public class XianshuCalculatorHelper {
 
 		xianshuCountMap.put("201110000", 8);
 		gongxianFenCountMap.put("201110000", 28);
-
-		xianshuCountMap.put("100110000", 8);
-		gongxianFenCountMap.put("100110000", 24);
 
 		xianshuCountMap.put("400110000", 8);
 		gongxianFenCountMap.put("400110000", 28);
@@ -534,28 +535,46 @@ public class XianshuCalculatorHelper {
 		gongxianFenCountMap.put("400001000", 32);
 
 		xianshuCountMap.put("310001000", 9);
-		gongxianFenCountMap.put("310001000", 36);
+		gongxianFenCountMap.put("310001000", 32);
 
-		xianshuCountMap.put("201020000", 9);
-		gongxianFenCountMap.put("201020000", 36);
+		xianshuCountMap.put("300001000", 9);
+		gongxianFenCountMap.put("300001000", 32);
 
-		xianshuCountMap.put("112001000", 9);
-		gongxianFenCountMap.put("112001000", 40);
+		xianshuCountMap.put("210001000", 9);
+		gongxianFenCountMap.put("210001000", 32);
+
+		xianshuCountMap.put("200020000", 9);
+		gongxianFenCountMap.put("200020000", 32);
+
+		xianshuCountMap.put("200001000", 9);
+		gongxianFenCountMap.put("200001000", 32);
+
+		xianshuCountMap.put("100020000", 9);
+		gongxianFenCountMap.put("100020000", 32);
+
+		xianshuCountMap.put("100001000", 9);
+		gongxianFenCountMap.put("100001000", 32);
+
+		xianshuCountMap.put("110020000", 9);
+		gongxianFenCountMap.put("110020000", 32);
+
+		xianshuCountMap.put("110001000", 9);
+		gongxianFenCountMap.put("110001000", 32);
 
 		xianshuCountMap.put("100300000", 9);
 		gongxianFenCountMap.put("100300000", 32);
 
-		xianshuCountMap.put("100011000", 9);
-		gongxianFenCountMap.put("100011000", 48);
-
-		xianshuCountMap.put("111001000", 9);
-		gongxianFenCountMap.put("111001000", 36);
+		xianshuCountMap.put("100210000", 9);
+		gongxianFenCountMap.put("100210000", 32);
 
 		xianshuCountMap.put("050000000", 9);
 		gongxianFenCountMap.put("050000000", 32);
 
 		xianshuCountMap.put("104000000", 9);
 		gongxianFenCountMap.put("104000000", 32);
+
+		xianshuCountMap.put("014000000", 9);
+		gongxianFenCountMap.put("014000000", 32);
 
 		xianshuCountMap.put("041000000", 9);
 		gongxianFenCountMap.put("041000000", 32);
@@ -572,32 +591,14 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("102200000", 9);
 		gongxianFenCountMap.put("102200000", 32);
 
-		xianshuCountMap.put("101001000", 9);
-		gongxianFenCountMap.put("101001000", 36);
-
-		xianshuCountMap.put("101101000", 9);
-		gongxianFenCountMap.put("101101000", 44);
-
-		xianshuCountMap.put("101011000", 9);
-		gongxianFenCountMap.put("101011000", 52);
-
 		xianshuCountMap.put("022100000", 9);
 		gongxianFenCountMap.put("022100000", 32);
 
-		xianshuCountMap.put("031001000", 9);
-		gongxianFenCountMap.put("031001000", 32);
+		xianshuCountMap.put("031010000", 9);
+		gongxianFenCountMap.put("031010000", 32);
 
 		xianshuCountMap.put("032000000", 9);
 		gongxianFenCountMap.put("032000000", 32);
-
-		xianshuCountMap.put("030001000", 9);
-		gongxianFenCountMap.put("030001000", 40);
-
-		xianshuCountMap.put("020020000", 9);
-		gongxianFenCountMap.put("020020000", 36);
-
-		xianshuCountMap.put("020001000", 9);
-		gongxianFenCountMap.put("020001000", 36);
 
 		xianshuCountMap.put("010300000", 9);
 		gongxianFenCountMap.put("010300000", 32);
@@ -605,14 +606,26 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("010020000", 9);
 		gongxianFenCountMap.put("010020000", 32);
 
+		xianshuCountMap.put("010300000", 9);
+		gongxianFenCountMap.put("010300000", 32);
+
+		xianshuCountMap.put("010001000", 9);
+		gongxianFenCountMap.put("010001000", 32);
+
 		xianshuCountMap.put("030200000", 9);
 		gongxianFenCountMap.put("030200000", 32);
 
 		xianshuCountMap.put("031010000", 9);
 		gongxianFenCountMap.put("031010000", 32);
 
+		xianshuCountMap.put("030200000", 9);
+		gongxianFenCountMap.put("030200000", 32);
+
 		xianshuCountMap.put("030110000", 9);
 		gongxianFenCountMap.put("030110000", 32);
+
+		xianshuCountMap.put("021110000", 9);
+		gongxianFenCountMap.put("021110000", 32);
 
 		xianshuCountMap.put("023000000", 9);
 		gongxianFenCountMap.put("023000000", 32);
@@ -635,53 +648,17 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("003010000", 9);
 		gongxianFenCountMap.put("003010000", 32);
 
-		xianshuCountMap.put("003001000", 9);
-		gongxianFenCountMap.put("003001000", 48);
-
-		xianshuCountMap.put("021110000", 9);
-		gongxianFenCountMap.put("021110000", 32);
-
-		xianshuCountMap.put("021101000", 9);
-		gongxianFenCountMap.put("021101000", 48);
-
-		xianshuCountMap.put("021001000", 9);
-		gongxianFenCountMap.put("021001000", 40);
-
-		xianshuCountMap.put("020011000", 9);
-		gongxianFenCountMap.put("020011000", 52);
-
 		xianshuCountMap.put("014000000", 9);
 		gongxianFenCountMap.put("014000000", 32);
 
 		xianshuCountMap.put("012200000", 9);
 		gongxianFenCountMap.put("012200000", 32);
 
-		xianshuCountMap.put("011020000", 9);
-		gongxianFenCountMap.put("011020000", 36);
+		xianshuCountMap.put("002200000", 9);
+		gongxianFenCountMap.put("002200000", 32);
 
-		xianshuCountMap.put("011001000", 9);
-		gongxianFenCountMap.put("011001000", 36);
-
-		xianshuCountMap.put("010011000", 9);
-		gongxianFenCountMap.put("010011000", 48);
-
-		xianshuCountMap.put("002001000", 9);
-		gongxianFenCountMap.put("002001000", 40);
-
-		xianshuCountMap.put("001300000", 9);
-		gongxianFenCountMap.put("001300000", 36);
-
-		xianshuCountMap.put("001020000", 9);
-		gongxianFenCountMap.put("001020000", 36);
-
-		xianshuCountMap.put("001020000", 9);
-		gongxianFenCountMap.put("001020000", 36);
-
-		xianshuCountMap.put("001011000", 9);
-		gongxianFenCountMap.put("001011000", 52);
-
-		xianshuCountMap.put("001001000", 9);
-		gongxianFenCountMap.put("001001000", 36);
+		xianshuCountMap.put("002110000", 9);
+		gongxianFenCountMap.put("002110000", 32);
 
 		xianshuCountMap.put("000300000", 9);
 		gongxianFenCountMap.put("000300000", 32);
@@ -689,26 +666,11 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("000210000", 9);
 		gongxianFenCountMap.put("000210000", 32);
 
-		xianshuCountMap.put("000201000", 9);
-		gongxianFenCountMap.put("000201000", 48);
-
 		xianshuCountMap.put("001210000", 9);
 		gongxianFenCountMap.put("001210000", 32);
 
-		xianshuCountMap.put("000120000", 9);
-		gongxianFenCountMap.put("000120000", 40);
-
-		xianshuCountMap.put("000111000", 9);
-		gongxianFenCountMap.put("000111000", 56);
-
-		xianshuCountMap.put("000101000", 9);
-		gongxianFenCountMap.put("000101000", 40);
-
 		xianshuCountMap.put("000020000", 9);
 		gongxianFenCountMap.put("000020000", 32);
-
-		xianshuCountMap.put("000011000", 9);
-		gongxianFenCountMap.put("000011000", 48);
 
 		xianshuCountMap.put("000001000", 9);
 		gongxianFenCountMap.put("000001000", 32);
@@ -719,46 +681,219 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("010210000", 9);
 		gongxianFenCountMap.put("010210000", 32);
 
-		xianshuCountMap.put("010201000", 9);
-		gongxianFenCountMap.put("010201000", 48);
+		xianshuCountMap.put("400001000", 9);
+		gongxianFenCountMap.put("400001000", 36);
+
+		xianshuCountMap.put("310001000", 9);
+		gongxianFenCountMap.put("310001000", 36);
+
+		xianshuCountMap.put("301001000", 9);
+		gongxianFenCountMap.put("301001000", 36);
+
+		xianshuCountMap.put("220001000", 9);
+		gongxianFenCountMap.put("220001000", 36);
+
+		xianshuCountMap.put("211001000", 9);
+		gongxianFenCountMap.put("211001000", 36);
+
+		xianshuCountMap.put("201020000", 9);
+		gongxianFenCountMap.put("201020000", 36);
+
+		xianshuCountMap.put("201001000", 9);
+		gongxianFenCountMap.put("201001000", 36);
+
+		xianshuCountMap.put("120001000", 9);
+		gongxianFenCountMap.put("120001000", 36);
+
+		xianshuCountMap.put("111001000", 9);
+		gongxianFenCountMap.put("111001000", 36);
+
+		xianshuCountMap.put("101001000", 9);
+		gongxianFenCountMap.put("101001000", 36);
+
+		xianshuCountMap.put("020020000", 9);
+		gongxianFenCountMap.put("020020000", 36);
+
+		xianshuCountMap.put("020001000", 9);
+		gongxianFenCountMap.put("020001000", 36);
+
+		xianshuCountMap.put("001001000", 9);
+		gongxianFenCountMap.put("001001000", 36);
+
+		xianshuCountMap.put("020020000", 9);
+		gongxianFenCountMap.put("020020000", 36);
+
+		xianshuCountMap.put("020001000", 9);
+		gongxianFenCountMap.put("020001000", 36);
+
+		xianshuCountMap.put("011020000", 9);
+		gongxianFenCountMap.put("011020000", 36);
+
+		xianshuCountMap.put("011001000", 9);
+		gongxianFenCountMap.put("011001000", 36);
+
+		xianshuCountMap.put("001300000", 9);
+		gongxianFenCountMap.put("001300000", 36);
+
+		xianshuCountMap.put("001300000", 9);
+		gongxianFenCountMap.put("001300000", 36);
+
+		xianshuCountMap.put("001020000", 9);
+		gongxianFenCountMap.put("001020000", 36);
+
+		xianshuCountMap.put("001001000", 9);
+		gongxianFenCountMap.put("001001000", 36);
+
+		xianshuCountMap.put("001020000", 9);
+		gongxianFenCountMap.put("001020000", 36);
+
+		xianshuCountMap.put("202001000", 9);
+		gongxianFenCountMap.put("202001000", 40);
+
+		xianshuCountMap.put("200101000", 9);
+		gongxianFenCountMap.put("200101000", 40);
+
+		xianshuCountMap.put("100120000", 9);
+		gongxianFenCountMap.put("100120000", 40);
+
+		xianshuCountMap.put("100101000", 9);
+		gongxianFenCountMap.put("100101000", 40);
+
+		xianshuCountMap.put("121001000", 9);
+		gongxianFenCountMap.put("121001000", 40);
+
+		xianshuCountMap.put("112001000", 9);
+		gongxianFenCountMap.put("112001000", 40);
+
+		xianshuCountMap.put("110101000", 9);
+		gongxianFenCountMap.put("110101000", 40);
+
+		xianshuCountMap.put("102001000", 9);
+		gongxianFenCountMap.put("102001000", 40);
+
+		xianshuCountMap.put("130001000", 9);
+		gongxianFenCountMap.put("130001000", 40);
+
+		xianshuCountMap.put("030001000", 9);
+		gongxianFenCountMap.put("030001000", 40);
+
+		xianshuCountMap.put("021001000", 9);
+		gongxianFenCountMap.put("021001000", 40);
+
+		xianshuCountMap.put("010120000", 9);
+		gongxianFenCountMap.put("010120000", 40);
+
+		xianshuCountMap.put("010101000", 9);
+		gongxianFenCountMap.put("010101000", 40);
+
+		xianshuCountMap.put("030001000", 9);
+		gongxianFenCountMap.put("030001000", 40);
+
+		xianshuCountMap.put("021001000", 9);
+		gongxianFenCountMap.put("021001000", 40);
+
+		xianshuCountMap.put("012001000", 9);
+		gongxianFenCountMap.put("012001000", 40);
+
+		xianshuCountMap.put("002001000", 9);
+		gongxianFenCountMap.put("002001000", 40);
+
+		xianshuCountMap.put("000120000", 9);
+		gongxianFenCountMap.put("000120000", 40);
+
+		xianshuCountMap.put("000120000", 9);
+		gongxianFenCountMap.put("000120000", 40);
+
+		xianshuCountMap.put("000101000", 9);
+		gongxianFenCountMap.put("000101000", 40);
 
 		xianshuCountMap.put("002020000", 9);
 		gongxianFenCountMap.put("002020000", 40);
 
-		xianshuCountMap.put("002200000", 9);
-		gongxianFenCountMap.put("002200000", 32);
+		xianshuCountMap.put("201101000", 9);
+		gongxianFenCountMap.put("201101000", 44);
+
+		xianshuCountMap.put("101101000", 9);
+		gongxianFenCountMap.put("101101000", 44);
+
+		xianshuCountMap.put("100101000", 9);
+		gongxianFenCountMap.put("100101000", 44);
+
+		xianshuCountMap.put("031001000", 9);
+		gongxianFenCountMap.put("031001000", 44);
+
+		xianshuCountMap.put("020101000", 9);
+		gongxianFenCountMap.put("020101000", 44);
+
+		xianshuCountMap.put("011101000", 9);
+		gongxianFenCountMap.put("011101000", 44);
+
+		xianshuCountMap.put("001120000", 9);
+		gongxianFenCountMap.put("001120000", 44);
+
+		xianshuCountMap.put("001101000", 9);
+		gongxianFenCountMap.put("001101000", 44);
+
+		xianshuCountMap.put("100011000", 9);
+		gongxianFenCountMap.put("100011000", 48);
+
+		xianshuCountMap.put("110011000", 9);
+		gongxianFenCountMap.put("110011000", 48);
+
+		xianshuCountMap.put("010011000", 9);
+		gongxianFenCountMap.put("010011000", 48);
+
+		xianshuCountMap.put("200011000", 9);
+		gongxianFenCountMap.put("200011000", 48);
+
+		xianshuCountMap.put("003001000", 9);
+		gongxianFenCountMap.put("003001000", 48);
+
+		xianshuCountMap.put("021101000", 9);
+		gongxianFenCountMap.put("021101000", 48);
+
+		xianshuCountMap.put("010011000", 9);
+		gongxianFenCountMap.put("010011000", 48);
+
+		xianshuCountMap.put("000201000", 9);
+		gongxianFenCountMap.put("000201000", 48);
+
+		xianshuCountMap.put("000011000", 9);
+		gongxianFenCountMap.put("000011000", 48);
+
+		xianshuCountMap.put("010201000", 9);
+		gongxianFenCountMap.put("010201000", 48);
+
+		xianshuCountMap.put("101011000", 9);
+		gongxianFenCountMap.put("101011000", 52);
+
+		xianshuCountMap.put("020011000", 9);
+		gongxianFenCountMap.put("020011000", 52);
+
+		xianshuCountMap.put("011011000", 9);
+		gongxianFenCountMap.put("011011000", 52);
+
+		xianshuCountMap.put("001011000", 9);
+		gongxianFenCountMap.put("001011000", 52);
+
+		xianshuCountMap.put("000111000", 9);
+		gongxianFenCountMap.put("000111000", 56);
+
 	}
 
 	/**
 	 * 计算十线倍数及贡献分
 	 */
 	private static void calculateShiXian() {
-		xianshuCountMap.put("400000100", 10);
-		gongxianFenCountMap.put("400000100", 68);
-
-		xianshuCountMap.put("310000100", 10);
-		gongxianFenCountMap.put("310000100", 68);
-
+		// 75
 		xianshuCountMap.put("300000100", 10);
 		gongxianFenCountMap.put("300000100", 64);
 
 		xianshuCountMap.put("210000100", 10);
 		gongxianFenCountMap.put("210000100", 64);
 
-		xianshuCountMap.put("201000100", 10);
-		gongxianFenCountMap.put("201000100", 68);
-
-		xianshuCountMap.put("200100100", 10);
-		gongxianFenCountMap.put("200100100", 72);
-
-		xianshuCountMap.put("200010100", 10);
-		gongxianFenCountMap.put("200010100", 80);
-
 		xianshuCountMap.put("200002000", 10);
 		gongxianFenCountMap.put("200002000", 64);
-
-		xianshuCountMap.put("200001100", 10);
-		gongxianFenCountMap.put("200001100", 96);
 
 		xianshuCountMap.put("200000100", 10);
 		gongxianFenCountMap.put("200000100", 64);
@@ -766,53 +901,8 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("110002000", 10);
 		gongxianFenCountMap.put("110002000", 64);
 
-		xianshuCountMap.put("100002000", 10);
-		gongxianFenCountMap.put("100002000", 64);
-
-		xianshuCountMap.put("120000100", 10);
-		gongxianFenCountMap.put("120000100", 64);
-
-		xianshuCountMap.put("111000100", 10);
-		gongxianFenCountMap.put("111000100", 68);
-
-		xianshuCountMap.put("110100100", 10);
-		gongxianFenCountMap.put("110100100", 72);
-
-		xianshuCountMap.put("110010100", 10);
-		gongxianFenCountMap.put("110010100", 80);
-
-		xianshuCountMap.put("102000100", 10);
-		gongxianFenCountMap.put("102000100", 72);
-
-		xianshuCountMap.put("101100100", 10);
-		gongxianFenCountMap.put("101100100", 76);
-
-		xianshuCountMap.put("100100100", 10);
-		gongxianFenCountMap.put("100010100", 84);
-
-		xianshuCountMap.put("101000100", 10);
-		gongxianFenCountMap.put("101000100", 68);
-
-		xianshuCountMap.put("100000100", 10);
-		gongxianFenCountMap.put("100000100", 64);
-
-		xianshuCountMap.put("030000100", 10);
-		gongxianFenCountMap.put("030000100", 72);
-
-		xianshuCountMap.put("021000100", 10);
-		gongxianFenCountMap.put("021000100", 72);
-
-		xianshuCountMap.put("020100100", 10);
-		gongxianFenCountMap.put("020100100", 76);
-
-		xianshuCountMap.put("012000100", 10);
-		gongxianFenCountMap.put("012000100", 72);
-
-		xianshuCountMap.put("011000100", 10);
-		gongxianFenCountMap.put("011000100", 68);
-
-		xianshuCountMap.put("010200100", 10);
-		gongxianFenCountMap.put("010200100", 80);
+		xianshuCountMap.put("110000100", 10);
+		gongxianFenCountMap.put("110000100", 64);
 
 		xianshuCountMap.put("010000100", 10);
 		gongxianFenCountMap.put("010000100", 64);
@@ -820,71 +910,23 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("010002000", 10);
 		gongxianFenCountMap.put("010002000", 64);
 
-		xianshuCountMap.put("003000100", 10);
-		gongxianFenCountMap.put("003000100", 80);
-
-		xianshuCountMap.put("002002000", 10);
-		gongxianFenCountMap.put("002002000", 72);
-
-		xianshuCountMap.put("002100100", 10);
-		gongxianFenCountMap.put("002100100", 80);
-
-		xianshuCountMap.put("002010100", 10);
-		gongxianFenCountMap.put("002010100", 88);
-
-		xianshuCountMap.put("002000100", 10);
-		gongxianFenCountMap.put("002000100", 72);
-
-		xianshuCountMap.put("001030000", 10);
-		gongxianFenCountMap.put("001030000", 68);
-
-		xianshuCountMap.put("001002000", 10);
-		gongxianFenCountMap.put("001002000", 68);
-
-		xianshuCountMap.put("001200100", 10);
-		gongxianFenCountMap.put("001200100", 84);
-
-		xianshuCountMap.put("001010100", 10);
-		gongxianFenCountMap.put("001010100", 84);
-
-		xianshuCountMap.put("001001100", 10);
-		gongxianFenCountMap.put("001001100", 100);
-
-		xianshuCountMap.put("001000100", 10);
-		gongxianFenCountMap.put("001000100", 68);
-
 		xianshuCountMap.put("000400000", 10);
 		gongxianFenCountMap.put("000400000", 64);
+
+		xianshuCountMap.put("000310000", 10);
+		gongxianFenCountMap.put("000310000", 64);
 
 		xianshuCountMap.put("000220000", 10);
 		gongxianFenCountMap.put("000220000", 64);
 
-		xianshuCountMap.put("000200100", 10);
-		gongxianFenCountMap.put("000200100", 80);
-
-		xianshuCountMap.put("000130000", 10);
-		gongxianFenCountMap.put("000130000", 72);
-
-		xianshuCountMap.put("000102000", 10);
-		gongxianFenCountMap.put("000102000", 72);
-
 		xianshuCountMap.put("000030000", 10);
 		gongxianFenCountMap.put("000030000", 64);
 
-		xianshuCountMap.put("000020100", 10);
-		gongxianFenCountMap.put("000020100", 96);
-
-		xianshuCountMap.put("000011100", 10);
-		gongxianFenCountMap.put("000011100", 112);
-
-		xianshuCountMap.put("000010100", 10);
-		gongxianFenCountMap.put("000010100", 80);
+		xianshuCountMap.put("000021000", 10);
+		gongxianFenCountMap.put("000021000", 64);
 
 		xianshuCountMap.put("000002000", 10);
 		gongxianFenCountMap.put("000002000", 64);
-
-		xianshuCountMap.put("000001100", 10);
-		gongxianFenCountMap.put("000001100", 96);
 
 		xianshuCountMap.put("000000100", 10);
 		gongxianFenCountMap.put("000000100", 64);
@@ -892,16 +934,203 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("005000000", 10);
 		gongxianFenCountMap.put("005000000", 64);
 
+		xianshuCountMap.put("100000100", 10);
+		gongxianFenCountMap.put("100000100", 64);
+
+		xianshuCountMap.put("100002000", 10);
+		gongxianFenCountMap.put("100002000", 64);
+
+		xianshuCountMap.put("120000100", 10);
+		gongxianFenCountMap.put("120000100", 64);
+
+		xianshuCountMap.put("011000100", 10);
+		gongxianFenCountMap.put("011000100", 68);
+
+		xianshuCountMap.put("001030000", 10);
+		gongxianFenCountMap.put("001030000", 68);
+
+		xianshuCountMap.put("001002000", 10);
+		gongxianFenCountMap.put("001002000", 68);
+
+		xianshuCountMap.put("400000100", 10);
+		gongxianFenCountMap.put("400000100", 68);
+
+		xianshuCountMap.put("310000100", 10);
+		gongxianFenCountMap.put("310000100", 68);
+
+		xianshuCountMap.put("201000100", 10);
+		gongxianFenCountMap.put("201000100", 68);
+
+		xianshuCountMap.put("120000100", 10);
+		gongxianFenCountMap.put("120000100", 68);
+
+		xianshuCountMap.put("101000100", 10);
+		gongxianFenCountMap.put("101000100", 68);
+
+		xianshuCountMap.put("020000100", 10);
+		gongxianFenCountMap.put("020000100", 68);
+
+		xianshuCountMap.put("001030000", 10);
+		gongxianFenCountMap.put("001030000", 68);
+
+		xianshuCountMap.put("001002000", 10);
+		gongxianFenCountMap.put("001002000", 68);
+
+		xianshuCountMap.put("001000100", 10);
+		gongxianFenCountMap.put("001000100", 68);
+
+		xianshuCountMap.put("011000100", 10);
+		gongxianFenCountMap.put("011000100", 68);
+
+		xianshuCountMap.put("111000100", 10);
+		gongxianFenCountMap.put("111000100", 68);
+
+		xianshuCountMap.put("101000100", 10);
+		gongxianFenCountMap.put("101000100", 68);
+
+		xianshuCountMap.put("200100100", 10);
+		gongxianFenCountMap.put("200100100", 72);
+
+		xianshuCountMap.put("110100100", 10);
+		gongxianFenCountMap.put("110100100", 72);
+
+		xianshuCountMap.put("100100100", 10);
+		gongxianFenCountMap.put("100100100", 72);
+
+		xianshuCountMap.put("010100100", 10);
+		gongxianFenCountMap.put("010100100", 72);
+
+		xianshuCountMap.put("000130000", 10);
+		gongxianFenCountMap.put("000130000", 72);
+
+		xianshuCountMap.put("000102000", 10);
+		gongxianFenCountMap.put("000102000", 72);
+
+		xianshuCountMap.put("000100100", 10);
+		gongxianFenCountMap.put("000100100", 72);
+
 		xianshuCountMap.put("002002000", 10);
 		gongxianFenCountMap.put("002002000", 72);
+
+		xianshuCountMap.put("200100100", 10);
+		gongxianFenCountMap.put("200100100", 72);
+
+		xianshuCountMap.put("110100100", 10);
+		gongxianFenCountMap.put("110100100", 72);
+
+		xianshuCountMap.put("102000100", 10);
+		gongxianFenCountMap.put("102000100", 72);
+
+		xianshuCountMap.put("030000100", 10);
+		gongxianFenCountMap.put("030000100", 72);
+
+		xianshuCountMap.put("021000100", 10);
+		gongxianFenCountMap.put("021000100", 72);
+
+		xianshuCountMap.put("012000100", 10);
+		gongxianFenCountMap.put("012000100", 72);
+
+		xianshuCountMap.put("002002000", 10);
+		gongxianFenCountMap.put("002002000", 72);
+
+		xianshuCountMap.put("002000100", 10);
+		gongxianFenCountMap.put("002000100", 72);
+
+		xianshuCountMap.put("101100100", 10);
+		gongxianFenCountMap.put("101100100", 76);
+
+		xianshuCountMap.put("020100100", 10);
+		gongxianFenCountMap.put("020100100", 76);
+
+		xianshuCountMap.put("001100100", 10);
+		gongxianFenCountMap.put("001100100", 76);
+
+		xianshuCountMap.put("020100100", 10);
+		gongxianFenCountMap.put("020100100", 76);
+
+		xianshuCountMap.put("110010100", 10);
+		gongxianFenCountMap.put("110010100", 80);
+
+		xianshuCountMap.put("100010100", 10);
+		gongxianFenCountMap.put("100010100", 80);
+
+		xianshuCountMap.put("010200100", 10);
+		gongxianFenCountMap.put("010200100", 80);
+
+		xianshuCountMap.put("010010100", 10);
+		gongxianFenCountMap.put("010010100", 80);
+
+		xianshuCountMap.put("003000100", 10);
+		gongxianFenCountMap.put("003000100", 80);
+
+		xianshuCountMap.put("002100100", 10);
+		gongxianFenCountMap.put("002100100", 80);
+
+		xianshuCountMap.put("000200100", 10);
+		gongxianFenCountMap.put("000200100", 80);
+
+		xianshuCountMap.put("000010100", 10);
+		gongxianFenCountMap.put("000010100", 80);
+
+		xianshuCountMap.put("200010100", 10);
+		gongxianFenCountMap.put("200010100", 80);
+
+		xianshuCountMap.put("001200100", 10);
+		gongxianFenCountMap.put("001200100", 84);
+
+		xianshuCountMap.put("001010100", 10);
+		gongxianFenCountMap.put("001010100", 84);
+
+		xianshuCountMap.put("100100100", 10);
+		gongxianFenCountMap.put("100010100", 84);
+
+		xianshuCountMap.put("002010100", 10);
+		gongxianFenCountMap.put("002010100", 88);
+
+		xianshuCountMap.put("000110100", 10);
+		gongxianFenCountMap.put("000110100", 88);
+
+		xianshuCountMap.put("200001100", 10);
+		gongxianFenCountMap.put("200001100", 96);
+
+		xianshuCountMap.put("100001100", 10);
+		gongxianFenCountMap.put("100001100", 96);
+
+		xianshuCountMap.put("000020100", 10);
+		gongxianFenCountMap.put("000020100", 96);
+
+		xianshuCountMap.put("000001100", 10);
+		gongxianFenCountMap.put("000001100", 96);
+
+		xianshuCountMap.put("001001100", 10);
+		gongxianFenCountMap.put("001001100", 100);
+
+		xianshuCountMap.put("000101100", 10);
+		gongxianFenCountMap.put("000101100", 104);
+
+		xianshuCountMap.put("000011100", 10);
+		gongxianFenCountMap.put("000011100", 112);
 	}
 
 	/**
 	 * 计算十一线倍数及贡献分
 	 */
 	private static void calculateShiyiXian() {
-		xianshuCountMap.put("400000010", 11);
-		gongxianFenCountMap.put("400000010", 132);
+
+		xianshuCountMap.put("010000010", 11);
+		gongxianFenCountMap.put("010000010", 128);
+
+		xianshuCountMap.put("110000010", 11);
+		gongxianFenCountMap.put("110000010", 128);
+
+		xianshuCountMap.put("120000010", 11);
+		gongxianFenCountMap.put("120000010", 128);
+
+		xianshuCountMap.put("000000010", 11);
+		gongxianFenCountMap.put("000000010", 128);
+
+		xianshuCountMap.put("000000200", 11);
+		gongxianFenCountMap.put("000000200", 128);
 
 		xianshuCountMap.put("300000010", 11);
 		gongxianFenCountMap.put("300000010", 128);
@@ -909,56 +1138,17 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("210000010", 11);
 		gongxianFenCountMap.put("210000010", 128);
 
-		xianshuCountMap.put("201000010", 11);
-		gongxianFenCountMap.put("201000010", 132);
-
-		xianshuCountMap.put("200100010", 11);
-		gongxianFenCountMap.put("200100010", 136);
-
-		xianshuCountMap.put("200010010", 11);
-		gongxianFenCountMap.put("200010010", 144);
-
-		xianshuCountMap.put("120000010", 11);
-		gongxianFenCountMap.put("120000010", 128);
-
-		xianshuCountMap.put("101010010", 11);
-		gongxianFenCountMap.put("101010010", 148);
-
-		xianshuCountMap.put("111000010", 11);
-		gongxianFenCountMap.put("111000010", 132);
-
-		xianshuCountMap.put("101001010", 11);
-		gongxianFenCountMap.put("101001010", 164);
-
-		xianshuCountMap.put("102000010", 11);
-		gongxianFenCountMap.put("102000010", 136);
-
-		xianshuCountMap.put("100100010", 11);
-		gongxianFenCountMap.put("100100010", 136);
-
-		xianshuCountMap.put("101100010", 11);
-		gongxianFenCountMap.put("101100010", 140);
-
-		xianshuCountMap.put("100010010", 11);
-		gongxianFenCountMap.put("100010010", 144);
-
-		xianshuCountMap.put("100001010", 11);
-		gongxianFenCountMap.put("100001010", 160);
-
-		xianshuCountMap.put("010200010", 11);
-		gongxianFenCountMap.put("010200010", 144);
-
-		xianshuCountMap.put("100000110", 11);
-		gongxianFenCountMap.put("100000110", 192);
-
 		xianshuCountMap.put("100000010", 11);
 		gongxianFenCountMap.put("100000010", 128);
 
-		xianshuCountMap.put("030000010", 11);
-		gongxianFenCountMap.put("030000010", 136);
+		xianshuCountMap.put("010000010", 11);
+		gongxianFenCountMap.put("010000010", 128);
 
-		xianshuCountMap.put("021000010", 11);
-		gongxianFenCountMap.put("021000010", 136);
+		xianshuCountMap.put("400000010", 11);
+		gongxianFenCountMap.put("400000010", 132);
+
+		xianshuCountMap.put("201000010", 11);
+		gongxianFenCountMap.put("201000010", 132);
 
 		xianshuCountMap.put("020000010", 11);
 		gongxianFenCountMap.put("020000010", 132);
@@ -969,53 +1159,87 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("010100010", 11);
 		gongxianFenCountMap.put("010100010", 132);
 
-		xianshuCountMap.put("010010010", 11);
-		gongxianFenCountMap.put("010010010", 144);
+		xianshuCountMap.put("111000010", 11);
+		gongxianFenCountMap.put("111000010", 132);
 
-		xianshuCountMap.put("010001010", 11);
-		gongxianFenCountMap.put("010001010", 160);
-
-		xianshuCountMap.put("010000110", 11);
-		gongxianFenCountMap.put("010000110", 192);
-
-		xianshuCountMap.put("010000010", 11);
-		gongxianFenCountMap.put("010000010", 128);
-
-		xianshuCountMap.put("002100010", 11);
-		gongxianFenCountMap.put("002100010", 144);
-
-		xianshuCountMap.put("002000010", 11);
-		gongxianFenCountMap.put("002000010", 136);
-
-		xianshuCountMap.put("000110010", 11);
-		gongxianFenCountMap.put("000110010", 160);
-
-		xianshuCountMap.put("000101010", 11);
-		gongxianFenCountMap.put("000101010", 168);
-
-		xianshuCountMap.put("000100110", 11);
-		gongxianFenCountMap.put("000100110", 200);
+		xianshuCountMap.put("200100010", 11);
+		gongxianFenCountMap.put("200100010", 136);
 
 		xianshuCountMap.put("000100010", 11);
 		gongxianFenCountMap.put("000100010", 136);
 
-		xianshuCountMap.put("000020010", 11);
-		gongxianFenCountMap.put("000020010", 160);
+		xianshuCountMap.put("102000010", 11);
+		gongxianFenCountMap.put("102000010", 136);
+
+		xianshuCountMap.put("100100010", 11);
+		gongxianFenCountMap.put("100100010", 136);
+
+		xianshuCountMap.put("030000010", 11);
+		gongxianFenCountMap.put("030000010", 136);
+
+		xianshuCountMap.put("021000010", 11);
+		gongxianFenCountMap.put("021000010", 136);
+
+		xianshuCountMap.put("002000010", 11);
+		gongxianFenCountMap.put("002000010", 136);
+
+		xianshuCountMap.put("101100010", 11);
+		gongxianFenCountMap.put("101100010", 140);
+
+		xianshuCountMap.put("200010010", 11);
+		gongxianFenCountMap.put("200010010", 144);
+
+		xianshuCountMap.put("100010010", 11);
+		gongxianFenCountMap.put("100010010", 144);
+
+		xianshuCountMap.put("010200010", 11);
+		gongxianFenCountMap.put("010200010", 144);
+
+		xianshuCountMap.put("010010010", 11);
+		gongxianFenCountMap.put("010010010", 144);
+
+		xianshuCountMap.put("002100010", 11);
+		gongxianFenCountMap.put("002100010", 144);
 
 		xianshuCountMap.put("000010010", 11);
 		gongxianFenCountMap.put("000010010", 144);
 
+		xianshuCountMap.put("101010010", 11);
+		gongxianFenCountMap.put("101010010", 148);
+
+		xianshuCountMap.put("100001010", 11);
+		gongxianFenCountMap.put("100001010", 160);
+
+		xianshuCountMap.put("010001010", 11);
+		gongxianFenCountMap.put("010001010", 160);
+
+		xianshuCountMap.put("000110010", 11);
+		gongxianFenCountMap.put("000110010", 160);
+
+		xianshuCountMap.put("000020010", 11);
+		gongxianFenCountMap.put("000020010", 160);
+
 		xianshuCountMap.put("000001010", 11);
 		gongxianFenCountMap.put("000001010", 160);
+
+		xianshuCountMap.put("101001010", 11);
+		gongxianFenCountMap.put("101001010", 164);
+
+		xianshuCountMap.put("000101010", 11);
+		gongxianFenCountMap.put("000101010", 168);
+
+		xianshuCountMap.put("100000110", 11);
+		gongxianFenCountMap.put("100000110", 192);
+
+		xianshuCountMap.put("010000110", 11);
+		gongxianFenCountMap.put("010000110", 192);
 
 		xianshuCountMap.put("000000110", 11);
 		gongxianFenCountMap.put("000000110", 192);
 
-		xianshuCountMap.put("000000010", 11);
-		gongxianFenCountMap.put("000000010", 128);
+		xianshuCountMap.put("000100110", 11);
+		gongxianFenCountMap.put("000100110", 200);
 
-		xianshuCountMap.put("000000200", 11);
-		gongxianFenCountMap.put("000000200", 128);
 	}
 
 	/**
@@ -1031,68 +1255,53 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("200000001", 12);
 		gongxianFenCountMap.put("200000001", 256);
 
-		xianshuCountMap.put("201000001", 12);
-		gongxianFenCountMap.put("201000001", 260);
-
-		xianshuCountMap.put("200100001", 12);
-		gongxianFenCountMap.put("200100001", 264);
-
-		xianshuCountMap.put("120000001", 12);
-		gongxianFenCountMap.put("120000001", 256);
-
-		xianshuCountMap.put("111000001", 12);
-		gongxianFenCountMap.put("111000001", 260);
-
 		xianshuCountMap.put("110000001", 12);
 		gongxianFenCountMap.put("110000001", 256);
-
-		xianshuCountMap.put("101000001", 12);
-		gongxianFenCountMap.put("101000001", 260);
-
-		xianshuCountMap.put("100100001", 12);
-		gongxianFenCountMap.put("100100001", 264);
-
-		xianshuCountMap.put("100010001", 12);
-		gongxianFenCountMap.put("100010001", 272);
-
-		xianshuCountMap.put("100001001", 12);
-		gongxianFenCountMap.put("100001001", 288);
-
-		xianshuCountMap.put("100000101", 12);
-		gongxianFenCountMap.put("100000101", 320);
-
-		xianshuCountMap.put("100000011", 12);
-		gongxianFenCountMap.put("100000011", 384);
 
 		xianshuCountMap.put("100000001", 12);
 		gongxianFenCountMap.put("100000001", 256);
 
-		xianshuCountMap.put("030000001", 12);
-		gongxianFenCountMap.put("030000001", 264);
+		xianshuCountMap.put("010000001", 12);
+		gongxianFenCountMap.put("010000001", 256);
+
+		xianshuCountMap.put("201000001", 12);
+		gongxianFenCountMap.put("201000001", 260);
+
+		xianshuCountMap.put("120000001", 12);
+		gongxianFenCountMap.put("120000001", 260);
+
+		xianshuCountMap.put("111000001", 12);
+		gongxianFenCountMap.put("111000001", 260);
+
+		xianshuCountMap.put("101000001", 12);
+		gongxianFenCountMap.put("101000001", 260);
 
 		xianshuCountMap.put("020000001", 12);
 		gongxianFenCountMap.put("020000001", 260);
 
-		xianshuCountMap.put("010000001", 12);
-		gongxianFenCountMap.put("010000001", 256);
-
 		xianshuCountMap.put("011000001", 12);
 		gongxianFenCountMap.put("011000001", 260);
+
+		xianshuCountMap.put("001000001", 12);
+		gongxianFenCountMap.put("001000001", 260);
+
+		xianshuCountMap.put("100100001", 12);
+		gongxianFenCountMap.put("100100001", 264);
 
 		xianshuCountMap.put("010100001", 12);
 		gongxianFenCountMap.put("010100001", 264);
 
-		xianshuCountMap.put("010010001", 12);
-		gongxianFenCountMap.put("010010001", 272);
+		xianshuCountMap.put("200100001", 12);
+		gongxianFenCountMap.put("200100001", 264);
 
-		xianshuCountMap.put("010001001", 12);
-		gongxianFenCountMap.put("010001001", 288);
+		xianshuCountMap.put("030000001", 12);
+		gongxianFenCountMap.put("030000001", 264);
 
-		xianshuCountMap.put("010000101", 12);
-		gongxianFenCountMap.put("010000101", 320);
+		xianshuCountMap.put("010100001", 12);
+		gongxianFenCountMap.put("010100001", 264);
 
-		xianshuCountMap.put("003000001", 12);
-		gongxianFenCountMap.put("003000001", 272);
+		xianshuCountMap.put("000100001", 12);
+		gongxianFenCountMap.put("000100001", 264);
 
 		xianshuCountMap.put("002000001", 12);
 		gongxianFenCountMap.put("002000001", 264);
@@ -1100,49 +1309,67 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("001100001", 12);
 		gongxianFenCountMap.put("001100001", 268);
 
-		xianshuCountMap.put("001010001", 12);
-		gongxianFenCountMap.put("001010001", 276);
+		xianshuCountMap.put("100010001", 12);
+		gongxianFenCountMap.put("100010001", 272);
 
-		xianshuCountMap.put("001001001", 12);
-		gongxianFenCountMap.put("001001001", 292);
+		xianshuCountMap.put("010010001", 12);
+		gongxianFenCountMap.put("010010001", 272);
 
-		xianshuCountMap.put("001000101", 12);
-		gongxianFenCountMap.put("001000101", 324);
-
-		xianshuCountMap.put("001000011", 12);
-		gongxianFenCountMap.put("001000011", 388);
-
-		xianshuCountMap.put("001000001", 12);
-		gongxianFenCountMap.put("001000001", 260);
+		xianshuCountMap.put("003000001", 12);
+		gongxianFenCountMap.put("003000001", 272);
 
 		xianshuCountMap.put("000200001", 12);
 		gongxianFenCountMap.put("000200001", 272);
 
+		xianshuCountMap.put("000010001", 12);
+		gongxianFenCountMap.put("000010001", 272);
+
+		xianshuCountMap.put("001010001", 12);
+		gongxianFenCountMap.put("001010001", 276);
+
 		xianshuCountMap.put("000110001", 12);
 		gongxianFenCountMap.put("000110001", 280);
 
-		xianshuCountMap.put("000101001", 12);
-		gongxianFenCountMap.put("000101001", 296);
+		xianshuCountMap.put("100001001", 12);
+		gongxianFenCountMap.put("100001001", 288);
 
-		xianshuCountMap.put("000100101", 12);
-		gongxianFenCountMap.put("000100101", 328);
-
-		xianshuCountMap.put("000100011", 12);
-		gongxianFenCountMap.put("000100011", 392);
-
-		xianshuCountMap.put("000010001", 12);
-		gongxianFenCountMap.put("000010001", 272);
+		xianshuCountMap.put("010001001", 12);
+		gongxianFenCountMap.put("010001001", 288);
 
 		xianshuCountMap.put("000001001", 12);
 		gongxianFenCountMap.put("000001001", 288);
 
+		xianshuCountMap.put("001001001", 12);
+		gongxianFenCountMap.put("001001001", 292);
+
+		xianshuCountMap.put("000101001", 12);
+		gongxianFenCountMap.put("000101001", 296);
+
+		xianshuCountMap.put("010000101", 12);
+		gongxianFenCountMap.put("010000101", 320);
+
 		xianshuCountMap.put("000000101", 12);
 		gongxianFenCountMap.put("000000101", 320);
+
+		xianshuCountMap.put("100000101", 12);
+		gongxianFenCountMap.put("100000101", 320);
+
+		xianshuCountMap.put("001000101", 12);
+		gongxianFenCountMap.put("001000101", 324);
+
+		xianshuCountMap.put("000100101", 12);
+		gongxianFenCountMap.put("000100101", 328);
 
 		xianshuCountMap.put("000000011", 12);
 		gongxianFenCountMap.put("000000011", 384);
 
-		xianshuCountMap.put("000100001", 12);
-		gongxianFenCountMap.put("000100001", 264);
+		xianshuCountMap.put("100000011", 12);
+		gongxianFenCountMap.put("100000011", 384);
+
+		xianshuCountMap.put("001000011", 12);
+		gongxianFenCountMap.put("001000011", 388);
+
+		xianshuCountMap.put("000100011", 12);
+		gongxianFenCountMap.put("000100011", 392);
 	}
 }
