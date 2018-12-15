@@ -66,7 +66,7 @@ import com.dml.shuangkou.preparedapai.luanpai.BazhangHasSiwangLuanpaiStrategy;
 import com.dml.shuangkou.preparedapai.luanpai.ErliuhunHasSiwangLuanpaiStrategy;
 import com.dml.shuangkou.preparedapai.luanpai.LastPanChuPaiOrdinalLuanpaiStrategy;
 import com.dml.shuangkou.preparedapai.luanpai.SanwuHasSiwangLuanpaiStrategy;
-import com.dml.shuangkou.preparedapai.xianda.DongPositionXiandaPlayerDeterminer;
+import com.dml.shuangkou.preparedapai.xianda.HongxinbaXiandaPlayerDeterminer;
 import com.dml.shuangkou.preparedapai.zudui.HongxinbaHongxinjiuZuduiStrategy;
 import com.dml.shuangkou.wanfa.BianXingWanFa;
 
@@ -640,7 +640,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		ju.setShoupaiSortStrategy(new DianshuOrPaishuShoupaiSortStrategy());
 		ju.setZuduiStrategyForFirstPan(new HongxinbaHongxinjiuZuduiStrategy());
 		ju.setZuduiStrategyForNextPan(new HongxinbaHongxinjiuZuduiStrategy());
-		ju.setXiandaPlayerDeterminer(new DongPositionXiandaPlayerDeterminer());
+		ju.setXiandaPlayerDeterminer(new HongxinbaXiandaPlayerDeterminer());
 		// ju.setKeyaDaPaiDianShuSolutionsGenerator(keyaDaPaiDianShuSolutionsGenerator);
 		DanGeDianShuZuComparator danGeDianShuZuComparator = new NoZhadanDanGeDianShuZuComparator();
 		LianXuDianShuZuComparator lianXuDianShuZuComparator = new TongDengLianXuDianShuZuComparator();

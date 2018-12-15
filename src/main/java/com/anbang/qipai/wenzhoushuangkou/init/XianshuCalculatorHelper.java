@@ -46,6 +46,7 @@ public class XianshuCalculatorHelper {
 	 * 计算四线倍数及贡献分
 	 */
 	private static void calculateSiXian() {
+		// String s = "012100000";
 		xianshuCountMap.put("100000000", 4);
 		gongxianFenCountMap.put("100000000", 0);
 
@@ -238,6 +239,7 @@ public class XianshuCalculatorHelper {
 	 * 计算八线倍数及贡献分
 	 */
 	private static void calculateBaXian() {
+		// 102
 		xianshuCountMap.put("500100000", 8);
 		gongxianFenCountMap.put("500100000", 16);
 
@@ -340,7 +342,7 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("112100000", 8);
 		gongxianFenCountMap.put("112100000", 16);
 
-		xianshuCountMap.put("012100000", 16);
+		xianshuCountMap.put("012100000", 8);
 		gongxianFenCountMap.put("012100000", 16);
 
 		xianshuCountMap.put("302100000", 8);
@@ -549,6 +551,7 @@ public class XianshuCalculatorHelper {
 	 * 计算九线倍数及贡献分
 	 */
 	private static void calculateJiuXian() {
+		// 117
 		xianshuCountMap.put("601000000", 9);
 		gongxianFenCountMap.put("601000000", 32);
 
@@ -828,6 +831,9 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("000101000", 9);
 		gongxianFenCountMap.put("000101000", 40);
 
+		xianshuCountMap.put("100101000", 9);
+		gongxianFenCountMap.put("100101000", 40);
+
 		xianshuCountMap.put("002020000", 9);
 		gongxianFenCountMap.put("002020000", 40);
 
@@ -836,9 +842,6 @@ public class XianshuCalculatorHelper {
 
 		xianshuCountMap.put("101101000", 9);
 		gongxianFenCountMap.put("101101000", 44);
-
-		xianshuCountMap.put("100101000", 9);
-		gongxianFenCountMap.put("100101000", 44);
 
 		xianshuCountMap.put("031001000", 9);
 		gongxianFenCountMap.put("031001000", 44);
@@ -1137,7 +1140,7 @@ public class XianshuCalculatorHelper {
 	 * 计算十一线倍数及贡献分
 	 */
 	private static void calculateShiyiXian() {
-
+		// 37
 		xianshuCountMap.put("010000010", 11);
 		gongxianFenCountMap.put("010000010", 128);
 
@@ -1254,6 +1257,7 @@ public class XianshuCalculatorHelper {
 	 * 计算十二线倍数及贡献分
 	 */
 	private static void calculateShierXian() {
+		// 28
 		xianshuCountMap.put("000000001", 12);
 		gongxianFenCountMap.put("000000001", 256);
 

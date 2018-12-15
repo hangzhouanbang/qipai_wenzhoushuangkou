@@ -32,7 +32,7 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 
 	@Override
 	public List<DaPaiDianShuSolution> filter(List<DaPaiDianShuSolution> YaPaiSolutions,
-			Map<Integer, PukePai> allShoupai) {
+			Map<Integer, PukePai> allShoupai, boolean yapai) {
 		int[] dianshuCountArray = new int[15];
 		for (PukePai pukePai : allShoupai.values()) {
 			DianShu dianShu = pukePai.getPaiMian().dianShu();
@@ -105,177 +105,6 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 		List<DaPaiDianShuSolution> noWangShunziSolutionList = new LinkedList<>();
 		List<DaPaiDianShuSolution> noWangLianduiSolutionList = new LinkedList<>();
 		List<DaPaiDianShuSolution> noWangLiansanzhangSolutionList = new LinkedList<>();
-		for (DaPaiDianShuSolution solution : noWangSolutionList) {
-			DianShuZu dianshuZu = solution.getDianShuZu();
-			// 三张
-			if (dianshuZu instanceof SanzhangDianShuZu) {
-				SanzhangDianShuZu sanzhangDianShuZu = (SanzhangDianShuZu) dianshuZu;
-				DianShu dianshu = sanzhangDianShuZu.getDianShu();
-				if (dianshuCountArray[dianshu.ordinal()] < 4) {
-					if (noWangSanzhangSolutionList.isEmpty()) {
-						noWangSanzhangSolutionList.add(solution);
-					} else {
-						int length = noWangSanzhangSolutionList.size();
-						int i = 0;
-						while (i < length) {
-							if (((SanzhangDianShuZu) noWangSanzhangSolutionList.get(i).getDianShuZu()).getDianShu()
-									.compareTo(sanzhangDianShuZu.getDianShu()) > 0) {
-								noWangSanzhangSolutionList.add(i, solution);
-								break;
-							}
-							if (i == length - 1) {
-								noWangSanzhangSolutionList.add(solution);
-							}
-							i++;
-						}
-					}
-				}
-			}
-			// 对子
-			if (dianshuZu instanceof DuiziDianShuZu) {
-				DuiziDianShuZu duiziDianShuZu = (DuiziDianShuZu) dianshuZu;
-				DianShu dianshu = duiziDianShuZu.getDianShu();
-				if (dianshuCountArray[dianshu.ordinal()] < 4) {
-					if (noWangDuiziSolutionList.isEmpty()) {
-						noWangDuiziSolutionList.add(solution);
-					} else {
-						int length = noWangDuiziSolutionList.size();
-						int i = 0;
-						while (i < length) {
-							if (((DuiziDianShuZu) noWangDuiziSolutionList.get(i).getDianShuZu()).getDianShu()
-									.compareTo(duiziDianShuZu.getDianShu()) > 0) {
-								noWangDuiziSolutionList.add(i, solution);
-								break;
-							}
-							if (i == length - 1) {
-								noWangDuiziSolutionList.add(solution);
-							}
-							i++;
-						}
-					}
-				}
-			}
-			// 单张
-			if (dianshuZu instanceof DanzhangDianShuZu) {
-				DanzhangDianShuZu danzhangDianShuZu = (DanzhangDianShuZu) dianshuZu;
-				DianShu dianshu = danzhangDianShuZu.getDianShu();
-				if (dianshuCountArray[dianshu.ordinal()] < 4) {
-					if (noWangDanzhangSolutionList.isEmpty()) {
-						noWangDanzhangSolutionList.add(solution);
-					} else {
-						int length = noWangDanzhangSolutionList.size();
-						int i = 0;
-						while (i < length) {
-							if (((DanzhangDianShuZu) noWangDanzhangSolutionList.get(i).getDianShuZu()).getDianShu()
-									.compareTo(danzhangDianShuZu.getDianShu()) > 0) {
-								noWangDanzhangSolutionList.add(i, solution);
-								break;
-							}
-							if (i == length - 1) {
-								noWangDanzhangSolutionList.add(solution);
-							}
-							i++;
-						}
-					}
-				}
-			}
-			// 连三张
-			if (dianshuZu instanceof LiansanzhangDianShuZu) {
-				LiansanzhangDianShuZu liansanzhangDianShuZu = (LiansanzhangDianShuZu) dianshuZu;
-				DianShu[] lianXuDianShuArray = liansanzhangDianShuZu.getLianXuDianShuArray();
-				boolean allSuccess = true;
-				for (DianShu dianshu : lianXuDianShuArray) {
-					if (dianshuCountArray[dianshu.ordinal()] != 3) {
-						allSuccess = false;
-						break;
-					}
-				}
-				if (allSuccess) {
-					if (noWangLiansanzhangSolutionList.isEmpty()) {
-						noWangLiansanzhangSolutionList.add(solution);
-					} else {
-						int length = noWangLiansanzhangSolutionList.size();
-						int i = 0;
-						while (i < length) {
-							if (((LiansanzhangDianShuZu) noWangLiansanzhangSolutionList.get(i).getDianShuZu())
-									.getLianXuDianShuArray()[0].compareTo(
-											((LiansanzhangDianShuZu) dianshuZu).getLianXuDianShuArray()[0]) > 0) {
-								noWangLiansanzhangSolutionList.add(i, solution);
-								break;
-							}
-							if (i == length - 1) {
-								noWangLiansanzhangSolutionList.add(solution);
-							}
-							i++;
-						}
-					}
-				}
-			}
-			// 连对
-			if (dianshuZu instanceof LianduiDianShuZu) {
-				LianduiDianShuZu lianduiDianShuZu = (LianduiDianShuZu) dianshuZu;
-				DianShu[] lianXuDianShuArray = lianduiDianShuZu.getLianXuDianShuArray();
-				boolean allSuccess = true;
-				for (DianShu dianshu : lianXuDianShuArray) {
-					if (dianshuCountArray[dianshu.ordinal()] != 2) {
-						allSuccess = false;
-						break;
-					}
-				}
-				if (allSuccess) {
-					if (noWangLianduiSolutionList.isEmpty()) {
-						noWangLianduiSolutionList.add(solution);
-					} else {
-						int length = noWangLianduiSolutionList.size();
-						int i = 0;
-						while (i < length) {
-							if (((LianduiDianShuZu) noWangLianduiSolutionList.get(i).getDianShuZu())
-									.getLianXuDianShuArray()[0]
-											.compareTo(((LianduiDianShuZu) dianshuZu).getLianXuDianShuArray()[0]) > 0) {
-								noWangLianduiSolutionList.add(i, solution);
-								break;
-							}
-							if (i == length - 1) {
-								noWangLianduiSolutionList.add(solution);
-							}
-							i++;
-						}
-					}
-				}
-			}
-			// 顺子
-			if (dianshuZu instanceof ShunziDianShuZu) {
-				ShunziDianShuZu shunziDianShuZu = (ShunziDianShuZu) dianshuZu;
-				DianShu[] lianXuDianShuArray = shunziDianShuZu.getLianXuDianShuArray();
-				boolean allSuccess = true;
-				for (DianShu dianshu : lianXuDianShuArray) {
-					if (dianshuCountArray[dianshu.ordinal()] != 1) {
-						allSuccess = false;
-						break;
-					}
-				}
-				if (allSuccess) {
-					if (noWangShunziSolutionList.isEmpty()) {
-						noWangShunziSolutionList.add(solution);
-					} else {
-						int length = noWangShunziSolutionList.size();
-						int i = 0;
-						while (i < length) {
-							if (((ShunziDianShuZu) noWangShunziSolutionList.get(i).getDianShuZu())
-									.getLianXuDianShuArray()[0]
-											.compareTo(((ShunziDianShuZu) dianshuZu).getLianXuDianShuArray()[0]) > 0) {
-								noWangShunziSolutionList.add(i, solution);
-								break;
-							}
-							if (i == length - 1) {
-								noWangShunziSolutionList.add(solution);
-							}
-							i++;
-						}
-					}
-				}
-			}
-		}
 
 		List<DaPaiDianShuSolution> hasWangDanzhangSolutionList = new LinkedList<>();
 		List<DaPaiDianShuSolution> hasWangDuiziSolutionList = new LinkedList<>();
@@ -283,6 +112,351 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 		List<DaPaiDianShuSolution> hasWangShunziSolutionList = new LinkedList<>();
 		List<DaPaiDianShuSolution> hasWangLianduiSolutionList = new LinkedList<>();
 		List<DaPaiDianShuSolution> hasWangLiansanzhangSolutionList = new LinkedList<>();
+		if (!yapai) {
+			for (DaPaiDianShuSolution solution : noWangSolutionList) {
+				DianShuZu dianshuZu = solution.getDianShuZu();
+				// 三张
+				if (dianshuZu instanceof SanzhangDianShuZu) {
+					SanzhangDianShuZu sanzhangDianShuZu = (SanzhangDianShuZu) dianshuZu;
+					DianShu dianshu = sanzhangDianShuZu.getDianShu();
+					if (dianshuCountArray[dianshu.ordinal()] == 3) {
+						if (noWangSanzhangSolutionList.isEmpty()) {
+							noWangSanzhangSolutionList.add(solution);
+						} else {
+							int length = noWangSanzhangSolutionList.size();
+							int i = 0;
+							while (i < length) {
+								if (((SanzhangDianShuZu) noWangSanzhangSolutionList.get(i).getDianShuZu()).getDianShu()
+										.compareTo(sanzhangDianShuZu.getDianShu()) > 0) {
+									noWangSanzhangSolutionList.add(i, solution);
+									break;
+								}
+								if (i == length - 1) {
+									noWangSanzhangSolutionList.add(solution);
+								}
+								i++;
+							}
+						}
+					}
+				}
+				// 对子
+				if (dianshuZu instanceof DuiziDianShuZu) {
+					DuiziDianShuZu duiziDianShuZu = (DuiziDianShuZu) dianshuZu;
+					DianShu dianshu = duiziDianShuZu.getDianShu();
+					if (dianshuCountArray[dianshu.ordinal()] == 2) {
+						if (noWangDuiziSolutionList.isEmpty()) {
+							noWangDuiziSolutionList.add(solution);
+						} else {
+							int length = noWangDuiziSolutionList.size();
+							int i = 0;
+							while (i < length) {
+								if (((DuiziDianShuZu) noWangDuiziSolutionList.get(i).getDianShuZu()).getDianShu()
+										.compareTo(duiziDianShuZu.getDianShu()) > 0) {
+									noWangDuiziSolutionList.add(i, solution);
+									break;
+								}
+								if (i == length - 1) {
+									noWangDuiziSolutionList.add(solution);
+								}
+								i++;
+							}
+						}
+					}
+				}
+				// 单张
+				if (dianshuZu instanceof DanzhangDianShuZu) {
+					DanzhangDianShuZu danzhangDianShuZu = (DanzhangDianShuZu) dianshuZu;
+					DianShu dianshu = danzhangDianShuZu.getDianShu();
+					if (dianshuCountArray[dianshu.ordinal()] == 1) {
+						if (noWangDanzhangSolutionList.isEmpty()) {
+							noWangDanzhangSolutionList.add(solution);
+						} else {
+							int length = noWangDanzhangSolutionList.size();
+							int i = 0;
+							while (i < length) {
+								if (((DanzhangDianShuZu) noWangDanzhangSolutionList.get(i).getDianShuZu()).getDianShu()
+										.compareTo(danzhangDianShuZu.getDianShu()) > 0) {
+									noWangDanzhangSolutionList.add(i, solution);
+									break;
+								}
+								if (i == length - 1) {
+									noWangDanzhangSolutionList.add(solution);
+								}
+								i++;
+							}
+						}
+					}
+				}
+				// 连三张
+				if (dianshuZu instanceof LiansanzhangDianShuZu) {
+					LiansanzhangDianShuZu liansanzhangDianShuZu = (LiansanzhangDianShuZu) dianshuZu;
+					DianShu[] lianXuDianShuArray = liansanzhangDianShuZu.getLianXuDianShuArray();
+					boolean allSuccess = true;
+					for (DianShu dianshu : lianXuDianShuArray) {
+						if (dianshuCountArray[dianshu.ordinal()] != 3) {
+							allSuccess = false;
+							break;
+						}
+					}
+					if (allSuccess) {
+						if (noWangLiansanzhangSolutionList.isEmpty()) {
+							noWangLiansanzhangSolutionList.add(solution);
+						} else {
+							int length = noWangLiansanzhangSolutionList.size();
+							int i = 0;
+							while (i < length) {
+								if (((LiansanzhangDianShuZu) noWangLiansanzhangSolutionList.get(i).getDianShuZu())
+										.getLianXuDianShuArray()[0].compareTo(
+												((LiansanzhangDianShuZu) dianshuZu).getLianXuDianShuArray()[0]) > 0) {
+									noWangLiansanzhangSolutionList.add(i, solution);
+									break;
+								}
+								if (i == length - 1) {
+									noWangLiansanzhangSolutionList.add(solution);
+								}
+								i++;
+							}
+						}
+					}
+				}
+				// 连对
+				if (dianshuZu instanceof LianduiDianShuZu) {
+					LianduiDianShuZu lianduiDianShuZu = (LianduiDianShuZu) dianshuZu;
+					DianShu[] lianXuDianShuArray = lianduiDianShuZu.getLianXuDianShuArray();
+					boolean allSuccess = true;
+					for (DianShu dianshu : lianXuDianShuArray) {
+						if (dianshuCountArray[dianshu.ordinal()] != 2) {
+							allSuccess = false;
+							break;
+						}
+					}
+					if (allSuccess) {
+						if (noWangLianduiSolutionList.isEmpty()) {
+							noWangLianduiSolutionList.add(solution);
+						} else {
+							int length = noWangLianduiSolutionList.size();
+							int i = 0;
+							while (i < length) {
+								if (((LianduiDianShuZu) noWangLianduiSolutionList.get(i).getDianShuZu())
+										.getLianXuDianShuArray()[0].compareTo(
+												((LianduiDianShuZu) dianshuZu).getLianXuDianShuArray()[0]) > 0) {
+									noWangLianduiSolutionList.add(i, solution);
+									break;
+								}
+								if (i == length - 1) {
+									noWangLianduiSolutionList.add(solution);
+								}
+								i++;
+							}
+						}
+					}
+				}
+				// 顺子
+				if (dianshuZu instanceof ShunziDianShuZu) {
+					ShunziDianShuZu shunziDianShuZu = (ShunziDianShuZu) dianshuZu;
+					DianShu[] lianXuDianShuArray = shunziDianShuZu.getLianXuDianShuArray();
+					boolean allSuccess = true;
+					for (DianShu dianshu : lianXuDianShuArray) {
+						if (dianshuCountArray[dianshu.ordinal()] != 1) {
+							allSuccess = false;
+							break;
+						}
+					}
+					if (allSuccess) {
+						if (noWangShunziSolutionList.isEmpty()) {
+							noWangShunziSolutionList.add(solution);
+						} else {
+							int length = noWangShunziSolutionList.size();
+							int i = 0;
+							while (i < length) {
+								if (((ShunziDianShuZu) noWangShunziSolutionList.get(i).getDianShuZu())
+										.getLianXuDianShuArray()[0].compareTo(
+												((ShunziDianShuZu) dianshuZu).getLianXuDianShuArray()[0]) > 0) {
+									noWangShunziSolutionList.add(i, solution);
+									break;
+								}
+								if (i == length - 1) {
+									noWangShunziSolutionList.add(solution);
+								}
+								i++;
+							}
+						}
+					}
+				}
+			}
+		} else {
+			for (DaPaiDianShuSolution solution : noWangSolutionList) {
+				DianShuZu dianshuZu = solution.getDianShuZu();
+				// 三张
+				if (dianshuZu instanceof SanzhangDianShuZu) {
+					SanzhangDianShuZu sanzhangDianShuZu = (SanzhangDianShuZu) dianshuZu;
+					DianShu dianshu = sanzhangDianShuZu.getDianShu();
+					if (dianshuCountArray[dianshu.ordinal()] < 4) {
+						if (noWangSanzhangSolutionList.isEmpty()) {
+							noWangSanzhangSolutionList.add(solution);
+						} else {
+							int length = noWangSanzhangSolutionList.size();
+							int i = 0;
+							while (i < length) {
+								if (((SanzhangDianShuZu) noWangSanzhangSolutionList.get(i).getDianShuZu()).getDianShu()
+										.compareTo(sanzhangDianShuZu.getDianShu()) > 0) {
+									noWangSanzhangSolutionList.add(i, solution);
+									break;
+								}
+								if (i == length - 1) {
+									noWangSanzhangSolutionList.add(solution);
+								}
+								i++;
+							}
+						}
+					}
+				}
+				// 对子
+				if (dianshuZu instanceof DuiziDianShuZu) {
+					DuiziDianShuZu duiziDianShuZu = (DuiziDianShuZu) dianshuZu;
+					DianShu dianshu = duiziDianShuZu.getDianShu();
+					if (dianshuCountArray[dianshu.ordinal()] < 4) {
+						if (noWangDuiziSolutionList.isEmpty()) {
+							noWangDuiziSolutionList.add(solution);
+						} else {
+							int length = noWangDuiziSolutionList.size();
+							int i = 0;
+							while (i < length) {
+								if (((DuiziDianShuZu) noWangDuiziSolutionList.get(i).getDianShuZu()).getDianShu()
+										.compareTo(duiziDianShuZu.getDianShu()) > 0) {
+									noWangDuiziSolutionList.add(i, solution);
+									break;
+								}
+								if (i == length - 1) {
+									noWangDuiziSolutionList.add(solution);
+								}
+								i++;
+							}
+						}
+					}
+				}
+				// 单张
+				if (dianshuZu instanceof DanzhangDianShuZu) {
+					DanzhangDianShuZu danzhangDianShuZu = (DanzhangDianShuZu) dianshuZu;
+					DianShu dianshu = danzhangDianShuZu.getDianShu();
+					if (dianshuCountArray[dianshu.ordinal()] < 4) {
+						if (noWangDanzhangSolutionList.isEmpty()) {
+							noWangDanzhangSolutionList.add(solution);
+						} else {
+							int length = noWangDanzhangSolutionList.size();
+							int i = 0;
+							while (i < length) {
+								if (((DanzhangDianShuZu) noWangDanzhangSolutionList.get(i).getDianShuZu()).getDianShu()
+										.compareTo(danzhangDianShuZu.getDianShu()) > 0) {
+									noWangDanzhangSolutionList.add(i, solution);
+									break;
+								}
+								if (i == length - 1) {
+									noWangDanzhangSolutionList.add(solution);
+								}
+								i++;
+							}
+						}
+					}
+				}
+				// 连三张
+				if (dianshuZu instanceof LiansanzhangDianShuZu) {
+					LiansanzhangDianShuZu liansanzhangDianShuZu = (LiansanzhangDianShuZu) dianshuZu;
+					DianShu[] lianXuDianShuArray = liansanzhangDianShuZu.getLianXuDianShuArray();
+					boolean allSuccess = true;
+					for (DianShu dianshu : lianXuDianShuArray) {
+						if (dianshuCountArray[dianshu.ordinal()] != 3) {
+							allSuccess = false;
+							break;
+						}
+					}
+					if (allSuccess) {
+						if (noWangLiansanzhangSolutionList.isEmpty()) {
+							noWangLiansanzhangSolutionList.add(solution);
+						} else {
+							int length = noWangLiansanzhangSolutionList.size();
+							int i = 0;
+							while (i < length) {
+								if (((LiansanzhangDianShuZu) noWangLiansanzhangSolutionList.get(i).getDianShuZu())
+										.getLianXuDianShuArray()[0].compareTo(
+												((LiansanzhangDianShuZu) dianshuZu).getLianXuDianShuArray()[0]) > 0) {
+									noWangLiansanzhangSolutionList.add(i, solution);
+									break;
+								}
+								if (i == length - 1) {
+									noWangLiansanzhangSolutionList.add(solution);
+								}
+								i++;
+							}
+						}
+					}
+				}
+				// 连对
+				if (dianshuZu instanceof LianduiDianShuZu) {
+					LianduiDianShuZu lianduiDianShuZu = (LianduiDianShuZu) dianshuZu;
+					DianShu[] lianXuDianShuArray = lianduiDianShuZu.getLianXuDianShuArray();
+					boolean allSuccess = true;
+					for (DianShu dianshu : lianXuDianShuArray) {
+						if (dianshuCountArray[dianshu.ordinal()] != 2) {
+							allSuccess = false;
+							break;
+						}
+					}
+					if (allSuccess) {
+						if (noWangLianduiSolutionList.isEmpty()) {
+							noWangLianduiSolutionList.add(solution);
+						} else {
+							int length = noWangLianduiSolutionList.size();
+							int i = 0;
+							while (i < length) {
+								if (((LianduiDianShuZu) noWangLianduiSolutionList.get(i).getDianShuZu())
+										.getLianXuDianShuArray()[0].compareTo(
+												((LianduiDianShuZu) dianshuZu).getLianXuDianShuArray()[0]) > 0) {
+									noWangLianduiSolutionList.add(i, solution);
+									break;
+								}
+								if (i == length - 1) {
+									noWangLianduiSolutionList.add(solution);
+								}
+								i++;
+							}
+						}
+					}
+				}
+				// 顺子
+				if (dianshuZu instanceof ShunziDianShuZu) {
+					ShunziDianShuZu shunziDianShuZu = (ShunziDianShuZu) dianshuZu;
+					DianShu[] lianXuDianShuArray = shunziDianShuZu.getLianXuDianShuArray();
+					boolean allSuccess = true;
+					for (DianShu dianshu : lianXuDianShuArray) {
+						if (dianshuCountArray[dianshu.ordinal()] != 1) {
+							allSuccess = false;
+							break;
+						}
+					}
+					if (allSuccess) {
+						if (noWangShunziSolutionList.isEmpty()) {
+							noWangShunziSolutionList.add(solution);
+						} else {
+							int length = noWangShunziSolutionList.size();
+							int i = 0;
+							while (i < length) {
+								if (((ShunziDianShuZu) noWangShunziSolutionList.get(i).getDianShuZu())
+										.getLianXuDianShuArray()[0].compareTo(
+												((ShunziDianShuZu) dianshuZu).getLianXuDianShuArray()[0]) > 0) {
+									noWangShunziSolutionList.add(i, solution);
+									break;
+								}
+								if (i == length - 1) {
+									noWangShunziSolutionList.add(solution);
+								}
+								i++;
+							}
+						}
+					}
+				}
+			}
+		}
 		f2: for (DaPaiDianShuSolution solution : hasWangSolutionList) {
 			DianShuZu dianshuZu = solution.getDianShuZu();
 			// 三张
