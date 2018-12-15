@@ -99,19 +99,26 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 			}
 		}
 
-		List<DaPaiDianShuSolution> noWangDanzhangSolutionList = new LinkedList<>();
-		List<DaPaiDianShuSolution> noWangDuiziSolutionList = new LinkedList<>();
-		List<DaPaiDianShuSolution> noWangSanzhangSolutionList = new LinkedList<>();
-		List<DaPaiDianShuSolution> noWangShunziSolutionList = new LinkedList<>();
-		List<DaPaiDianShuSolution> noWangLianduiSolutionList = new LinkedList<>();
-		List<DaPaiDianShuSolution> noWangLiansanzhangSolutionList = new LinkedList<>();
+		LinkedList<DaPaiDianShuSolution> noWangDanzhangSolutionList = new LinkedList<>();
+		LinkedList<DaPaiDianShuSolution> noWangDuiziSolutionList = new LinkedList<>();
+		LinkedList<DaPaiDianShuSolution> noWangSanzhangSolutionList = new LinkedList<>();
+		LinkedList<DaPaiDianShuSolution> noWangShunziSolutionList = new LinkedList<>();
+		LinkedList<DaPaiDianShuSolution> noWangLianduiSolutionList = new LinkedList<>();
+		LinkedList<DaPaiDianShuSolution> noWangLiansanzhangSolutionList = new LinkedList<>();
 
-		List<DaPaiDianShuSolution> hasWangDanzhangSolutionList = new LinkedList<>();
-		List<DaPaiDianShuSolution> hasWangDuiziSolutionList = new LinkedList<>();
-		List<DaPaiDianShuSolution> hasWangSanzhangSolutionList = new LinkedList<>();
-		List<DaPaiDianShuSolution> hasWangShunziSolutionList = new LinkedList<>();
-		List<DaPaiDianShuSolution> hasWangLianduiSolutionList = new LinkedList<>();
-		List<DaPaiDianShuSolution> hasWangLiansanzhangSolutionList = new LinkedList<>();
+		// 单张至两张的单张
+		LinkedList<DaPaiDianShuSolution> noWangDanzhangYiShangSolutionList = new LinkedList<>();
+		// 两张以上的单张
+		LinkedList<DaPaiDianShuSolution> noWangDanzhangDuiziYiShangSolutionList = new LinkedList<>();
+		// 有三张的对子
+		LinkedList<DaPaiDianShuSolution> noWangDuiziYiShangSolutionList = new LinkedList<>();
+
+		LinkedList<DaPaiDianShuSolution> hasWangDanzhangSolutionList = new LinkedList<>();
+		LinkedList<DaPaiDianShuSolution> hasWangDuiziSolutionList = new LinkedList<>();
+		LinkedList<DaPaiDianShuSolution> hasWangSanzhangSolutionList = new LinkedList<>();
+		LinkedList<DaPaiDianShuSolution> hasWangShunziSolutionList = new LinkedList<>();
+		LinkedList<DaPaiDianShuSolution> hasWangLianduiSolutionList = new LinkedList<>();
+		LinkedList<DaPaiDianShuSolution> hasWangLiansanzhangSolutionList = new LinkedList<>();
 		if (!yapai) {
 			for (DaPaiDianShuSolution solution : noWangSolutionList) {
 				DianShuZu dianshuZu = solution.getDianShuZu();
@@ -317,15 +324,57 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 					DianShu dianshu = duiziDianShuZu.getDianShu();
 					if (dianshuCountArray[dianshu.ordinal()] < 4) {
 						if (noWangDuiziSolutionList.isEmpty()) {
-							noWangDuiziSolutionList.add(solution);
+							if (dianshuCountArray[dianshu.ordinal()] > 2) {
+								if (noWangDuiziYiShangSolutionList.isEmpty()) {
+									noWangDuiziYiShangSolutionList.add(solution);
+								} else {
+									int length1 = noWangDuiziYiShangSolutionList.size();
+									int j = 0;
+									while (j < length1) {
+										if (((DanzhangDianShuZu) noWangDuiziYiShangSolutionList.get(j).getDianShuZu())
+												.getDianShu().compareTo(duiziDianShuZu.getDianShu()) > 0) {
+											noWangDuiziYiShangSolutionList.add(j, solution);
+											break;
+										}
+										if (j == length1 - 1) {
+											noWangDuiziYiShangSolutionList.add(solution);
+										}
+										j++;
+									}
+								}
+							} else {
+								noWangDuiziSolutionList.add(solution);
+							}
 						} else {
 							int length = noWangDuiziSolutionList.size();
 							int i = 0;
 							while (i < length) {
 								if (((DuiziDianShuZu) noWangDuiziSolutionList.get(i).getDianShuZu()).getDianShu()
 										.compareTo(duiziDianShuZu.getDianShu()) > 0) {
-									noWangDuiziSolutionList.add(i, solution);
-									break;
+									if (dianshuCountArray[dianshu.ordinal()] > 2) {
+										if (noWangDuiziYiShangSolutionList.isEmpty()) {
+											noWangDuiziYiShangSolutionList.add(solution);
+										} else {
+											int length1 = noWangDuiziYiShangSolutionList.size();
+											int j = 0;
+											while (j < length1) {
+												if (((DanzhangDianShuZu) noWangDuiziYiShangSolutionList.get(j)
+														.getDianShuZu()).getDianShu()
+																.compareTo(duiziDianShuZu.getDianShu()) > 0) {
+													noWangDuiziYiShangSolutionList.add(j, solution);
+													break;
+												}
+												if (j == length1 - 1) {
+													noWangDuiziYiShangSolutionList.add(solution);
+												}
+												j++;
+											}
+										}
+										break;
+									} else {
+										noWangDuiziSolutionList.add(i, solution);
+										break;
+									}
 								}
 								if (i == length - 1) {
 									noWangDuiziSolutionList.add(solution);
@@ -341,15 +390,101 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 					DianShu dianshu = danzhangDianShuZu.getDianShu();
 					if (dianshuCountArray[dianshu.ordinal()] < 4) {
 						if (noWangDanzhangSolutionList.isEmpty()) {
-							noWangDanzhangSolutionList.add(solution);
+							if (dianshuCountArray[dianshu.ordinal()] > 2) {
+								if (noWangDanzhangDuiziYiShangSolutionList.isEmpty()) {
+									noWangDanzhangDuiziYiShangSolutionList.add(solution);
+								} else {
+									int length1 = noWangDanzhangDuiziYiShangSolutionList.size();
+									int j = 0;
+									while (j < length1) {
+										if (((DanzhangDianShuZu) noWangDanzhangDuiziYiShangSolutionList.get(j)
+												.getDianShuZu()).getDianShu()
+														.compareTo(danzhangDianShuZu.getDianShu()) > 0) {
+
+											noWangDanzhangDuiziYiShangSolutionList.add(j, solution);
+											break;
+										}
+										if (j == length1 - 1) {
+											noWangDanzhangDuiziYiShangSolutionList.add(solution);
+										}
+										j++;
+									}
+								}
+								break;
+							} else if (dianshuCountArray[dianshu.ordinal()] > 1) {
+								if (noWangDanzhangYiShangSolutionList.isEmpty()) {
+									noWangDanzhangYiShangSolutionList.add(solution);
+								} else {
+									int length1 = noWangDanzhangYiShangSolutionList.size();
+									int j = 0;
+									while (j < length1) {
+										if (((DanzhangDianShuZu) noWangDanzhangYiShangSolutionList.get(j)
+												.getDianShuZu()).getDianShu()
+														.compareTo(danzhangDianShuZu.getDianShu()) > 0) {
+											noWangDanzhangYiShangSolutionList.add(j, solution);
+											break;
+										}
+										if (j == length1 - 1) {
+											noWangDanzhangYiShangSolutionList.add(solution);
+										}
+										j++;
+									}
+								}
+							} else {
+								noWangDanzhangSolutionList.add(solution);
+							}
 						} else {
 							int length = noWangDanzhangSolutionList.size();
 							int i = 0;
 							while (i < length) {
 								if (((DanzhangDianShuZu) noWangDanzhangSolutionList.get(i).getDianShuZu()).getDianShu()
 										.compareTo(danzhangDianShuZu.getDianShu()) > 0) {
-									noWangDanzhangSolutionList.add(i, solution);
-									break;
+									if (dianshuCountArray[dianshu.ordinal()] > 2) {
+										if (noWangDanzhangDuiziYiShangSolutionList.isEmpty()) {
+											noWangDanzhangDuiziYiShangSolutionList.add(solution);
+										} else {
+											int length1 = noWangDanzhangDuiziYiShangSolutionList.size();
+											int j = 0;
+											while (j < length1) {
+												if (((DanzhangDianShuZu) noWangDanzhangDuiziYiShangSolutionList.get(j)
+														.getDianShuZu()).getDianShu()
+																.compareTo(danzhangDianShuZu.getDianShu()) > 0) {
+
+													noWangDanzhangDuiziYiShangSolutionList.add(j, solution);
+													break;
+												}
+												if (j == length1 - 1) {
+													noWangDanzhangDuiziYiShangSolutionList.add(solution);
+												}
+												j++;
+											}
+										}
+										break;
+									} else if (dianshuCountArray[dianshu.ordinal()] > 1) {
+										if (noWangDanzhangYiShangSolutionList.isEmpty()) {
+											noWangDanzhangYiShangSolutionList.add(solution);
+										} else {
+											int length1 = noWangDanzhangYiShangSolutionList.size();
+											int j = 0;
+											while (j < length1) {
+												if (((DanzhangDianShuZu) noWangDanzhangYiShangSolutionList.get(j)
+														.getDianShuZu()).getDianShu()
+																.compareTo(danzhangDianShuZu.getDianShu()) > 0) {
+
+													noWangDanzhangYiShangSolutionList.add(j, solution);
+													break;
+												}
+												if (j == length1 - 1) {
+													noWangDanzhangYiShangSolutionList.add(solution);
+												}
+												j++;
+											}
+										}
+										break;
+									} else {
+										noWangDanzhangSolutionList.add(i, solution);
+										break;
+									}
 								}
 								if (i == length - 1) {
 									noWangDanzhangSolutionList.add(solution);
@@ -652,18 +787,34 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 				zhadanSolutionList.add(maxZhadanSolution);
 			}
 		}
+		noWangDanzhangSolutionList.addAll(noWangDanzhangYiShangSolutionList);
+		noWangDanzhangSolutionList.addAll(noWangDanzhangDuiziYiShangSolutionList);
+		noWangDuiziSolutionList.addAll(noWangDuiziYiShangSolutionList);
+
 		filtedSolutionList.addAll(noWangDanzhangSolutionList);
 		filtedSolutionList.addAll(noWangDuiziSolutionList);
 		filtedSolutionList.addAll(noWangSanzhangSolutionList);
 		filtedSolutionList.addAll(noWangShunziSolutionList);
 		filtedSolutionList.addAll(noWangLianduiSolutionList);
 		filtedSolutionList.addAll(noWangLiansanzhangSolutionList);
-		filtedSolutionList.addAll(hasWangDanzhangSolutionList);
-		filtedSolutionList.addAll(hasWangDuiziSolutionList);
-		filtedSolutionList.addAll(hasWangSanzhangSolutionList);
-		filtedSolutionList.addAll(hasWangShunziSolutionList);
-		filtedSolutionList.addAll(hasWangLianduiSolutionList);
-		filtedSolutionList.addAll(hasWangLiansanzhangSolutionList);
+		if (noWangDanzhangSolutionList.isEmpty()) {
+			filtedSolutionList.addAll(hasWangDanzhangSolutionList);
+		}
+		if (noWangDuiziSolutionList.isEmpty()) {
+			filtedSolutionList.addAll(hasWangDuiziSolutionList);
+		}
+		if (noWangSanzhangSolutionList.isEmpty()) {
+			filtedSolutionList.addAll(hasWangSanzhangSolutionList);
+		}
+		if (noWangShunziSolutionList.isEmpty()) {
+			filtedSolutionList.addAll(hasWangShunziSolutionList);
+		}
+		if (noWangLianduiSolutionList.isEmpty()) {
+			filtedSolutionList.addAll(hasWangLianduiSolutionList);
+		}
+		if (noWangLiansanzhangSolutionList.isEmpty()) {
+			filtedSolutionList.addAll(hasWangLiansanzhangSolutionList);
+		}
 		filtedSolutionList.addAll(zhadanSolutionList);
 		return filtedSolutionList;
 	}

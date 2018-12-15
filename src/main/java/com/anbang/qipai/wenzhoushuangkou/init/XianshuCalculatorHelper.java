@@ -46,7 +46,8 @@ public class XianshuCalculatorHelper {
 	 * 计算四线倍数及贡献分
 	 */
 	private static void calculateSiXian() {
-		// String s = "012100000";
+		// String s = "100010100";
+		// 2
 		xianshuCountMap.put("100000000", 4);
 		gongxianFenCountMap.put("100000000", 0);
 
@@ -58,6 +59,7 @@ public class XianshuCalculatorHelper {
 	 * 计算五线倍数及贡献分
 	 */
 	private static void calculateWuXian() {
+		// 4
 		xianshuCountMap.put("300000000", 5);
 		gongxianFenCountMap.put("300000000", 0);
 
@@ -75,6 +77,7 @@ public class XianshuCalculatorHelper {
 	 * 计算六线倍数及贡献分
 	 */
 	private static void calculateLiuXian() {
+		// 12
 		xianshuCountMap.put("400000000", 6);
 		gongxianFenCountMap.put("400000000", 4);
 
@@ -116,7 +119,7 @@ public class XianshuCalculatorHelper {
 	 * 计算七线倍数及贡献分
 	 */
 	private static void calculateQiXian() {
-
+		// 39
 		xianshuCountMap.put("500000000", 7);
 		gongxianFenCountMap.put("500000000", 8);
 
@@ -909,7 +912,7 @@ public class XianshuCalculatorHelper {
 	 * 计算十线倍数及贡献分
 	 */
 	private static void calculateShiXian() {
-		// 75
+		// 74
 		xianshuCountMap.put("300000100", 10);
 		gongxianFenCountMap.put("300000100", 64);
 
@@ -1104,9 +1107,6 @@ public class XianshuCalculatorHelper {
 
 		xianshuCountMap.put("001010100", 10);
 		gongxianFenCountMap.put("001010100", 84);
-
-		xianshuCountMap.put("100100100", 10);
-		gongxianFenCountMap.put("100010100", 84);
 
 		xianshuCountMap.put("002010100", 10);
 		gongxianFenCountMap.put("002010100", 88);
