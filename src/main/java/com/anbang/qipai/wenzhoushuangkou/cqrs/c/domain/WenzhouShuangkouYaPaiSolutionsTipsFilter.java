@@ -330,7 +330,7 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 								int length1 = noWangDuiziYiShangSolutionList.size();
 								int j = 0;
 								while (j < length1) {
-									if (((DanzhangDianShuZu) noWangDuiziYiShangSolutionList.get(j).getDianShuZu())
+									if (((DuiziDianShuZu) noWangDuiziYiShangSolutionList.get(j).getDianShuZu())
 											.getDianShu().compareTo(duiziDianShuZu.getDianShu()) > 0) {
 										noWangDuiziYiShangSolutionList.add(j, solution);
 										break;
