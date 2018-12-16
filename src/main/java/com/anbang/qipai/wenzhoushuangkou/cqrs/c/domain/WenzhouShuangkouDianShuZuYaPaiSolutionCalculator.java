@@ -70,7 +70,12 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 			try {
 				// 对子，当有大小王个一张时可以当一对大王打出
 				if (xiaowangCount > 0 && dawangCount > 0) {
-					DuiziDianShuZu duiziDianShuZu = new DuiziDianShuZu(DianShu.dawang);
+					DuiziDianShuZu duiziDianShuZu = null;
+					if (BianXingWanFa.qianbian.equals(bx)) {
+						duiziDianShuZu = new DuiziDianShuZu(DianShu.dawang);
+					} else {
+						duiziDianShuZu = new DuiziDianShuZu(DianShu.xiaowang);
+					}
 					if (danGeDianShuZuComparator.compare(duiziDianShuZu, beiYaDuiziDianShuZu) > 0) {
 						DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
 						solution.setDianShuZu(duiziDianShuZu);
@@ -207,7 +212,7 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 				PaiXing paiXing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
 				paiXing = paiXingFilter(paiXing, beiYaDianShuZu);
 				solutionSet.addAll(DianShuZuCalculator.calculateAllDaPaiDianShuSolutionWithWangDang(paiXing,
-						wangDangPaiArray, dianshuCountArray));
+						wangDangPaiArray, dianshuCountArray, bx));
 				// 减去当牌的数量
 				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
 					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]--;

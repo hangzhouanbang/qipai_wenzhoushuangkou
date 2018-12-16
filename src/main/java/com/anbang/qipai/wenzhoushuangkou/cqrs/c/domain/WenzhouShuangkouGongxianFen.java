@@ -1,5 +1,7 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
 
+import java.util.List;
+
 import com.anbang.qipai.wenzhoushuangkou.init.XianshuCalculatorHelper;
 
 /**
@@ -40,19 +42,55 @@ public class WenzhouShuangkouGongxianFen {
 		shierxian = xianshuCount[8];
 	}
 
-	public void calculateShouPaiXianshu(int[] xianshuCount) {
-		if (xianshuCount == null) {
-			xianshuCount = new int[9];
+	public void calculateShouPaiXianshu(List<int[]> xianshuList) {
+		if (xianshuList == null || xianshuList.isEmpty()) {
+			String key = "" + sixian + wuxian + liuxian + qixian + baxian + jiuxian + shixian + shiyixian + shierxian;
+			Integer score = XianshuCalculatorHelper.getGongxianFenCountMap().get(key);
+			if (score != null) {
+				value = score;
+			}
+		} else {
+			int bestScore = 0;
+			int[] bestXianShuCount = new int[9];
+			for (int[] xianshuCount : xianshuList) {
+				sixian += xianshuCount[0];
+				wuxian += xianshuCount[1];
+				liuxian += xianshuCount[2];
+				qixian += xianshuCount[3];
+				baxian += xianshuCount[4];
+				jiuxian += xianshuCount[5];
+				shixian += xianshuCount[6];
+				shiyixian += xianshuCount[7];
+				shierxian += xianshuCount[8];
+				String key = "" + sixian + wuxian + liuxian + qixian + baxian + jiuxian + shixian + shiyixian
+						+ shierxian;
+				Integer score = XianshuCalculatorHelper.getGongxianFenCountMap().get(key);
+				if (score != null && score > bestScore) {
+					bestScore = score;
+					bestXianShuCount = xianshuCount;
+				}
+				sixian -= xianshuCount[0];
+				wuxian -= xianshuCount[1];
+				liuxian -= xianshuCount[2];
+				qixian -= xianshuCount[3];
+				baxian -= xianshuCount[4];
+				jiuxian -= xianshuCount[5];
+				shixian -= xianshuCount[6];
+				shiyixian -= xianshuCount[7];
+				shierxian -= xianshuCount[8];
+
+			}
+			sixian += bestXianShuCount[0];
+			wuxian += bestXianShuCount[1];
+			liuxian += bestXianShuCount[2];
+			qixian += bestXianShuCount[3];
+			baxian += bestXianShuCount[4];
+			jiuxian += bestXianShuCount[5];
+			shixian += bestXianShuCount[6];
+			shiyixian += bestXianShuCount[7];
+			shierxian += bestXianShuCount[8];
+			value = bestScore;
 		}
-		sixian += xianshuCount[0];
-		wuxian += xianshuCount[1];
-		liuxian += xianshuCount[2];
-		qixian += xianshuCount[3];
-		baxian += xianshuCount[4];
-		jiuxian += xianshuCount[5];
-		shixian += xianshuCount[6];
-		shiyixian += xianshuCount[7];
-		shierxian += xianshuCount[8];
 	}
 
 	public void calculateXianshu() {

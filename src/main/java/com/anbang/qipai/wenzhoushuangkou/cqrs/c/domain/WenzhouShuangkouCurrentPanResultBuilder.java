@@ -135,7 +135,6 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			int[] xianshuCount = playerXianshuMap.get(yingPlayerId);
 			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
 			gongxianfen.calculateShouPaiXianshu(calculateShouPaiTotalGongxianfenForPlayer(yingPlayerId, ju));
-			gongxianfen.calculateXianshu();
 			gongxianfen.calculate(renshu);
 			yingPlayerResult.setGongxianfen(gongxianfen);
 			WenzhouShuangkouChaixianbufen bufen = new WenzhouShuangkouChaixianbufen();
@@ -166,7 +165,6 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			int[] xianshuCount1 = playerXianshuMap.get(playerId1);
 			WenzhouShuangkouGongxianFen gongxianfen1 = new WenzhouShuangkouGongxianFen(xianshuCount1);
 			gongxianfen1.calculateShouPaiXianshu(calculateShouPaiTotalGongxianfenForPlayer(playerId1, ju));
-			gongxianfen1.calculateXianshu();
 			gongxianfen1.calculate(renshu);
 			playerResult1.setGongxianfen(gongxianfen1);
 			WenzhouShuangkouChaixianbufen bufen1 = new WenzhouShuangkouChaixianbufen();
@@ -198,7 +196,6 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			int[] xianshuCount2 = playerXianshuMap.get(playerId2);
 			WenzhouShuangkouGongxianFen gongxianfen2 = new WenzhouShuangkouGongxianFen(xianshuCount2);
 			gongxianfen2.calculateShouPaiXianshu(calculateShouPaiTotalGongxianfenForPlayer(playerId2, ju));
-			gongxianfen2.calculateXianshu();
 			gongxianfen2.calculate(renshu);
 			playerResult2.setGongxianfen(gongxianfen2);
 			WenzhouShuangkouChaixianbufen bufen2 = new WenzhouShuangkouChaixianbufen();
@@ -230,7 +227,6 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			int[] xianshuCount3 = playerXianshuMap.get(playerId3);
 			WenzhouShuangkouGongxianFen gongxianfen3 = new WenzhouShuangkouGongxianFen(xianshuCount3);
 			gongxianfen3.calculateShouPaiXianshu(calculateShouPaiTotalGongxianfenForPlayer(playerId3, ju));
-			gongxianfen3.calculateXianshu();
 			gongxianfen3.calculate(renshu);
 			playerResult3.setGongxianfen(gongxianfen3);
 			WenzhouShuangkouChaixianbufen bufen3 = new WenzhouShuangkouChaixianbufen();
@@ -338,7 +334,6 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			int[] xianshuCount = playerXianshuMap.get(yingPlayerId);
 			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
 			gongxianfen.calculateShouPaiXianshu(calculateShouPaiTotalGongxianfenForPlayer(yingPlayerId, ju));
-			gongxianfen.calculateXianshu();
 			gongxianfen.calculate(renshu);
 			yingPlayerResult.setGongxianfen(gongxianfen);
 			WenzhouShuangkouChaixianbufen bufen = new WenzhouShuangkouChaixianbufen();
@@ -363,7 +358,6 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			shuPlayerResult.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
 			WenzhouShuangkouGongxianFen gongxianfen1 = new WenzhouShuangkouGongxianFen(xianshuCount1);
 			gongxianfen1.calculateShouPaiXianshu(calculateShouPaiTotalGongxianfenForPlayer(shuPlayerId, ju));
-			gongxianfen1.calculateXianshu();
 			gongxianfen1.calculate(renshu);
 			shuPlayerResult.setGongxianfen(gongxianfen1);
 			WenzhouShuangkouChaixianbufen bufen1 = new WenzhouShuangkouChaixianbufen();
@@ -473,7 +467,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 		return wenzhouShuangkouPanResult;
 	}
 
-	private int[] calculateShouPaiTotalGongxianfenForPlayer(String playerId, Ju ju) {
+	private List<int[]> calculateShouPaiTotalGongxianfenForPlayer(String playerId, Ju ju) {
 		Pan currentPan = ju.getCurrentPan();
 		ShuangkouPlayer player = currentPan.findPlayer(playerId);
 		Map<Integer, PukePai> allShoupai = player.getAllShoupai();
@@ -482,8 +476,28 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			DianShu dianShu = pukePai.getPaiMian().dianShu();
 			dianshuCountArray[dianShu.ordinal()]++;
 		}
+		List<int[]> xianshuList = new ArrayList<>();
 		int xiaowangCount = dianshuCountArray[13];
 		int dawangCount = dianshuCountArray[14];
+		if (xiaowangCount + dawangCount == 4) {// 有天王炸
+			List<int[]> xianshuList1 = calculatePaiXingWithWangDang(1, dianshuCountArray, xiaowangCount, dawangCount);
+			for (int[] xianshuCount1 : xianshuList1) {
+				xianshuCount1[2] += 1;
+			}
+			xianshuList.addAll(xianshuList1);
+			List<int[]> xianshuList2 = calculatePaiXingWithoutWangDang(dianshuCountArray);
+			for (int[] xianshuCount2 : xianshuList2) {
+				xianshuCount2[3] += 1;
+			}
+			xianshuList.addAll(xianshuList2);
+		}
+		if (xiaowangCount + dawangCount == 3) {// 有三王炸
+			List<int[]> xianshuList3 = calculatePaiXingWithoutWangDang(dianshuCountArray);
+			for (int[] xianshuCount3 : xianshuList3) {
+				xianshuCount3[2] += 1;
+			}
+			xianshuList.addAll(xianshuList3);
+		}
 		int wangCount = 0;
 		if (BianXingWanFa.qianbian.equals(bx)) {// 千变
 			wangCount = xiaowangCount + dawangCount;
@@ -507,14 +521,15 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 		}
 		if (wangCount > 0) {
 			// 有王牌
-			return calculatePaiXingWithWangDang(wangCount, dianshuCountArray, xiaowangCount, dawangCount);
+			xianshuList.addAll(calculatePaiXingWithWangDang(wangCount, dianshuCountArray, xiaowangCount, dawangCount));
 		} else {
 			// 没有王牌
-			return calculatePaiXingWithoutWangDang(dianshuCountArray);
+			xianshuList.addAll(calculatePaiXingWithoutWangDang(dianshuCountArray));
 		}
+		return xianshuList;
 	}
 
-	private int[] calculatePaiXingWithoutWangDang(int[] dianshuCountArray) {
+	private List<int[]> calculatePaiXingWithoutWangDang(int[] dianshuCountArray) {
 		PaiXing paiXing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
 		return calculateBestGongxianfen(dianshuCountArray.clone(), paiXing);
 	}
@@ -529,15 +544,14 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 		return kedangDianShuList;
 	}
 
-	private int[] calculatePaiXingWithWangDang(int wangCount, int[] dianshuCountArray, int xiaowangCount,
+	private List<int[]> calculatePaiXingWithWangDang(int wangCount, int[] dianshuCountArray, int xiaowangCount,
 			int dawangCount) {
-		int bestScore = 0;
-		int[] bestXianshuCount = new int[9];
+		List<int[]> xianshuList = new ArrayList<>();
 		// 计算王可以当哪些牌，提高性能
 		List<DianShu> kedangDianShuList = verifyDangFa(dawangCount, dianshuCountArray);
 		// 循环王的各种当法
 		if (kedangDianShuList.isEmpty()) {
-			return bestXianshuCount;
+			return xianshuList;
 		}
 		int size = kedangDianShuList.size();
 		int maxZuheCode = (int) Math.pow(size, wangCount);
@@ -584,22 +598,14 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]++;
 				}
 				PaiXing paixing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
-				int[] xianshuCount = calculateBestGongxianfen(dianshuCountArray.clone(), paixing);
-				WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
-				gongxianfen.calculateXianshu();
-				gongxianfen.calculate(renshu);
-				int score = gongxianfen.getValue();
-				if (score > bestScore) {
-					bestScore = score;
-					bestXianshuCount = xianshuCount;
-				}
+				xianshuList.addAll(calculateBestGongxianfen(dianshuCountArray.clone(), paixing));
 				// 减去当牌的数量
 				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
 					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]--;
 				}
 			}
 		}
-		return bestXianshuCount;
+		return xianshuList;
 	}
 
 	private int calculateXianShu(ZhadanDianShuZu zhadan) {
@@ -622,13 +628,9 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 	}
 
 	private void calculateGongxianfen(int[] dianshuCountArray, int[] xianshuArray,
-			List<ZhadanDianShuZu> zhadanDianShuZuList, Map<Integer, int[]> scoreXianshuMap) {
+			List<ZhadanDianShuZu> zhadanDianShuZuList, List<int[]> xianshuList) {
 		if (zhadanDianShuZuList.isEmpty()) {
-			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuArray);
-			gongxianfen.calculateXianshu();
-			gongxianfen.calculate(renshu);
-			int score = gongxianfen.getValue();
-			scoreXianshuMap.put(score, xianshuArray);
+			xianshuList.add(xianshuArray);
 		} else {
 			for (int i = 0; i < zhadanDianShuZuList.size(); i++) {
 				int[] xianshuArray1 = xianshuArray.clone();
@@ -638,7 +640,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 				int[] dianshuCountArray1 = removeZhadan(dianshuCountArray.clone(), zhadanDianShuZu);
 				List<ZhadanDianShuZu> zhadanDianShuZuList1 = calculateTotalGongxianfenForDianshuCountArray(
 						dianshuCountArray1);
-				calculateGongxianfen(dianshuCountArray1, xianshuArray1, zhadanDianShuZuList1, scoreXianshuMap);
+				calculateGongxianfen(dianshuCountArray1, xianshuArray1, zhadanDianShuZuList1, xianshuList);
 			}
 		}
 	}
@@ -646,26 +648,18 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 	/**
 	 * 根据牌型和牌数计算最佳贡献分
 	 */
-	private int[] calculateBestGongxianfen(int[] dianshuCountArray, PaiXing paixing) {
-		int bestScore = 0;
+	private List<int[]> calculateBestGongxianfen(int[] dianshuCountArray, PaiXing paixing) {
 		List<ZhadanDianShuZu> zhadanDianShuZuList = new ArrayList<>();
 		List<DanGeZhadanDianShuZu> danGeZhadanDianShuZuList = paixing.getZhadanDianShuZuList();
 		zhadanDianShuZuList.addAll(danGeZhadanDianShuZuList);
 		List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paixing.getLianXuZhadanDianShuZuList();
 		zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
-		List<WangZhadanDianShuZu> wangZhadanDianShuZuList = paixing.getWangZhadanDianShuZuList();
-		zhadanDianShuZuList.addAll(wangZhadanDianShuZuList);
 
-		Map<Integer, int[]> scoreXianshuMap = new HashMap<>();
+		List<int[]> xianshuList = new ArrayList<>();
 		int[] xianshuArray = new int[9];
-		calculateGongxianfen(dianshuCountArray, xianshuArray, zhadanDianShuZuList, scoreXianshuMap);
+		calculateGongxianfen(dianshuCountArray, xianshuArray, zhadanDianShuZuList, xianshuList);
 
-		for (int score : scoreXianshuMap.keySet()) {
-			if (score > bestScore) {
-				bestScore = score;
-			}
-		}
-		return scoreXianshuMap.get(bestScore);
+		return xianshuList;
 	}
 
 	private List<ZhadanDianShuZu> calculateTotalGongxianfenForDianshuCountArray(int[] dianshuCountArray) {
@@ -708,8 +702,6 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 		zhadanDianShuZuList.addAll(danGeZhadanDianShuZuList);
 		List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paixing.getLianXuZhadanDianShuZuList();
 		zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
-		List<WangZhadanDianShuZu> wangZhadanDianShuZuList = paixing.getWangZhadanDianShuZuList();
-		zhadanDianShuZuList.addAll(wangZhadanDianShuZuList);
 		return zhadanDianShuZuList;
 	}
 
@@ -771,8 +763,6 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 				zhadanDianShuZuList.addAll(danGeZhadanDianShuZuList);
 				List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paixing.getLianXuZhadanDianShuZuList();
 				zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
-				List<WangZhadanDianShuZu> wangZhadanDianShuZuList = paixing.getWangZhadanDianShuZuList();
-				zhadanDianShuZuList.addAll(wangZhadanDianShuZuList);
 				// 减去当牌的数量
 				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
 					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]--;

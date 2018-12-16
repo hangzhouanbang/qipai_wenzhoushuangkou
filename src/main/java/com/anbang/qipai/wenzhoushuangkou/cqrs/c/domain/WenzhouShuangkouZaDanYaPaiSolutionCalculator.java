@@ -39,20 +39,40 @@ public class WenzhouShuangkouZaDanYaPaiSolutionCalculator implements ZaDanYaPaiS
 				.generateAllWangZhadanDianShuZu(dianShuAmountArray);
 
 		for (WangZhadanDianShuZu wangZhadanDianShuZu : wangZhadanDianShuZuList) {
-			DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
-			solution.setDianShuZu(wangZhadanDianShuZu);
-			List<DianShu> dachuDianShuList = new ArrayList<>();
-			DianShu[] lianXuDianShuArray = wangZhadanDianShuZu.getDianShuZu();
-			for (int count = 0; count < wangZhadanDianShuZu.getXiaowangCount(); count++) {
-				dachuDianShuList.add(lianXuDianShuArray[0]);
+			if (beiYaDianShuZu instanceof ZhadanDianShuZu) {
+				ZhadanDianShuZu beiYaZhadanDianShuZu = (ZhadanDianShuZu) beiYaDianShuZu;
+				if (zhadanComparator.compare(wangZhadanDianShuZu, beiYaZhadanDianShuZu) > 0) {
+					DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
+					solution.setDianShuZu(wangZhadanDianShuZu);
+					List<DianShu> dachuDianShuList = new ArrayList<>();
+					DianShu[] lianXuDianShuArray = wangZhadanDianShuZu.getDianShuZu();
+					for (int count = 0; count < wangZhadanDianShuZu.getXiaowangCount(); count++) {
+						dachuDianShuList.add(lianXuDianShuArray[0]);
+					}
+					for (int count = 0; count < wangZhadanDianShuZu.getDawangCount(); count++) {
+						dachuDianShuList.add(lianXuDianShuArray[1]);
+					}
+					DianShu[] dachuDianShuArray = dachuDianShuList.toArray(new DianShu[dachuDianShuList.size()]);
+					solution.setDachuDianShuArray(dachuDianShuArray);
+					solution.calculateDianshuZuheIdx();
+					solutionList.add(solution);
+				}
+			} else {
+				DaPaiDianShuSolution solution = new DaPaiDianShuSolution();
+				solution.setDianShuZu(wangZhadanDianShuZu);
+				List<DianShu> dachuDianShuList = new ArrayList<>();
+				DianShu[] lianXuDianShuArray = wangZhadanDianShuZu.getDianShuZu();
+				for (int count = 0; count < wangZhadanDianShuZu.getXiaowangCount(); count++) {
+					dachuDianShuList.add(lianXuDianShuArray[0]);
+				}
+				for (int count = 0; count < wangZhadanDianShuZu.getDawangCount(); count++) {
+					dachuDianShuList.add(lianXuDianShuArray[1]);
+				}
+				DianShu[] dachuDianShuArray = dachuDianShuList.toArray(new DianShu[dachuDianShuList.size()]);
+				solution.setDachuDianShuArray(dachuDianShuArray);
+				solution.calculateDianshuZuheIdx();
+				solutionList.add(solution);
 			}
-			for (int count = 0; count < wangZhadanDianShuZu.getDawangCount(); count++) {
-				dachuDianShuList.add(lianXuDianShuArray[1]);
-			}
-			DianShu[] dachuDianShuArray = dachuDianShuList.toArray(new DianShu[dachuDianShuList.size()]);
-			solution.setDachuDianShuArray(dachuDianShuArray);
-			solution.calculateDianshuZuheIdx();
-			solutionList.add(solution);
 		}
 		int wangCount = 0;
 		if (BianXingWanFa.qianbian.equals(bx)) {// 千变
@@ -152,7 +172,7 @@ public class WenzhouShuangkouZaDanYaPaiSolutionCalculator implements ZaDanYaPaiS
 				PaiXing paiXing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
 				paiXing = paiXingFilter(paiXing, beiYaDianShuZu);
 				solutionSet.addAll(DianShuZuCalculator.calculateAllDaPaiDianShuSolutionWithWangDang(paiXing,
-						wangDangPaiArray, dianshuCountArray));
+						wangDangPaiArray, dianshuCountArray, bx));
 				// 减去当牌的数量
 				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
 					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]--;
@@ -189,17 +209,9 @@ public class WenzhouShuangkouZaDanYaPaiSolutionCalculator implements ZaDanYaPaiS
 					filtedLianXuZhadanDianShuZuList.add(lianXuZhadanDianShuZu);
 				}
 			}
-			List<WangZhadanDianShuZu> filtedWangZhadanDianShuZuList = filtedPaiXing.getWangZhadanDianShuZuList();
-			List<WangZhadanDianShuZu> wangZhadanDianShuZuList = paiXing.getWangZhadanDianShuZuList();
-			for (WangZhadanDianShuZu wangZhadanDianShuZu : wangZhadanDianShuZuList) {
-				if (zhadanComparator.compare(wangZhadanDianShuZu, beiYaZhadanDianShuZu) > 0) {
-					filtedWangZhadanDianShuZuList.add(wangZhadanDianShuZu);
-				}
-			}
 		} else {
 			filtedPaiXing.setZhadanDianShuZuList(paiXing.getZhadanDianShuZuList());
 			filtedPaiXing.setLianXuZhadanDianShuZuList(paiXing.getLianXuZhadanDianShuZuList());
-			filtedPaiXing.setWangZhadanDianShuZuList(paiXing.getWangZhadanDianShuZuList());
 		}
 		return filtedPaiXing;
 	}

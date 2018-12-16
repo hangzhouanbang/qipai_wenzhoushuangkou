@@ -163,6 +163,9 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		}
 		int xiaowangCount = dianshuCountArray[13];
 		int dawangCount = dianshuCountArray[14];
+		if (xiaowangCount + dawangCount >= 3) {// 有王炸
+			return true;
+		}
 		int wangCount = 0;
 		if (BianXingWanFa.qianbian.equals(bx)) {// 千变
 			wangCount = xiaowangCount + dawangCount;
@@ -271,8 +274,28 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 			DianShu dianShu = pukePai.getPaiMian().dianShu();
 			dianshuCountArray[dianShu.ordinal()]++;
 		}
+		int bestScore = 0;
 		int xiaowangCount = dianshuCountArray[13];
 		int dawangCount = dianshuCountArray[14];
+		if (xiaowangCount + dawangCount == 4) {// 有天王炸
+			int score1 = calculatePaiXingWithWangDang(1, dianshuCountArray, xiaowangCount, dawangCount);
+			score1 += 4;
+			if (score1 > bestScore) {
+				bestScore = score1;
+			}
+			int score2 = calculatePaiXingWithoutWangDang(dianshuCountArray);
+			score2 += 8;
+			if (score2 > bestScore) {
+				bestScore = score2;
+			}
+		}
+		if (xiaowangCount + dawangCount == 3) {// 有三王炸
+			int score = calculatePaiXingWithoutWangDang(dianshuCountArray);
+			score += 4;
+			if (score > bestScore) {
+				bestScore = score;
+			}
+		}
 		int wangCount = 0;
 		if (BianXingWanFa.qianbian.equals(bx)) {// 千变
 			wangCount = xiaowangCount + dawangCount;
@@ -295,12 +318,19 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 
 		}
 		if (wangCount > 0) {
-			// 有王牌
-			return calculatePaiXingWithWangDang(wangCount, dianshuCountArray, xiaowangCount, dawangCount);
+			// 有王当
+			int score = calculatePaiXingWithWangDang(wangCount, dianshuCountArray, xiaowangCount, dawangCount);
+			if (score > bestScore) {
+				bestScore = score;
+			}
 		} else {
-			// 没有王牌
-			return calculatePaiXingWithoutWangDang(dianshuCountArray);
+			// 没有王当
+			int score = calculatePaiXingWithoutWangDang(dianshuCountArray);
+			if (score > bestScore) {
+				bestScore = score;
+			}
 		}
+		return bestScore;
 	}
 
 	private int calculatePaiXingWithoutWangDang(int[] dianshuCountArray) {
@@ -436,8 +466,6 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		zhadanDianShuZuList.addAll(danGeZhadanDianShuZuList);
 		List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paixing.getLianXuZhadanDianShuZuList();
 		zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
-		List<WangZhadanDianShuZu> wangZhadanDianShuZuList = paixing.getWangZhadanDianShuZuList();
-		zhadanDianShuZuList.addAll(wangZhadanDianShuZuList);
 
 		List<Integer> scoreList = new ArrayList<>();
 		int[] xianshuArray = new int[9];
@@ -491,8 +519,6 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		zhadanDianShuZuList.addAll(danGeZhadanDianShuZuList);
 		List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paixing.getLianXuZhadanDianShuZuList();
 		zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
-		List<WangZhadanDianShuZu> wangZhadanDianShuZuList = paixing.getWangZhadanDianShuZuList();
-		zhadanDianShuZuList.addAll(wangZhadanDianShuZuList);
 		return zhadanDianShuZuList;
 	}
 
@@ -554,8 +580,6 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 				zhadanDianShuZuList.addAll(danGeZhadanDianShuZuList);
 				List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paixing.getLianXuZhadanDianShuZuList();
 				zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
-				List<WangZhadanDianShuZu> wangZhadanDianShuZuList = paixing.getWangZhadanDianShuZuList();
-				zhadanDianShuZuList.addAll(wangZhadanDianShuZuList);
 				// 减去当牌的数量
 				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
 					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]--;
@@ -648,6 +672,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 
 		WenzhouShuangkouYaPaiSolutionsTipsFilter wenzhouShuangkouYaPaiSolutionsTipsFilter = new WenzhouShuangkouYaPaiSolutionsTipsFilter();
 		wenzhouShuangkouYaPaiSolutionsTipsFilter.setZhadanComparator(zhadanComparator);
+		wenzhouShuangkouYaPaiSolutionsTipsFilter.setBx(bx);
 		ju.setYaPaiSolutionsTipsFilter(wenzhouShuangkouYaPaiSolutionsTipsFilter);
 
 		WenzhouShuangkouAllKedaPaiSolutionsGenerator wenzhouShuangkouAllKedaPaiSolutionsGenerator = new WenzhouShuangkouAllKedaPaiSolutionsGenerator();
