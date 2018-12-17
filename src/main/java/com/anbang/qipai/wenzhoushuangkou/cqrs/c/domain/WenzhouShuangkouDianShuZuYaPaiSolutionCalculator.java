@@ -146,7 +146,10 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 			DaPaiDianShuSolution daPaiDianShuSolution = yaPaiSolutionCandidates.get(solution.getDianshuZuheIdx());
 			if (daPaiDianShuSolution != null) {
 				DianShuZu dianShuZu = daPaiDianShuSolution.getDianShuZu();
-				if (dianShuZu instanceof LianXuDianShuZu) {
+				// 有可能出现打出点数相同类型却不同的情况
+				if (!solution.getDianShuZu().getClass().equals(dianShuZu.getClass())) {
+
+				} else if (dianShuZu instanceof LianXuDianShuZu) {
 					try {
 						if (lianXuDianShuZuComparator.compare((LianXuDianShuZu) solution.getDianShuZu(),
 								(LianXuDianShuZu) dianShuZu) > 0) {
@@ -162,14 +165,36 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 		return yaPaiSolutionCandidates;
 	}
 
+	private List<DianShu> verifyDangFa(int wangCount, int[] dianshuCountArray) {
+		Set<DianShu> kedangDianShuSet = new HashSet<>();
+		for (int i = 0; i < 13; i++) {
+			if (dianshuCountArray[i] > 0) {
+				kedangDianShuSet.add(DianShu.getDianShuByOrdinal(i));
+				if (i - 1 >= 0) {
+					kedangDianShuSet.add(DianShu.getDianShuByOrdinal(i - 1));
+				}
+				if (i + 1 < 13) {
+					kedangDianShuSet.add(DianShu.getDianShuByOrdinal(i + 1));
+				}
+			}
+		}
+		return new ArrayList<>(kedangDianShuSet);
+	}
+
 	private List<DaPaiDianShuSolution> calculateDaPaiDianShuSolutionWithWangDang(int wangCount, int[] dianshuCountArray,
 			int xiaowangCount, int dawangCount, DianShuZu beiYaDianShuZu) {
 		Set<DaPaiDianShuSolution> solutionSet = new HashSet<>();
+		// 计算可以当的牌，提高性能
+		List<DianShu> kedangDianShuList = verifyDangFa(dawangCount, dianshuCountArray);
+		if (kedangDianShuList.isEmpty()) {
+			new ArrayList<>(solutionSet);
+		}
 		// 循环王的各种当法
-		int maxZuheCode = (int) Math.pow(13, wangCount);
+		int size = kedangDianShuList.size();
+		int maxZuheCode = (int) Math.pow(size, wangCount);
 		int[] modArray = new int[wangCount];
 		for (int m = 0; m < wangCount; m++) {
-			modArray[m] = (int) Math.pow(13, wangCount - 1 - m);
+			modArray[m] = (int) Math.pow(size, wangCount - 1 - m);
 		}
 		for (int zuheCode = 0; zuheCode < maxZuheCode; zuheCode++) {
 			ShoupaiJiesuanPai[] wangDangPaiArray = new ShoupaiJiesuanPai[wangCount];
@@ -182,18 +207,18 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 					int yu = temp % mod;
 					if (BianXingWanFa.qianbian.equals(bx)) {// 千变
 						if (n < dawangCount) {
-							wangDangPaiArray[n] = new DawangDangPai(DianShu.getDianShuByOrdinal(shang));
+							wangDangPaiArray[n] = new DawangDangPai(kedangDianShuList.get(shang));
 						} else {
-							wangDangPaiArray[n] = new XiaowangDangPai(1, DianShu.getDianShuByOrdinal(shang));
+							wangDangPaiArray[n] = new XiaowangDangPai(1, kedangDianShuList.get(shang));
 						}
 					} else if (BianXingWanFa.banqianbian.equals(bx)) {// 半千变;
 						if (n < dawangCount) {
-							wangDangPaiArray[n] = new DawangDangPai(DianShu.getDianShuByOrdinal(shang));
+							wangDangPaiArray[n] = new DawangDangPai(kedangDianShuList.get(shang));
 						} else {
-							wangDangPaiArray[n] = new XiaowangDangPai(2, DianShu.getDianShuByOrdinal(shang));
+							wangDangPaiArray[n] = new XiaowangDangPai(2, kedangDianShuList.get(shang));
 						}
 					} else if (BianXingWanFa.baibian.equals(bx)) {// 百变
-						wangDangPaiArray[n] = new DawangDangPai(DianShu.getDianShuByOrdinal(shang));
+						wangDangPaiArray[n] = new DawangDangPai(kedangDianShuList.get(shang));
 					} else {
 
 					}
@@ -209,7 +234,17 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
 					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]++;
 				}
-				PaiXing paiXing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
+				PaiXing paiXing = new PaiXing();
+				// 对子
+				DianShuZuCalculator.calculateDuiziDianShuZu(dianshuCountArray, paiXing);
+				// 三张
+				DianShuZuCalculator.calculateSanzhangDianShuZu(dianshuCountArray, paiXing);
+				// 顺子
+				DianShuZuCalculator.calculateShunziDianShuZu(dianshuCountArray, paiXing);
+				// 连对
+				DianShuZuCalculator.calculateLianduiDianShuZu(dianshuCountArray, paiXing);
+				// 连三张
+				DianShuZuCalculator.calculateLiansanzhangDianShuZu(dianshuCountArray, paiXing);
 				paiXing = paiXingFilter(paiXing, beiYaDianShuZu);
 				solutionSet.addAll(DianShuZuCalculator.calculateAllDaPaiDianShuSolutionWithWangDang(paiXing,
 						wangDangPaiArray, dianshuCountArray, bx));
@@ -225,7 +260,17 @@ public class WenzhouShuangkouDianShuZuYaPaiSolutionCalculator implements DianShu
 	private List<DaPaiDianShuSolution> calculateDaPaiDianShuSolutionWithoutWangDang(int[] dianshuCountArray,
 			DianShuZu beiYaDianShuZu) {
 		Set<DaPaiDianShuSolution> solutionSet = new HashSet<>();
-		PaiXing paiXing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
+		PaiXing paiXing = new PaiXing();
+		// 对子
+		DianShuZuCalculator.calculateDuiziDianShuZu(dianshuCountArray, paiXing);
+		// 三张
+		DianShuZuCalculator.calculateSanzhangDianShuZu(dianshuCountArray, paiXing);
+		// 顺子
+		DianShuZuCalculator.calculateShunziDianShuZu(dianshuCountArray, paiXing);
+		// 连对
+		DianShuZuCalculator.calculateLianduiDianShuZu(dianshuCountArray, paiXing);
+		// 连三张
+		DianShuZuCalculator.calculateLiansanzhangDianShuZu(dianshuCountArray, paiXing);
 		paiXing = paiXingFilter(paiXing, beiYaDianShuZu);
 		solutionSet.addAll(DianShuZuCalculator.calculateAllDaPaiDianShuSolutionWithoutWangDang(paiXing));
 		return new ArrayList<>(solutionSet);

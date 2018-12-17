@@ -530,7 +530,11 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 	}
 
 	private List<int[]> calculatePaiXingWithoutWangDang(int[] dianshuCountArray) {
-		PaiXing paiXing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
+		PaiXing paiXing = new PaiXing();
+		// 普通炸弹
+		DianShuZuCalculator.calculateDanGeZhadanDianShuZu(dianshuCountArray, paiXing);
+		// 连续炸弹
+		DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray, paiXing);
 		return calculateBestGongxianfen(dianshuCountArray.clone(), paiXing);
 	}
 
@@ -597,8 +601,12 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
 					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]++;
 				}
-				PaiXing paixing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
-				xianshuList.addAll(calculateBestGongxianfen(dianshuCountArray.clone(), paixing));
+				PaiXing paiXing = new PaiXing();
+				// 普通炸弹
+				DianShuZuCalculator.calculateDanGeZhadanDianShuZu(dianshuCountArray, paiXing);
+				// 连续炸弹
+				DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray, paiXing);
+				xianshuList.addAll(calculateBestGongxianfen(dianshuCountArray.clone(), paiXing));
 				// 减去当牌的数量
 				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
 					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]--;
@@ -696,11 +704,15 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 	}
 
 	private List<ZhadanDianShuZu> calculateListZhadanDianShuZuWithoutWangDang(int[] dianshuCountArray) {
-		PaiXing paixing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
+		PaiXing paiXing = new PaiXing();
+		// 普通炸弹
+		DianShuZuCalculator.calculateDanGeZhadanDianShuZu(dianshuCountArray, paiXing);
+		// 连续炸弹
+		DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray, paiXing);
 		List<ZhadanDianShuZu> zhadanDianShuZuList = new ArrayList<>();
-		List<DanGeZhadanDianShuZu> danGeZhadanDianShuZuList = paixing.getZhadanDianShuZuList();
+		List<DanGeZhadanDianShuZu> danGeZhadanDianShuZuList = paiXing.getZhadanDianShuZuList();
 		zhadanDianShuZuList.addAll(danGeZhadanDianShuZuList);
-		List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paixing.getLianXuZhadanDianShuZuList();
+		List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paiXing.getLianXuZhadanDianShuZuList();
 		zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
 		return zhadanDianShuZuList;
 	}
@@ -758,10 +770,14 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
 					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]++;
 				}
-				PaiXing paixing = DianShuZuCalculator.calculateAllDianShuZu(dianshuCountArray);
-				List<DanGeZhadanDianShuZu> danGeZhadanDianShuZuList = paixing.getZhadanDianShuZuList();
+				PaiXing paiXing = new PaiXing();
+				// 普通炸弹
+				DianShuZuCalculator.calculateDanGeZhadanDianShuZu(dianshuCountArray, paiXing);
+				// 连续炸弹
+				DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray, paiXing);
+				List<DanGeZhadanDianShuZu> danGeZhadanDianShuZuList = paiXing.getZhadanDianShuZuList();
 				zhadanDianShuZuList.addAll(danGeZhadanDianShuZuList);
-				List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paixing.getLianXuZhadanDianShuZuList();
+				List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paiXing.getLianXuZhadanDianShuZuList();
 				zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
 				// 减去当牌的数量
 				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
