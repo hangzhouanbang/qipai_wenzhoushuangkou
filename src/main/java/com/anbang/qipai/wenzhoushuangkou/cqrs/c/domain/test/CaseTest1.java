@@ -85,7 +85,7 @@ public class CaseTest1 {
 	// }
 
 	private static List<int[]> calculateShouPaiTotalGongxianfenForPlayer() {
-		int[] dianshuCountArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 5, 6, 6, 2, 2 };
+		int[] dianshuCountArray = { 0, 0, 0, 0, 0, 0, 0, 0, 5, 6, 5, 4, 4, 2, 2 };
 		List<int[]> xianshuList = new ArrayList<>();
 		int xiaowangCount = dianshuCountArray[13];
 		int dawangCount = dianshuCountArray[14];
@@ -141,20 +141,10 @@ public class CaseTest1 {
 
 	private static List<int[]> calculatePaiXingWithoutWangDang(int[] dianshuCountArray) {
 		PaiXing paiXing = new PaiXing();
-		// 对子
-		DianShuZuCalculator.calculateDuiziDianShuZu(dianshuCountArray, paiXing);
-		// 三张
-		DianShuZuCalculator.calculateSanzhangDianShuZu(dianshuCountArray, paiXing);
-		// 顺子
-		DianShuZuCalculator.calculateShunziDianShuZu(dianshuCountArray, paiXing);
-		// 连对
-		DianShuZuCalculator.calculateLianduiDianShuZu(dianshuCountArray, paiXing);
-		// 连三张
-		DianShuZuCalculator.calculateLiansanzhangDianShuZu(dianshuCountArray, paiXing);
 		// 普通炸弹
-		DianShuZuCalculator.calculateDanGeZhadanDianShuZu(dianshuCountArray, paiXing);
+		paiXing.setDanGeZhadanDianShuZuList(DianShuZuCalculator.calculateDanGeZhadanDianShuZu(dianshuCountArray));
 		// 连续炸弹
-		DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray, paiXing);
+		paiXing.setLianXuZhadanDianShuZuList(DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray));
 		return calculateBestGongxianfen(dianshuCountArray.clone(), paiXing);
 	}
 
@@ -222,20 +212,12 @@ public class CaseTest1 {
 					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]++;
 				}
 				PaiXing paiXing = new PaiXing();
-				// 对子
-				DianShuZuCalculator.calculateDuiziDianShuZu(dianshuCountArray, paiXing);
-				// 三张
-				DianShuZuCalculator.calculateSanzhangDianShuZu(dianshuCountArray, paiXing);
-				// 顺子
-				DianShuZuCalculator.calculateShunziDianShuZu(dianshuCountArray, paiXing);
-				// 连对
-				DianShuZuCalculator.calculateLianduiDianShuZu(dianshuCountArray, paiXing);
-				// 连三张
-				DianShuZuCalculator.calculateLiansanzhangDianShuZu(dianshuCountArray, paiXing);
 				// 普通炸弹
-				DianShuZuCalculator.calculateDanGeZhadanDianShuZu(dianshuCountArray, paiXing);
+				paiXing.setDanGeZhadanDianShuZuList(
+						DianShuZuCalculator.calculateDanGeZhadanDianShuZu(dianshuCountArray));
 				// 连续炸弹
-				DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray, paiXing);
+				paiXing.setLianXuZhadanDianShuZuList(
+						DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray));
 				xianshuList.addAll(calculateBestGongxianfen(dianshuCountArray.clone(), paiXing));
 				// 减去当牌的数量
 				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
@@ -288,7 +270,7 @@ public class CaseTest1 {
 	 */
 	private static List<int[]> calculateBestGongxianfen(int[] dianshuCountArray, PaiXing paixing) {
 		List<ZhadanDianShuZu> zhadanDianShuZuList = new ArrayList<>();
-		List<DanGeZhadanDianShuZu> danGeZhadanDianShuZuList = paixing.getZhadanDianShuZuList();
+		List<DanGeZhadanDianShuZu> danGeZhadanDianShuZuList = paixing.getDanGeZhadanDianShuZuList();
 		zhadanDianShuZuList.addAll(danGeZhadanDianShuZuList);
 		List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paixing.getLianXuZhadanDianShuZuList();
 		zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
@@ -335,22 +317,12 @@ public class CaseTest1 {
 
 	private static List<ZhadanDianShuZu> calculateListZhadanDianShuZuWithoutWangDang(int[] dianshuCountArray) {
 		PaiXing paiXing = new PaiXing();
-		// 对子
-		DianShuZuCalculator.calculateDuiziDianShuZu(dianshuCountArray, paiXing);
-		// 三张
-		DianShuZuCalculator.calculateSanzhangDianShuZu(dianshuCountArray, paiXing);
-		// 顺子
-		DianShuZuCalculator.calculateShunziDianShuZu(dianshuCountArray, paiXing);
-		// 连对
-		DianShuZuCalculator.calculateLianduiDianShuZu(dianshuCountArray, paiXing);
-		// 连三张
-		DianShuZuCalculator.calculateLiansanzhangDianShuZu(dianshuCountArray, paiXing);
 		// 普通炸弹
-		DianShuZuCalculator.calculateDanGeZhadanDianShuZu(dianshuCountArray, paiXing);
+		paiXing.setDanGeZhadanDianShuZuList(DianShuZuCalculator.calculateDanGeZhadanDianShuZu(dianshuCountArray));
 		// 连续炸弹
-		DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray, paiXing);
+		paiXing.setLianXuZhadanDianShuZuList(DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray));
 		List<ZhadanDianShuZu> zhadanDianShuZuList = new ArrayList<>();
-		List<DanGeZhadanDianShuZu> danGeZhadanDianShuZuList = paiXing.getZhadanDianShuZuList();
+		List<DanGeZhadanDianShuZu> danGeZhadanDianShuZuList = paiXing.getDanGeZhadanDianShuZuList();
 		zhadanDianShuZuList.addAll(danGeZhadanDianShuZuList);
 		List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paiXing.getLianXuZhadanDianShuZuList();
 		zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
@@ -411,21 +383,13 @@ public class CaseTest1 {
 					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]++;
 				}
 				PaiXing paiXing = new PaiXing();
-				// 对子
-				DianShuZuCalculator.calculateDuiziDianShuZu(dianshuCountArray, paiXing);
-				// 三张
-				DianShuZuCalculator.calculateSanzhangDianShuZu(dianshuCountArray, paiXing);
-				// 顺子
-				DianShuZuCalculator.calculateShunziDianShuZu(dianshuCountArray, paiXing);
-				// 连对
-				DianShuZuCalculator.calculateLianduiDianShuZu(dianshuCountArray, paiXing);
-				// 连三张
-				DianShuZuCalculator.calculateLiansanzhangDianShuZu(dianshuCountArray, paiXing);
 				// 普通炸弹
-				DianShuZuCalculator.calculateDanGeZhadanDianShuZu(dianshuCountArray, paiXing);
+				paiXing.setDanGeZhadanDianShuZuList(
+						DianShuZuCalculator.calculateDanGeZhadanDianShuZu(dianshuCountArray));
 				// 连续炸弹
-				DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray, paiXing);
-				List<DanGeZhadanDianShuZu> danGeZhadanDianShuZuList = paiXing.getZhadanDianShuZuList();
+				paiXing.setLianXuZhadanDianShuZuList(
+						DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray));
+				List<DanGeZhadanDianShuZu> danGeZhadanDianShuZuList = paiXing.getDanGeZhadanDianShuZuList();
 				zhadanDianShuZuList.addAll(danGeZhadanDianShuZuList);
 				List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paiXing.getLianXuZhadanDianShuZuList();
 				zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);

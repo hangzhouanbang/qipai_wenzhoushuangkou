@@ -23,7 +23,7 @@ public class XianshuCalculatorHelper {
 		calculateShiyiXian();
 		calculateShierXian();
 		long endTime = System.currentTimeMillis();
-		System.out.println("线数倍数计算结束:" + (endTime - startTime));
+		System.out.println("线数倍数计算结束:" + (endTime - startTime) + "毫秒");
 	}
 
 	public static Map<String, Integer> getXianshuCountMap() {
@@ -46,7 +46,7 @@ public class XianshuCalculatorHelper {
 	 * 计算四线倍数及贡献分
 	 */
 	private static void calculateSiXian() {
-		// String s = "100010100";
+		// String s = "510000000";
 		// 2
 		xianshuCountMap.put("100000000", 4);
 		gongxianFenCountMap.put("100000000", 0);
@@ -213,9 +213,6 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("001100000", 7);
 		gongxianFenCountMap.put("001100000", 12);
 
-		xianshuCountMap.put("501000000", 7);
-		gongxianFenCountMap.put("501000000", 12);
-
 		xianshuCountMap.put("400100000", 7);
 		gongxianFenCountMap.put("400100000", 12);
 
@@ -249,8 +246,8 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("000010000", 8);
 		gongxianFenCountMap.put("000010000", 16);
 
-		xianshuCountMap.put("001200000", 8);
-		gongxianFenCountMap.put("001200000", 20);
+		xianshuCountMap.put("501000000", 8);
+		gongxianFenCountMap.put("501000000", 16);
 
 		xianshuCountMap.put("210010000", 8);
 		gongxianFenCountMap.put("210010000", 16);
@@ -360,6 +357,9 @@ public class XianshuCalculatorHelper {
 		xianshuCountMap.put("401100000", 8);
 		gongxianFenCountMap.put("401100000", 16);
 
+		xianshuCountMap.put("411000000", 8);
+		gongxianFenCountMap.put("411000000", 16);
+
 		xianshuCountMap.put("021100000", 8);
 		gongxianFenCountMap.put("021100000", 16);
 
@@ -410,6 +410,9 @@ public class XianshuCalculatorHelper {
 
 		xianshuCountMap.put("022000000", 8);
 		gongxianFenCountMap.put("022000000", 20);
+
+		xianshuCountMap.put("001200000", 8);
+		gongxianFenCountMap.put("001200000", 20);
 
 		xianshuCountMap.put("020200000", 8);
 		gongxianFenCountMap.put("020200000", 20);
