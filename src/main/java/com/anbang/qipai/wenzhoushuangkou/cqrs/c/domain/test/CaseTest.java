@@ -68,7 +68,7 @@ public class CaseTest {
 
 	// 所有可打的牌
 	public static void main(String[] args) {
-		int[] dianShuAmountArray = { 1, 1, 1, 1, 1, 2, 4, 4, 3, 2, 1, 1, 1, 2, 2 };
+		int[] dianShuAmountArray = { 0, 2, 3, 4, 2, 3, 2, 1, 2, 1, 1, 2, 0, 2, 2 };
 		long s1 = System.currentTimeMillis();
 		List<DaPaiDianShuSolution> solutionList = new ArrayList<>(
 				generateAllKedaPaiSolutions(dianShuAmountArray.clone()).values());
