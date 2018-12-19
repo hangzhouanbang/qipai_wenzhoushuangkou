@@ -132,7 +132,7 @@ public class WenzhouShuangkouZaDanYaPaiSolutionCalculator implements ZaDanYaPaiS
 			int dawangCount, DianShuZu beiYaDianShuZu, Set<DaPaiDianShuSolution> solutionSet) {
 		// 计算可以当的牌，提高性能
 		List<DianShu> kedangDianShuList = verifyDangFa(dawangCount, dianshuCountArray);
-		if (kedangDianShuList.isEmpty()) {
+		if (!kedangDianShuList.isEmpty()) {
 			// 循环王的各种当法
 			int size = kedangDianShuList.size();
 			int maxZuheCode = (int) Math.pow(size, wangCount);

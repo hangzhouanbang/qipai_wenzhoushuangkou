@@ -23,12 +23,18 @@ public class CaseTest1 {
 	private static BianXingWanFa bx = BianXingWanFa.qianbian;
 
 	public static void main(String[] args) {
-		long s1 = System.currentTimeMillis();
 		XianshuCalculatorHelper.calculateXianshu();
+		long s1 = System.currentTimeMillis();
 		List<int[]> xianshuList = calculateShouPaiTotalGongxianfenForPlayer();
+		long s2 = System.currentTimeMillis();
+		System.out.println("计算手牌线数组合耗时：");
+		System.out.println(s2 - s1 + "ms");
 		WenzhouShuangkouGongxianFen fen = new WenzhouShuangkouGongxianFen();
 		fen.calculateShouPaiXianshu(xianshuList);
 		fen.calculate(renshu);
+		long s3 = System.currentTimeMillis();
+		System.out.println("计算最佳贡献分耗时：");
+		System.out.println(s3 - s2 + "ms");
 		int[] xianshuCountArray = new int[9];
 		xianshuCountArray[0] = fen.getSixian();
 		xianshuCountArray[1] = fen.getWuxian();
@@ -41,7 +47,7 @@ public class CaseTest1 {
 		xianshuCountArray[8] = fen.getShierxian();
 		WenzhouShuangkouXianshuBeishu beishu = new WenzhouShuangkouXianshuBeishu(xianshuCountArray);
 		beishu.calculate();
-		long s2 = System.currentTimeMillis();
+		long s4 = System.currentTimeMillis();
 		System.out.println("最佳线数组合：");
 		for (int i = 0; i < xianshuCountArray.length; i++) {
 			System.out.print(xianshuCountArray[i]);
@@ -52,7 +58,7 @@ public class CaseTest1 {
 		System.out.println("最佳线数组合得分：");
 		System.out.println(fen.getValue());
 		System.out.println("耗时：");
-		System.out.println(s2 - s1 + "ms");
+		System.out.println(s4 - s1 + "ms");
 	}
 
 	// public static void main(String[] args) {

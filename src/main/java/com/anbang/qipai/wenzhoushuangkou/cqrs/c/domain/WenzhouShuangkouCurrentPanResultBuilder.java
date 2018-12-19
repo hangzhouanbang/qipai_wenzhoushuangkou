@@ -48,7 +48,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 				playerTotalScoreMap.put(panPlayerResult.getPlayerId(), panPlayerResult.getTotalScore());
 			}
 		}
-		List<String> playerIds = currentPan.getAllPlayerId();
+		List<String> playerIds = currentPan.findAllPlayerId();
 		XianshuCountDaActionStatisticsListener wenzhouShuangkouListener = ju.getActionStatisticsListenerManager()
 				.findDaListener(XianshuCountDaActionStatisticsListener.class);
 		Map<String, int[]> playerXianshuMap = wenzhouShuangkouListener.getPlayerXianshuMap();
@@ -411,7 +411,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			}
 		}
 		List<WenzhouShuangkouPanPlayerResult> panPlayerResultList = new ArrayList<>();
-		List<String> playerIdList = ju.getCurrentPan().getAllPlayerId();
+		List<String> playerIdList = ju.getCurrentPan().findAllPlayerId();
 		playerIdList.forEach((playerId) -> {
 			WenzhouShuangkouPanPlayerResult playerResult = new WenzhouShuangkouPanPlayerResult();
 			playerResult.setPlayerId(playerId);

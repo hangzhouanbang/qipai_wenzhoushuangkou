@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouZaDanYaPaiSolutionCalculator;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouZhadanComparator;
 import com.dml.puke.pai.DianShu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DanGeZhadanDianShuZu;
@@ -55,8 +56,10 @@ public class CaseTest {
 	// 普通压牌
 	// public static void main(String[] args) {
 	// long s1 = System.currentTimeMillis();
-	// DianShuZu beiYaDianShuZu = new DanzhangDianShuZu(DianShu.qi);
-	// int[] dianShuAmountArray = { 1, 1, 8, 0, 3, 3, 2, 2, 1, 3, 3, 0, 0, 0, 0 };
+	// DianShuZu beiYaDianShuZu = new ShunziDianShuZu(
+	// new DianShu[] { DianShu.san, DianShu.si, DianShu.wu, DianShu.liu, DianShu.qi
+	// });
+	// int[] dianShuAmountArray = { 2, 0, 0, 0, 1, 5, 0, 2, 0, 1, 3, 1, 2, 0, 1 };
 	// List<DaPaiDianShuSolution> solutionList = new ArrayList<>(
 	// calculate(beiYaDianShuZu, dianShuAmountArray.clone()).values());
 	// solutionList.addAll(calculateForZhadan(beiYaDianShuZu,
@@ -66,19 +69,33 @@ public class CaseTest {
 	// System.out.println(s2 - s1 + "ms");
 	// }
 
-	// 所有可打的牌
+	// 普通压牌
 	public static void main(String[] args) {
-		int[] dianShuAmountArray = { 0, 2, 3, 4, 2, 3, 2, 1, 2, 1, 1, 2, 0, 2, 2 };
 		long s1 = System.currentTimeMillis();
-		List<DaPaiDianShuSolution> solutionList = new ArrayList<>(
-				generateAllKedaPaiSolutions(dianShuAmountArray.clone()).values());
+		WenzhouShuangkouZaDanYaPaiSolutionCalculator calculator = new WenzhouShuangkouZaDanYaPaiSolutionCalculator();
+		calculator.setBx(bx);
+		calculator.setZhadanComparator(zhadanComparator);
+		DianShuZu beiYaDianShuZu = new ShunziDianShuZu(
+				new DianShu[] { DianShu.san, DianShu.si, DianShu.wu, DianShu.liu, DianShu.qi });
+		int[] dianShuAmountArray = { 2, 0, 0, 0, 1, 5, 0, 2, 0, 1, 3, 1, 2, 0, 1 };
+		Map<String, DaPaiDianShuSolution> solutionMap = calculator.calculate(beiYaDianShuZu, dianShuAmountArray);
 		long s2 = System.currentTimeMillis();
-		System.out.println("计算打法：" + (s2 - s1) + "毫秒");
-		solutionList = filter(solutionList, dianShuAmountArray, false);
-		long s3 = System.currentTimeMillis();
-		System.out.println("计算提示：" + (s3 - s2) + "毫秒");
-		System.out.println("总耗时：" + (s3 - s1) + "毫秒");
+		System.out.println(s2 - s1 + "ms");
 	}
+
+	// 所有可打的牌
+	// public static void main(String[] args) {
+	// int[] dianShuAmountArray = { 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 5, 4, 4, 2, 2 };
+	// long s1 = System.currentTimeMillis();
+	// List<DaPaiDianShuSolution> solutionList = new ArrayList<>(
+	// generateAllKedaPaiSolutions(dianShuAmountArray.clone()).values());
+	// long s2 = System.currentTimeMillis();
+	// System.out.println("计算打法：" + (s2 - s1) + "毫秒");
+	// solutionList = filter(solutionList, dianShuAmountArray, false);
+	// long s3 = System.currentTimeMillis();
+	// System.out.println("计算提示：" + (s3 - s2) + "毫秒");
+	// System.out.println("总耗时：" + (s3 - s1) + "毫秒");
+	// }
 
 	public static List<DaPaiDianShuSolution> filter(List<DaPaiDianShuSolution> YaPaiSolutions, int[] dianshuCountArray,
 			boolean yapai) {
@@ -1491,7 +1508,7 @@ public class CaseTest {
 					// 连续炸弹
 					paiXing.setLianXuZhadanDianShuZuList(
 							DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray));
-					paiXing = paiXingFilter(paiXing, beiYaDianShuZu);
+					paiXing = paiXingFilterForZhadan(paiXing, beiYaDianShuZu);
 					solutionSet.addAll(DianShuZuCalculator.calculateAllDaPaiDianShuSolutionWithWangDang(paiXing,
 							wangDangPaiArray, dianshuCountArray, bx));
 					// 减去当牌的数量
