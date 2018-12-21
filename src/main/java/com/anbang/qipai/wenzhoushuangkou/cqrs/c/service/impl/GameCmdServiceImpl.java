@@ -91,7 +91,7 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 	public PukeGameValueObject leaveGameByHangup(String playerId) throws Exception {
 		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
 		Game game = gameServer.findGamePlayerPlaying(playerId);
-		PukeGameValueObject pukeGameValueObject = gameServer.leaveByPlayer(playerId);
+		PukeGameValueObject pukeGameValueObject = gameServer.leaveByHangup(playerId);
 		if (game.getState().name().equals(FinishedByVote.name)) {// 有可能离开的时候正在投票，由于离开自动投弃权最终导致游戏结束
 			gameServer.finishGame(game.getId());
 		}

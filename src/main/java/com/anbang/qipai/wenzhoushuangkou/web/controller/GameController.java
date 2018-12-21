@@ -181,7 +181,8 @@ public class GameController {
 						pukeGameValueObject.findPlayerState(otherPlayerId));
 				scopes.remove(QueryScope.panResult);
 				if (pukeGameValueObject.getState().name().equals(VoteNotPassWhenPlaying.name)
-						|| pukeGameValueObject.getState().name().equals(VoteNotPassWhenWaitingNextPan.name)) {
+						|| pukeGameValueObject.getState().name().equals(VoteNotPassWhenWaitingNextPan.name)
+						|| pukeGameValueObject.getState().name().equals(StartChaodi.name)) {
 					scopes.remove(QueryScope.gameFinishVote);
 				}
 				wsNotifier.notifyToQuery(otherPlayerId, scopes);
