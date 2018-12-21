@@ -1,7 +1,13 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo;
 
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.dml.shuangkou.pan.PanActionFrame;
 
+@Document
+@CompoundIndexes({ @CompoundIndex(name = "gameId_1_panNo_1", def = "{'gameId': 1, 'panNo': 1}") })
 public class PanActionFrameDbo {
 
 	private String id;
