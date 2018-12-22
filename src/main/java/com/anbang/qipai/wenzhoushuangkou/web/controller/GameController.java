@@ -35,6 +35,7 @@ import com.anbang.qipai.wenzhoushuangkou.msg.service.WenzhouShuangkouResultMsgSe
 import com.anbang.qipai.wenzhoushuangkou.plan.bean.MemberGoldBalance;
 import com.anbang.qipai.wenzhoushuangkou.plan.service.MemberGoldBalanceService;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.CommonVO;
+import com.anbang.qipai.wenzhoushuangkou.web.vo.GameFinishVoteVO;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.GameVO;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.PanActionFrameVO;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.PanResultVO;
@@ -388,7 +389,7 @@ public class GameController {
 
 		PukeGameValueObject pukeGameValueObject;
 		try {
-			pukeGameValueObject = gameCmdService.finish(playerId);
+			pukeGameValueObject = gameCmdService.finish(playerId, System.currentTimeMillis());
 		} catch (Exception e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getClass().getName());
@@ -482,6 +483,59 @@ public class GameController {
 		return vo;
 	}
 
+	/**
+	 * 投票倒计时结束弃权
+	 */
+	@RequestMapping(value = "/timeover_to_waiver")
+	@ResponseBody
+	public CommonVO timeoverToWaiver(String token) {
+		CommonVO vo = new CommonVO();
+		Map data = new HashMap();
+		vo.setData(data);
+		String playerId = playerAuthService.getPlayerIdByToken(token);
+		if (playerId == null) {
+			vo.setSuccess(false);
+			vo.setMsg("invalid token");
+			return vo;
+		}
+
+		PukeGameValueObject pukeGameValueObject;
+		try {
+			pukeGameValueObject = gameCmdService.voteToFinishByTimeOver(playerId, System.currentTimeMillis());
+		} catch (Exception e) {
+			vo.setSuccess(false);
+			vo.setMsg(e.getClass().getName());
+			return vo;
+		}
+		String gameId = pukeGameValueObject.getId();
+		pukeGameQueryService.voteToFinish(pukeGameValueObject);
+		JuResultDbo juResultDbo = pukePlayQueryService.findJuResultDbo(gameId);
+		// 记录战绩
+		if (juResultDbo != null) {
+			PukeGameDbo pukeGameDbo = pukeGameQueryService.findPukeGameDboById(gameId);
+			PukeHistoricalJuResult juResult = new PukeHistoricalJuResult(juResultDbo, pukeGameDbo);
+			wenzhouShuangkouResultMsgService.recordJuResult(juResult);
+		}
+		if (pukeGameValueObject.getState().name().equals(FinishedByVote.name)
+				|| pukeGameValueObject.getState().name().equals(Canceled.name)) {
+			gameMsgService.gameFinished(gameId);
+		}
+		data.put("queryScope", QueryScope.gameFinishVote);
+		// 通知其他人来查询投票情况
+		for (String otherPlayerId : pukeGameValueObject.allPlayerIds()) {
+			if (!otherPlayerId.equals(playerId)) {
+				GamePlayerOnlineState onlineState = pukeGameValueObject.findPlayerOnlineState(otherPlayerId);
+				if (onlineState.equals(GamePlayerOnlineState.online)) {
+					List<QueryScope> scopes = QueryScope.scopesForState(pukeGameValueObject.getState(),
+							pukeGameValueObject.findPlayerState(otherPlayerId));
+					scopes.remove(QueryScope.panResult);
+					wsNotifier.notifyToQuery(otherPlayerId, scopes);
+				}
+			}
+		}
+		return vo;
+	}
+
 	@RequestMapping(value = "/finish_vote_info")
 	@ResponseBody
 	public CommonVO finishvoteinfo(String gameId) {
@@ -489,7 +543,7 @@ public class GameController {
 		CommonVO vo = new CommonVO();
 		GameFinishVoteDbo gameFinishVoteDbo = pukeGameQueryService.findGameFinishVoteDbo(gameId);
 		Map data = new HashMap();
-		data.put("vote", gameFinishVoteDbo.getVote());
+		data.put("vote", new GameFinishVoteVO(gameFinishVoteDbo.getVote()));
 		vo.setData(data);
 		return vo;
 

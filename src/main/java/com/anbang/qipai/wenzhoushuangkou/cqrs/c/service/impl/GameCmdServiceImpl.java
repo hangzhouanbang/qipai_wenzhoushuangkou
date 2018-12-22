@@ -120,7 +120,7 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 	}
 
 	@Override
-	public PukeGameValueObject finish(String playerId) throws Exception {
+	public PukeGameValueObject finish(String playerId, Long currentTime) throws Exception {
 		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
 		PukeGame pukeGame = (PukeGame) gameServer.findGamePlayerPlaying(playerId);
 		// 在准备阶段不会发起投票
@@ -133,7 +133,7 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 				pukeGame.quit(playerId);
 			}
 		} else {
-			pukeGame.launchVoteToFinish(playerId, new MostPlayersWinVoteCalculator());
+			pukeGame.launchVoteToFinish(playerId, new MostPlayersWinVoteCalculator(), currentTime, 15000);
 			pukeGame.voteToFinish(playerId, VoteOption.yes);
 		}
 
@@ -185,6 +185,18 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 	public void bindPlayer(String playerId, String gameId) {
 		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
 		gameServer.bindPlayer(playerId, gameId);
+	}
+
+	@Override
+	public PukeGameValueObject voteToFinishByTimeOver(String playerId, Long currentTime) throws Exception {
+		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
+		PukeGame pukeGame = (PukeGame) gameServer.findGamePlayerPlaying(playerId);
+		pukeGame.voteToFinishByTimeOver(currentTime);
+
+		if (pukeGame.getState().name().equals(FinishedByVote.name)) {
+			gameServer.finishGame(pukeGame.getId());
+		}
+		return new PukeGameValueObject(pukeGame);
 	}
 
 }
