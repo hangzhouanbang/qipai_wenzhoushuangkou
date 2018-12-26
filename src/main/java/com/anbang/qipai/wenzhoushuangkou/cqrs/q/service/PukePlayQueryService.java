@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.GameInfoPlayerViewFilter;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PanActionFramePlayerViewFilter;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ChaodiResult;
@@ -18,16 +19,20 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.StartChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.VoteNotPassWhenChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.VotingWhenChaodi;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.GameLatestPanActionFrameDboDao;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.GameLatestPukeGameInfoDboDao;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.JuResultDboDao;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.PanActionFrameDboDao;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.PanResultDboDao;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.PukeGameDboDao;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.PukeGameInfoDboDao;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.PukeGamePlayerChaodiDboDao;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.GameLatestPanActionFrameDbo;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.GameLatestPukeGameInfoDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.JuResultDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PanActionFrameDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PanResultDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameDbo;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameInfoDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGamePlayerChaodiDbo;
 import com.anbang.qipai.wenzhoushuangkou.plan.bean.PlayerInfo;
 import com.anbang.qipai.wenzhoushuangkou.plan.dao.PlayerInfoDao;
@@ -55,12 +60,20 @@ public class PukePlayQueryService {
 	private PanActionFrameDboDao panActionFrameDboDao;
 
 	@Autowired
+	private PukeGameInfoDboDao pukeGameInfoDboDao;
+
+	@Autowired
 	private GameLatestPanActionFrameDboDao gameLatestPanActionFrameDboDao;
+
+	@Autowired
+	private GameLatestPukeGameInfoDboDao gameLatestPukeGameInfoDboDao;
 
 	@Autowired
 	private PukeGamePlayerChaodiDboDao pukeGamePlayerChaodiDboDao;
 
 	private PanActionFramePlayerViewFilter pvFilter = new PanActionFramePlayerViewFilter();
+
+	private GameInfoPlayerViewFilter gvFilter = new GameInfoPlayerViewFilter();
 
 	public PanActionFrame findAndFilterCurrentPanValueObjectForPlayer(String gameId, String playerId) throws Exception {
 		PukeGameDbo pukeGameDbo = pukeGameDboDao.findById(gameId);
@@ -76,6 +89,22 @@ public class PukePlayQueryService {
 		GameLatestPanActionFrameDbo frame = gameLatestPanActionFrameDboDao.findById(gameId);
 		PanActionFrame panActionFrame = pvFilter.filter(frame, playerId, pukeGameDbo.isShuangming());
 		return panActionFrame;
+	}
+
+	public PukeGameInfoDbo findAndFilterCurrentGameInfoForPlayer(String gameId, String playerId) throws Exception {
+		PukeGameDbo pukeGameDbo = pukeGameDboDao.findById(gameId);
+		if (!(pukeGameDbo.getState().name().equals(Playing.name)
+				|| pukeGameDbo.getState().name().equals(VotingWhenPlaying.name)
+				|| pukeGameDbo.getState().name().equals(VoteNotPassWhenPlaying.name)
+				|| pukeGameDbo.getState().name().equals(StartChaodi.name)
+				|| pukeGameDbo.getState().name().equals(VotingWhenChaodi.name)
+				|| pukeGameDbo.getState().name().equals(VoteNotPassWhenChaodi.name))) {
+			throw new Exception("game not playing");
+		}
+
+		GameLatestPukeGameInfoDbo info = gameLatestPukeGameInfoDboDao.findById(gameId);
+		PukeGameInfoDbo pukeGameInfoDbo = gvFilter.filter(playerId, info);
+		return pukeGameInfoDbo;
 	}
 
 	public void readyForGame(ReadyForGameResult readyForGameResult) throws Throwable {
@@ -103,6 +132,10 @@ public class PukePlayQueryService {
 			PanActionFrameDbo panActionFrameDbo = new PanActionFrameDbo(gameId, panNo, actionNo);
 			panActionFrameDbo.setPanActionFrame(panActionFrame);
 			panActionFrameDboDao.save(panActionFrameDbo);
+
+			PukeGameInfoDbo pukeGameInfoDbo = new PukeGameInfoDbo(pukeGame, playerInfoMap, actionNo);
+			gameLatestPukeGameInfoDboDao.save(gameId, pukeGameInfoDbo);
+			pukeGameInfoDboDao.save(pukeGameInfoDbo);
 		}
 	}
 
@@ -123,6 +156,10 @@ public class PukePlayQueryService {
 		PanActionFrameDbo panActionFrameDbo = new PanActionFrameDbo(gameId, panNo, actionNo);
 		panActionFrameDbo.setPanActionFrame(panActionFrame);
 		panActionFrameDboDao.save(panActionFrameDbo);
+
+		PukeGameInfoDbo pukeGameInfoDbo = new PukeGameInfoDbo(pukeGame, playerInfoMap, actionNo);
+		gameLatestPukeGameInfoDboDao.save(gameId, pukeGameInfoDbo);
+		pukeGameInfoDboDao.save(pukeGameInfoDbo);
 		// 盘出结果的话要记录结果
 		WenzhouShuangkouPanResult wenzhouShuangkouPanResult = pukeActionResult.getPanResult();
 		if (wenzhouShuangkouPanResult != null) {
@@ -156,6 +193,10 @@ public class PukePlayQueryService {
 			PanActionFrameDbo panActionFrameDbo = new PanActionFrameDbo(gameId, panNo, actionNo);
 			panActionFrameDbo.setPanActionFrame(panActionFrame);
 			panActionFrameDboDao.save(panActionFrameDbo);
+
+			PukeGameInfoDbo pukeGameInfoDbo = new PukeGameInfoDbo(pukeGame, playerInfoMap, actionNo);
+			gameLatestPukeGameInfoDboDao.save(gameId, pukeGameInfoDbo);
+			pukeGameInfoDboDao.save(pukeGameInfoDbo);
 		}
 		// 盘出结果的话要记录结果
 		WenzhouShuangkouPanResult wenzhouShuangkouPanResult = chaodiResult.getPanResult();
@@ -196,6 +237,10 @@ public class PukePlayQueryService {
 			PanActionFrameDbo panActionFrameDbo = new PanActionFrameDbo(gameId, panNo, actionNo);
 			panActionFrameDbo.setPanActionFrame(readyToNextPanResult.getFirstActionFrame());
 			panActionFrameDboDao.save(panActionFrameDbo);
+
+			PukeGameInfoDbo pukeGameInfoDbo = new PukeGameInfoDbo(pukeGame, playerInfoMap, actionNo);
+			gameLatestPukeGameInfoDboDao.save(gameId, pukeGameInfoDbo);
+			pukeGameInfoDboDao.save(pukeGameInfoDbo);
 		}
 
 	}
@@ -218,5 +263,9 @@ public class PukePlayQueryService {
 
 	public List<PanActionFrameDbo> findPanActionFrameDboForBackPlay(String gameId, int panNo) {
 		return panActionFrameDboDao.findByGameIdAndPanNo(gameId, panNo);
+	}
+
+	public List<PukeGameInfoDbo> findGameInfoDboForBackPlay(String gameId, int panNo) {
+		return pukeGameInfoDboDao.findByGameIdAndPanNo(gameId, panNo);
 	}
 }

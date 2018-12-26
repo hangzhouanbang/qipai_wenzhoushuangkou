@@ -25,7 +25,6 @@ public class PukeGameDbo {
 	private GameState state;// 原来是 waitingStart, playing, waitingNextPan, finished
 	private int panNo;
 	private List<PukeGamePlayerDbo> players;
-	private List<String> chaodiPlayerIdList;
 
 	public PukeGameDbo() {
 	}
@@ -42,14 +41,8 @@ public class PukeGameDbo {
 		fapai = pukeGame.getFapai();
 		state = pukeGame.getState();
 		panNo = pukeGame.getPanNo();
-		chaodiPlayerIdList = new ArrayList<>(pukeGame.getChaodiPlayerIdList());
 		players = new ArrayList<>();
 		Map<String, Integer> playeTotalScoreMap = pukeGame.getPlayeTotalScoreMap();
-		Map<String, Integer> playerMaxXianshuMap = pukeGame.getPlayerMaxXianshuMap();
-		Map<String, Integer> playerOtherMaxXianshuMap = pukeGame.getPlayerOtherMaxXianshuMap();
-		Map<String, Integer> playeGongxianfenMap = pukeGame.getPlayeGongxianfenMap();
-		Map<String, Integer> playeTotalGongxianfenMap = pukeGame.getPlayeTotalGongxianfenMap();
-		Map<String, Integer> playerMingciMap = pukeGame.getPlayerMingciMap();
 		for (GamePlayerValueObject playerValueObject : pukeGame.getPlayers()) {
 			String playerId = playerValueObject.getId();
 			PlayerInfo playerInfo = playerInfoMap.get(playerId);
@@ -60,24 +53,8 @@ public class PukeGameDbo {
 			playerDbo.setOnlineState(playerValueObject.getOnlineState());
 			playerDbo.setPlayerId(playerId);
 			playerDbo.setState(playerValueObject.getState());
-			if (playerMingciMap.get(playerId) != null) {
-				playerDbo.setMingci(playerMingciMap.get(playerId));
-				playerDbo.setNopai(true);
-			}
 			if (playeTotalScoreMap.get(playerId) != null) {
 				playerDbo.setTotalScore(playeTotalScoreMap.get(playerId));
-			}
-			if (playeGongxianfenMap.get(playerId) != null) {
-				playerDbo.setGongxianfen(playeGongxianfenMap.get(playerId));
-			}
-			if (playeTotalGongxianfenMap.get(playerId) != null) {
-				playerDbo.setTotalGongxianfen(playeTotalGongxianfenMap.get(playerId));
-			}
-			if (playerMaxXianshuMap.get(playerId) != null) {
-				playerDbo.setMaxXianshu(playerMaxXianshuMap.get(playerId));
-			}
-			if (playerOtherMaxXianshuMap.get(playerId) != null) {
-				playerDbo.setOtherMaxXianshu(playerOtherMaxXianshuMap.get(playerId));
 			}
 			players.add(playerDbo);
 		}
@@ -91,14 +68,6 @@ public class PukeGameDbo {
 			}
 		}
 		return null;
-	}
-
-	public List<String> getChaodiPlayerIdList() {
-		return chaodiPlayerIdList;
-	}
-
-	public void setChaodiPlayerIdList(List<String> chaodiPlayerIdList) {
-		this.chaodiPlayerIdList = chaodiPlayerIdList;
 	}
 
 	public String getId() {

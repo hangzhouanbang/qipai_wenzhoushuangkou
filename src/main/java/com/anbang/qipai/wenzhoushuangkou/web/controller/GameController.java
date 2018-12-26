@@ -24,6 +24,7 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.JuResultDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PanActionFrameDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PanResultDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameDbo;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameInfoDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGamePlayerChaodiDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGamePlayerDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.service.PukeGameQueryService;
@@ -615,6 +616,7 @@ public class GameController {
 			frame.getPanActionFrame().getPanAfterAction().getPaiListValueObject().setPaiList(null);
 			frameVOList.add(new PanActionFrameVO(frame.getPanActionFrame()));
 		}
+		List<PukeGameInfoDbo> infos = pukePlayQueryService.findGameInfoDboForBackPlay(gameId, panNo);
 		PukeGameDbo pukeGameDbo = pukeGameQueryService.findPukeGameDboById(gameId);
 		pukeGameDbo.setPanNo(panNo);
 		GameVO gameVO = new GameVO(pukeGameDbo);
@@ -629,6 +631,7 @@ public class GameController {
 		data.put("chaodiState", playerChaodiStateMap);
 		data.put("game", gameVO);
 		data.put("framelist", frameVOList);
+		data.put("infos", infos);
 		return vo;
 	}
 

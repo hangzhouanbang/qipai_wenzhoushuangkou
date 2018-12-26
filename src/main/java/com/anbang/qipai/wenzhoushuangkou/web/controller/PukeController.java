@@ -20,6 +20,7 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.PukePlayCmdService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.JuResultDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PanResultDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameDbo;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameInfoDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.service.PukeGameQueryService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.service.PukePlayQueryService;
 import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.PukeHistoricalJuResult;
@@ -27,6 +28,7 @@ import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.PukeHistoricalPanResult;
 import com.anbang.qipai.wenzhoushuangkou.msg.service.WenzhouShuangkouGameMsgService;
 import com.anbang.qipai.wenzhoushuangkou.msg.service.WenzhouShuangkouResultMsgService;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.CommonVO;
+import com.anbang.qipai.wenzhoushuangkou.web.vo.GameInfoVO;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.JuResultVO;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.PanActionFrameVO;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.PanResultVO;
@@ -79,14 +81,17 @@ public class PukeController {
 			return vo;
 		}
 		PanActionFrame panActionFrame;
+		PukeGameInfoDbo pukeGameInfoDbo;
 		try {
 			panActionFrame = pukePlayQueryService.findAndFilterCurrentPanValueObjectForPlayer(gameId, playerId);
+			pukeGameInfoDbo = pukePlayQueryService.findAndFilterCurrentGameInfoForPlayer(gameId, playerId);
 		} catch (Exception e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getMessage());
 			return vo;
 		}
 		data.put("panActionFrame", new PanActionFrameVO(panActionFrame));
+		data.put("gameInfo", new GameInfoVO(pukeGameInfoDbo));
 		return vo;
 	}
 

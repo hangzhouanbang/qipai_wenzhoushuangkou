@@ -28,12 +28,6 @@ public class PukeGamePlayerVO {
 	private String state;
 	private String onlineState;
 	private int totalScore;
-	private int gongxianfen;
-	private int maxXianshu;
-	private int otherMaxXianshu;
-	private int totalGongxianfen;
-	private boolean nopai;
-	private int mingci;
 
 	public PukeGamePlayerVO(PukeGamePlayerDbo dbo) {
 		playerId = dbo.getPlayerId();
@@ -42,12 +36,6 @@ public class PukeGamePlayerVO {
 		headimgurl = dbo.getHeadimgurl();
 		onlineState = dbo.getOnlineState().name();
 		totalScore = dbo.getTotalScore();
-		gongxianfen = dbo.getGongxianfen();
-		totalGongxianfen = dbo.getTotalGongxianfen();
-		maxXianshu = dbo.getMaxXianshu();
-		otherMaxXianshu = dbo.getOtherMaxXianshu();
-		nopai = dbo.isNopai();
-		mingci = dbo.getMingci();
 		String sn = dbo.getState().name();
 		if (sn.equals(PlayerFinished.name)) {
 			state = "finished";
@@ -89,22 +77,6 @@ public class PukeGamePlayerVO {
 		}
 	}
 
-	public boolean isNopai() {
-		return nopai;
-	}
-
-	public void setNopai(boolean nopai) {
-		this.nopai = nopai;
-	}
-
-	public int getMingci() {
-		return mingci;
-	}
-
-	public void setMingci(int mingci) {
-		this.mingci = mingci;
-	}
-
 	public String getPlayerId() {
 		return playerId;
 	}
@@ -113,36 +85,20 @@ public class PukeGamePlayerVO {
 		this.playerId = playerId;
 	}
 
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public int getGongxianfen() {
-		return gongxianfen;
-	}
-
-	public void setGongxianfen(int gongxianfen) {
-		this.gongxianfen = gongxianfen;
-	}
-
-	public int getTotalGongxianfen() {
-		return totalGongxianfen;
-	}
-
-	public void setTotalGongxianfen(int totalGongxianfen) {
-		this.totalGongxianfen = totalGongxianfen;
-	}
-
 	public String getNickname() {
 		return nickname;
 	}
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	public String getHeadimgurl() {
@@ -175,22 +131,6 @@ public class PukeGamePlayerVO {
 
 	public void setTotalScore(int totalScore) {
 		this.totalScore = totalScore;
-	}
-
-	public int getMaxXianshu() {
-		return maxXianshu;
-	}
-
-	public void setMaxXianshu(int maxXianshu) {
-		this.maxXianshu = maxXianshu;
-	}
-
-	public int getOtherMaxXianshu() {
-		return otherMaxXianshu;
-	}
-
-	public void setOtherMaxXianshu(int otherMaxXianshu) {
-		this.otherMaxXianshu = otherMaxXianshu;
 	}
 
 }

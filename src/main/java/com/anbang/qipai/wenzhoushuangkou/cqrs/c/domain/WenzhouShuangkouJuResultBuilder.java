@@ -33,13 +33,13 @@ public class WenzhouShuangkouJuResultBuilder implements JuResultBuilder {
 						juPlayerResultMap.put(panPlayerResult.getPlayerId(), juPlayerResult);
 					}
 					WenzhouShuangkouMingcifen mingcifen = panPlayerResult.getMingcifen();
-					if (mingcifen.isShuangkou()) {
+					if (mingcifen.isYing() && mingcifen.isShuangkou()) {
 						juPlayerResult.increaseShuangkouCount();
 					}
-					if (mingcifen.isDankou()) {
+					if (mingcifen.isYing() && mingcifen.isDankou()) {
 						juPlayerResult.increaseDankouCount();
 					}
-					if (mingcifen.isPingkou()) {
+					if (mingcifen.isYing() && mingcifen.isPingkou()) {
 						juPlayerResult.increasePingkouCount();
 					}
 					juPlayerResult.tryAndUpdateMaxXianshu(panPlayerResult.getXianshubeishu());
