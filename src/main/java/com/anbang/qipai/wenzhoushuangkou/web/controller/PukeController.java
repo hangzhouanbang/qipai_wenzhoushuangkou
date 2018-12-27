@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,6 +63,8 @@ public class PukeController {
 
 	@Autowired
 	private GamePlayWsNotifier wsNotifier;
+
+	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	/**
 	 * 当前盘我应该看到的所有信息
@@ -131,6 +135,9 @@ public class PukeController {
 	@RequestMapping(value = "/chaodi")
 	@ResponseBody
 	public CommonVO chaodi(String token, boolean chaodi) {
+		long startTime = System.currentTimeMillis();
+		logger.info("chaodi");
+		logger.info("startTime:" + startTime);
 		CommonVO vo = new CommonVO();
 		Map data = new HashMap();
 		List<String> queryScopes = new ArrayList<>();
@@ -140,6 +147,12 @@ public class PukeController {
 		if (playerId == null) {
 			vo.setSuccess(false);
 			vo.setMsg("invalid token");
+			logger.info("playerId:" + playerId);
+			logger.info("chaodi:" + chaodi);
+			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
+			long endTime = System.currentTimeMillis();
+			logger.info("endTime:" + endTime);
+			logger.info("use:" + (endTime - startTime) + "ms");
 			return vo;
 		}
 
@@ -149,6 +162,12 @@ public class PukeController {
 		} catch (Exception e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getClass().getName());
+			logger.info("playerId:" + playerId);
+			logger.info("chaodi:" + chaodi);
+			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
+			long endTime = System.currentTimeMillis();
+			logger.info("endTime:" + endTime);
+			logger.info("use:" + (endTime - startTime) + "ms");
 			return vo;
 		}
 		try {
@@ -156,6 +175,12 @@ public class PukeController {
 		} catch (Throwable e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getMessage());
+			logger.info("playerId:" + playerId);
+			logger.info("chaodi:" + chaodi);
+			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
+			long endTime = System.currentTimeMillis();
+			logger.info("endTime:" + endTime);
+			logger.info("use:" + (endTime - startTime) + "ms");
 			return vo;
 		}
 
@@ -196,12 +221,21 @@ public class PukeController {
 						chaodiResult.getPukeGame().findPlayerState(otherPlayerId)));
 			}
 		}
+		logger.info("playerId:" + playerId);
+		logger.info("chaodi:" + chaodi);
+		logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
+		long endTime = System.currentTimeMillis();
+		logger.info("endTime:" + endTime);
+		logger.info("use:" + (endTime - startTime) + "ms");
 		return vo;
 	}
 
 	@RequestMapping(value = "/da")
 	@ResponseBody
 	public CommonVO da(String token, @RequestBody List<Integer> paiIds, String dianshuZuheIdx) {
+		long startTime = System.currentTimeMillis();
+		logger.info("da");
+		logger.info("startTime:" + startTime);
 		CommonVO vo = new CommonVO();
 		Map data = new HashMap();
 		List<String> queryScopes = new ArrayList<>();
@@ -211,6 +245,13 @@ public class PukeController {
 		if (playerId == null) {
 			vo.setSuccess(false);
 			vo.setMsg("invalid token");
+			logger.info("playerId:" + playerId);
+			logger.info("paiIds:" + paiIds);
+			logger.info("dianshuZuheIdx:" + dianshuZuheIdx);
+			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
+			long endTime = System.currentTimeMillis();
+			logger.info("endTime:" + endTime);
+			logger.info("use:" + (endTime - startTime) + "ms");
 			return vo;
 		}
 
@@ -220,6 +261,13 @@ public class PukeController {
 		} catch (Exception e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getClass().getName());
+			logger.info("playerId:" + playerId);
+			logger.info("paiIds:" + paiIds);
+			logger.info("dianshuZuheIdx:" + dianshuZuheIdx);
+			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
+			long endTime = System.currentTimeMillis();
+			logger.info("endTime:" + endTime);
+			logger.info("use:" + (endTime - startTime) + "ms");
 			return vo;
 		}
 		try {
@@ -227,6 +275,13 @@ public class PukeController {
 		} catch (Throwable e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getMessage());
+			logger.info("playerId:" + playerId);
+			logger.info("paiIds:" + paiIds);
+			logger.info("dianshuZuheIdx:" + dianshuZuheIdx);
+			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
+			long endTime = System.currentTimeMillis();
+			logger.info("endTime:" + endTime);
+			logger.info("use:" + (endTime - startTime) + "ms");
 			return vo;
 		}
 
@@ -262,12 +317,22 @@ public class PukeController {
 								pukeActionResult.getPukeGame().findPlayerState(otherPlayerId)));
 			}
 		}
+		logger.info("playerId:" + playerId);
+		logger.info("paiIds:" + paiIds);
+		logger.info("dianshuZuheIdx:" + dianshuZuheIdx);
+		logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
+		long endTime = System.currentTimeMillis();
+		logger.info("endTime:" + endTime);
+		logger.info("use:" + (endTime - startTime) + "ms");
 		return vo;
 	}
 
 	@RequestMapping(value = "/guo")
 	@ResponseBody
 	public CommonVO guo(String token) {
+		long startTime = System.currentTimeMillis();
+		logger.info("guo");
+		logger.info("startTime:" + startTime);
 		CommonVO vo = new CommonVO();
 		Map data = new HashMap();
 		List<String> queryScopes = new ArrayList<>();
@@ -277,6 +342,11 @@ public class PukeController {
 		if (playerId == null) {
 			vo.setSuccess(false);
 			vo.setMsg("invalid token");
+			logger.info("playerId:" + playerId);
+			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
+			long endTime = System.currentTimeMillis();
+			logger.info("endTime:" + endTime);
+			logger.info("use:" + (endTime - startTime) + "ms");
 			return vo;
 		}
 
@@ -286,6 +356,11 @@ public class PukeController {
 		} catch (Exception e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getClass().getName());
+			logger.info("playerId:" + playerId);
+			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
+			long endTime = System.currentTimeMillis();
+			logger.info("endTime:" + endTime);
+			logger.info("use:" + (endTime - startTime) + "ms");
 			return vo;
 		}
 		try {
@@ -293,6 +368,11 @@ public class PukeController {
 		} catch (Throwable e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getMessage());
+			logger.info("playerId:" + playerId);
+			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
+			long endTime = System.currentTimeMillis();
+			logger.info("endTime:" + endTime);
+			logger.info("use:" + (endTime - startTime) + "ms");
 			return vo;
 		}
 
@@ -307,6 +387,11 @@ public class PukeController {
 								pukeActionResult.getPukeGame().findPlayerState(otherPlayerId)));
 			}
 		}
+		logger.info("playerId:" + playerId);
+		logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
+		long endTime = System.currentTimeMillis();
+		logger.info("endTime:" + endTime);
+		logger.info("use:" + (endTime - startTime) + "ms");
 		return vo;
 	}
 

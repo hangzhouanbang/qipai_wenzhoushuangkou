@@ -87,3 +87,6 @@ server:
 filepath:
   snapshotFileBasePath: /data/app/qipai_wenzhoushuangkou/server1/snapshot
   jFileBasePath: /data/app/qipai_wenzhoushuangkou/server1/journal
+  
+logging:
+  config: classpath:spring-log.xml
