@@ -132,7 +132,7 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 				pukeGame.quit(playerId);
 			}
 		} else {
-			pukeGame.launchVoteToFinish(playerId, new MostPlayersWinVoteCalculator(), currentTime, 15000);
+			pukeGame.launchVoteToFinish(playerId, new MostPlayersWinVoteCalculator(), currentTime, 99000);
 			pukeGame.voteToFinish(playerId, VoteOption.yes);
 		}
 
