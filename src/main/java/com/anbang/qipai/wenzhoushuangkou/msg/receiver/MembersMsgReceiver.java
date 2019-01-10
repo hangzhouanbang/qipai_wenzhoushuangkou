@@ -26,6 +26,9 @@ public class MembersMsgReceiver {
 		if ("newMember".equals(msg)) {
 			playerInfoService.save(playerInfo);
 		}
+		if ("update member info".equals(msg)) {
+			playerInfoService.save(playerInfo);
+		}
 	}
 
 }
