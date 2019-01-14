@@ -33,6 +33,7 @@ import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.PukeHistoricalJuResult;
 import com.anbang.qipai.wenzhoushuangkou.msg.service.MemberGoldsMsgService;
 import com.anbang.qipai.wenzhoushuangkou.msg.service.WenzhouShuangkouGameMsgService;
 import com.anbang.qipai.wenzhoushuangkou.msg.service.WenzhouShuangkouResultMsgService;
+import com.anbang.qipai.wenzhoushuangkou.msg.service.WiseCrackMsgServcie;
 import com.anbang.qipai.wenzhoushuangkou.plan.bean.MemberGoldBalance;
 import com.anbang.qipai.wenzhoushuangkou.plan.service.MemberGoldBalanceService;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.CommonVO;
@@ -82,6 +83,9 @@ public class GameController {
 
 	@Autowired
 	private WenzhouShuangkouResultMsgService wenzhouShuangkouResultMsgService;
+
+	@Autowired
+	private WiseCrackMsgServcie wiseCrackMsgServcie;
 
 	/**
 	 * 新一局游戏
@@ -584,6 +588,7 @@ public class GameController {
 					wsNotifier.notifyToListenWisecrack(otherPlayer.getPlayerId(), ordinal, playerId);
 				}
 			}
+			wiseCrackMsgServcie.wisecrack(playerId);
 			vo.setSuccess(true);
 			return vo;
 		}
@@ -596,6 +601,7 @@ public class GameController {
 					wsNotifier.notifyToListenWisecrack(otherPlayer.getPlayerId(), ordinal, playerId);
 				}
 			}
+			wiseCrackMsgServcie.wisecrack(playerId);
 			vo.setSuccess(true);
 			return vo;
 		}
