@@ -366,7 +366,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 			int dawangCount) {
 		int bestScore = 0;
 		// 计算王可以当哪些牌，提高性能
-		List<DianShu> kedangDianShuList = verifyDangFa(dawangCount, dianshuCountArray);
+		List<DianShu> kedangDianShuList = verifyDangFa(wangCount, dianshuCountArray);
 		// 循环王的各种当法
 		if (kedangDianShuList.isEmpty()) {
 			return bestScore;
