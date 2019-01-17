@@ -288,7 +288,10 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		int xiaowangCount = dianshuCountArray[13];
 		int dawangCount = dianshuCountArray[14];
 		if (xiaowangCount + dawangCount == 4) {// 有天王炸
-			int score1 = calculatePaiXingWithWangDang(1, dianshuCountArray, xiaowangCount, dawangCount);
+			int[] dianshuAmountArray = dianshuCountArray.clone();
+			dianshuAmountArray[13] = 0;
+			dianshuAmountArray[14] = 1;
+			int score1 = calculatePaiXingWithWangDang(1, dianshuAmountArray, 0, 1);
 			score1 += 4;
 			if (score1 > bestScore) {
 				bestScore = score1;

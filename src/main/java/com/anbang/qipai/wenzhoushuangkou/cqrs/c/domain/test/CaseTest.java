@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouZaDanYaPaiSolutionCalculator;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouZhadanComparator;
 import com.dml.puke.pai.DianShu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DanGeZhadanDianShuZu;
@@ -44,14 +43,22 @@ public class CaseTest {
 	private static LianXuDianShuZuComparator lianXuDianShuZuComparator = new TongDengLianXuDianShuZuComparator();
 
 	// 炸弹压牌
-	// public static void main(String[] args) {
-	// DianShuZu beiYaDianShuZu = new DuiziDianShuZu(DianShu.Q);
-	// int[] dianShuAmountArray = { 1, 2, 0, 3, 3, 0, 3, 0, 4, 5, 3, 0, 0, 2, 1 };
-	// List<DaPaiDianShuSolution> solutionList = new ArrayList<>(
-	// calculateForZhadan(beiYaDianShuZu, dianShuAmountArray).values());
-	// solutionList = filter(solutionList, dianShuAmountArray.clone(), true);
-	// System.out.println(solutionList);
-	// }
+	public static void main(String[] args) {
+		// DianShuZu beiYaDianShuZu = new DuiziDianShuZu(DianShu.Q);
+		int[] dianShuAmountArray = { 4, 4, 4, 3, 2, 0, 1, 2, 2, 0, 0, 1, 4, 1, 1 };
+		// List<DaPaiDianShuSolution> solutionList = new ArrayList<>(
+		// calculateForZhadan(beiYaDianShuZu, dianShuAmountArray).values());
+		// solutionList = filter(solutionList, dianShuAmountArray.clone(), true);
+		DianShu[] lianXuDianShuArray = { DianShu.er, DianShu.san, DianShu.si, DianShu.wu };
+		int[] lianXuDianShuSizeArray = { 4, 4, 4, 4, 0, 0, 0, 0 };
+		// LianXuZhadanDianShuZu lianXuZhadanDianShuZu =
+		List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = DianShuZuCalculator
+				.calculateLianXuZhadanDianShuZu(dianShuAmountArray);
+		// new LianXuZhadanDianShuZu(lianXuDianShuArray,
+		// lianXuDianShuSizeArray);
+		// int xianshu = lianXuZhadanDianShuZu.getXianShu();
+		System.out.println(lianXuZhadanDianShuZuList);
+	}
 
 	// 普通压牌
 	// public static void main(String[] args) {
@@ -70,18 +77,21 @@ public class CaseTest {
 	// }
 
 	// 普通压牌
-	public static void main(String[] args) {
-		long s1 = System.currentTimeMillis();
-		WenzhouShuangkouZaDanYaPaiSolutionCalculator calculator = new WenzhouShuangkouZaDanYaPaiSolutionCalculator();
-		calculator.setBx(bx);
-		calculator.setZhadanComparator(zhadanComparator);
-		DianShuZu beiYaDianShuZu = new ShunziDianShuZu(
-				new DianShu[] { DianShu.san, DianShu.si, DianShu.wu, DianShu.liu, DianShu.qi });
-		int[] dianShuAmountArray = { 2, 0, 0, 0, 1, 5, 0, 2, 0, 1, 3, 1, 2, 0, 1 };
-		Map<String, DaPaiDianShuSolution> solutionMap = calculator.calculate(beiYaDianShuZu, dianShuAmountArray);
-		long s2 = System.currentTimeMillis();
-		System.out.println(s2 - s1 + "ms");
-	}
+	// public static void main(String[] args) {
+	// long s1 = System.currentTimeMillis();
+	// WenzhouShuangkouZaDanYaPaiSolutionCalculator calculator = new
+	// WenzhouShuangkouZaDanYaPaiSolutionCalculator();
+	// calculator.setBx(bx);
+	// calculator.setZhadanComparator(zhadanComparator);
+	// DianShuZu beiYaDianShuZu = new ShunziDianShuZu(
+	// new DianShu[] { DianShu.san, DianShu.si, DianShu.wu, DianShu.liu, DianShu.qi
+	// });
+	// int[] dianShuAmountArray = { 2, 0, 0, 0, 1, 5, 0, 2, 0, 1, 3, 1, 2, 0, 1 };
+	// Map<String, DaPaiDianShuSolution> solutionMap =
+	// calculator.calculate(beiYaDianShuZu, dianShuAmountArray);
+	// long s2 = System.currentTimeMillis();
+	// System.out.println(s2 - s1 + "ms");
+	// }
 
 	// 所有可打的牌
 	// public static void main(String[] args) {

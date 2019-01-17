@@ -20,7 +20,7 @@ import com.dml.shuangkou.wanfa.BianXingWanFa;
 
 public class CaseTest1 {
 	private static int renshu = 4;
-	private static BianXingWanFa bx = BianXingWanFa.qianbian;
+	private static BianXingWanFa bx = BianXingWanFa.banqianbian;
 
 	public static void main(String[] args) {
 		XianshuCalculatorHelper.calculateXianshu();
@@ -91,12 +91,15 @@ public class CaseTest1 {
 	// }
 
 	private static List<int[]> calculateShouPaiTotalGongxianfenForPlayer() {
-		int[] dianshuCountArray = { 0, 0, 0, 0, 0, 0, 0, 0, 5, 6, 5, 4, 4, 2, 2 };
+		int[] dianshuCountArray = { 0, 1, 0, 3, 6, 0, 0, 5, 0, 4, 0, 4, 0, 2, 2 };
 		List<int[]> xianshuList = new ArrayList<>();
 		int xiaowangCount = dianshuCountArray[13];
 		int dawangCount = dianshuCountArray[14];
 		if (xiaowangCount + dawangCount == 4) {// 有天王炸
-			List<int[]> xianshuList1 = calculatePaiXingWithWangDang(1, dianshuCountArray, xiaowangCount, dawangCount);
+			int[] dianshuAmountArray = dianshuCountArray.clone();
+			dianshuAmountArray[13] = 0;
+			dianshuAmountArray[14] = 1;
+			List<int[]> xianshuList1 = calculatePaiXingWithWangDang(1, dianshuAmountArray, 0, 1);
 			for (int[] xianshuCount1 : xianshuList1) {
 				xianshuCount1[2] += 1;
 			}
@@ -168,7 +171,7 @@ public class CaseTest1 {
 			int dawangCount) {
 		List<int[]> xianshuList = new ArrayList<>();
 		// 计算王可以当哪些牌，提高性能
-		List<DianShu> kedangDianShuList = verifyDangFa(dawangCount, dianshuCountArray);
+		List<DianShu> kedangDianShuList = verifyDangFa(wangCount, dianshuCountArray);
 		// 循环王的各种当法
 		if (kedangDianShuList.isEmpty()) {
 			return xianshuList;

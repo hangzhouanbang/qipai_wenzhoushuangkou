@@ -480,7 +480,10 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 		int xiaowangCount = dianshuCountArray[13];
 		int dawangCount = dianshuCountArray[14];
 		if (xiaowangCount + dawangCount == 4) {// 有天王炸
-			List<int[]> xianshuList1 = calculatePaiXingWithWangDang(1, dianshuCountArray, xiaowangCount, dawangCount);
+			int[] dianshuAmountArray = dianshuCountArray.clone();
+			dianshuAmountArray[13] = 0;
+			dianshuAmountArray[14] = 1;
+			List<int[]> xianshuList1 = calculatePaiXingWithWangDang(1, dianshuAmountArray, 0, 1);
 			for (int[] xianshuCount1 : xianshuList1) {
 				xianshuCount1[2] += 1;
 			}
