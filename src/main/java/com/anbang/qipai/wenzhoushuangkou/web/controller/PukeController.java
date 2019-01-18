@@ -234,8 +234,6 @@ public class PukeController {
 	@ResponseBody
 	public CommonVO da(String token, @RequestBody List<Integer> paiIds, String dianshuZuheIdx) {
 		long startTime = System.currentTimeMillis();
-		logger.info("da");
-		logger.info("startTime:" + startTime);
 		CommonVO vo = new CommonVO();
 		Map data = new HashMap();
 		List<String> queryScopes = new ArrayList<>();
@@ -245,13 +243,10 @@ public class PukeController {
 		if (playerId == null) {
 			vo.setSuccess(false);
 			vo.setMsg("invalid token");
-			logger.info("playerId:" + playerId);
-			logger.info("paiIds:" + paiIds);
-			logger.info("dianshuZuheIdx:" + dianshuZuheIdx);
-			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
 			long endTime = System.currentTimeMillis();
-			logger.info("endTime:" + endTime);
-			logger.info("use:" + (endTime - startTime) + "ms");
+			logger.info("action:da," + "startTime:" + startTime + "," + "playerId:" + playerId + "," + "paiIds:"
+					+ paiIds + "," + "dianshuZuheIdx:" + dianshuZuheIdx + "," + "success:" + vo.isSuccess() + ",msg:"
+					+ vo.getMsg() + "," + "endTime:" + endTime + "," + "use:" + (endTime - startTime) + "ms");
 			return vo;
 		}
 
@@ -261,13 +256,10 @@ public class PukeController {
 		} catch (Exception e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getClass().getName());
-			logger.info("playerId:" + playerId);
-			logger.info("paiIds:" + paiIds);
-			logger.info("dianshuZuheIdx:" + dianshuZuheIdx);
-			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
 			long endTime = System.currentTimeMillis();
-			logger.info("endTime:" + endTime);
-			logger.info("use:" + (endTime - startTime) + "ms");
+			logger.info("action:da," + "startTime:" + startTime + "," + "playerId:" + playerId + "," + "paiIds:"
+					+ paiIds + "," + "dianshuZuheIdx:" + dianshuZuheIdx + "," + "success:" + vo.isSuccess() + ",msg:"
+					+ vo.getMsg() + "," + "endTime:" + endTime + "," + "use:" + (endTime - startTime) + "ms");
 			return vo;
 		}
 		try {
@@ -275,13 +267,10 @@ public class PukeController {
 		} catch (Throwable e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getMessage());
-			logger.info("playerId:" + playerId);
-			logger.info("paiIds:" + paiIds);
-			logger.info("dianshuZuheIdx:" + dianshuZuheIdx);
-			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
 			long endTime = System.currentTimeMillis();
-			logger.info("endTime:" + endTime);
-			logger.info("use:" + (endTime - startTime) + "ms");
+			logger.info("action:da," + "startTime:" + startTime + "," + "playerId:" + playerId + "," + "paiIds:"
+					+ paiIds + "," + "dianshuZuheIdx:" + dianshuZuheIdx + "," + "success:" + vo.isSuccess() + ",msg:"
+					+ vo.getMsg() + "," + "endTime:" + endTime + "," + "use:" + (endTime - startTime) + "ms");
 			return vo;
 		}
 
@@ -317,13 +306,10 @@ public class PukeController {
 								pukeActionResult.getPukeGame().findPlayerState(otherPlayerId)));
 			}
 		}
-		logger.info("playerId:" + playerId);
-		logger.info("paiIds:" + paiIds);
-		logger.info("dianshuZuheIdx:" + dianshuZuheIdx);
-		logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
 		long endTime = System.currentTimeMillis();
-		logger.info("endTime:" + endTime);
-		logger.info("use:" + (endTime - startTime) + "ms");
+		logger.info("action:da," + "startTime:" + startTime + "," + "playerId:" + playerId + "," + "paiIds:" + paiIds
+				+ "," + "dianshuZuheIdx:" + dianshuZuheIdx + "," + "success:" + vo.isSuccess() + ",msg:" + vo.getMsg()
+				+ "," + "endTime:" + endTime + "," + "use:" + (endTime - startTime) + "ms");
 		return vo;
 	}
 
@@ -331,8 +317,6 @@ public class PukeController {
 	@ResponseBody
 	public CommonVO guo(String token) {
 		long startTime = System.currentTimeMillis();
-		logger.info("guo");
-		logger.info("startTime:" + startTime);
 		CommonVO vo = new CommonVO();
 		Map data = new HashMap();
 		List<String> queryScopes = new ArrayList<>();
@@ -342,11 +326,10 @@ public class PukeController {
 		if (playerId == null) {
 			vo.setSuccess(false);
 			vo.setMsg("invalid token");
-			logger.info("playerId:" + playerId);
-			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
 			long endTime = System.currentTimeMillis();
-			logger.info("endTime:" + endTime);
-			logger.info("use:" + (endTime - startTime) + "ms");
+			logger.info("action:guo," + "startTime:" + startTime + "," + "playerId:" + playerId + "," + "success:"
+					+ vo.isSuccess() + ",msg:" + vo.getMsg() + "," + "endTime:" + endTime + "," + "use:"
+					+ (endTime - startTime) + "ms");
 			return vo;
 		}
 
@@ -356,11 +339,10 @@ public class PukeController {
 		} catch (Exception e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getClass().getName());
-			logger.info("playerId:" + playerId);
-			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
 			long endTime = System.currentTimeMillis();
-			logger.info("endTime:" + endTime);
-			logger.info("use:" + (endTime - startTime) + "ms");
+			logger.info("action:guo," + "startTime:" + startTime + "," + "playerId:" + playerId + "," + "success:"
+					+ vo.isSuccess() + ",msg:" + vo.getMsg() + "," + "endTime:" + endTime + "," + "use:"
+					+ (endTime - startTime) + "ms");
 			return vo;
 		}
 		try {
@@ -368,11 +350,10 @@ public class PukeController {
 		} catch (Throwable e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getMessage());
-			logger.info("playerId:" + playerId);
-			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
 			long endTime = System.currentTimeMillis();
-			logger.info("endTime:" + endTime);
-			logger.info("use:" + (endTime - startTime) + "ms");
+			logger.info("action:guo," + "startTime:" + startTime + "," + "playerId:" + playerId + "," + "success:"
+					+ vo.isSuccess() + ",msg:" + vo.getMsg() + "," + "endTime:" + endTime + "," + "use:"
+					+ (endTime - startTime) + "ms");
 			return vo;
 		}
 
@@ -387,11 +368,10 @@ public class PukeController {
 								pukeActionResult.getPukeGame().findPlayerState(otherPlayerId)));
 			}
 		}
-		logger.info("playerId:" + playerId);
-		logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
 		long endTime = System.currentTimeMillis();
-		logger.info("endTime:" + endTime);
-		logger.info("use:" + (endTime - startTime) + "ms");
+		logger.info("action:guo," + "startTime:" + startTime + "," + "playerId:" + playerId + "," + "success:"
+				+ vo.isSuccess() + ",msg:" + vo.getMsg() + "," + "endTime:" + endTime + "," + "use:"
+				+ (endTime - startTime) + "ms");
 		return vo;
 	}
 
