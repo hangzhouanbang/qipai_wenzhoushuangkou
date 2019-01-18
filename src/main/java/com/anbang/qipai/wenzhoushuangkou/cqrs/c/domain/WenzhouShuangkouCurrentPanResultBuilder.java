@@ -482,20 +482,23 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 		if (xiaowangCount + dawangCount == 4) {// 有天王炸
 			int[] dianshuAmountArray = dianshuCountArray.clone();
 			dianshuAmountArray[13] = 0;
-			dianshuAmountArray[14] = 1;
-			List<int[]> xianshuList1 = calculatePaiXingWithWangDang(1, dianshuAmountArray, 0, 1);
+			dianshuAmountArray[14] = 0;
+			List<int[]> xianshuList1 = calculatePaiXingWithWangDang(1, dianshuAmountArray.clone(), 0, 1);
 			for (int[] xianshuCount1 : xianshuList1) {
 				xianshuCount1[2] += 1;
 			}
 			xianshuList.addAll(xianshuList1);
-			List<int[]> xianshuList2 = calculatePaiXingWithoutWangDang(dianshuCountArray);
+			List<int[]> xianshuList2 = calculatePaiXingWithoutWangDang(dianshuAmountArray);
 			for (int[] xianshuCount2 : xianshuList2) {
 				xianshuCount2[3] += 1;
 			}
 			xianshuList.addAll(xianshuList2);
 		}
 		if (xiaowangCount + dawangCount == 3) {// 有三王炸
-			List<int[]> xianshuList3 = calculatePaiXingWithoutWangDang(dianshuCountArray);
+			int[] dianshuAmountArray = dianshuCountArray.clone();
+			dianshuAmountArray[13] = 0;
+			dianshuAmountArray[14] = 0;
+			List<int[]> xianshuList3 = calculatePaiXingWithoutWangDang(dianshuAmountArray);
 			for (int[] xianshuCount3 : xianshuList3) {
 				xianshuCount3[2] += 1;
 			}
