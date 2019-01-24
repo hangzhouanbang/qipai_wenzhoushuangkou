@@ -20,7 +20,7 @@ import com.dml.shuangkou.wanfa.BianXingWanFa;
 
 public class CaseTest1 {
 	private static int renshu = 4;
-	private static BianXingWanFa bx = BianXingWanFa.baibian;
+	private static BianXingWanFa bx = BianXingWanFa.qianbian;
 
 	public static void main(String[] args) {
 		XianshuCalculatorHelper.calculateXianshu();
@@ -91,7 +91,7 @@ public class CaseTest1 {
 	// }
 
 	private static List<int[]> calculateShouPaiTotalGongxianfenForPlayer() {
-		int[] dianshuCountArray = { 0, 1, 0, 3, 6, 0, 0, 5, 0, 4, 0, 4, 0, 2, 2 };
+		int[] dianshuCountArray = { 2, 0, 2, 0, 1, 1, 0, 8, 4, 2, 0, 0, 4, 1, 2 };
 		List<int[]> xianshuList = new ArrayList<>();
 		int xiaowangCount = dianshuCountArray[13];
 		int dawangCount = dianshuCountArray[14];

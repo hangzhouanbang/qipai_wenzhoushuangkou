@@ -847,10 +847,6 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 					}
 				}
 			});
-			WenzhouShuangkouCurrentPanResultBuilder panResultBuilder = (WenzhouShuangkouCurrentPanResultBuilder) ju
-					.getCurrentPanResultBuilder();
-			panResultBuilder.getPlayerMaxXianshuMap().putAll(playerMaxXianshuMap);
-			panResultBuilder.getPlayerOtherMaxXianshuMap().putAll(playerOtherMaxXianshuMap);
 			// 记录名次
 			List<String> noPaiPlayerIdList = ju.getCurrentPan().getNoPaiPlayerIdList();
 			if (!noPaiPlayerIdList.isEmpty()) {
@@ -894,13 +890,10 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		playerMingciMap = new HashMap<>();
 		ju.startNextPan();
 		Map<String, Integer> totalGongxianfenMap = new HashMap<>();
-		Map<String, Integer> maxXianshuMap = new HashMap<>();
-		Map<String, Integer> otherMaxXianshuMap = new HashMap<>();
 		WenzhouShuangkouCurrentPanResultBuilder panResultBuilder = (WenzhouShuangkouCurrentPanResultBuilder) ju
 				.getCurrentPanResultBuilder();
 		panResultBuilder.setPlayerTotalGongxianfenMap(totalGongxianfenMap);
-		panResultBuilder.setPlayerMaxXianshuMap(maxXianshuMap);
-		panResultBuilder.setPlayerOtherMaxXianshuMap(otherMaxXianshuMap);
+
 		allPlayerIds().forEach((pid) -> {
 			playerTotalGongxianfenMap.put(pid, calculateTotalGongxianfenForPlayer(pid));
 		});
@@ -911,8 +904,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 			playerOtherMaxXianshuMap.put(pid, 1);
 		});
 		totalGongxianfenMap.putAll(playerTotalGongxianfenMap);
-		maxXianshuMap.putAll(playerMaxXianshuMap);
-		otherMaxXianshuMap.putAll(playerOtherMaxXianshuMap);
+
 		boolean hasChaodi = false;
 		chaodiPlayerIdList = new ArrayList<>();
 		Set<String> cannotChaodiSet = new HashSet<>();

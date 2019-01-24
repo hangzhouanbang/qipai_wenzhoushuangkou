@@ -33,8 +33,6 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 	private int renshu;
 	private BianXingWanFa bx;
 	private Map<String, Integer> playerTotalGongxianfenMap = new HashMap<>();
-	private Map<String, Integer> playerMaxXianshuMap = new HashMap<>();
-	private Map<String, Integer> playerOtherMaxXianshuMap = new HashMap<>();
 	private List<String> chaodiPlayerIdList = new ArrayList<>();
 
 	@Override
@@ -59,40 +57,6 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			xianshubeishu.calculate();
 			maxXianshuMap.put(pid, xianshubeishu);
 		}
-		// 计算胜负分
-		playerIds.forEach((pid) -> {
-			if (renshu > 2) {
-				ShuangkouPlayer duijiaPlayer = currentPan.findDuijiaPlayer(pid);
-				String duijiaPlayerId = duijiaPlayer.getId();
-				int maxXianshu = 1;
-				int otherMaxXianshu = 1;
-				for (String id : playerIds) {
-					if (id.equals(pid) || id.equals(duijiaPlayerId)) {
-						WenzhouShuangkouXianshuBeishu xianshubeishu = maxXianshuMap.get(id);
-						if (xianshubeishu.getValue() > maxXianshu) {
-							maxXianshu = xianshubeishu.getValue();
-						}
-					} else {
-						WenzhouShuangkouXianshuBeishu xianshubeishu = maxXianshuMap.get(id);
-						if (xianshubeishu.getValue() > otherMaxXianshu) {
-							otherMaxXianshu = xianshubeishu.getValue();
-						}
-					}
-				}
-				playerMaxXianshuMap.put(pid, maxXianshu);
-				playerOtherMaxXianshuMap.put(pid, otherMaxXianshu);
-			} else {
-				for (String id : playerIds) {
-					if (id.equals(pid)) {
-						WenzhouShuangkouXianshuBeishu xianshubeishu = maxXianshuMap.get(id);
-						playerMaxXianshuMap.put(pid, xianshubeishu.getValue());
-					} else {
-						WenzhouShuangkouXianshuBeishu xianshubeishu = maxXianshuMap.get(id);
-						playerOtherMaxXianshuMap.put(pid, xianshubeishu.getValue());
-					}
-				}
-			}
-		});
 
 		List<String> noPaiPlayerIdList = currentPan.getNoPaiPlayerIdList();
 		if (renshu > 2) {// 4人游戏
@@ -120,7 +84,6 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			WenzhouShuangkouPanPlayerResult yingPlayerResult = new WenzhouShuangkouPanPlayerResult();
 			yingPlayerResult.setPlayerId(yingPlayerId);
 			WenzhouShuangkouMingcifen mingcifen = new WenzhouShuangkouMingcifen();
-			yingPlayerResult.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
 			mingcifen.setYing(true);
 			mingcifen.setMingci(1);
 			if (playerId1.equals(duijiaPlayer.getId())) {
@@ -137,6 +100,19 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			gongxianfen.calculateShouPaiXianshu(calculateShouPaiTotalGongxianfenForPlayer(yingPlayerId, ju));
 			gongxianfen.calculate(renshu);
 			yingPlayerResult.setGongxianfen(gongxianfen);
+			int[] xianshuCountArray = new int[9];
+			xianshuCountArray[0] = gongxianfen.getSixian();
+			xianshuCountArray[1] = gongxianfen.getWuxian();
+			xianshuCountArray[2] = gongxianfen.getLiuxian();
+			xianshuCountArray[3] = gongxianfen.getQixian();
+			xianshuCountArray[4] = gongxianfen.getBaxian();
+			xianshuCountArray[5] = gongxianfen.getJiuxian();
+			xianshuCountArray[6] = gongxianfen.getShixian();
+			xianshuCountArray[7] = gongxianfen.getShiyixian();
+			xianshuCountArray[8] = gongxianfen.getShierxian();
+			WenzhouShuangkouXianshuBeishu beishu = new WenzhouShuangkouXianshuBeishu(xianshuCountArray);
+			beishu.calculate();
+			yingPlayerResult.setXianshubeishu(beishu.getValue());
 			WenzhouShuangkouChaixianbufen bufen = new WenzhouShuangkouChaixianbufen();
 			bufen.setTotalScore(playerTotalGongxianfenMap.get(yingPlayerId));
 			bufen.setScore(gongxianfen.getValue());
@@ -149,7 +125,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			playerResult1.setPlayerId(playerId1);
 			WenzhouShuangkouMingcifen mingcifen1 = new WenzhouShuangkouMingcifen();
 			mingcifen1.setMingci(2);
-			playerResult1.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
+			playerResult1.setXianshubeishu(beishu.getValue());
 			if (playerId1.equals(duijiaPlayer.getId())) {
 				mingcifen1.setYing(true);
 				mingcifen1.setShuangkou(true);
@@ -179,7 +155,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			playerResult2.setPlayerId(playerId2);
 			WenzhouShuangkouMingcifen mingcifen2 = new WenzhouShuangkouMingcifen();
 			mingcifen2.setMingci(3);
-			playerResult2.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
+			playerResult2.setXianshubeishu(beishu.getValue());
 			if (playerId1.equals(duijiaPlayer.getId())) {
 				mingcifen2.setYing(false);
 				mingcifen2.setShuangkou(true);
@@ -188,7 +164,6 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 				mingcifen2.setDankou(true);
 			} else {
 				mingcifen2.setYing(false);
-				playerResult2.setXianshubeishu(playerOtherMaxXianshuMap.get(playerId2));
 				mingcifen2.setPingkou(true);
 			}
 			mingcifen2.calculate();
@@ -210,7 +185,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			playerResult3.setPlayerId(playerId3);
 			WenzhouShuangkouMingcifen mingcifen3 = new WenzhouShuangkouMingcifen();
 			mingcifen3.setMingci(4);
-			playerResult3.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
+			playerResult3.setXianshubeishu(beishu.getValue());
 			if (playerId1.equals(duijiaPlayer.getId())) {
 				mingcifen3.setYing(false);
 				mingcifen3.setShuangkou(true);
@@ -219,7 +194,6 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 				mingcifen3.setDankou(true);
 			} else {
 				mingcifen3.setYing(true);
-				playerResult3.setXianshubeishu(playerMaxXianshuMap.get(playerId3));
 				mingcifen3.setPingkou(true);
 			}
 			mingcifen3.calculate();
@@ -330,12 +304,24 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			}
 			mingcifen.calculate();
 			yingPlayerResult.setMingcifen(mingcifen);
-			yingPlayerResult.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
 			int[] xianshuCount = playerXianshuMap.get(yingPlayerId);
 			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
 			gongxianfen.calculateShouPaiXianshu(calculateShouPaiTotalGongxianfenForPlayer(yingPlayerId, ju));
 			gongxianfen.calculate(renshu);
 			yingPlayerResult.setGongxianfen(gongxianfen);
+			int[] xianshuCountArray = new int[9];
+			xianshuCountArray[0] = gongxianfen.getSixian();
+			xianshuCountArray[1] = gongxianfen.getWuxian();
+			xianshuCountArray[2] = gongxianfen.getLiuxian();
+			xianshuCountArray[3] = gongxianfen.getQixian();
+			xianshuCountArray[4] = gongxianfen.getBaxian();
+			xianshuCountArray[5] = gongxianfen.getJiuxian();
+			xianshuCountArray[6] = gongxianfen.getShixian();
+			xianshuCountArray[7] = gongxianfen.getShiyixian();
+			xianshuCountArray[8] = gongxianfen.getShierxian();
+			WenzhouShuangkouXianshuBeishu beishu = new WenzhouShuangkouXianshuBeishu(xianshuCountArray);
+			beishu.calculate();
+			yingPlayerResult.setXianshubeishu(beishu.getValue());
 			WenzhouShuangkouChaixianbufen bufen = new WenzhouShuangkouChaixianbufen();
 			yingPlayerResult.setBufen(bufen);
 			panPlayerResultList.add(yingPlayerResult);
@@ -355,7 +341,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			mingcifen1.calculate();
 			shuPlayerResult.setMingcifen(mingcifen1);
 			int[] xianshuCount1 = playerXianshuMap.get(shuPlayerId);
-			shuPlayerResult.setXianshubeishu(playerMaxXianshuMap.get(yingPlayerId));
+			shuPlayerResult.setXianshubeishu(beishu.getValue());
 			WenzhouShuangkouGongxianFen gongxianfen1 = new WenzhouShuangkouGongxianFen(xianshuCount1);
 			gongxianfen1.calculateShouPaiXianshu(calculateShouPaiTotalGongxianfenForPlayer(shuPlayerId, ju));
 			gongxianfen1.calculate(renshu);
@@ -852,22 +838,6 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 
 	public void setChaodiPlayerIdList(List<String> chaodiPlayerIdList) {
 		this.chaodiPlayerIdList = chaodiPlayerIdList;
-	}
-
-	public Map<String, Integer> getPlayerMaxXianshuMap() {
-		return playerMaxXianshuMap;
-	}
-
-	public void setPlayerMaxXianshuMap(Map<String, Integer> playerMaxXianshuMap) {
-		this.playerMaxXianshuMap = playerMaxXianshuMap;
-	}
-
-	public Map<String, Integer> getPlayerOtherMaxXianshuMap() {
-		return playerOtherMaxXianshuMap;
-	}
-
-	public void setPlayerOtherMaxXianshuMap(Map<String, Integer> playerOtherMaxXianshuMap) {
-		this.playerOtherMaxXianshuMap = playerOtherMaxXianshuMap;
 	}
 
 }
