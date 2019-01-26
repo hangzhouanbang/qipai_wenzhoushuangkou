@@ -20,6 +20,7 @@ import com.dml.shuangkou.wanfa.BianXingWanFa;
 
 public class CaseTest1 {
 	private static int renshu = 4;
+	private static boolean fengding = true;
 	private static BianXingWanFa bx = BianXingWanFa.qianbian;
 
 	public static void main(String[] args) {
@@ -30,7 +31,7 @@ public class CaseTest1 {
 		System.out.println("计算手牌线数组合耗时：");
 		System.out.println(s2 - s1 + "ms");
 		WenzhouShuangkouGongxianFen fen = new WenzhouShuangkouGongxianFen();
-		fen.calculateShouPaiXianshu(xianshuList);
+		fen.calculateShouPaiXianshu(xianshuList, fengding);
 		fen.calculate(renshu);
 		long s3 = System.currentTimeMillis();
 		System.out.println("计算最佳贡献分耗时：");
@@ -46,7 +47,7 @@ public class CaseTest1 {
 		xianshuCountArray[7] = fen.getShiyixian();
 		xianshuCountArray[8] = fen.getShierxian();
 		WenzhouShuangkouXianshuBeishu beishu = new WenzhouShuangkouXianshuBeishu(xianshuCountArray);
-		beishu.calculate();
+		beishu.calculate(fengding);
 		long s4 = System.currentTimeMillis();
 		System.out.println("最佳线数组合：");
 		for (int i = 0; i < xianshuCountArray.length; i++) {

@@ -42,7 +42,7 @@ public class WenzhouShuangkouGongxianFen {
 		shierxian = xianshuCount[8];
 	}
 
-	public void calculateShouPaiXianshu(List<int[]> xianshuList) {
+	public void calculateShouPaiXianshu(List<int[]> xianshuList, boolean fengding) {
 		if (xianshuList == null || xianshuList.isEmpty()) {
 			String key = "" + sixian + wuxian + liuxian + qixian + baxian + jiuxian + shixian + shiyixian + shierxian;
 			Integer score = XianshuCalculatorHelper.getGongxianFenCountMap().get(key);
@@ -93,7 +93,7 @@ public class WenzhouShuangkouGongxianFen {
 		}
 	}
 
-	public void calculateXianshu() {
+	public void calculateXianshu(boolean fengding) {
 		String key = "" + sixian + wuxian + liuxian + qixian + baxian + jiuxian + shixian + shiyixian + shierxian;
 		Integer score = XianshuCalculatorHelper.getGongxianFenCountMap().get(key);
 		if (score != null) {

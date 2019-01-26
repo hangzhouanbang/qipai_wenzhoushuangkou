@@ -464,7 +464,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 			List<ZhadanDianShuZu> zhadanDianShuZuList, List<Integer> scoreList) {
 		if (zhadanDianShuZuList.isEmpty()) {
 			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuArray);
-			gongxianfen.calculateXianshu();
+			gongxianfen.calculateXianshu(fengding);
 			gongxianfen.calculate(renshu);
 			int score = gongxianfen.getValue();
 			scoreList.add(score);
@@ -659,6 +659,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		panResultBuilder.setPlayerTotalGongxianfenMap(totalGongxianfenMap);
 		panResultBuilder.setRenshu(renshu);
 		panResultBuilder.setBx(bx);
+		panResultBuilder.setFengding(fengding);
 		ju.setCurrentPanResultBuilder(panResultBuilder);
 		// 生成局结果
 		ju.setJuResultBuilder(new WenzhouShuangkouJuResultBuilder());
@@ -767,10 +768,10 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		for (String pid : allPlayerIds()) {
 			int[] xianshuCount = playerXianshuMap.get(pid);
 			WenzhouShuangkouXianshuBeishu xianshubeishu = new WenzhouShuangkouXianshuBeishu(xianshuCount);
-			xianshubeishu.calculate();
+			xianshubeishu.calculate(fengding);
 			maxXianshuMap.put(pid, xianshubeishu);
 			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
-			gongxianfen.calculateXianshu();
+			gongxianfen.calculateXianshu(fengding);
 			gongxianfen.calculate(renshu);
 			panPlayerGongxianfenList.add(gongxianfen);
 			gongxianfenMap.put(pid, gongxianfen);
