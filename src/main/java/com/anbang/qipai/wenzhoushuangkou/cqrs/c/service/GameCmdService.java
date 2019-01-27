@@ -24,6 +24,8 @@ public interface GameCmdService {
 
 	ReadyForGameResult readyForGame(String playerId, Long currentTime) throws Exception;
 
+	ReadyForGameResult cancelReadyForGame(String playerId, Long currentTime) throws Exception;
+
 	PukeGameValueObject finish(String playerId, Long currentTime) throws Exception;
 
 	PukeGameValueObject voteToFinish(String playerId, Boolean yes) throws Exception;
