@@ -24,7 +24,7 @@ public class PukeGameValueObject extends FixedPlayersMultipanAndVotetofinishGame
 	private FaPai fapai;
 	private Map<String, Integer> playeTotalScoreMap = new HashMap<>();
 	private Map<String, Integer> playeGongxianfenMap = new HashMap<>();
-	private Map<String, Integer> playeTotalGongxianfenMap = new HashMap<>();
+	private Map<String, WenzhouShuangkouGongxianFen> playeTotalGongxianfenMap = new HashMap<>();
 	private Map<String, Integer> playerMaxXianshuMap = new HashMap<>();
 	private Map<String, Integer> playerOtherMaxXianshuMap = new HashMap<>();
 	private Map<String, PukeGamePlayerChaodiState> playerChaodiStateMap = new HashMap<>();
@@ -167,11 +167,11 @@ public class PukeGameValueObject extends FixedPlayersMultipanAndVotetofinishGame
 		this.playeGongxianfenMap = playeGongxianfenMap;
 	}
 
-	public Map<String, Integer> getPlayeTotalGongxianfenMap() {
+	public Map<String, WenzhouShuangkouGongxianFen> getPlayeTotalGongxianfenMap() {
 		return playeTotalGongxianfenMap;
 	}
 
-	public void setPlayeTotalGongxianfenMap(Map<String, Integer> playeTotalGongxianfenMap) {
+	public void setPlayeTotalGongxianfenMap(Map<String, WenzhouShuangkouGongxianFen> playeTotalGongxianfenMap) {
 		this.playeTotalGongxianfenMap = playeTotalGongxianfenMap;
 	}
 

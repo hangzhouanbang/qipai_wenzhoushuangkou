@@ -20,7 +20,7 @@ public class PukeGamePlayerInfoVO {
 		gongxianfen = dbo.getGongxianfen();
 		maxXianshu = dbo.getMaxXianshu();
 		otherMaxXianshu = dbo.getOtherMaxXianshu();
-		totalGongxianfen = dbo.getTotalGongxianfen();
+		totalGongxianfen = dbo.getTotalGongxianfen().getValue();
 		nopai = dbo.isNopai();
 		mingci = dbo.getMingci();
 	}

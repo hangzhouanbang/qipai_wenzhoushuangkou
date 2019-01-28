@@ -1,6 +1,6 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.impl;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
 
@@ -22,7 +22,7 @@ import com.dml.shuangkou.pan.PanActionFrame;
 public class PukePlayCmdServiceImpl extends CmdServiceBase implements PukePlayCmdService {
 
 	@Override
-	public PukeActionResult da(String playerId, List<Integer> paiIds, String dianshuZuheIdx, Long actionTime)
+	public PukeActionResult da(String playerId, ArrayList<Integer> paiIds, String dianshuZuheIdx, Long actionTime)
 			throws Exception {
 		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
 		String gameId = gameServer.findBindGameId(playerId);

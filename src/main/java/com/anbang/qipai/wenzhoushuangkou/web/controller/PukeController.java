@@ -136,8 +136,6 @@ public class PukeController {
 	@ResponseBody
 	public CommonVO chaodi(String token, boolean chaodi) {
 		long startTime = System.currentTimeMillis();
-		logger.info("chaodi");
-		logger.info("startTime:" + startTime);
 		CommonVO vo = new CommonVO();
 		Map data = new HashMap();
 		List<String> queryScopes = new ArrayList<>();
@@ -147,12 +145,10 @@ public class PukeController {
 		if (playerId == null) {
 			vo.setSuccess(false);
 			vo.setMsg("invalid token");
-			logger.info("playerId:" + playerId);
-			logger.info("chaodi:" + chaodi);
-			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
 			long endTime = System.currentTimeMillis();
-			logger.info("endTime:" + endTime);
-			logger.info("use:" + (endTime - startTime) + "ms");
+			logger.info("action:chaodi," + "startTime:" + startTime + ",playerId:" + playerId + "chaodi:" + chaodi
+					+ ",success:" + vo.isSuccess() + ",msg:" + vo.getMsg() + ",endTime:" + endTime + ",use:"
+					+ (endTime - startTime) + "ms");
 			return vo;
 		}
 
@@ -162,12 +158,10 @@ public class PukeController {
 		} catch (Exception e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getClass().getName());
-			logger.info("playerId:" + playerId);
-			logger.info("chaodi:" + chaodi);
-			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
 			long endTime = System.currentTimeMillis();
-			logger.info("endTime:" + endTime);
-			logger.info("use:" + (endTime - startTime) + "ms");
+			logger.info("action:chaodi," + "startTime:" + startTime + ",playerId:" + playerId + "chaodi:" + chaodi
+					+ ",success:" + vo.isSuccess() + ",msg:" + vo.getMsg() + ",endTime:" + endTime + ",use:"
+					+ (endTime - startTime) + "ms");
 			return vo;
 		}
 		try {
@@ -175,12 +169,10 @@ public class PukeController {
 		} catch (Throwable e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getMessage());
-			logger.info("playerId:" + playerId);
-			logger.info("chaodi:" + chaodi);
-			logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
 			long endTime = System.currentTimeMillis();
-			logger.info("endTime:" + endTime);
-			logger.info("use:" + (endTime - startTime) + "ms");
+			logger.info("action:chaodi," + "startTime:" + startTime + ",playerId:" + playerId + "chaodi:" + chaodi
+					+ ",success:" + vo.isSuccess() + ",msg:" + vo.getMsg() + ",endTime:" + endTime + ",use:"
+					+ (endTime - startTime) + "ms");
 			return vo;
 		}
 
@@ -221,12 +213,10 @@ public class PukeController {
 						chaodiResult.getPukeGame().findPlayerState(otherPlayerId)));
 			}
 		}
-		logger.info("playerId:" + playerId);
-		logger.info("chaodi:" + chaodi);
-		logger.info("success:" + vo.isSuccess() + ",msg:" + vo.getMsg());
 		long endTime = System.currentTimeMillis();
-		logger.info("endTime:" + endTime);
-		logger.info("use:" + (endTime - startTime) + "ms");
+		logger.info("action:chaodi," + "startTime:" + startTime + ",playerId:" + playerId + "chaodi:" + chaodi
+				+ ",success:" + vo.isSuccess() + ",msg:" + vo.getMsg() + ",endTime:" + endTime + ",use:"
+				+ (endTime - startTime) + "ms");
 		return vo;
 	}
 
@@ -252,7 +242,8 @@ public class PukeController {
 
 		PukeActionResult pukeActionResult;
 		try {
-			pukeActionResult = pukePlayCmdService.da(playerId, paiIds, dianshuZuheIdx, System.currentTimeMillis());
+			pukeActionResult = pukePlayCmdService.da(playerId, new ArrayList<>(paiIds), dianshuZuheIdx,
+					System.currentTimeMillis());
 		} catch (Exception e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getClass().getName());

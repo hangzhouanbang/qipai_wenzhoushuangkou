@@ -1,69 +1,45 @@
-package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.test;
+package com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouGongxianFen;
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouXianshuBeishu;
-import com.anbang.qipai.wenzhoushuangkou.init.XianshuCalculatorHelper;
 import com.dml.puke.pai.DianShu;
+import com.dml.puke.pai.PukePai;
 import com.dml.puke.wanfa.dianshu.dianshuzu.DanGeZhadanDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.ZhadanDianShuZu;
+import com.dml.shuangkou.ju.Ju;
 import com.dml.shuangkou.pai.dianshuzu.DianShuZuCalculator;
 import com.dml.shuangkou.pai.dianshuzu.LianXuZhadanDianShuZu;
 import com.dml.shuangkou.pai.dianshuzu.PaiXing;
 import com.dml.shuangkou.pai.jiesuanpai.DawangDangPai;
 import com.dml.shuangkou.pai.jiesuanpai.ShoupaiJiesuanPai;
 import com.dml.shuangkou.pai.jiesuanpai.XiaowangDangPai;
+import com.dml.shuangkou.pan.Pan;
+import com.dml.shuangkou.player.ShuangkouPlayer;
 import com.dml.shuangkou.wanfa.BianXingWanFa;
 
-public class CaseTest1 {
-	private static int renshu = 4;
-	private static boolean fengding = false;
-	private static BianXingWanFa bx = BianXingWanFa.qianbian;
-
-	public static void main(String[] args) {
-		XianshuCalculatorHelper.calculateXianshu();
-		long s1 = System.currentTimeMillis();
-		WenzhouShuangkouGongxianFen fen = calculateTotalGongxianfenWithShouPaiForPlayer();
-		fen.calculate(renshu);
-		long s2 = System.currentTimeMillis();
-		System.out.println("计算最佳贡献分耗时：");
-		System.out.println(s2 - s1 + "ms");
-		int[] xianshuCountArray = new int[9];
-		xianshuCountArray[0] = fen.getSixian();
-		xianshuCountArray[1] = fen.getWuxian();
-		xianshuCountArray[2] = fen.getLiuxian();
-		xianshuCountArray[3] = fen.getQixian();
-		xianshuCountArray[4] = fen.getBaxian();
-		xianshuCountArray[5] = fen.getJiuxian();
-		xianshuCountArray[6] = fen.getShixian();
-		xianshuCountArray[7] = fen.getShiyixian();
-		xianshuCountArray[8] = fen.getShierxian();
-		WenzhouShuangkouXianshuBeishu beishu = new WenzhouShuangkouXianshuBeishu(xianshuCountArray);
-		beishu.calculate(fengding);
-		long s3 = System.currentTimeMillis();
-		System.out.println("最佳线数组合：");
-		for (int i = 0; i < xianshuCountArray.length; i++) {
-			System.out.print(xianshuCountArray[i]);
-		}
-		System.out.println("");
-		System.out.println("最佳倍数：");
-		System.out.println(beishu.getValue());
-		System.out.println("最佳线数组合得分：");
-		System.out.println(fen.getValue());
-		System.out.println("耗时：");
-		System.out.println(s3 - s1 + "ms");
-	}
+/**
+ * 玩家贡献分计算器
+ *
+ */
+public class WenzhouShuangkouShoupaiGongxianfenCalculator {
 
 	/**
 	 * 计算玩家总贡献分
 	 */
-	private static WenzhouShuangkouGongxianFen calculateTotalGongxianfenWithShouPaiForPlayer() {
-		int[] xianshuArray = new int[9];
+	public static WenzhouShuangkouGongxianFen calculateTotalGongxianfenWithShouPaiForPlayer(String playerId, Ju ju,
+			BianXingWanFa bx, int[] xianshuArray) {
 		WenzhouShuangkouGongxianFen bestGongxianfen = new WenzhouShuangkouGongxianFen(xianshuArray);
 		bestGongxianfen.calculateXianshu();
-		int[] dianshuCountArray = { 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 0, 0, 2, 2 };
+		Pan currentPan = ju.getCurrentPan();
+		ShuangkouPlayer player = currentPan.findPlayer(playerId);
+		Map<Integer, PukePai> allShoupai = player.getAllShoupai();
+		int[] dianshuCountArray = new int[15];
+		for (PukePai pukePai : allShoupai.values()) {
+			DianShu dianShu = pukePai.getPaiMian().dianShu();
+			dianshuCountArray[dianShu.ordinal()]++;
+		}
 		int xiaowangCount = dianshuCountArray[13];
 		int dawangCount = dianshuCountArray[14];
 		if (xiaowangCount + dawangCount == 4) {// 有天王炸
@@ -206,7 +182,6 @@ public class CaseTest1 {
 				}
 			}
 			if (wangDangPaiArray != null) {
-				// System.out.println(renshu++);
 				// 加上当牌的数量
 				for (ShoupaiJiesuanPai jiesuanPai : wangDangPaiArray) {
 					dianshuCountArray[jiesuanPai.getDangPaiType().ordinal()]++;
@@ -258,10 +233,10 @@ public class CaseTest1 {
 		List<LianXuZhadanDianShuZu> lianXuZhadanDianShuZuList = paixing.getLianXuZhadanDianShuZuList();
 		zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
 
-		WenzhouShuangkouGongxianFen bestGongxianfen = new WenzhouShuangkouGongxianFen(xianshuArray);
+		WenzhouShuangkouGongxianFen bestGongxianfen = new WenzhouShuangkouGongxianFen();
 		bestGongxianfen.calculateXianshu();
 		calculateGongxianfen(dianshuCountArray, bx, xianshuArray, zhadanDianShuZuList, bestGongxianfen);
-		// System.out.println(renshu++);
+
 		return bestGongxianfen;
 	}
 

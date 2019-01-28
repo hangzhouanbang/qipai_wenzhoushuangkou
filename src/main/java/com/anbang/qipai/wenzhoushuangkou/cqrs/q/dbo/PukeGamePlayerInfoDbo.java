@@ -1,11 +1,13 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo;
 
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouGongxianFen;
+
 public class PukeGamePlayerInfoDbo {
 	private String playerId;
 	private int gongxianfen;
 	private int maxXianshu;
 	private int otherMaxXianshu;
-	private int totalGongxianfen;
+	private WenzhouShuangkouGongxianFen totalGongxianfen;
 	private boolean nopai;
 	private int mingci;
 
@@ -41,11 +43,11 @@ public class PukeGamePlayerInfoDbo {
 		this.otherMaxXianshu = otherMaxXianshu;
 	}
 
-	public int getTotalGongxianfen() {
+	public WenzhouShuangkouGongxianFen getTotalGongxianfen() {
 		return totalGongxianfen;
 	}
 
-	public void setTotalGongxianfen(int totalGongxianfen) {
+	public void setTotalGongxianfen(WenzhouShuangkouGongxianFen totalGongxianfen) {
 		this.totalGongxianfen = totalGongxianfen;
 	}
 

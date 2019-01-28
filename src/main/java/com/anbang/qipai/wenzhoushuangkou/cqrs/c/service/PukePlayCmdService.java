@@ -1,6 +1,6 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.service;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ChaodiResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.PukeActionResult;
@@ -8,7 +8,8 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ReadyToNextPanResu
 
 public interface PukePlayCmdService {
 
-	PukeActionResult da(String playerId, List<Integer> paiIds, String dianshuZuheIdx, Long actionTime) throws Exception;
+	PukeActionResult da(String playerId, ArrayList<Integer> paiIds, String dianshuZuheIdx, Long actionTime)
+			throws Exception;
 
 	PukeActionResult guo(String playerId, Long actionTime) throws Exception;
 

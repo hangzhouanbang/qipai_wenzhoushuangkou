@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouGongxianFen;
 import com.anbang.qipai.wenzhoushuangkou.plan.bean.PlayerInfo;
 import com.dml.mpgame.game.GamePlayerValueObject;
 
@@ -34,7 +35,7 @@ public class PukeGameInfoDbo {
 		Map<String, Integer> playerMaxXianshuMap = pukeGame.getPlayerMaxXianshuMap();
 		Map<String, Integer> playerOtherMaxXianshuMap = pukeGame.getPlayerOtherMaxXianshuMap();
 		Map<String, Integer> playeGongxianfenMap = pukeGame.getPlayeGongxianfenMap();
-		Map<String, Integer> playeTotalGongxianfenMap = pukeGame.getPlayeTotalGongxianfenMap();
+		Map<String, WenzhouShuangkouGongxianFen> playeTotalGongxianfenMap = pukeGame.getPlayeTotalGongxianfenMap();
 		Map<String, Integer> playerMingciMap = pukeGame.getPlayerMingciMap();
 		for (GamePlayerValueObject playerValueObject : pukeGame.getPlayers()) {
 			String playerId = playerValueObject.getId();

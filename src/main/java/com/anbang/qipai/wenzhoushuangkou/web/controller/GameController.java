@@ -108,6 +108,26 @@ public class GameController {
 	}
 
 	/**
+	 * 新一局游戏
+	 */
+	@RequestMapping(value = "/newgame_xiuxianchang")
+	@ResponseBody
+	public CommonVO newgameForXiuxianchang(String playerId, int panshu, int renshu, BianXingWanFa bx, boolean chaodi,
+			boolean shuangming, boolean fengding, ChaPai chapai, FaPai fapai) {
+		CommonVO vo = new CommonVO();
+		String newGameId = UUID.randomUUID().toString();
+		PukeGameValueObject pukeGameValueObject = gameCmdService.newPukeGameForXiuxianchang(newGameId, playerId, panshu,
+				renshu, bx, chaodi, shuangming, fengding, chapai, fapai);
+		pukeGameQueryService.newPukeGame(pukeGameValueObject);
+		String token = playerAuthService.newSessionForPlayer(playerId);
+		Map data = new HashMap();
+		data.put("gameId", newGameId);
+		data.put("token", token);
+		vo.setData(data);
+		return vo;
+	}
+
+	/**
 	 * 加入游戏
 	 */
 	@RequestMapping(value = "/joingame")

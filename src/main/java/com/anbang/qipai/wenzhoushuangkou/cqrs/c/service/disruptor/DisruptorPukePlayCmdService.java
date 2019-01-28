@@ -1,6 +1,6 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.disruptor;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ public class DisruptorPukePlayCmdService extends DisruptorCmdServiceBase impleme
 	private PukePlayCmdServiceImpl pukePlayCmdServiceImpl;
 
 	@Override
-	public PukeActionResult da(String playerId, List<Integer> paiIds, String dianshuZuheIdx, Long actionTime)
+	public PukeActionResult da(String playerId, ArrayList<Integer> paiIds, String dianshuZuheIdx, Long actionTime)
 			throws Exception {
 		CommonCommand cmd = new CommonCommand(PukePlayCmdServiceImpl.class.getName(), "da", playerId, paiIds,
 				dianshuZuheIdx, actionTime);
