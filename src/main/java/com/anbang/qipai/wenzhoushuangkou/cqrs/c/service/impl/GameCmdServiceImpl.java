@@ -72,9 +72,8 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 	}
 
 	@Override
-	public PukeGameValueObject newPukeGameForXiuxianchang(String gameId, String playerId, Integer panshu,
-			Integer renshu, BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean fengding, ChaPai chapai,
-			FaPai fapai) {
+	public PukeGameValueObject newPukeGameLeaveAndQuit(String gameId, String playerId, Integer panshu, Integer renshu,
+			BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean fengding, ChaPai chapai, FaPai fapai) {
 		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
 
 		PukeGame newGame = new PukeGame();
@@ -95,10 +94,10 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 		newGame.setReadyStrategy(new FixedNumberOfPlayersGameReadyStrategy(renshu));
 
 		newGame.setLeaveByOfflineStrategyAfterStart(new OfflineGameLeaveStrategy());
-		newGame.setLeaveByOfflineStrategyBeforeStart(new OfflineAndNotReadyGameLeaveStrategy());
+		newGame.setLeaveByOfflineStrategyBeforeStart(new PlayerGameLeaveStrategy());
 
 		newGame.setLeaveByHangupStrategyAfterStart(new OfflineGameLeaveStrategy());
-		newGame.setLeaveByHangupStrategyBeforeStart(new OfflineAndNotReadyGameLeaveStrategy());
+		newGame.setLeaveByHangupStrategyBeforeStart(new PlayerGameLeaveStrategy());
 
 		newGame.setLeaveByPlayerStrategyAfterStart(new OfflineGameLeaveStrategy());
 		newGame.setLeaveByPlayerStrategyBeforeStart(new PlayerGameLeaveStrategy());

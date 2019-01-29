@@ -12,7 +12,7 @@ public interface GameCmdService {
 	PukeGameValueObject newPukeGame(String gameId, String playerId, Integer panshu, Integer renshu, BianXingWanFa bx,
 			Boolean chaodi, Boolean shuangming, Boolean fengding, ChaPai chapai, FaPai fapai);
 
-	PukeGameValueObject newPukeGameForXiuxianchang(String gameId, String playerId, Integer panshu, Integer renshu,
+	PukeGameValueObject newPukeGameLeaveAndQuit(String gameId, String playerId, Integer panshu, Integer renshu,
 			BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean fengding, ChaPai chapai, FaPai fapai);
 
 	PukeGameValueObject joinGame(String playerId, String gameId) throws Exception;

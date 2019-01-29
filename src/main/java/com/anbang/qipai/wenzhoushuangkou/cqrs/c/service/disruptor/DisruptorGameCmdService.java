@@ -39,13 +39,12 @@ public class DisruptorGameCmdService extends DisruptorCmdServiceBase implements 
 	}
 
 	@Override
-	public PukeGameValueObject newPukeGameForXiuxianchang(String gameId, String playerId, Integer panshu,
-			Integer renshu, BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean fengding, ChaPai chapai,
-			FaPai fapai) {
-		CommonCommand cmd = new CommonCommand(GameCmdServiceImpl.class.getName(), "newPukeGameForXiuxianchang", gameId,
+	public PukeGameValueObject newPukeGameLeaveAndQuit(String gameId, String playerId, Integer panshu, Integer renshu,
+			BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean fengding, ChaPai chapai, FaPai fapai) {
+		CommonCommand cmd = new CommonCommand(GameCmdServiceImpl.class.getName(), "newPukeGameLeaveAndQuit", gameId,
 				playerId, panshu, renshu, bx, chaodi, shuangming, fengding, chapai, fapai);
 		DeferredResult<PukeGameValueObject> result = publishEvent(disruptorFactory.getCoreCmdDisruptor(), cmd, () -> {
-			PukeGameValueObject pukeGameValueObject = gameCmdServiceImpl.newPukeGameForXiuxianchang(cmd.getParameter(),
+			PukeGameValueObject pukeGameValueObject = gameCmdServiceImpl.newPukeGameLeaveAndQuit(cmd.getParameter(),
 					cmd.getParameter(), cmd.getParameter(), cmd.getParameter(), cmd.getParameter(), cmd.getParameter(),
 					cmd.getParameter(), cmd.getParameter(), cmd.getParameter(), cmd.getParameter());
 			return pukeGameValueObject;
