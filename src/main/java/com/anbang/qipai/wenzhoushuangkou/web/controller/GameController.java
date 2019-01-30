@@ -267,7 +267,9 @@ public class GameController {
 			if (!otherPlayerId.equals(playerId)) {
 				List<QueryScope> scopes = QueryScope.scopesForState(pukeGameValueObject.getState(),
 						pukeGameValueObject.findPlayerState(otherPlayerId));
-				scopes.remove(QueryScope.panResult);
+				if (!pukeGameValueObject.getState().name().equals(Finished.name)) {
+					scopes.remove(QueryScope.panResult);
+				}
 				if (pukeGameValueObject.getState().name().equals(VoteNotPassWhenPlaying.name)
 						|| pukeGameValueObject.getState().name().equals(VoteNotPassWhenWaitingNextPan.name)) {
 					scopes.remove(QueryScope.gameFinishVote);
