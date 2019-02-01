@@ -45,7 +45,7 @@ public class CaseTest {
 	// 炸弹压牌
 	public static void main(String[] args) {
 		// DianShuZu beiYaDianShuZu = new DuiziDianShuZu(DianShu.Q);
-		int[] dianShuAmountArray = { 4, 4, 4, 3, 2, 0, 1, 2, 2, 0, 0, 1, 4, 1, 1 };
+		int[] dianShuAmountArray = { 1, 0, 0, 0, 0, 0, 4, 4, 4, 4, 8, 1, 0, 1, 0 };
 		// List<DaPaiDianShuSolution> solutionList = new ArrayList<>(
 		// calculateForZhadan(beiYaDianShuZu, dianShuAmountArray).values());
 		// solutionList = filter(solutionList, dianShuAmountArray.clone(), true);

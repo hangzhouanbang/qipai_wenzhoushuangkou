@@ -97,7 +97,7 @@ public class GameController {
 		CommonVO vo = new CommonVO();
 		String newGameId = UUID.randomUUID().toString();
 		PukeGameValueObject pukeGameValueObject = gameCmdService.newPukeGame(newGameId, playerId, panshu, renshu, bx,
-				chaodi, shuangming, fengding, chapai, fapai);
+				false, shuangming, fengding, chapai, fapai);
 		pukeGameQueryService.newPukeGame(pukeGameValueObject);
 		String token = playerAuthService.newSessionForPlayer(playerId);
 		Map data = new HashMap();

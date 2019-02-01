@@ -63,21 +63,10 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 					playerId3 = pid;
 				}
 			}
+			WenzhouShuangkouXianshuBeishu beishu = new WenzhouShuangkouXianshuBeishu();
 			// 赢家
 			WenzhouShuangkouPanPlayerResult yingPlayerResult = new WenzhouShuangkouPanPlayerResult();
 			yingPlayerResult.setPlayerId(yingPlayerId);
-			WenzhouShuangkouMingcifen mingcifen = new WenzhouShuangkouMingcifen();
-			mingcifen.setYing(true);
-			mingcifen.setMingci(1);
-			if (playerId1.equals(duijiaPlayer.getId())) {
-				mingcifen.setShuangkou(true);
-			} else if (playerId2.equals(duijiaPlayer.getId())) {
-				mingcifen.setDankou(true);
-			} else {
-				mingcifen.setPingkou(true);
-			}
-			mingcifen.calculate();
-			yingPlayerResult.setMingcifen(mingcifen);
 			int[] xianshuCount = playerXianshuMap.get(yingPlayerId);
 			if (xianshuCount == null) {
 				xianshuCount = new int[9];
@@ -96,25 +85,63 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			xianshuCountArray[6] = gongxianfen.getShixian();
 			xianshuCountArray[7] = gongxianfen.getShiyixian();
 			xianshuCountArray[8] = gongxianfen.getShierxian();
-			WenzhouShuangkouXianshuBeishu beishu = new WenzhouShuangkouXianshuBeishu(xianshuCountArray);
-			beishu.calculate(fengding);
-			yingPlayerResult.setXianshubeishu(beishu.getValue());
+			WenzhouShuangkouXianshuBeishu yingBeishu = new WenzhouShuangkouXianshuBeishu(xianshuCountArray);
+			yingBeishu.calculate(fengding);
+			beishu = yingBeishu;
 			WenzhouShuangkouChaixianbufen bufen = new WenzhouShuangkouChaixianbufen();
 			bufen.setTotalScore(playerTotalGongxianfenMap.get(yingPlayerId).getValue());
 			bufen.setScore(gongxianfen.getValue());
 			bufen.calculate();
 			yingPlayerResult.setBufen(bufen);
+			WenzhouShuangkouMingcifen mingcifen = new WenzhouShuangkouMingcifen();
+			mingcifen.setYing(true);
+			mingcifen.setMingci(1);
+			if (playerId1.equals(duijiaPlayer.getId())) {
+				mingcifen.setShuangkou(true);
+			} else if (playerId2.equals(duijiaPlayer.getId())) {
+				mingcifen.setDankou(true);
+			} else {
+				mingcifen.setPingkou(true);
+			}
+			mingcifen.calculate();
+			yingPlayerResult.setMingcifen(mingcifen);
 			panPlayerResultList.add(yingPlayerResult);
 
 			// 玩家1
 			WenzhouShuangkouPanPlayerResult playerResult1 = new WenzhouShuangkouPanPlayerResult();
 			playerResult1.setPlayerId(playerId1);
+			int[] xianshuCount1 = playerXianshuMap.get(playerId1);
+			if (xianshuCount1 == null) {
+				xianshuCount1 = new int[9];
+			}
+			WenzhouShuangkouGongxianFen gongxianfen1 = calculateTotalGongxianfenForPlayer(playerId1, xianshuCount1, ju);
+			gongxianfen1.calculate(renshu);
+			playerResult1.setGongxianfen(gongxianfen1);
+			int[] xianshuCountArray1 = new int[9];
+			xianshuCountArray1[0] = gongxianfen1.getSixian();
+			xianshuCountArray1[1] = gongxianfen1.getWuxian();
+			xianshuCountArray1[2] = gongxianfen1.getLiuxian();
+			xianshuCountArray1[3] = gongxianfen1.getQixian();
+			xianshuCountArray1[4] = gongxianfen1.getBaxian();
+			xianshuCountArray1[5] = gongxianfen1.getJiuxian();
+			xianshuCountArray1[6] = gongxianfen1.getShixian();
+			xianshuCountArray1[7] = gongxianfen1.getShiyixian();
+			xianshuCountArray1[8] = gongxianfen1.getShierxian();
+			WenzhouShuangkouXianshuBeishu beishu1 = new WenzhouShuangkouXianshuBeishu(xianshuCountArray1);
+			beishu1.calculate(fengding);
+			WenzhouShuangkouChaixianbufen bufen1 = new WenzhouShuangkouChaixianbufen();
+			bufen1.setTotalScore(playerTotalGongxianfenMap.get(playerId1).getValue());
+			bufen1.setScore(gongxianfen1.getValue());
+			bufen1.calculate();
+			playerResult1.setBufen(bufen1);
 			WenzhouShuangkouMingcifen mingcifen1 = new WenzhouShuangkouMingcifen();
 			mingcifen1.setMingci(2);
-			playerResult1.setXianshubeishu(beishu.getValue());
 			if (playerId1.equals(duijiaPlayer.getId())) {
 				mingcifen1.setYing(true);
 				mingcifen1.setShuangkou(true);
+				if (beishu1.getValue() > beishu.getValue()) {
+					beishu = beishu1;
+				}
 			} else if (playerId2.equals(duijiaPlayer.getId())) {
 				mingcifen1.setYing(false);
 				mingcifen1.setDankou(true);
@@ -124,38 +151,11 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			}
 			mingcifen1.calculate();
 			playerResult1.setMingcifen(mingcifen1);
-			int[] xianshuCount1 = playerXianshuMap.get(playerId1);
-			if (xianshuCount1 == null) {
-				xianshuCount1 = new int[9];
-			}
-			WenzhouShuangkouGongxianFen gongxianfen1 = calculateTotalGongxianfenForPlayer(playerId1, xianshuCount1, ju);
-			gongxianfen1.calculate(renshu);
-			playerResult1.setGongxianfen(gongxianfen1);
-			WenzhouShuangkouChaixianbufen bufen1 = new WenzhouShuangkouChaixianbufen();
-			bufen1.setTotalScore(playerTotalGongxianfenMap.get(playerId1).getValue());
-			bufen1.setScore(gongxianfen1.getValue());
-			bufen1.calculate();
-			playerResult1.setBufen(bufen1);
 			panPlayerResultList.add(playerResult1);
 
 			// 玩家2
 			WenzhouShuangkouPanPlayerResult playerResult2 = new WenzhouShuangkouPanPlayerResult();
 			playerResult2.setPlayerId(playerId2);
-			WenzhouShuangkouMingcifen mingcifen2 = new WenzhouShuangkouMingcifen();
-			mingcifen2.setMingci(3);
-			playerResult2.setXianshubeishu(beishu.getValue());
-			if (playerId1.equals(duijiaPlayer.getId())) {
-				mingcifen2.setYing(false);
-				mingcifen2.setShuangkou(true);
-			} else if (playerId2.equals(duijiaPlayer.getId())) {
-				mingcifen2.setYing(true);
-				mingcifen2.setDankou(true);
-			} else {
-				mingcifen2.setYing(false);
-				mingcifen2.setPingkou(true);
-			}
-			mingcifen2.calculate();
-			playerResult2.setMingcifen(mingcifen2);
 			int[] xianshuCount2 = playerXianshuMap.get(playerId2);
 			if (xianshuCount2 == null) {
 				xianshuCount2 = new int[9];
@@ -163,19 +163,71 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			WenzhouShuangkouGongxianFen gongxianfen2 = calculateTotalGongxianfenForPlayer(playerId2, xianshuCount2, ju);
 			gongxianfen2.calculate(renshu);
 			playerResult2.setGongxianfen(gongxianfen2);
+			int[] xianshuCountArray2 = new int[9];
+			xianshuCountArray2[0] = gongxianfen2.getSixian();
+			xianshuCountArray2[1] = gongxianfen2.getWuxian();
+			xianshuCountArray2[2] = gongxianfen2.getLiuxian();
+			xianshuCountArray2[3] = gongxianfen2.getQixian();
+			xianshuCountArray2[4] = gongxianfen2.getBaxian();
+			xianshuCountArray2[5] = gongxianfen2.getJiuxian();
+			xianshuCountArray2[6] = gongxianfen2.getShixian();
+			xianshuCountArray2[7] = gongxianfen2.getShiyixian();
+			xianshuCountArray2[8] = gongxianfen2.getShierxian();
+			WenzhouShuangkouXianshuBeishu beishu2 = new WenzhouShuangkouXianshuBeishu(xianshuCountArray2);
+			beishu2.calculate(fengding);
 			WenzhouShuangkouChaixianbufen bufen2 = new WenzhouShuangkouChaixianbufen();
 			bufen2.setTotalScore(playerTotalGongxianfenMap.get(playerId2).getValue());
 			bufen2.setScore(gongxianfen2.getValue());
 			bufen2.calculate();
 			playerResult2.setBufen(bufen2);
+			WenzhouShuangkouMingcifen mingcifen2 = new WenzhouShuangkouMingcifen();
+			mingcifen2.setMingci(3);
+			if (playerId1.equals(duijiaPlayer.getId())) {
+				mingcifen2.setYing(false);
+				mingcifen2.setShuangkou(true);
+			} else if (playerId2.equals(duijiaPlayer.getId())) {
+				mingcifen2.setYing(true);
+				mingcifen2.setDankou(true);
+				if (beishu2.getValue() > beishu.getValue()) {
+					beishu = beishu2;
+				}
+			} else {
+				mingcifen2.setYing(false);
+				mingcifen2.setPingkou(true);
+			}
+			mingcifen2.calculate();
+			playerResult2.setMingcifen(mingcifen2);
 			panPlayerResultList.add(playerResult2);
 
 			// 玩家3
 			WenzhouShuangkouPanPlayerResult playerResult3 = new WenzhouShuangkouPanPlayerResult();
 			playerResult3.setPlayerId(playerId3);
+			int[] xianshuCount3 = playerXianshuMap.get(playerId3);
+			if (xianshuCount3 == null) {
+				xianshuCount3 = new int[9];
+			}
+			WenzhouShuangkouGongxianFen gongxianfen3 = calculateTotalGongxianfenForPlayer(playerId3, xianshuCount3, ju);
+			gongxianfen3.calculate(renshu);
+			playerResult3.setGongxianfen(gongxianfen3);
+			int[] xianshuCountArray3 = new int[9];
+			xianshuCountArray3[0] = gongxianfen3.getSixian();
+			xianshuCountArray3[1] = gongxianfen3.getWuxian();
+			xianshuCountArray3[2] = gongxianfen3.getLiuxian();
+			xianshuCountArray3[3] = gongxianfen3.getQixian();
+			xianshuCountArray3[4] = gongxianfen3.getBaxian();
+			xianshuCountArray3[5] = gongxianfen3.getJiuxian();
+			xianshuCountArray3[6] = gongxianfen3.getShixian();
+			xianshuCountArray3[7] = gongxianfen3.getShiyixian();
+			xianshuCountArray3[8] = gongxianfen3.getShierxian();
+			WenzhouShuangkouXianshuBeishu beishu3 = new WenzhouShuangkouXianshuBeishu(xianshuCountArray3);
+			beishu3.calculate(fengding);
+			WenzhouShuangkouChaixianbufen bufen3 = new WenzhouShuangkouChaixianbufen();
+			bufen3.setTotalScore(playerTotalGongxianfenMap.get(playerId3).getValue());
+			bufen3.setScore(gongxianfen3.getValue());
+			bufen3.calculate();
+			playerResult3.setBufen(bufen3);
 			WenzhouShuangkouMingcifen mingcifen3 = new WenzhouShuangkouMingcifen();
 			mingcifen3.setMingci(4);
-			playerResult3.setXianshubeishu(beishu.getValue());
 			if (playerId1.equals(duijiaPlayer.getId())) {
 				mingcifen3.setYing(false);
 				mingcifen3.setShuangkou(true);
@@ -185,22 +237,19 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			} else {
 				mingcifen3.setYing(true);
 				mingcifen3.setPingkou(true);
+				if (beishu3.getValue() > beishu.getValue()) {
+					beishu = beishu3;
+				}
 			}
 			mingcifen3.calculate();
 			playerResult3.setMingcifen(mingcifen3);
-			int[] xianshuCount3 = playerXianshuMap.get(playerId3);
-			if (xianshuCount3 == null) {
-				xianshuCount3 = new int[9];
-			}
-			WenzhouShuangkouGongxianFen gongxianfen3 = calculateTotalGongxianfenForPlayer(playerId3, xianshuCount3, ju);
-			gongxianfen3.calculate(renshu);
-			playerResult3.setGongxianfen(gongxianfen3);
-			WenzhouShuangkouChaixianbufen bufen3 = new WenzhouShuangkouChaixianbufen();
-			bufen3.setTotalScore(playerTotalGongxianfenMap.get(playerId3).getValue());
-			bufen3.setScore(gongxianfen3.getValue());
-			bufen3.calculate();
-			playerResult3.setBufen(bufen3);
 			panPlayerResultList.add(playerResult3);
+
+			// 结算线数倍数
+			yingPlayerResult.setXianshubeishu(beishu.getValue());
+			playerResult1.setXianshubeishu(beishu.getValue());
+			playerResult2.setXianshubeishu(beishu.getValue());
+			playerResult3.setXianshubeishu(beishu.getValue());
 
 			// 两两结算贡献分
 			for (int i = 0; i < panPlayerResultList.size(); i++) {
