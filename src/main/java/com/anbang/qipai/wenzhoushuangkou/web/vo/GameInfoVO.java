@@ -6,7 +6,6 @@ import java.util.List;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameInfoDbo;
 
 public class GameInfoVO {
-	private String id;
 	private String gameId;
 	private int panNo;
 	private int actionNo;
@@ -18,21 +17,12 @@ public class GameInfoVO {
 	}
 
 	public GameInfoVO(PukeGameInfoDbo gameInfo) {
-		id = gameInfo.getId();
 		gameId = gameInfo.getGameId();
 		panNo = gameInfo.getPanNo();
 		actionNo = gameInfo.getActionNo();
 		playerInfos = new ArrayList<>();
 		gameInfo.getPlayerInfos().forEach((playerInfo) -> playerInfos.add(new PukeGamePlayerInfoVO(playerInfo)));
 		chaodiPlayerIdList = gameInfo.getChaodiPlayerIdList();
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getGameId() {

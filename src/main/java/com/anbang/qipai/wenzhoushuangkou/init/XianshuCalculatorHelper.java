@@ -46,7 +46,7 @@ public class XianshuCalculatorHelper {
 	 * 计算四线倍数及贡献分
 	 */
 	private static void calculateSiXian() {
-		String s = "120000001";
+		String s = "011110000";
 		// 2
 		xianshuCountMap.put("100000000", 4);
 		gongxianFenCountMap.put("100000000", 0);
@@ -239,7 +239,7 @@ public class XianshuCalculatorHelper {
 	 * 计算八线倍数及贡献分
 	 */
 	private static void calculateBaXian() {
-		// 102
+		// 103
 		xianshuCountMap.put("500100000", 8);
 		gongxianFenCountMap.put("500100000", 16);
 
@@ -536,6 +536,9 @@ public class XianshuCalculatorHelper {
 
 		xianshuCountMap.put("011110000", 8);
 		gongxianFenCountMap.put("011110000", 28);
+
+		xianshuCountMap.put("101110000", 8);
+		gongxianFenCountMap.put("101110000", 28);
 
 		xianshuCountMap.put("301110000", 8);
 		gongxianFenCountMap.put("301110000", 28);
