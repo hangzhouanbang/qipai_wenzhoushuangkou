@@ -23,6 +23,8 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.q.service.PukePlayQueryService;
 import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.PukeHistoricalJuResult;
 import com.anbang.qipai.wenzhoushuangkou.msg.service.WenzhouShuangkouGameMsgService;
 import com.anbang.qipai.wenzhoushuangkou.msg.service.WenzhouShuangkouResultMsgService;
+import com.dml.mpgame.game.Canceled;
+import com.dml.mpgame.game.Finished;
 import com.dml.mpgame.game.GameState;
 import com.dml.mpgame.game.extend.vote.FinishedByVote;
 import com.dml.mpgame.game.player.GamePlayerState;
@@ -94,7 +96,9 @@ public class GamePlayWsController extends TextWebSocketHandler {
 			gameMsgService.gamePlayerLeave(pukeGameValueObject, closedPlayerId);
 
 			String gameId = pukeGameValueObject.getId();
-			if (pukeGameValueObject.getState().name().equals(FinishedByVote.name)) {
+			if (pukeGameValueObject.getState().name().equals(FinishedByVote.name)
+					|| pukeGameValueObject.getState().name().equals(Canceled.name)
+					|| pukeGameValueObject.getState().name().equals(Finished.name)) {
 				JuResultDbo juResultDbo = pukePlayQueryService.findJuResultDbo(gameId);
 				if (juResultDbo != null) {
 					PukeGameDbo pukeGameDbo = pukeGameQueryService.findPukeGameDboById(gameId);
