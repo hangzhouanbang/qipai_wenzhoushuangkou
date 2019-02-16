@@ -19,15 +19,18 @@ public class PanActionFramePlayerViewFilter {
 		PanValueObject pan = frame.getPanActionFrame().getPanAfterAction();
 		pan.getPaiListValueObject().setPaiList(null);
 		Position duijiaPosition = null;
+		ShuangkouPlayerValueObject filterPlayer = null;
 		for (ShuangkouPlayerValueObject player : pan.getShuangkouPlayerList()) {
 			if (player.getId().equals(playerId)) {// 是自己
+				filterPlayer = player;
 				duijiaPosition = PositionUtil.nextPositionClockwise(player.getPosition());
 				duijiaPosition = PositionUtil.nextPositionClockwise(duijiaPosition);
 			}
 		}
 		if (pan.getShuangkouPlayerList().size() > 2) {
 			for (ShuangkouPlayerValueObject player : pan.getShuangkouPlayerList()) {
-				if (player.getId().equals(playerId) || (player.getPosition().equals(duijiaPosition) && shuangming)) {// 是自己或者对家
+				if (player.getId().equals(playerId) || (player.getPosition().equals(duijiaPosition) && shuangming)
+						|| (player.getPosition().equals(duijiaPosition) && filterPlayer.getTotalShoupai() == 0)) {// 是自己或者对家,或者自己出完牌可以看到对家牌
 
 					// 什么都不过滤，全要看
 				} else {// 是其他玩家
