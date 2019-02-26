@@ -715,7 +715,8 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 		filtedSolutionList.addAll(noWangShunziSolutionList);
 		filtedSolutionList.addAll(noWangLianduiSolutionList);
 		filtedSolutionList.addAll(noWangLiansanzhangSolutionList);
-		if (noWangDanzhangSolutionList.isEmpty() && bx.equals(BianXingWanFa.baibian)) {
+		if (noWangDanzhangSolutionList.isEmpty() && bx.equals(BianXingWanFa.baibian)
+				|| dianshuCountArray[13] + dianshuCountArray[14] == 1) {
 			filtedSolutionList.addAll(hasWangDanzhangSolutionList);
 		}
 		if (noWangDuiziSolutionList.isEmpty() && allShoupai.size() == 2) {
