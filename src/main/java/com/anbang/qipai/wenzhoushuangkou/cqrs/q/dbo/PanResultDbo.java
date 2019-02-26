@@ -15,6 +15,7 @@ public class PanResultDbo {
 	private List<WenzhouShuangkouPanPlayerResultDbo> playerResultList;
 	private long finishTime;
 	private PanActionFrame panActionFrame;
+	private PukeGameInfoDbo pukeGameInfoDbo;
 
 	public PanResultDbo() {
 	}
@@ -89,4 +90,13 @@ public class PanResultDbo {
 	public void setPanActionFrame(PanActionFrame panActionFrame) {
 		this.panActionFrame = panActionFrame;
 	}
+
+	public PukeGameInfoDbo getPukeGameInfoDbo() {
+		return pukeGameInfoDbo;
+	}
+
+	public void setPukeGameInfoDbo(PukeGameInfoDbo pukeGameInfoDbo) {
+		this.pukeGameInfoDbo = pukeGameInfoDbo;
+	}
+
 }

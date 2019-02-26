@@ -165,6 +165,7 @@ public class PukePlayQueryService {
 		if (wenzhouShuangkouPanResult != null) {
 			PanResultDbo panResultDbo = new PanResultDbo(gameId, wenzhouShuangkouPanResult);
 			panResultDbo.setPanActionFrame(panActionFrame);
+			panResultDbo.setPukeGameInfoDbo(pukeGameInfoDbo);
 			panResultDboDao.save(panResultDbo);
 			if (pukeActionResult.getJuResult() != null) {// 一切都结束了
 				// 要记录局结果

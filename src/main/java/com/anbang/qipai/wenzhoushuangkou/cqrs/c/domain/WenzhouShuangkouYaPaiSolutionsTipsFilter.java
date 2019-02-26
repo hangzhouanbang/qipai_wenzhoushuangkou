@@ -55,7 +55,7 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 		}
 
 		LinkedList<DaPaiDianShuSolution> danGeZhadanSolutionList = new LinkedList<>();
-		for (DaPaiDianShuSolution solution : noWangSolutionList) {
+		for (DaPaiDianShuSolution solution : noWangSolutionList) {// 没有王的炸弹
 			DianShuZu dianshuZu = solution.getDianShuZu();
 			if (dianshuZu instanceof DanGeZhadanDianShuZu) {
 				DanGeZhadanDianShuZu danGeZhadanDianShuZu1 = (DanGeZhadanDianShuZu) dianshuZu;
@@ -82,7 +82,7 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 			}
 		}
 		LinkedList<DaPaiDianShuSolution> zhadanSolutionList = new LinkedList<>();
-		for (DaPaiDianShuSolution zhadanSolution : danGeZhadanSolutionList) {
+		for (DaPaiDianShuSolution zhadanSolution : danGeZhadanSolutionList) {// 炸弹排序
 			if (zhadanSolutionList.isEmpty()) {
 				zhadanSolutionList.add(zhadanSolution);
 			} else {
@@ -697,9 +697,14 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 		}
 		if (maxZhadanSolution != null) {
 			if (!zhadanSolutionList.isEmpty()) {
-				DaPaiDianShuSolution solution = zhadanSolutionList.getLast();
-				if (!solution.getDianshuZuheIdx().equals(maxZhadanSolution.getDianshuZuheIdx())) {
+				if (zhadanSolutionList.size() == 1) {// 只有一个炸弹，把王也带上
+					zhadanSolutionList.clear();
 					zhadanSolutionList.add(maxZhadanSolution);
+				} else {
+					DaPaiDianShuSolution solution = zhadanSolutionList.getLast();
+					if (!solution.getDianshuZuheIdx().equals(maxZhadanSolution.getDianshuZuheIdx())) {
+						zhadanSolutionList.add(maxZhadanSolution);
+					}
 				}
 			} else {
 				zhadanSolutionList.add(maxZhadanSolution);
