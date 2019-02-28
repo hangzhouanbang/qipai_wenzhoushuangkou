@@ -558,7 +558,7 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 			if (dianshuZu instanceof DuiziDianShuZu) {
 				DuiziDianShuZu duiziDianShuZu = (DuiziDianShuZu) dianshuZu;
 				DianShu dianshu = duiziDianShuZu.getDianShu();
-				if (dianshuCountArray[dianshu.ordinal()] >= 2) {
+				if (dianshu.ordinal() < 13 && dianshuCountArray[dianshu.ordinal()] >= 2) {
 					continue f2;
 				}
 				if (hasWangDuiziSolutionList.isEmpty()) {
