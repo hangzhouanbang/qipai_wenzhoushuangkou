@@ -22,8 +22,8 @@ import com.dml.shuangkou.pan.PanActionFrame;
 public class PukePlayCmdServiceImpl extends CmdServiceBase implements PukePlayCmdService {
 
 	@Override
-	public PukeActionResult da(String playerId, ArrayList<Integer> paiIds, String dianshuZuheIdx, Long actionTime)
-			throws Exception {
+	public PukeActionResult da(String playerId, ArrayList<Integer> paiIds, String dianshuZuheIdx, Integer actionNo,
+			Long actionTime) throws Exception {
 		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
 		String gameId = gameServer.findBindGameId(playerId);
 		if (gameId == null) {
@@ -31,7 +31,7 @@ public class PukePlayCmdServiceImpl extends CmdServiceBase implements PukePlayCm
 		}
 
 		PukeGame pukeGame = (PukeGame) gameServer.findGame(gameId);
-		PukeActionResult pukeActionResult = pukeGame.da(playerId, paiIds, dianshuZuheIdx, actionTime);
+		PukeActionResult pukeActionResult = pukeGame.da(playerId, paiIds, dianshuZuheIdx, actionNo, actionTime);
 
 		if (pukeActionResult.getJuResult() != null) {// 全部结束
 			gameServer.finishGame(gameId);
@@ -76,7 +76,7 @@ public class PukePlayCmdServiceImpl extends CmdServiceBase implements PukePlayCm
 	}
 
 	@Override
-	public PukeActionResult guo(String playerId, Long actionTime) throws Exception {
+	public PukeActionResult guo(String playerId, Integer actionNo, Long actionTime) throws Exception {
 		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
 		String gameId = gameServer.findBindGameId(playerId);
 		if (gameId == null) {
@@ -84,7 +84,7 @@ public class PukePlayCmdServiceImpl extends CmdServiceBase implements PukePlayCm
 		}
 
 		PukeGame pukeGame = (PukeGame) gameServer.findGame(gameId);
-		PukeActionResult pukeActionResult = pukeGame.guo(playerId, actionTime);
+		PukeActionResult pukeActionResult = pukeGame.guo(playerId, actionNo, actionTime);
 
 		return pukeActionResult;
 	}
