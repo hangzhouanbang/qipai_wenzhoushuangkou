@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      #uri: mongodb://localhost:27017/qipai_wenzhoushuangkou
+      uri: mongodb://localhost:27017/qipai_wenzhoushuangkou
 
   cloud:
     stream:
@@ -53,6 +53,16 @@ spring:
                   ms: 5
                 batch:
                   size: 16384
+          watchRecord:
+            producer:
+              configuration:
+                request:
+                  timeout:
+                    ms: 30000
+                linger:
+                  ms: 5
+                batch:
+                  size: 16384
       bindings:
         memberGoldsAccounting:
           destination: memberGoldsAccounting
@@ -92,6 +102,11 @@ spring:
           contentType: application/json
         wisecrack:
           destination: wisecrack
+          contentType: application/json
+          producer:
+            partitionCount: 1
+        watchRecord:
+          destination: watchRecord
           contentType: application/json
           producer:
             partitionCount: 1

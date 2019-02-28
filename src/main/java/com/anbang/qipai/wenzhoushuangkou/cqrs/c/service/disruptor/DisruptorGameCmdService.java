@@ -14,6 +14,8 @@ import com.dml.shuangkou.wanfa.BianXingWanFa;
 import com.highto.framework.concurrent.DeferredResult;
 import com.highto.framework.ddd.CommonCommand;
 
+import java.util.Map;
+
 @Component(value = "gameCmdService")
 public class DisruptorGameCmdService extends DisruptorCmdServiceBase implements GameCmdService {
 
@@ -230,6 +232,58 @@ public class DisruptorGameCmdService extends DisruptorCmdServiceBase implements 
 			return result.getResult();
 		} catch (Exception e) {
 			throw e;
+		}
+	}
+
+	@Override
+	public PukeGameValueObject joinWatch(String playerId, String nickName, String headimgurl, String gameId) throws Exception {
+		CommonCommand cmd = new CommonCommand(GameCmdServiceImpl.class.getName(), "joinWatch", playerId, nickName, headimgurl, gameId);
+		DeferredResult<PukeGameValueObject> result = publishEvent(disruptorFactory.getCoreCmdDisruptor(), cmd,
+				() -> {
+					PukeGameValueObject majiangGameValueObject = gameCmdServiceImpl.joinWatch(cmd.getParameter(),
+							cmd.getParameter(), cmd.getParameter(), cmd.getParameter());
+					return majiangGameValueObject;
+				});
+		try {
+			return result.getResult();
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	@Override
+	public PukeGameValueObject leaveWatch(String playerId, String gameId) throws Exception {
+		CommonCommand cmd = new CommonCommand(GameCmdServiceImpl.class.getName(), "leaveWatch", playerId, gameId);
+		DeferredResult<PukeGameValueObject> result = publishEvent(disruptorFactory.getCoreCmdDisruptor(), cmd,
+				() -> {
+					PukeGameValueObject majiangGameValueObject = gameCmdServiceImpl.leaveWatch(cmd.getParameter(),
+							cmd.getParameter());
+					return majiangGameValueObject;
+				});
+		try {
+			return result.getResult();
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	@Override
+	public Map getwatch(String gameId){
+		return gameCmdServiceImpl.getwatch(gameId);
+	}
+
+	@Override
+	public void recycleWatch(String gameId){
+		CommonCommand cmd = new CommonCommand(GameCmdServiceImpl.class.getName(), "recycleWatch",gameId);
+		DeferredResult<Object> result = publishEvent(disruptorFactory.getCoreCmdDisruptor(), cmd,
+				() -> {
+					gameCmdServiceImpl.recycleWatch(cmd.getParameter());
+					return null;
+				});
+		try {
+			result.getResult();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 }

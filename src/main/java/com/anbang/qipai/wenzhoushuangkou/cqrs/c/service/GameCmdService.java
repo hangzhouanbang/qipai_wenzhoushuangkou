@@ -7,6 +7,8 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.wanfa.FaPai;
 import com.dml.mpgame.game.GameValueObject;
 import com.dml.shuangkou.wanfa.BianXingWanFa;
 
+import java.util.Map;
+
 public interface GameCmdService {
 
 	PukeGameValueObject newPukeGame(String gameId, String playerId, Integer panshu, Integer renshu, BianXingWanFa bx,
@@ -38,4 +40,12 @@ public interface GameCmdService {
 	GameValueObject finishGameImmediately(String gameId) throws Exception;
 
 	void bindPlayer(String playerId, String gameId);
+
+	PukeGameValueObject joinWatch (String playerId, String nickName, String headimgurl, String gameId) throws Exception;
+
+	PukeGameValueObject leaveWatch (String playerId, String gameId) throws Exception;
+
+	Map getwatch (String gameId);
+
+	void recycleWatch(String gameId);
 }
