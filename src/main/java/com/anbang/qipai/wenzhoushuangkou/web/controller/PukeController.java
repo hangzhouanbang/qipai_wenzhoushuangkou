@@ -222,7 +222,7 @@ public class PukeController {
 
 	@RequestMapping(value = "/da")
 	@ResponseBody
-	public CommonVO da(String token, @RequestBody List<Integer> paiIds, String dianshuZuheIdx, int actionNo) {
+	public CommonVO da(String token, @RequestBody List<Integer> paiIds, String dianshuZuheIdx) {
 		long startTime = System.currentTimeMillis();
 		CommonVO vo = new CommonVO();
 		Map data = new HashMap();
@@ -242,7 +242,7 @@ public class PukeController {
 
 		PukeActionResult pukeActionResult;
 		try {
-			pukeActionResult = pukePlayCmdService.da(playerId, new ArrayList<>(paiIds), dianshuZuheIdx, actionNo,
+			pukeActionResult = pukePlayCmdService.da(playerId, new ArrayList<>(paiIds), dianshuZuheIdx,
 					System.currentTimeMillis());
 		} catch (Exception e) {
 			vo.setSuccess(false);
@@ -306,7 +306,7 @@ public class PukeController {
 
 	@RequestMapping(value = "/guo")
 	@ResponseBody
-	public CommonVO guo(String token, int actionNo) {
+	public CommonVO guo(String token) {
 		long startTime = System.currentTimeMillis();
 		CommonVO vo = new CommonVO();
 		Map data = new HashMap();
@@ -326,7 +326,7 @@ public class PukeController {
 
 		PukeActionResult pukeActionResult;
 		try {
-			pukeActionResult = pukePlayCmdService.guo(playerId, actionNo, System.currentTimeMillis());
+			pukeActionResult = pukePlayCmdService.guo(playerId, System.currentTimeMillis());
 		} catch (Exception e) {
 			vo.setSuccess(false);
 			vo.setMsg(e.getClass().getName());

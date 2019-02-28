@@ -20,13 +20,13 @@ public class DisruptorPukePlayCmdService extends DisruptorCmdServiceBase impleme
 	private PukePlayCmdServiceImpl pukePlayCmdServiceImpl;
 
 	@Override
-	public PukeActionResult da(String playerId, ArrayList<Integer> paiIds, String dianshuZuheIdx, Integer actionNo,
-			Long actionTime) throws Exception {
+	public PukeActionResult da(String playerId, ArrayList<Integer> paiIds, String dianshuZuheIdx, Long actionTime)
+			throws Exception {
 		CommonCommand cmd = new CommonCommand(PukePlayCmdServiceImpl.class.getName(), "da", playerId, paiIds,
-				dianshuZuheIdx, actionNo, actionTime);
+				dianshuZuheIdx, actionTime);
 		DeferredResult<PukeActionResult> result = publishEvent(disruptorFactory.getCoreCmdDisruptor(), cmd, () -> {
 			PukeActionResult pukeActionResult = pukePlayCmdServiceImpl.da(cmd.getParameter(), cmd.getParameter(),
-					cmd.getParameter(), cmd.getParameter(), cmd.getParameter());
+					cmd.getParameter(), cmd.getParameter());
 			return pukeActionResult;
 		});
 		try {
@@ -67,12 +67,10 @@ public class DisruptorPukePlayCmdService extends DisruptorCmdServiceBase impleme
 	}
 
 	@Override
-	public PukeActionResult guo(String playerId, Integer actionNo, Long actionTime) throws Exception {
-		CommonCommand cmd = new CommonCommand(PukePlayCmdServiceImpl.class.getName(), "guo", playerId, actionNo,
-				actionTime);
+	public PukeActionResult guo(String playerId, Long actionTime) throws Exception {
+		CommonCommand cmd = new CommonCommand(PukePlayCmdServiceImpl.class.getName(), "guo", playerId, actionTime);
 		DeferredResult<PukeActionResult> result = publishEvent(disruptorFactory.getCoreCmdDisruptor(), cmd, () -> {
-			PukeActionResult pukeActionResult = pukePlayCmdServiceImpl.guo(cmd.getParameter(), cmd.getParameter(),
-					cmd.getParameter());
+			PukeActionResult pukeActionResult = pukePlayCmdServiceImpl.guo(cmd.getParameter(), cmd.getParameter());
 			return pukeActionResult;
 		});
 		try {
