@@ -379,11 +379,11 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		return ju.getCurrentPan().findLatestActionFrame();
 	}
 
-	public PukeActionResult da(String playerId, List<Integer> paiIds, String dianshuZuheIdx, int actionNo,
-			long actionTime) throws Exception {
+	public PukeActionResult da(String playerId, List<Integer> paiIds, String dianshuZuheIdx, long actionTime)
+			throws Exception {
 		PanActionFrame panActionFrame = null;
 
-		panActionFrame = ju.da(playerId, paiIds, dianshuZuheIdx, actionNo, actionTime);
+		panActionFrame = ju.da(playerId, paiIds, dianshuZuheIdx, actionTime);
 
 		PukeActionResult result = new PukeActionResult();
 		result.setPanActionFrame(panActionFrame);
@@ -489,9 +489,9 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		return result;
 	}
 
-	public PukeActionResult guo(String playerId, int actionNo, long actionTime) throws Exception {
+	public PukeActionResult guo(String playerId, long actionTime) throws Exception {
 		PanActionFrame panActionFrame = null;
-		panActionFrame = ju.guo(playerId, actionNo, actionTime);
+		panActionFrame = ju.guo(playerId, actionTime);
 
 		PukeActionResult result = new PukeActionResult();
 		result.setPanActionFrame(panActionFrame);
