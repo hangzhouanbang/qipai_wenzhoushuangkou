@@ -14,6 +14,7 @@ import com.anbang.qipai.wenzhoushuangkou.plan.service.PlayerInfoService;
 import com.anbang.qipai.wenzhoushuangkou.utils.CommonVoUtil;
 import com.anbang.qipai.wenzhoushuangkou.websocket.WatchQueryScope;
 import com.dml.mpgame.game.*;
+import com.dml.mpgame.game.watch.WatchRecord;
 import com.dml.mpgame.game.watch.Watcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -208,7 +209,16 @@ public class GameController {
 
 		//返回查询token
 		String token = playerAuthService.newSessionForPlayer(playerId);
-		watchRecordMsgService.joinWatch(gameId, playerId);
+
+		Watcher watcher = new Watcher();
+		watcher.setId(playerId);
+		watcher.setHeadimgurl(headimgurl);
+		watcher.setNickName(nickName);
+		watcher.setState("join");
+		watcher.setJoinTime(System.currentTimeMillis());
+		WatchRecord watchRecord = pukeGameQueryService.saveWatchRecord(gameId,watcher);
+		watchRecordMsgService.joinWatch(watchRecord);
+
 		Map data = new HashMap();
 		data.put("token", token);
 		return CommonVoUtil.success(data, "join watch success");
@@ -250,7 +260,14 @@ public class GameController {
 			}
 		}
 
-		watchRecordMsgService.leaveWatch(gameId, playerId);
+		Watcher watcher = new Watcher();
+		watcher.setId(playerId);
+		watcher.setHeadimgurl(headimgurl);
+		watcher.setNickName(nickName);
+		watcher.setState("leave");
+		WatchRecord watchRecord = pukeGameQueryService.saveWatchRecord(gameId,watcher);
+		watchRecordMsgService.leaveWatch(watchRecord);
+
 		return CommonVoUtil.success("leave success");
 	}
 
