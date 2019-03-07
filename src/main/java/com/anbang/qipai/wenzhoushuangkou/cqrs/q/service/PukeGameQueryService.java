@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.WatchRecordDao;
-import com.dml.mpgame.game.watch.WatchRecord;
-import com.dml.mpgame.game.watch.Watcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +13,15 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.WenzhouShuangkouJu
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.GameFinishVoteDboDao;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.JuResultDboDao;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.PukeGameDboDao;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dao.WatchRecordDao;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.GameFinishVoteDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.JuResultDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameDbo;
 import com.anbang.qipai.wenzhoushuangkou.plan.bean.PlayerInfo;
 import com.anbang.qipai.wenzhoushuangkou.plan.dao.PlayerInfoDao;
 import com.dml.mpgame.game.extend.vote.GameFinishVoteValueObject;
+import com.dml.mpgame.game.watch.WatchRecord;
+import com.dml.mpgame.game.watch.Watcher;
 
 @Service
 public class PukeGameQueryService {
@@ -67,12 +67,14 @@ public class PukeGameQueryService {
 		PukeGameDbo pukeGameDbo = new PukeGameDbo(pukeGame, playerInfoMap);
 		pukeGameDboDao.save(pukeGameDbo);
 
-		gameFinishVoteDboDao.removeGameFinishVoteDboByGameId(pukeGame.getId());
 		GameFinishVoteValueObject gameFinishVoteValueObject = pukeGame.getVote();
-		GameFinishVoteDbo gameFinishVoteDbo = new GameFinishVoteDbo();
-		gameFinishVoteDbo.setVote(gameFinishVoteValueObject);
-		gameFinishVoteDbo.setGameId(pukeGame.getId());
-		gameFinishVoteDboDao.save(gameFinishVoteDbo);
+		if (gameFinishVoteValueObject != null) {
+			gameFinishVoteDboDao.removeGameFinishVoteDboByGameId(pukeGame.getId());
+			GameFinishVoteDbo gameFinishVoteDbo = new GameFinishVoteDbo();
+			gameFinishVoteDbo.setVote(gameFinishVoteValueObject);
+			gameFinishVoteDbo.setGameId(pukeGame.getId());
+			gameFinishVoteDboDao.save(gameFinishVoteDbo);
+		}
 
 		WenzhouShuangkouJuResult wenzhouShuangkouJuResult = (WenzhouShuangkouJuResult) pukeGame.getJuResult();
 		if (wenzhouShuangkouJuResult != null) {
@@ -85,7 +87,9 @@ public class PukeGameQueryService {
 		pukeGameDboDao.updatePlayerOnlineState(pukeGameValueObject.getId(), playerId,
 				pukeGameValueObject.findPlayerOnlineState(playerId));
 		GameFinishVoteValueObject gameFinishVoteValueObject = pukeGameValueObject.getVote();
-		gameFinishVoteDboDao.update(pukeGameValueObject.getId(), gameFinishVoteValueObject);
+		if (gameFinishVoteValueObject != null) {
+			gameFinishVoteDboDao.update(pukeGameValueObject.getId(), gameFinishVoteValueObject);
+		}
 	}
 
 	public void finish(PukeGameValueObject pukeGameValueObject) {
@@ -102,9 +106,9 @@ public class PukeGameQueryService {
 		PukeGameDbo pukeGameDbo = new PukeGameDbo(pukeGameValueObject, playerInfoMap);
 		pukeGameDboDao.save(pukeGameDbo);
 
-		WenzhouShuangkouJuResult wenzhouShuangkouJuResult = (WenzhouShuangkouJuResult) pukeGameValueObject
-				.getJuResult();
-		if (wenzhouShuangkouJuResult != null) {
+		if (pukeGameValueObject.getJuResult() != null) {
+			WenzhouShuangkouJuResult wenzhouShuangkouJuResult = (WenzhouShuangkouJuResult) pukeGameValueObject
+					.getJuResult();
 			JuResultDbo juResultDbo = new JuResultDbo(pukeGameValueObject.getId(), null, wenzhouShuangkouJuResult);
 			juResultDboDao.save(juResultDbo);
 		}
@@ -120,9 +124,9 @@ public class PukeGameQueryService {
 		PukeGameDbo pukeGameDbo = new PukeGameDbo(pukeGameValueObject, playerInfoMap);
 		pukeGameDboDao.save(pukeGameDbo);
 
-		WenzhouShuangkouJuResult wenzhouShuangkouJuResult = (WenzhouShuangkouJuResult) pukeGameValueObject
-				.getJuResult();
-		if (wenzhouShuangkouJuResult != null) {
+		if (pukeGameValueObject.getJuResult() != null) {
+			WenzhouShuangkouJuResult wenzhouShuangkouJuResult = (WenzhouShuangkouJuResult) pukeGameValueObject
+					.getJuResult();
 			JuResultDbo juResultDbo = new JuResultDbo(pukeGameValueObject.getId(), null, wenzhouShuangkouJuResult);
 			juResultDboDao.save(juResultDbo);
 		}
@@ -132,7 +136,7 @@ public class PukeGameQueryService {
 		return gameFinishVoteDboDao.findByGameId(gameId);
 	}
 
-	public WatchRecord saveWatchRecord(String gameId, Watcher watcher){
+	public WatchRecord saveWatchRecord(String gameId, Watcher watcher) {
 		WatchRecord watchRecord = watchRecordDao.findByGameId(gameId);
 		if (watchRecord == null) {
 			WatchRecord record = new WatchRecord();
@@ -147,7 +151,7 @@ public class PukeGameQueryService {
 
 		watchRecord.getWatchers().add(watcher);
 		for (Watcher list : watchRecord.getWatchers()) {
-			if (list.getId().equals(watcher.getId())){
+			if (list.getId().equals(watcher.getId())) {
 				list.setState(watcher.getState());
 				watchRecordDao.save(watchRecord);
 				return watchRecord;
@@ -159,8 +163,8 @@ public class PukeGameQueryService {
 		return watchRecord;
 	}
 
-	public boolean findByPlayerId(String gameId, String playerId){
-		if (watchRecordDao.findByPlayerId(gameId,playerId) != null) {
+	public boolean findByPlayerId(String gameId, String playerId) {
+		if (watchRecordDao.findByPlayerId(gameId, playerId) != null) {
 			return true;
 		}
 		return false;

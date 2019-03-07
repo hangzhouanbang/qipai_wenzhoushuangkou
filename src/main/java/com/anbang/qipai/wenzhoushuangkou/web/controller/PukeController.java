@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.GameCmdService;
-import com.anbang.qipai.wenzhoushuangkou.websocket.WatchQueryScope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +19,7 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ChaodiResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.PukeActionResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ReadyToNextPanResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.StartChaodi;
+import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.GameCmdService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.PlayerAuthService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.PukePlayCmdService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.JuResultDbo;
@@ -40,6 +39,7 @@ import com.anbang.qipai.wenzhoushuangkou.web.vo.PanActionFrameVO;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.PanResultVO;
 import com.anbang.qipai.wenzhoushuangkou.websocket.GamePlayWsNotifier;
 import com.anbang.qipai.wenzhoushuangkou.websocket.QueryScope;
+import com.anbang.qipai.wenzhoushuangkou.websocket.WatchQueryScope;
 import com.dml.mpgame.game.Playing;
 import com.dml.shuangkou.pan.PanActionFrame;
 
@@ -75,9 +75,6 @@ public class PukeController {
 
 	/**
 	 * 当前盘我应该看到的所有信息
-	 * 
-	 * @param token
-	 * @return
 	 */
 	@RequestMapping(value = "/pan_action_frame_for_me")
 	@ResponseBody
@@ -443,11 +440,11 @@ public class PukeController {
 	/**
 	 * 通知观战者
 	 */
-	private void hintWatcher (String gameId, String flag) {
-		Map<String ,Object> map = gameCmdService.getwatch(gameId);
+	private void hintWatcher(String gameId, String flag) {
+		Map<String, Object> map = gameCmdService.getwatch(gameId);
 		if (!CollectionUtils.isEmpty(map)) {
 			List<String> playerIds = map.entrySet().stream().map(e -> e.getKey()).collect(Collectors.toList());
-			wsNotifier.notifyToWatchQuery(playerIds,flag);
+			wsNotifier.notifyToWatchQuery(playerIds, flag);
 			if (WatchQueryScope.watchEnd.name().equals(flag)) {
 				gameCmdService.recycleWatch(gameId);
 			}

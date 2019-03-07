@@ -17,6 +17,7 @@ import com.dml.puke.wanfa.dianshu.dianshuzu.SanzhangDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.ShunziDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.ZhadanDianShuZu;
 import com.dml.puke.wanfa.dianshu.dianshuzu.comparator.ZhadanComparator;
+import com.dml.shuangkou.pai.dianshuzu.LianXuZhadanDianShuZu;
 import com.dml.shuangkou.player.action.da.YaPaiSolutionsTipsFilter;
 import com.dml.shuangkou.player.action.da.solution.DaPaiDianShuSolution;
 import com.dml.shuangkou.wanfa.BianXingWanFa;
@@ -689,8 +690,21 @@ public class WenzhouShuangkouYaPaiSolutionsTipsFilter implements YaPaiSolutionsT
 			DianShuZu dianshuZu = solution.getDianShuZu();
 			if (dianshuZu instanceof ZhadanDianShuZu) {
 				ZhadanDianShuZu zhadanDianShuZu1 = (ZhadanDianShuZu) dianshuZu;
-				if (maxZhadanSolution == null || zhadanComparator.compare(zhadanDianShuZu1,
-						(ZhadanDianShuZu) maxZhadanSolution.getDianShuZu()) > 0) {
+				if (maxZhadanSolution != null) {
+					int comparator = zhadanComparator.compare(zhadanDianShuZu1,
+							(ZhadanDianShuZu) maxZhadanSolution.getDianShuZu());
+					if (comparator > 0) {
+						maxZhadanSolution = solution;
+					} else if (comparator == 0 && maxZhadanSolution.getDianShuZu() instanceof LianXuZhadanDianShuZu
+							&& zhadanDianShuZu1 instanceof LianXuZhadanDianShuZu) {
+						LianXuZhadanDianShuZu lianXuZhadanDianShuZu1 = (LianXuZhadanDianShuZu) maxZhadanSolution
+								.getDianShuZu();
+						LianXuZhadanDianShuZu lianXuZhadanDianShuZu2 = (LianXuZhadanDianShuZu) zhadanDianShuZu1;
+						if (lianXuZhadanDianShuZu2.getZhangshu() > lianXuZhadanDianShuZu1.getZhangshu()) {
+							maxZhadanSolution = solution;
+						}
+					}
+				} else if (maxZhadanSolution == null) {
 					maxZhadanSolution = solution;
 				}
 			}
