@@ -177,18 +177,20 @@ public class GamePlayWsController extends TextWebSocketHandler {
 			wsNotifier.notifyToWatchQuery(playerIds,"bindPlayer");
 			return;
 		}
-		if (pukeGameQueryService.findByPlayerId(gameId,playerId)) {
-			List<String> playerIds = new ArrayList<>();
-			playerIds.add(playerId);
-			wsNotifier.notifyToWatchQuery(playerIds, WatchQueryScope.watchEnd.name());
-			return;
-		}
 
 		// 给用户安排query scope
 		PukeGameDbo pukeGameDbo = pukeGameQueryService.findPukeGameDboById(gameId);
 		if (pukeGameDbo != null) {
-
 			GameState gameState = pukeGameDbo.getState();
+
+			//观战结束
+			if (pukeGameQueryService.findByPlayerId(gameId,playerId) &&  gameState.name().equals(Finished.name)) {
+				List<String> playerIds = new ArrayList<>();
+				playerIds.add(playerId);
+				wsNotifier.notifyToWatchQuery(playerIds, WatchQueryScope.watchEnd.name());
+				return;
+			}
+
 			GamePlayerState playerState = pukeGameDbo.findPlayer(playerId).getState();
 
 			List<QueryScope> scopes = QueryScope.scopesForState(gameState, playerState);
