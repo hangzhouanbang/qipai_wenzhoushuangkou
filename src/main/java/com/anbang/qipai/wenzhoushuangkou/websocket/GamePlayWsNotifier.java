@@ -210,30 +210,6 @@ public class GamePlayWsNotifier {
 		});
 	}
 
-	// /**
-	// * 观战结束(待废弃)
-	// */
-	// public void notifyToWatchEnd(List<String> playerIds) {
-	// executorService.submit(() -> {
-	// for (String playerId : playerIds) {
-	// CommonMO mo = new CommonMO();
-	// mo.setMsg("watch end");
-	// Map data = new HashMap();
-	// data.put("scope","watch end");
-	// mo.setData(data);
-	// String payLoad = gson.toJson(mo);
-	// String sessionId = playerIdSessionIdMap.get(playerId);
-	// if (sessionId == null) {
-	// continue;
-	// }
-	// WebSocketSession session = idSessionMap.get(sessionId);
-	// if (session != null) {
-	// sendMessage(session, payLoad);
-	// }
-	// }
-	// });
-	// }
-
 	private void sendMessage(WebSocketSession session, String message) {
 		synchronized (session) {
 			try {
