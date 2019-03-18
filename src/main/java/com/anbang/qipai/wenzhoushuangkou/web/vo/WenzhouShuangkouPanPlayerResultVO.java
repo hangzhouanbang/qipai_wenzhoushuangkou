@@ -24,11 +24,12 @@ public class WenzhouShuangkouPanPlayerResultVO {
 	}
 
 	public WenzhouShuangkouPanPlayerResultVO(PukeGamePlayerDbo playerDbo,
-			WenzhouShuangkouPanPlayerResultDbo panPlayerResult, ShuangkouPlayerValueObject shuangkouPlayerValueObject) {
+			WenzhouShuangkouPanPlayerResultDbo panPlayerResult) {
 		playerId = playerDbo.getPlayerId();
 		nickname = playerDbo.getNickname();
 		headimgurl = playerDbo.getHeadimgurl();
 		chaodi = panPlayerResult.getPlayerResult().isChaodi();
+		ShuangkouPlayerValueObject shuangkouPlayerValueObject = panPlayerResult.getPlayer();
 		List<List<Integer>> shoupaiIdListForSortList = shuangkouPlayerValueObject.getShoupaiIdListForSortList();
 		if (shoupaiIdListForSortList == null || shoupaiIdListForSortList.isEmpty()) {
 			allShoupai = new ShuangkouPlayerShoupaiVO(shuangkouPlayerValueObject.getAllShoupai(),

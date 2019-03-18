@@ -6,7 +6,6 @@ import java.util.List;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PanResultDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGameDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.WenzhouShuangkouPanPlayerResultDbo;
-import com.dml.shuangkou.player.ShuangkouPlayerValueObject;
 
 public class PanResultVO {
 
@@ -28,20 +27,11 @@ public class PanResultVO {
 
 	public PanResultVO(PanResultDbo panResultDbo, PukeGameDbo pukeGameDbo) {
 		List<WenzhouShuangkouPanPlayerResultDbo> list = panResultDbo.getPlayerResultList();
-		List<ShuangkouPlayerValueObject> players = panResultDbo.getPanActionFrame().getPanAfterAction()
-				.getShuangkouPlayerList();
+		playerResultList = new ArrayList<>();
 		if (list != null) {
-			playerResultList = new ArrayList<>(list.size());
 			list.forEach((panPlayerResult) -> {
-				ShuangkouPlayerValueObject shuangkouPlayer = null;
-				for (ShuangkouPlayerValueObject player : players) {
-					if (player.getId().equals(panPlayerResult.getPlayerId())) {
-						shuangkouPlayer = player;
-						break;
-					}
-				}
 				playerResultList.add(new WenzhouShuangkouPanPlayerResultVO(
-						pukeGameDbo.findPlayer(panPlayerResult.getPlayerId()), panPlayerResult, shuangkouPlayer));
+						pukeGameDbo.findPlayer(panPlayerResult.getPlayerId()), panPlayerResult));
 			});
 		}
 		chaodi = panResultDbo.isChaodi();
