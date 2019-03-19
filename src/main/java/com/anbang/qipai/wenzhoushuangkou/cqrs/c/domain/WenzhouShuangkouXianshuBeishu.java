@@ -33,12 +33,16 @@ public class WenzhouShuangkouXianshuBeishu {
 		shierxian = xianshuCount[8];
 	}
 
-	public void calculate(boolean fengding) {
+	public void calculate(boolean bxfd, boolean jxfd, boolean sxfd) {
 		int beishu = 1;
 		String key = "" + sixian + wuxian + liuxian + qixian + baxian + jiuxian + shixian + shiyixian + shierxian;
 		Integer score = XianshuCalculatorHelper.getXianshuCountMap().get(key);
 		if (score != null && score > 4) {
-			if (fengding && score > 8) {
+			if (sxfd && score > 10) {
+				beishu = 2 << 5;
+			} else if (jxfd && score > 9) {
+				beishu = 2 << 4;
+			} else if (bxfd && score > 8) {
 				beishu = 2 << 3;
 			} else {
 				beishu = 2 << (score - 5);

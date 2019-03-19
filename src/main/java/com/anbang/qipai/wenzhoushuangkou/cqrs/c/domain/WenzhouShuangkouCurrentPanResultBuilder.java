@@ -21,7 +21,9 @@ import com.dml.shuangkou.wanfa.BianXingWanFa;
 public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResultBuilder {
 	private int renshu;
 	private BianXingWanFa bx;
-	private boolean fengding;
+	private boolean bxfd;// 八线封顶
+	private boolean jxfd;// 九线封顶
+	private boolean sxfd;// 十线封顶
 	private Map<String, WenzhouShuangkouGongxianFen> playerTotalGongxianfenMap = new HashMap<>();
 	private List<String> chaodiPlayerIdList = new ArrayList<>();
 
@@ -86,7 +88,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			xianshuCountArray[7] = gongxianfen.getShiyixian();
 			xianshuCountArray[8] = gongxianfen.getShierxian();
 			WenzhouShuangkouXianshuBeishu yingBeishu = new WenzhouShuangkouXianshuBeishu(xianshuCountArray);
-			yingBeishu.calculate(fengding);
+			yingBeishu.calculate(bxfd, jxfd, sxfd);
 			beishu = yingBeishu;
 			WenzhouShuangkouChaixianbufen bufen = new WenzhouShuangkouChaixianbufen();
 			bufen.setTotalScore(playerTotalGongxianfenMap.get(yingPlayerId).getValue());
@@ -128,7 +130,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			xianshuCountArray1[7] = gongxianfen1.getShiyixian();
 			xianshuCountArray1[8] = gongxianfen1.getShierxian();
 			WenzhouShuangkouXianshuBeishu beishu1 = new WenzhouShuangkouXianshuBeishu(xianshuCountArray1);
-			beishu1.calculate(fengding);
+			beishu1.calculate(bxfd, jxfd, sxfd);
 			WenzhouShuangkouChaixianbufen bufen1 = new WenzhouShuangkouChaixianbufen();
 			bufen1.setTotalScore(playerTotalGongxianfenMap.get(playerId1).getValue());
 			bufen1.setScore(gongxianfen1.getValue());
@@ -174,7 +176,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			xianshuCountArray2[7] = gongxianfen2.getShiyixian();
 			xianshuCountArray2[8] = gongxianfen2.getShierxian();
 			WenzhouShuangkouXianshuBeishu beishu2 = new WenzhouShuangkouXianshuBeishu(xianshuCountArray2);
-			beishu2.calculate(fengding);
+			beishu2.calculate(bxfd, jxfd, sxfd);
 			WenzhouShuangkouChaixianbufen bufen2 = new WenzhouShuangkouChaixianbufen();
 			bufen2.setTotalScore(playerTotalGongxianfenMap.get(playerId2).getValue());
 			bufen2.setScore(gongxianfen2.getValue());
@@ -220,7 +222,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			xianshuCountArray3[7] = gongxianfen3.getShiyixian();
 			xianshuCountArray3[8] = gongxianfen3.getShierxian();
 			WenzhouShuangkouXianshuBeishu beishu3 = new WenzhouShuangkouXianshuBeishu(xianshuCountArray3);
-			beishu3.calculate(fengding);
+			beishu3.calculate(bxfd, jxfd, sxfd);
 			WenzhouShuangkouChaixianbufen bufen3 = new WenzhouShuangkouChaixianbufen();
 			bufen3.setTotalScore(playerTotalGongxianfenMap.get(playerId3).getValue());
 			bufen3.setScore(gongxianfen3.getValue());
@@ -364,7 +366,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			xianshuCountArray[7] = gongxianfen.getShiyixian();
 			xianshuCountArray[8] = gongxianfen.getShierxian();
 			WenzhouShuangkouXianshuBeishu beishu = new WenzhouShuangkouXianshuBeishu(xianshuCountArray);
-			beishu.calculate(fengding);
+			beishu.calculate(bxfd, jxfd, sxfd);
 			yingPlayerResult.setXianshubeishu(beishu.getValue());
 			WenzhouShuangkouChaixianbufen bufen = new WenzhouShuangkouChaixianbufen();
 			yingPlayerResult.setBufen(bufen);
@@ -538,12 +540,28 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 		this.chaodiPlayerIdList = chaodiPlayerIdList;
 	}
 
-	public boolean isFengding() {
-		return fengding;
+	public boolean isBxfd() {
+		return bxfd;
 	}
 
-	public void setFengding(boolean fengding) {
-		this.fengding = fengding;
+	public void setBxfd(boolean bxfd) {
+		this.bxfd = bxfd;
+	}
+
+	public boolean isJxfd() {
+		return jxfd;
+	}
+
+	public void setJxfd(boolean jxfd) {
+		this.jxfd = jxfd;
+	}
+
+	public boolean isSxfd() {
+		return sxfd;
+	}
+
+	public void setSxfd(boolean sxfd) {
+		this.sxfd = sxfd;
 	}
 
 }

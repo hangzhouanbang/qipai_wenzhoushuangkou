@@ -41,7 +41,7 @@ public class CaseTest1 {
 		xianshuCountArray[7] = fen.getShiyixian();
 		xianshuCountArray[8] = fen.getShierxian();
 		WenzhouShuangkouXianshuBeishu beishu = new WenzhouShuangkouXianshuBeishu(xianshuCountArray);
-		beishu.calculate(fengding);
+		beishu.calculate(fengding, fengding, fengding);
 		long s3 = System.currentTimeMillis();
 		System.out.println("最佳线数组合：");
 		for (int i = 0; i < xianshuCountArray.length; i++) {

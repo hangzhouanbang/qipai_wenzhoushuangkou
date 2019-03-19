@@ -72,7 +72,9 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 	private BianXingWanFa bx;
 	private boolean chaodi;
 	private boolean shuangming;
-	private boolean fengding;
+	private boolean bxfd;// 八线封顶
+	private boolean jxfd;// 九线封顶
+	private boolean sxfd;// 十线封顶
 	private ChaPai chapai;
 	private FaPai fapai;
 	private Ju ju;
@@ -288,7 +290,9 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		panResultBuilder.setPlayerTotalGongxianfenMap(totalGongxianfenMap);
 		panResultBuilder.setRenshu(renshu);
 		panResultBuilder.setBx(bx);
-		panResultBuilder.setFengding(fengding);
+		panResultBuilder.setBxfd(bxfd);
+		panResultBuilder.setJxfd(jxfd);
+		panResultBuilder.setSxfd(sxfd);
 		ju.setCurrentPanResultBuilder(panResultBuilder);
 		// 生成局结果
 		ju.setJuResultBuilder(new WenzhouShuangkouJuResultBuilder());
@@ -397,7 +401,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		for (String pid : allPlayerIds()) {
 			int[] xianshuCount = playerXianshuMap.get(pid);
 			WenzhouShuangkouXianshuBeishu xianshubeishu = new WenzhouShuangkouXianshuBeishu(xianshuCount);
-			xianshubeishu.calculate(fengding);
+			xianshubeishu.calculate(bxfd, jxfd, sxfd);
 			maxXianshuMap.put(pid, xianshubeishu);
 			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
 			gongxianfen.calculateXianshu();
@@ -704,12 +708,28 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		this.shuangming = shuangming;
 	}
 
-	public boolean isFengding() {
-		return fengding;
+	public boolean isBxfd() {
+		return bxfd;
 	}
 
-	public void setFengding(boolean fengding) {
-		this.fengding = fengding;
+	public void setBxfd(boolean bxfd) {
+		this.bxfd = bxfd;
+	}
+
+	public boolean isJxfd() {
+		return jxfd;
+	}
+
+	public void setJxfd(boolean jxfd) {
+		this.jxfd = jxfd;
+	}
+
+	public boolean isSxfd() {
+		return sxfd;
+	}
+
+	public void setSxfd(boolean sxfd) {
+		this.sxfd = sxfd;
 	}
 
 	public ChaPai getChapai() {

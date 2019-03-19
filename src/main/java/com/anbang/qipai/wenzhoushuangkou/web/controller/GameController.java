@@ -7,15 +7,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.alibaba.fastjson.JSON;
-import com.anbang.qipai.wenzhoushuangkou.msg.service.*;
-import com.anbang.qipai.wenzhoushuangkou.plan.bean.PlayerInfo;
-import com.anbang.qipai.wenzhoushuangkou.plan.service.PlayerInfoService;
-import com.anbang.qipai.wenzhoushuangkou.utils.CommonVoUtil;
-import com.anbang.qipai.wenzhoushuangkou.websocket.WatchQueryScope;
-import com.dml.mpgame.game.*;
-import com.dml.mpgame.game.watch.WatchRecord;
-import com.dml.mpgame.game.watch.Watcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ReadyForGameResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.state.PukeGamePlayerChaodiState;
@@ -43,8 +35,16 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGamePlayerDbo;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.service.PukeGameQueryService;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.q.service.PukePlayQueryService;
 import com.anbang.qipai.wenzhoushuangkou.msg.msjobj.PukeHistoricalJuResult;
+import com.anbang.qipai.wenzhoushuangkou.msg.service.MemberGoldsMsgService;
+import com.anbang.qipai.wenzhoushuangkou.msg.service.WatchRecordMsgService;
+import com.anbang.qipai.wenzhoushuangkou.msg.service.WenzhouShuangkouGameMsgService;
+import com.anbang.qipai.wenzhoushuangkou.msg.service.WenzhouShuangkouResultMsgService;
+import com.anbang.qipai.wenzhoushuangkou.msg.service.WiseCrackMsgServcie;
 import com.anbang.qipai.wenzhoushuangkou.plan.bean.MemberGoldBalance;
+import com.anbang.qipai.wenzhoushuangkou.plan.bean.PlayerInfo;
 import com.anbang.qipai.wenzhoushuangkou.plan.service.MemberGoldBalanceService;
+import com.anbang.qipai.wenzhoushuangkou.plan.service.PlayerInfoService;
+import com.anbang.qipai.wenzhoushuangkou.utils.CommonVoUtil;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.CommonVO;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.GameFinishVoteVO;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.GameVO;
@@ -52,10 +52,18 @@ import com.anbang.qipai.wenzhoushuangkou.web.vo.PanActionFrameVO;
 import com.anbang.qipai.wenzhoushuangkou.web.vo.PanResultVO;
 import com.anbang.qipai.wenzhoushuangkou.websocket.GamePlayWsNotifier;
 import com.anbang.qipai.wenzhoushuangkou.websocket.QueryScope;
+import com.anbang.qipai.wenzhoushuangkou.websocket.WatchQueryScope;
+import com.dml.mpgame.game.Canceled;
+import com.dml.mpgame.game.CrowdLimitsException;
+import com.dml.mpgame.game.Finished;
+import com.dml.mpgame.game.GameNotFoundException;
+import com.dml.mpgame.game.Playing;
 import com.dml.mpgame.game.extend.fpmpv.VoteNotPassWhenWaitingNextPan;
 import com.dml.mpgame.game.extend.vote.FinishedByVote;
 import com.dml.mpgame.game.extend.vote.VoteNotPassWhenPlaying;
 import com.dml.mpgame.game.player.GamePlayerOnlineState;
+import com.dml.mpgame.game.watch.WatchRecord;
+import com.dml.mpgame.game.watch.Watcher;
 import com.dml.shuangkou.wanfa.BianXingWanFa;
 
 @RestController
@@ -106,11 +114,11 @@ public class GameController {
 	@RequestMapping(value = "/newgame")
 	@ResponseBody
 	public CommonVO newgame(String playerId, int panshu, int renshu, BianXingWanFa bx, boolean chaodi,
-			boolean shuangming, boolean fengding, ChaPai chapai, FaPai fapai) {
+			boolean shuangming, boolean bxfd, boolean jxfd, boolean sxfd, ChaPai chapai, FaPai fapai) {
 		CommonVO vo = new CommonVO();
 		String newGameId = UUID.randomUUID().toString();
 		PukeGameValueObject pukeGameValueObject = gameCmdService.newPukeGame(newGameId, playerId, panshu, renshu, bx,
-				false, shuangming, fengding, chapai, fapai);
+				false, shuangming, bxfd, jxfd, sxfd, chapai, fapai);
 		pukeGameQueryService.newPukeGame(pukeGameValueObject);
 		String token = playerAuthService.newSessionForPlayer(playerId);
 		Map data = new HashMap();
@@ -126,11 +134,11 @@ public class GameController {
 	@RequestMapping(value = "/newgame_leave_quit")
 	@ResponseBody
 	public CommonVO newgame_leave_quit(String playerId, int panshu, int renshu, BianXingWanFa bx, boolean chaodi,
-			boolean shuangming, boolean fengding, ChaPai chapai, FaPai fapai) {
+			boolean shuangming, boolean bxfd, boolean jxfd, boolean sxfd, ChaPai chapai, FaPai fapai) {
 		CommonVO vo = new CommonVO();
 		String newGameId = UUID.randomUUID().toString();
 		PukeGameValueObject pukeGameValueObject = gameCmdService.newPukeGameLeaveAndQuit(newGameId, playerId, panshu,
-				renshu, bx, chaodi, shuangming, fengding, chapai, fapai);
+				renshu, bx, chaodi, shuangming, bxfd, jxfd, sxfd, chapai, fapai);
 		pukeGameQueryService.newPukeGame(pukeGameValueObject);
 		String token = playerAuthService.newSessionForPlayer(playerId);
 		Map data = new HashMap();
@@ -180,7 +188,7 @@ public class GameController {
 		String nickName = "";
 		String headimgurl = "";
 
-		//加入观战
+		// 加入观战
 		try {
 			PlayerInfo playerInfo = playerInfoService.findPlayerInfoById(playerId);
 			nickName = playerInfo.getNickname();
@@ -207,7 +215,7 @@ public class GameController {
 			}
 		}
 
-		//返回查询token
+		// 返回查询token
 		String token = playerAuthService.newSessionForPlayer(playerId);
 
 		Watcher watcher = new Watcher();
@@ -216,7 +224,7 @@ public class GameController {
 		watcher.setNickName(nickName);
 		watcher.setState("join");
 		watcher.setJoinTime(System.currentTimeMillis());
-		WatchRecord watchRecord = pukeGameQueryService.saveWatchRecord(gameId,watcher);
+		WatchRecord watchRecord = pukeGameQueryService.saveWatchRecord(gameId, watcher);
 		watchRecordMsgService.joinWatch(watchRecord);
 
 		Map data = new HashMap();
@@ -229,7 +237,7 @@ public class GameController {
 	 */
 	@RequestMapping(value = "/leavewatch")
 	@ResponseBody
-	public CommonVO leaveWatch(String token,String gameId) {
+	public CommonVO leaveWatch(String token, String gameId) {
 		String playerId = playerAuthService.getPlayerIdByToken(token);
 		if (playerId == null) {
 			return CommonVoUtil.error("invalid token");
@@ -248,7 +256,7 @@ public class GameController {
 
 		// 通知游戏玩家
 		for (String otherPlayerId : pukeGameValueObject.allPlayerIds()) {
-			wsNotifier.notifyWatchInfo(otherPlayerId, "leave",playerId, nickName, headimgurl);
+			wsNotifier.notifyWatchInfo(otherPlayerId, "leave", playerId, nickName, headimgurl);
 		}
 		// 通知观战者
 		Map<String, Watcher> map = gameCmdService.getwatch(gameId);
@@ -265,7 +273,7 @@ public class GameController {
 		watcher.setHeadimgurl(headimgurl);
 		watcher.setNickName(nickName);
 		watcher.setState("leave");
-		WatchRecord watchRecord = pukeGameQueryService.saveWatchRecord(gameId,watcher);
+		WatchRecord watchRecord = pukeGameQueryService.saveWatchRecord(gameId, watcher);
 		watchRecordMsgService.leaveWatch(watchRecord);
 
 		return CommonVoUtil.success("leave success");
@@ -278,7 +286,7 @@ public class GameController {
 	@ResponseBody
 	public CommonVO queryWatch(String gameId) {
 		Map<String, Watcher> map = gameCmdService.getwatch(gameId);
-		if (CollectionUtils.isEmpty(map)){
+		if (CollectionUtils.isEmpty(map)) {
 			return CommonVoUtil.success("queryWatch success");
 		}
 		return CommonVoUtil.success(map.values(), "queryWatch success");
@@ -436,7 +444,7 @@ public class GameController {
 	@RequestMapping(value = "/backtogame")
 	@ResponseBody
 	public CommonVO backtogame(String playerId, String gameId) {
-		//是观战返回新token
+		// 是观战返回新token
 		Map<String, Watcher> map = gameCmdService.getwatch(gameId);
 		if (!CollectionUtils.isEmpty(map) && map.containsKey(playerId)) {
 			List<String> playerIds = new ArrayList<>();
@@ -446,7 +454,7 @@ public class GameController {
 			Map data = new HashMap();
 			String token = playerAuthService.newSessionForPlayer(playerId);
 			data.put("token", token);
-			return CommonVoUtil.success(data,"backtogame success");
+			return CommonVoUtil.success(data, "backtogame success");
 		}
 
 		CommonVO vo = new CommonVO();
@@ -912,8 +920,8 @@ public class GameController {
 				wsNotifier.notifyToListenSpeak(player.getPlayerId(), wordId, playerId, true);
 			}
 		}
-		//观战者接收语音
-		Map<String ,Object> map = gameCmdService.getwatch(gameId);
+		// 观战者接收语音
+		Map<String, Object> map = gameCmdService.getwatch(gameId);
 		if (!CollectionUtils.isEmpty(map)) {
 			List<String> playerIds = map.entrySet().stream().map(e -> e.getKey()).collect(Collectors.toList());
 			for (String list : playerIds) {
@@ -930,8 +938,8 @@ public class GameController {
 	/**
 	 * 通知观战者
 	 */
-	private void hintWatcher (String gameId, String flag) {
-		Map<String ,Object> map = gameCmdService.getwatch(gameId);
+	private void hintWatcher(String gameId, String flag) {
+		Map<String, Object> map = gameCmdService.getwatch(gameId);
 		if (!CollectionUtils.isEmpty(map)) {
 			List<String> playerIds = map.entrySet().stream().map(e -> e.getKey()).collect(Collectors.toList());
 			wsNotifier.notifyToWatchQuery(playerIds, flag);

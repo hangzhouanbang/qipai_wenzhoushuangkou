@@ -1,6 +1,7 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.impl;
 
-import com.dml.mpgame.game.watch.WatcherMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
 
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGame;
@@ -28,18 +29,18 @@ import com.dml.mpgame.game.leave.PlayerGameLeaveStrategy;
 import com.dml.mpgame.game.leave.PlayerLeaveCancelGameGameLeaveStrategy;
 import com.dml.mpgame.game.player.PlayerFinished;
 import com.dml.mpgame.game.ready.FixedNumberOfPlayersGameReadyStrategy;
+import com.dml.mpgame.game.watch.WatcherMap;
 import com.dml.mpgame.server.GameServer;
 import com.dml.shuangkou.pan.PanActionFrame;
 import com.dml.shuangkou.wanfa.BianXingWanFa;
-
-import java.util.Map;
 
 @Component
 public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService {
 
 	@Override
 	public PukeGameValueObject newPukeGame(String gameId, String playerId, Integer panshu, Integer renshu,
-			BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean fengding, ChaPai chapai, FaPai fapai) {
+			BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean bxfd, Boolean jxfd, Boolean sxfd,
+			ChaPai chapai, FaPai fapai) {
 		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
 
 		PukeGame newGame = new PukeGame();
@@ -50,7 +51,9 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 		newGame.setBx(bx);
 		newGame.setChaodi(chaodi);
 		newGame.setShuangming(shuangming);
-		newGame.setFengding(fengding);
+		newGame.setBxfd(bxfd);
+		newGame.setJxfd(jxfd);
+		newGame.setSxfd(sxfd);
 		newGame.setChapai(chapai);
 		newGame.setFapai(fapai);
 
@@ -77,7 +80,8 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 
 	@Override
 	public PukeGameValueObject newPukeGameLeaveAndQuit(String gameId, String playerId, Integer panshu, Integer renshu,
-			BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean fengding, ChaPai chapai, FaPai fapai) {
+			BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean bxfd, Boolean jxfd, Boolean sxfd,
+			ChaPai chapai, FaPai fapai) {
 		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
 
 		PukeGame newGame = new PukeGame();
@@ -88,7 +92,9 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 		newGame.setBx(bx);
 		newGame.setChaodi(chaodi);
 		newGame.setShuangming(shuangming);
-		newGame.setFengding(fengding);
+		newGame.setBxfd(bxfd);
+		newGame.setJxfd(jxfd);
+		newGame.setSxfd(sxfd);
 		newGame.setChapai(chapai);
 		newGame.setFapai(fapai);
 
@@ -252,7 +258,8 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 	}
 
 	@Override
-	public PukeGameValueObject joinWatch(String playerId, String nickName, String headimgurl, String gameId) throws Exception {
+	public PukeGameValueObject joinWatch(String playerId, String nickName, String headimgurl, String gameId)
+			throws Exception {
 		WatcherMap watcherMap = singletonEntityRepository.getEntity(WatcherMap.class);
 		watcherMap.join(playerId, nickName, headimgurl, gameId);
 		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);

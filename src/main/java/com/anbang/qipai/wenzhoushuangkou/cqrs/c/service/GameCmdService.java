@@ -1,5 +1,7 @@
 package com.anbang.qipai.wenzhoushuangkou.cqrs.c.service;
 
+import java.util.Map;
+
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ReadyForGameResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.wanfa.ChaPai;
@@ -7,15 +9,14 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.wanfa.FaPai;
 import com.dml.mpgame.game.GameValueObject;
 import com.dml.shuangkou.wanfa.BianXingWanFa;
 
-import java.util.Map;
-
 public interface GameCmdService {
 
 	PukeGameValueObject newPukeGame(String gameId, String playerId, Integer panshu, Integer renshu, BianXingWanFa bx,
-			Boolean chaodi, Boolean shuangming, Boolean fengding, ChaPai chapai, FaPai fapai);
+			Boolean chaodi, Boolean shuangming, Boolean bxfd, Boolean jxfd, Boolean sxfd, ChaPai chapai, FaPai fapai);
 
 	PukeGameValueObject newPukeGameLeaveAndQuit(String gameId, String playerId, Integer panshu, Integer renshu,
-			BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean fengding, ChaPai chapai, FaPai fapai);
+			BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean bxfd, Boolean jxfd, Boolean sxfd,
+			ChaPai chapai, FaPai fapai);
 
 	PukeGameValueObject joinGame(String playerId, String gameId) throws Exception;
 
@@ -41,11 +42,11 @@ public interface GameCmdService {
 
 	void bindPlayer(String playerId, String gameId);
 
-	PukeGameValueObject joinWatch (String playerId, String nickName, String headimgurl, String gameId) throws Exception;
+	PukeGameValueObject joinWatch(String playerId, String nickName, String headimgurl, String gameId) throws Exception;
 
-	PukeGameValueObject leaveWatch (String playerId, String gameId) throws Exception;
+	PukeGameValueObject leaveWatch(String playerId, String gameId) throws Exception;
 
-	Map getwatch (String gameId);
+	Map getwatch(String gameId);
 
 	void recycleWatch(String gameId);
 }

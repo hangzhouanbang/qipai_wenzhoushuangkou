@@ -28,7 +28,9 @@ public class GameVO {
 	private BianXingWanFa bx;
 	private boolean chaodi;
 	private boolean shuangming;
-	private boolean fengding;
+	private boolean bxfd;// 八线封顶
+	private boolean jxfd;// 九线封顶
+	private boolean sxfd;// 十线封顶
 	private ChaPai chapai;
 	private FaPai fapai;
 	private int panNo;
@@ -42,7 +44,9 @@ public class GameVO {
 		bx = pukeGameDbo.getBx();
 		chaodi = pukeGameDbo.isChaodi();
 		shuangming = pukeGameDbo.isShuangming();
-		fengding = pukeGameDbo.isFengding();
+		bxfd = pukeGameDbo.isBxfd();
+		jxfd = pukeGameDbo.isJxfd();
+		sxfd = pukeGameDbo.isSxfd();
 		chapai = pukeGameDbo.getChapai();
 		fapai = pukeGameDbo.getFapai();
 		playerList = new ArrayList<>();
@@ -127,12 +131,28 @@ public class GameVO {
 		this.shuangming = shuangming;
 	}
 
-	public boolean isFengding() {
-		return fengding;
+	public boolean isBxfd() {
+		return bxfd;
 	}
 
-	public void setFengding(boolean fengding) {
-		this.fengding = fengding;
+	public void setBxfd(boolean bxfd) {
+		this.bxfd = bxfd;
+	}
+
+	public boolean isJxfd() {
+		return jxfd;
+	}
+
+	public void setJxfd(boolean jxfd) {
+		this.jxfd = jxfd;
+	}
+
+	public boolean isSxfd() {
+		return sxfd;
+	}
+
+	public void setSxfd(boolean sxfd) {
+		this.sxfd = sxfd;
 	}
 
 	public ChaPai getChapai() {
