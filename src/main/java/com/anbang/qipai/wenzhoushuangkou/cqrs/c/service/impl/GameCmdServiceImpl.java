@@ -13,7 +13,6 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.wanfa.FaPai;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.service.GameCmdService;
 import com.dml.mpgame.game.Finished;
 import com.dml.mpgame.game.Game;
-import com.dml.mpgame.game.GameValueObject;
 import com.dml.mpgame.game.Playing;
 import com.dml.mpgame.game.WaitingStart;
 import com.dml.mpgame.game.extend.fpmpv.back.OnlineGameBackStrategy;
@@ -209,7 +208,7 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 	}
 
 	@Override
-	public GameValueObject finishGameImmediately(String gameId) throws Exception {
+	public PukeGameValueObject finishGameImmediately(String gameId) throws Exception {
 		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
 		PukeGame pukeGame = (PukeGame) gameServer.findGame(gameId);
 		pukeGame.finish();

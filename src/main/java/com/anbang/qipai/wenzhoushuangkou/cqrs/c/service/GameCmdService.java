@@ -6,7 +6,6 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.result.ReadyForGameResult;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.wanfa.ChaPai;
 import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.wanfa.FaPai;
-import com.dml.mpgame.game.GameValueObject;
 import com.dml.shuangkou.wanfa.BianXingWanFa;
 
 public interface GameCmdService {
@@ -38,7 +37,7 @@ public interface GameCmdService {
 
 	PukeGameValueObject voteToFinishByTimeOver(String playerId, Long currentTime) throws Exception;
 
-	GameValueObject finishGameImmediately(String gameId) throws Exception;
+	PukeGameValueObject finishGameImmediately(String gameId) throws Exception;
 
 	void bindPlayer(String playerId, String gameId);
 
