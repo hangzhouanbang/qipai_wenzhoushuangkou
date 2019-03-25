@@ -22,6 +22,7 @@ public class PukeGameDbo {
 	private boolean bxfd;// 八线封顶
 	private boolean jxfd;// 九线封顶
 	private boolean sxfd;// 十线封顶
+	private boolean gxjb;// 贡献分减半
 	private ChaPai chapai;
 	private FaPai fapai;
 	private GameState state;// 原来是 waitingStart, playing, waitingNextPan, finished
@@ -41,6 +42,7 @@ public class PukeGameDbo {
 		bxfd = pukeGame.isBxfd();
 		jxfd = pukeGame.isJxfd();
 		sxfd = pukeGame.isSxfd();
+		gxjb = pukeGame.isGxjb();
 		chapai = pukeGame.getChapai();
 		fapai = pukeGame.getFapai();
 		state = pukeGame.getState();
@@ -184,6 +186,14 @@ public class PukeGameDbo {
 
 	public void setPlayers(List<PukeGamePlayerDbo> players) {
 		this.players = players;
+	}
+
+	public boolean isGxjb() {
+		return gxjb;
+	}
+
+	public void setGxjb(boolean gxjb) {
+		this.gxjb = gxjb;
 	}
 
 }

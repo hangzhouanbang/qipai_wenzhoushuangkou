@@ -31,6 +31,7 @@ public class GameVO {
 	private boolean bxfd;// 八线封顶
 	private boolean jxfd;// 九线封顶
 	private boolean sxfd;// 十线封顶
+	private boolean gxjb;// 贡献分减半
 	private ChaPai chapai;
 	private FaPai fapai;
 	private int panNo;
@@ -47,6 +48,7 @@ public class GameVO {
 		bxfd = pukeGameDbo.isBxfd();
 		jxfd = pukeGameDbo.isJxfd();
 		sxfd = pukeGameDbo.isSxfd();
+		gxjb = pukeGameDbo.isGxjb();
 		chapai = pukeGameDbo.getChapai();
 		fapai = pukeGameDbo.getFapai();
 		playerList = new ArrayList<>();
@@ -193,6 +195,14 @@ public class GameVO {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public boolean isGxjb() {
+		return gxjb;
+	}
+
+	public void setGxjb(boolean gxjb) {
+		this.gxjb = gxjb;
 	}
 
 }

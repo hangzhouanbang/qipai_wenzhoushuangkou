@@ -11,11 +11,12 @@ import com.dml.shuangkou.wanfa.BianXingWanFa;
 public interface GameCmdService {
 
 	PukeGameValueObject newPukeGame(String gameId, String playerId, Integer panshu, Integer renshu, BianXingWanFa bx,
-			Boolean chaodi, Boolean shuangming, Boolean bxfd, Boolean jxfd, Boolean sxfd, ChaPai chapai, FaPai fapai);
+			Boolean chaodi, Boolean shuangming, Boolean bxfd, Boolean jxfd, Boolean sxfd, Boolean gxjb, ChaPai chapai,
+			FaPai fapai);
 
 	PukeGameValueObject newPukeGameLeaveAndQuit(String gameId, String playerId, Integer panshu, Integer renshu,
 			BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean bxfd, Boolean jxfd, Boolean sxfd,
-			ChaPai chapai, FaPai fapai);
+			Boolean gxjb, ChaPai chapai, FaPai fapai);
 
 	PukeGameValueObject joinGame(String playerId, String gameId) throws Exception;
 
@@ -39,7 +40,7 @@ public interface GameCmdService {
 
 	PukeGameValueObject finishGameImmediately(String gameId) throws Exception;
 
-	void bindPlayer(String playerId, String gameId);
+	void bindPlayer(String playerId, String gameId) throws Exception;
 
 	PukeGameValueObject joinWatch(String playerId, String nickName, String headimgurl, String gameId) throws Exception;
 

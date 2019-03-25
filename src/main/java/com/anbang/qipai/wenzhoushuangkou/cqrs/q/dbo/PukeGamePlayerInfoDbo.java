@@ -5,6 +5,7 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.c.domain.WenzhouShuangkouGongxianF
 public class PukeGamePlayerInfoDbo {
 	private String playerId;
 	private int gongxianfen;
+	private int detal;
 	private int maxXianshu;
 	private int otherMaxXianshu;
 	private WenzhouShuangkouGongxianFen totalGongxianfen;
@@ -65,6 +66,14 @@ public class PukeGamePlayerInfoDbo {
 
 	public void setMingci(int mingci) {
 		this.mingci = mingci;
+	}
+
+	public int getDetal() {
+		return detal;
+	}
+
+	public void setDetal(int detal) {
+		this.detal = detal;
 	}
 
 }

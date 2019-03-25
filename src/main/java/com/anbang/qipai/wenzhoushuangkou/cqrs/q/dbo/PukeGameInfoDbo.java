@@ -35,6 +35,7 @@ public class PukeGameInfoDbo {
 		Map<String, Integer> playerMaxXianshuMap = pukeGame.getPlayerMaxXianshuMap();
 		Map<String, Integer> playerOtherMaxXianshuMap = pukeGame.getPlayerOtherMaxXianshuMap();
 		Map<String, Integer> playeGongxianfenMap = pukeGame.getPlayeGongxianfenMap();
+		Map<String, Integer> playeGongxianfenDetalMap = pukeGame.getPlayerGongxianfenDetalMap();
 		Map<String, WenzhouShuangkouGongxianFen> playeTotalGongxianfenMap = pukeGame.getPlayeTotalGongxianfenMap();
 		Map<String, Integer> playerMingciMap = pukeGame.getPlayerMingciMap();
 		for (GamePlayerValueObject playerValueObject : pukeGame.getPlayers()) {
@@ -47,6 +48,9 @@ public class PukeGameInfoDbo {
 			}
 			if (playeGongxianfenMap.get(playerId) != null) {
 				playerInfoDbo.setGongxianfen(playeGongxianfenMap.get(playerId));
+			}
+			if (playeGongxianfenDetalMap.get(playerId) != null) {
+				playerInfoDbo.setDetal(playeGongxianfenDetalMap.get(playerId));
 			}
 			if (playeTotalGongxianfenMap.get(playerId) != null) {
 				playerInfoDbo.setTotalGongxianfen(playeTotalGongxianfenMap.get(playerId));

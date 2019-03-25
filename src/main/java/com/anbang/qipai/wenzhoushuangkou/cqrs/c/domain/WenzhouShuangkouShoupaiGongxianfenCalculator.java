@@ -29,9 +29,9 @@ public class WenzhouShuangkouShoupaiGongxianfenCalculator {
 	 * 计算玩家总贡献分
 	 */
 	public static WenzhouShuangkouGongxianFen calculateTotalGongxianfenWithShouPaiForPlayer(String playerId, Ju ju,
-			BianXingWanFa bx, int[] xianshuArray) {
+			BianXingWanFa bx, int[] xianshuArray, boolean gxjb) {
 		WenzhouShuangkouGongxianFen bestGongxianfen = new WenzhouShuangkouGongxianFen(xianshuArray);
-		bestGongxianfen.calculateXianshu();
+		bestGongxianfen.calculateXianshu(gxjb);
 		Pan currentPan = ju.getCurrentPan();
 		ShuangkouPlayer player = currentPan.findPlayer(playerId);
 		Map<Integer, PukePai> allShoupai = player.getAllShoupai();
@@ -49,14 +49,14 @@ public class WenzhouShuangkouShoupaiGongxianfenCalculator {
 			int[] xianshuCount1 = xianshuArray.clone();
 			xianshuCount1[2] += 1;
 			WenzhouShuangkouGongxianFen gongxianfen = calculatePaiXingWithWangDang(dianshuAmountArray.clone(), 1, 0, 1,
-					bx, xianshuCount1);
+					bx, xianshuCount1, gxjb);
 			if (bestGongxianfen == null || bestGongxianfen.getValue() < gongxianfen.getValue()) {
 				bestGongxianfen = gongxianfen;
 			}
 			int[] xianshuCount2 = xianshuArray.clone();
 			xianshuCount2[3] += 1;
 			WenzhouShuangkouGongxianFen gongxianfen1 = calculatePaiXingWithoutWangDang(dianshuAmountArray, bx,
-					xianshuCount2);
+					xianshuCount2, gxjb);
 			if (bestGongxianfen == null || bestGongxianfen.getValue() < gongxianfen1.getValue()) {
 				bestGongxianfen = gongxianfen1;
 			}
@@ -68,7 +68,7 @@ public class WenzhouShuangkouShoupaiGongxianfenCalculator {
 			int[] xianshuCount3 = xianshuArray.clone();
 			xianshuCount3[2] += 1;
 			WenzhouShuangkouGongxianFen gongxianfen = calculatePaiXingWithoutWangDang(dianshuAmountArray, bx,
-					xianshuCount3);
+					xianshuCount3, gxjb);
 			if (bestGongxianfen == null || bestGongxianfen.getValue() < gongxianfen.getValue()) {
 				bestGongxianfen = gongxianfen;
 			}
@@ -97,14 +97,14 @@ public class WenzhouShuangkouShoupaiGongxianfenCalculator {
 		if (wangCount > 0) {
 			// 有王牌
 			WenzhouShuangkouGongxianFen gongxianfen = calculatePaiXingWithWangDang(dianshuCountArray, wangCount,
-					xiaowangCount, dawangCount, bx, xianshuArray);
+					xiaowangCount, dawangCount, bx, xianshuArray, gxjb);
 			if (bestGongxianfen == null || bestGongxianfen.getValue() < gongxianfen.getValue()) {
 				bestGongxianfen = gongxianfen;
 			}
 		} else {
 			// 没有王牌
 			WenzhouShuangkouGongxianFen gongxianfen = calculatePaiXingWithoutWangDang(dianshuCountArray, bx,
-					xianshuArray);
+					xianshuArray, gxjb);
 			if (bestGongxianfen == null || bestGongxianfen.getValue() < gongxianfen.getValue()) {
 				bestGongxianfen = gongxianfen;
 			}
@@ -113,13 +113,13 @@ public class WenzhouShuangkouShoupaiGongxianfenCalculator {
 	}
 
 	private static WenzhouShuangkouGongxianFen calculatePaiXingWithoutWangDang(int[] dianshuCountArray,
-			BianXingWanFa bx, int[] xianshuArray) {
+			BianXingWanFa bx, int[] xianshuArray, boolean gxjb) {
 		PaiXing paiXing = new PaiXing();
 		// 普通炸弹
 		paiXing.setDanGeZhadanDianShuZuList(DianShuZuCalculator.calculateDanGeZhadanDianShuZu(dianshuCountArray));
 		// 连续炸弹
 		paiXing.setLianXuZhadanDianShuZuList(DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray));
-		return calculateBestGongxianfen(dianshuCountArray.clone(), bx, paiXing, xianshuArray);
+		return calculateBestGongxianfen(dianshuCountArray.clone(), bx, paiXing, xianshuArray, gxjb);
 	}
 
 	private static List<DianShu> verifyDangFa(int wangCount, int[] dianshuCountArray) {
@@ -133,9 +133,9 @@ public class WenzhouShuangkouShoupaiGongxianfenCalculator {
 	}
 
 	private static WenzhouShuangkouGongxianFen calculatePaiXingWithWangDang(int[] dianshuCountArray, int wangCount,
-			int xiaowangCount, int dawangCount, BianXingWanFa bx, int[] xianshuArray) {
+			int xiaowangCount, int dawangCount, BianXingWanFa bx, int[] xianshuArray, boolean gxjb) {
 		WenzhouShuangkouGongxianFen bestGongxianfen = new WenzhouShuangkouGongxianFen(xianshuArray);
-		bestGongxianfen.calculateXianshu();
+		bestGongxianfen.calculateXianshu(gxjb);
 		// 计算王可以当哪些牌，提高性能
 		List<DianShu> kedangDianShuList = verifyDangFa(wangCount, dianshuCountArray);
 		// 循环王的各种当法
@@ -194,7 +194,7 @@ public class WenzhouShuangkouShoupaiGongxianfenCalculator {
 				paiXing.setLianXuZhadanDianShuZuList(
 						DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray));
 				WenzhouShuangkouGongxianFen gongxianfen = calculateBestGongxianfen(dianshuCountArray.clone(), bx,
-						paiXing, xianshuArray.clone());
+						paiXing, xianshuArray.clone(), gxjb);
 				if (bestGongxianfen == null || bestGongxianfen.getValue() < gongxianfen.getValue()) {
 					bestGongxianfen = gongxianfen;
 				}
@@ -226,7 +226,7 @@ public class WenzhouShuangkouShoupaiGongxianfenCalculator {
 	 * 根据牌型和牌数计算最佳贡献分
 	 */
 	private static WenzhouShuangkouGongxianFen calculateBestGongxianfen(int[] dianshuCountArray, BianXingWanFa bx,
-			PaiXing paixing, int[] xianshuArray) {
+			PaiXing paixing, int[] xianshuArray, boolean gxjb) {
 		List<ZhadanDianShuZu> zhadanDianShuZuList = new ArrayList<>();
 		List<DanGeZhadanDianShuZu> danGeZhadanDianShuZuList = paixing.getDanGeZhadanDianShuZuList();
 		zhadanDianShuZuList.addAll(danGeZhadanDianShuZuList);
@@ -234,17 +234,17 @@ public class WenzhouShuangkouShoupaiGongxianfenCalculator {
 		zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
 
 		WenzhouShuangkouGongxianFen bestGongxianfen = new WenzhouShuangkouGongxianFen();
-		bestGongxianfen.calculateXianshu();
-		calculateGongxianfen(dianshuCountArray, bx, xianshuArray, zhadanDianShuZuList, bestGongxianfen);
+		bestGongxianfen.calculateXianshu(gxjb);
+		calculateGongxianfen(dianshuCountArray, bx, xianshuArray, zhadanDianShuZuList, bestGongxianfen, gxjb);
 
 		return bestGongxianfen;
 	}
 
 	private static void calculateGongxianfen(int[] dianshuCountArray, BianXingWanFa bx, int[] xianshuArray,
-			List<ZhadanDianShuZu> zhadanDianShuZuList, WenzhouShuangkouGongxianFen bestGongxianfen) {
+			List<ZhadanDianShuZu> zhadanDianShuZuList, WenzhouShuangkouGongxianFen bestGongxianfen, boolean gxjb) {
 		if (zhadanDianShuZuList.isEmpty()) {
 			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuArray);
-			gongxianfen.calculateXianshu();
+			gongxianfen.calculateXianshu(gxjb);
 			if (bestGongxianfen == null || bestGongxianfen.getValue() < gongxianfen.getValue()) {
 				bestGongxianfen.setSixian(gongxianfen.getSixian());
 				bestGongxianfen.setWuxian(gongxianfen.getWuxian());
@@ -267,7 +267,8 @@ public class WenzhouShuangkouShoupaiGongxianfenCalculator {
 				int[] dianshuCountArray1 = removeZhadan(dianshuCountArray.clone(), zhadanDianShuZu);
 				List<ZhadanDianShuZu> zhadanDianShuZuList1 = calculateTotalGongxianfenForDianshuCountArray(
 						dianshuCountArray1, bx);
-				calculateGongxianfen(dianshuCountArray1, bx, xianshuArray1, zhadanDianShuZuList1, bestGongxianfen);
+				calculateGongxianfen(dianshuCountArray1, bx, xianshuArray1, zhadanDianShuZuList1, bestGongxianfen,
+						gxjb);
 			}
 		}
 	}

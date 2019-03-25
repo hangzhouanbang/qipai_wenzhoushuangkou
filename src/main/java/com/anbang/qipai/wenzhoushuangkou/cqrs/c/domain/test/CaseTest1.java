@@ -62,7 +62,7 @@ public class CaseTest1 {
 	private static WenzhouShuangkouGongxianFen calculateTotalGongxianfenWithShouPaiForPlayer() {
 		int[] xianshuArray = new int[9];
 		WenzhouShuangkouGongxianFen bestGongxianfen = new WenzhouShuangkouGongxianFen(xianshuArray);
-		bestGongxianfen.calculateXianshu();
+		bestGongxianfen.calculateXianshu(false);
 		int[] dianshuCountArray = { 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 0, 0, 2, 2 };
 		int xiaowangCount = dianshuCountArray[13];
 		int dawangCount = dianshuCountArray[14];
@@ -159,7 +159,7 @@ public class CaseTest1 {
 	private static WenzhouShuangkouGongxianFen calculatePaiXingWithWangDang(int[] dianshuCountArray, int wangCount,
 			int xiaowangCount, int dawangCount, BianXingWanFa bx, int[] xianshuArray) {
 		WenzhouShuangkouGongxianFen bestGongxianfen = new WenzhouShuangkouGongxianFen(xianshuArray);
-		bestGongxianfen.calculateXianshu();
+		bestGongxianfen.calculateXianshu(false);
 		// 计算王可以当哪些牌，提高性能
 		List<DianShu> kedangDianShuList = verifyDangFa(wangCount, dianshuCountArray);
 		// 循环王的各种当法
@@ -259,7 +259,7 @@ public class CaseTest1 {
 		zhadanDianShuZuList.addAll(lianXuZhadanDianShuZuList);
 
 		WenzhouShuangkouGongxianFen bestGongxianfen = new WenzhouShuangkouGongxianFen(xianshuArray);
-		bestGongxianfen.calculateXianshu();
+		bestGongxianfen.calculateXianshu(false);
 		calculateGongxianfen(dianshuCountArray, bx, xianshuArray, zhadanDianShuZuList, bestGongxianfen);
 		// System.out.println(renshu++);
 		return bestGongxianfen;
@@ -269,7 +269,7 @@ public class CaseTest1 {
 			List<ZhadanDianShuZu> zhadanDianShuZuList, WenzhouShuangkouGongxianFen bestGongxianfen) {
 		if (zhadanDianShuZuList.isEmpty()) {
 			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuArray);
-			gongxianfen.calculateXianshu();
+			gongxianfen.calculateXianshu(false);
 			if (bestGongxianfen == null || bestGongxianfen.getValue() < gongxianfen.getValue()) {
 				bestGongxianfen.setSixian(gongxianfen.getSixian());
 				bestGongxianfen.setWuxian(gongxianfen.getWuxian());

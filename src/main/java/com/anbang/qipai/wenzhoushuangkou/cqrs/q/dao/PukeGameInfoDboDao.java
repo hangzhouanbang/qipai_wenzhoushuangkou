@@ -8,4 +8,5 @@ public interface PukeGameInfoDboDao {
 	void save(PukeGameInfoDbo dbo);
 
 	List<PukeGameInfoDbo> findByGameIdAndPanNo(String gameId, int panNo);
+
 }

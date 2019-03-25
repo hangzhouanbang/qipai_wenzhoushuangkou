@@ -24,6 +24,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 	private boolean bxfd;// 八线封顶
 	private boolean jxfd;// 九线封顶
 	private boolean sxfd;// 十线封顶
+	private boolean gxjb;// 贡献分减半
 	private Map<String, WenzhouShuangkouGongxianFen> playerTotalGongxianfenMap = new HashMap<>();
 	private List<String> chaodiPlayerIdList = new ArrayList<>();
 
@@ -504,7 +505,7 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 
 	private WenzhouShuangkouGongxianFen calculateTotalGongxianfenForPlayer(String playerId, int[] xianshuCount, Ju ju) {
 		WenzhouShuangkouGongxianFen bestGongxianfen = WenzhouShuangkouShoupaiGongxianfenCalculator
-				.calculateTotalGongxianfenWithShouPaiForPlayer(playerId, ju, bx, xianshuCount);
+				.calculateTotalGongxianfenWithShouPaiForPlayer(playerId, ju, bx, xianshuCount, gxjb);
 		return bestGongxianfen;
 	}
 
@@ -562,6 +563,14 @@ public class WenzhouShuangkouCurrentPanResultBuilder implements CurrentPanResult
 
 	public void setSxfd(boolean sxfd) {
 		this.sxfd = sxfd;
+	}
+
+	public boolean isGxjb() {
+		return gxjb;
+	}
+
+	public void setGxjb(boolean gxjb) {
+		this.gxjb = gxjb;
 	}
 
 }

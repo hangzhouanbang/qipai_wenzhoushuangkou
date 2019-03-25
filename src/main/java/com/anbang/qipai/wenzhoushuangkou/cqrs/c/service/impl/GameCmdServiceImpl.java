@@ -39,7 +39,7 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 	@Override
 	public PukeGameValueObject newPukeGame(String gameId, String playerId, Integer panshu, Integer renshu,
 			BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean bxfd, Boolean jxfd, Boolean sxfd,
-			ChaPai chapai, FaPai fapai) {
+			Boolean gxjb, ChaPai chapai, FaPai fapai) {
 		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
 
 		PukeGame newGame = new PukeGame();
@@ -53,6 +53,7 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 		newGame.setBxfd(bxfd);
 		newGame.setJxfd(jxfd);
 		newGame.setSxfd(sxfd);
+		newGame.setGxjb(gxjb);
 		newGame.setChapai(chapai);
 		newGame.setFapai(fapai);
 
@@ -80,7 +81,7 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 	@Override
 	public PukeGameValueObject newPukeGameLeaveAndQuit(String gameId, String playerId, Integer panshu, Integer renshu,
 			BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean bxfd, Boolean jxfd, Boolean sxfd,
-			ChaPai chapai, FaPai fapai) {
+			Boolean gxjb, ChaPai chapai, FaPai fapai) {
 		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
 
 		PukeGame newGame = new PukeGame();
@@ -94,6 +95,7 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 		newGame.setBxfd(bxfd);
 		newGame.setJxfd(jxfd);
 		newGame.setSxfd(sxfd);
+		newGame.setGxjb(gxjb);
 		newGame.setChapai(chapai);
 		newGame.setFapai(fapai);
 
@@ -230,7 +232,7 @@ public class GameCmdServiceImpl extends CmdServiceBase implements GameCmdService
 	}
 
 	@Override
-	public void bindPlayer(String playerId, String gameId) {
+	public void bindPlayer(String playerId, String gameId) throws Exception {
 		GameServer gameServer = singletonEntityRepository.getEntity(GameServer.class);
 		gameServer.bindPlayer(playerId, gameId);
 	}

@@ -40,11 +40,14 @@ public class WenzhouShuangkouGongxianFen {
 		shierxian = xianshuCount[8];
 	}
 
-	public void calculateXianshu() {
+	public void calculateXianshu(boolean gxjb) {
 		String key = "" + sixian + wuxian + liuxian + qixian + baxian + jiuxian + shixian + shiyixian + shierxian;
 		Integer score = XianshuCalculatorHelper.getGongxianFenCountMap().get(key);
 		if (score != null) {
 			value = score;
+		}
+		if (gxjb) {
+			value /= 2;
 		}
 	}
 

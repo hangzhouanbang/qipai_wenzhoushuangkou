@@ -22,10 +22,12 @@ public class PukeGameValueObject extends FixedPlayersMultipanAndVotetofinishGame
 	private boolean bxfd;// 八线封顶
 	private boolean jxfd;// 九线封顶
 	private boolean sxfd;// 十线封顶
+	private boolean gxjb;// 贡献分减半
 	private ChaPai chapai;
 	private FaPai fapai;
 	private Map<String, Integer> playeTotalScoreMap = new HashMap<>();
 	private Map<String, Integer> playeGongxianfenMap = new HashMap<>();
+	private Map<String, Integer> playerGongxianfenDetalMap = new HashMap<>();
 	private Map<String, WenzhouShuangkouGongxianFen> playeTotalGongxianfenMap = new HashMap<>();
 	private Map<String, Integer> playerMaxXianshuMap = new HashMap<>();
 	private Map<String, Integer> playerOtherMaxXianshuMap = new HashMap<>();
@@ -44,10 +46,12 @@ public class PukeGameValueObject extends FixedPlayersMultipanAndVotetofinishGame
 		bxfd = pukeGame.isBxfd();
 		jxfd = pukeGame.isJxfd();
 		sxfd = pukeGame.isSxfd();
+		gxjb = pukeGame.isGxjb();
 		chapai = pukeGame.getChapai();
 		fapai = pukeGame.getFapai();
 		playeTotalScoreMap.putAll(pukeGame.getPlayerTotalScoreMap());
 		playeGongxianfenMap.putAll(pukeGame.getPlayerGongxianfenMap());
+		playerGongxianfenDetalMap.putAll(pukeGame.getPlayerGongxianfenDetalMap());
 		playerChaodiStateMap.putAll(pukeGame.getPlayerChaodiStateMap());
 		playeTotalGongxianfenMap.putAll(pukeGame.getPlayerTotalGongxianfenMap());
 		playerMaxXianshuMap.putAll(pukeGame.getPlayerMaxXianshuMap());
@@ -209,6 +213,22 @@ public class PukeGameValueObject extends FixedPlayersMultipanAndVotetofinishGame
 
 	public void setPlayerMingciMap(Map<String, Integer> playerMingciMap) {
 		this.playerMingciMap = playerMingciMap;
+	}
+
+	public boolean isGxjb() {
+		return gxjb;
+	}
+
+	public void setGxjb(boolean gxjb) {
+		this.gxjb = gxjb;
+	}
+
+	public Map<String, Integer> getPlayerGongxianfenDetalMap() {
+		return playerGongxianfenDetalMap;
+	}
+
+	public void setPlayerGongxianfenDetalMap(Map<String, Integer> playerGongxianfenDetalMap) {
+		this.playerGongxianfenDetalMap = playerGongxianfenDetalMap;
 	}
 
 }

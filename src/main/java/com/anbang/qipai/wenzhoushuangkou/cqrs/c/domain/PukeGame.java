@@ -75,11 +75,13 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 	private boolean bxfd;// 八线封顶
 	private boolean jxfd;// 九线封顶
 	private boolean sxfd;// 十线封顶
+	private boolean gxjb;// 贡献分减半
 	private ChaPai chapai;
 	private FaPai fapai;
 	private Ju ju;
 	private Map<String, Integer> playerTotalScoreMap = new HashMap<>();
 	private Map<String, Integer> playerGongxianfenMap = new HashMap<>();
+	private Map<String, Integer> playerGongxianfenDetalMap = new HashMap<>();
 	private Map<String, WenzhouShuangkouGongxianFen> playerTotalGongxianfenMap = new HashMap<>();
 	private Map<String, Integer> playerMaxXianshuMap = new HashMap<>();
 	private Map<String, Integer> playerOtherMaxXianshuMap = new HashMap<>();
@@ -276,7 +278,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 	private WenzhouShuangkouGongxianFen calculateTotalGongxianfenForPlayer(String playerId) {
 		int[] xianshuArray = new int[9];
 		WenzhouShuangkouGongxianFen bestGongxianfen = WenzhouShuangkouShoupaiGongxianfenCalculator
-				.calculateTotalGongxianfenWithShouPaiForPlayer(playerId, ju, bx, xianshuArray);
+				.calculateTotalGongxianfenWithShouPaiForPlayer(playerId, ju, bx, xianshuArray, gxjb);
 		return bestGongxianfen;
 	}
 
@@ -293,6 +295,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		panResultBuilder.setBxfd(bxfd);
 		panResultBuilder.setJxfd(jxfd);
 		panResultBuilder.setSxfd(sxfd);
+		panResultBuilder.setGxjb(gxjb);
 		ju.setCurrentPanResultBuilder(panResultBuilder);
 		// 生成局结果
 		ju.setJuResultBuilder(new WenzhouShuangkouJuResultBuilder());
@@ -404,7 +407,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 			xianshubeishu.calculate(bxfd, jxfd, sxfd);
 			maxXianshuMap.put(pid, xianshubeishu);
 			WenzhouShuangkouGongxianFen gongxianfen = new WenzhouShuangkouGongxianFen(xianshuCount);
-			gongxianfen.calculateXianshu();
+			gongxianfen.calculateXianshu(gxjb);
 			gongxianfen.calculate(renshu);
 			panPlayerGongxianfenList.add(gongxianfen);
 			gongxianfenMap.put(pid, gongxianfen);
@@ -425,6 +428,11 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		// 计算贡献分
 		for (String pid : allPlayerIds()) {
 			WenzhouShuangkouGongxianFen gongxianfen = gongxianfenMap.get(pid);
+			Integer detal = playerGongxianfenDetalMap.get(pid);
+			if (detal == null) {
+				detal = 0;
+			}
+			playerGongxianfenDetalMap.put(pid, gongxianfen.getTotalscore() - detal);
 			playerGongxianfenMap.put(pid, gongxianfen.getTotalscore());
 		}
 
@@ -818,6 +826,22 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 
 	public void setPlayerMingciMap(Map<String, Integer> playerMingciMap) {
 		this.playerMingciMap = playerMingciMap;
+	}
+
+	public boolean isGxjb() {
+		return gxjb;
+	}
+
+	public void setGxjb(boolean gxjb) {
+		this.gxjb = gxjb;
+	}
+
+	public Map<String, Integer> getPlayerGongxianfenDetalMap() {
+		return playerGongxianfenDetalMap;
+	}
+
+	public void setPlayerGongxianfenDetalMap(Map<String, Integer> playerGongxianfenDetalMap) {
+		this.playerGongxianfenDetalMap = playerGongxianfenDetalMap;
 	}
 
 }

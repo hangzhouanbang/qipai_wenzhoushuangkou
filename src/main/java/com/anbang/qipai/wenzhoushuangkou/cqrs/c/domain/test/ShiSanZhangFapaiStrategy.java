@@ -15,8 +15,7 @@ public class ShiSanZhangFapaiStrategy implements FapaiStrategy {
 	public void fapai(Ju ju) throws Exception {
 		Pan currentPan = ju.getCurrentPan();
 		List<PukePai> avaliablePaiList = currentPan.getAvaliablePaiList();
-		Map<String, ShuangkouPlayer> shuangkouPlayerIdMajiangPlayerMap = currentPan
-				.getShuangkouPlayerIdMajiangPlayerMap();
+		Map<String, ShuangkouPlayer> shuangkouPlayerIdMajiangPlayerMap = currentPan.getShuangkouPlayerIdPlayerMap();
 		for (int i = 0; i < 2; i++) {
 			for (ShuangkouPlayer player : shuangkouPlayerIdMajiangPlayerMap.values()) {
 				for (int j = 0; j < 13; j++) {

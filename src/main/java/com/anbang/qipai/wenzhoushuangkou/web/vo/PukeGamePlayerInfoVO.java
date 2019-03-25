@@ -5,6 +5,7 @@ import com.anbang.qipai.wenzhoushuangkou.cqrs.q.dbo.PukeGamePlayerInfoDbo;
 public class PukeGamePlayerInfoVO {
 	private String playerId;
 	private int gongxianfen;
+	private int detal;
 	private int maxXianshu;
 	private int otherMaxXianshu;
 	private int totalGongxianfen;
@@ -18,6 +19,7 @@ public class PukeGamePlayerInfoVO {
 	public PukeGamePlayerInfoVO(PukeGamePlayerInfoDbo dbo) {
 		playerId = dbo.getPlayerId();
 		gongxianfen = dbo.getGongxianfen();
+		detal = dbo.getDetal();
 		maxXianshu = dbo.getMaxXianshu();
 		otherMaxXianshu = dbo.getOtherMaxXianshu();
 		totalGongxianfen = dbo.getTotalGongxianfen().getValue();
@@ -79,6 +81,14 @@ public class PukeGamePlayerInfoVO {
 
 	public void setMingci(int mingci) {
 		this.mingci = mingci;
+	}
+
+	public int getDetal() {
+		return detal;
+	}
+
+	public void setDetal(int detal) {
+		this.detal = detal;
 	}
 
 }

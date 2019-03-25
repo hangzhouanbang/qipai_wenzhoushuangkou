@@ -34,13 +34,4 @@ public class MongodbPanActionFrameDboDao implements PanActionFrameDboDao {
 		return mongoTemplate.find(query, PanActionFrameDbo.class);
 	}
 
-	@Override
-	public PanActionFrameDbo findByGameIdAndPanNo(String gameId, int panNo, int actionNo) {
-		Query query = new Query();
-		query.addCriteria(Criteria.where("gameId").is(gameId));
-		query.addCriteria(Criteria.where("panNo").is(panNo));
-		query.addCriteria(Criteria.where("actionNo").is(actionNo));
-		return mongoTemplate.findOne(query, PanActionFrameDbo.class);
-	}
-
 }
