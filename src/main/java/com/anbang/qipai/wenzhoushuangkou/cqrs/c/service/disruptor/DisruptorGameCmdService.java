@@ -46,7 +46,7 @@ public class DisruptorGameCmdService extends DisruptorCmdServiceBase implements 
 			BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean bxfd, Boolean jxfd, Boolean sxfd,
 			Boolean gxjb, ChaPai chapai, FaPai fapai) {
 		CommonCommand cmd = new CommonCommand(GameCmdServiceImpl.class.getName(), "newPukeGameLeaveAndQuit", gameId,
-				playerId, panshu, renshu, bx, chaodi, shuangming, bxfd, jxfd, sxfd, chapai, fapai);
+				playerId, panshu, renshu, bx, chaodi, shuangming, bxfd, jxfd, sxfd, gxjb, chapai, fapai);
 		DeferredResult<PukeGameValueObject> result = publishEvent(disruptorFactory.getCoreCmdDisruptor(), cmd, () -> {
 			PukeGameValueObject pukeGameValueObject = gameCmdServiceImpl.newPukeGameLeaveAndQuit(cmd.getParameter(),
 					cmd.getParameter(), cmd.getParameter(), cmd.getParameter(), cmd.getParameter(), cmd.getParameter(),

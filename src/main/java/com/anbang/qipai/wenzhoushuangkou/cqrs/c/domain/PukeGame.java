@@ -428,7 +428,7 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		// 计算贡献分
 		for (String pid : allPlayerIds()) {
 			WenzhouShuangkouGongxianFen gongxianfen = gongxianfenMap.get(pid);
-			Integer detal = playerGongxianfenDetalMap.get(pid);
+			Integer detal = playerGongxianfenMap.get(pid);
 			if (detal == null) {
 				detal = 0;
 			}
