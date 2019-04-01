@@ -169,8 +169,11 @@ public class GameController {
 		// 通知其他玩家
 		for (String otherPlayerId : pukeGameValueObject.allPlayerIds()) {
 			if (!otherPlayerId.equals(playerId)) {
-				wsNotifier.notifyToQuery(otherPlayerId, QueryScope.scopesForState(pukeGameValueObject.getState(),
-						pukeGameValueObject.findPlayerState(otherPlayerId)));
+				GamePlayerOnlineState onlineState = pukeGameValueObject.findPlayerOnlineState(otherPlayerId);
+				if (onlineState.equals(GamePlayerOnlineState.online)) {
+					wsNotifier.notifyToQuery(otherPlayerId, QueryScope.scopesForState(pukeGameValueObject.getState(),
+							pukeGameValueObject.findPlayerState(otherPlayerId)));
+				}
 			}
 		}
 		String token = playerAuthService.newSessionForPlayer(playerId);
@@ -359,15 +362,18 @@ public class GameController {
 		// 通知其他玩家
 		for (String otherPlayerId : pukeGameValueObject.allPlayerIds()) {
 			if (!otherPlayerId.equals(playerId)) {
-				List<QueryScope> scopes = QueryScope.scopesForState(pukeGameValueObject.getState(),
-						pukeGameValueObject.findPlayerState(otherPlayerId));
-				scopes.remove(QueryScope.panResult);
-				if (pukeGameValueObject.getState().name().equals(VoteNotPassWhenPlaying.name)
-						|| pukeGameValueObject.getState().name().equals(VoteNotPassWhenWaitingNextPan.name)
-						|| pukeGameValueObject.getState().name().equals(StartChaodi.name)) {
-					scopes.remove(QueryScope.gameFinishVote);
+				GamePlayerOnlineState onlineState = pukeGameValueObject.findPlayerOnlineState(otherPlayerId);
+				if (onlineState.equals(GamePlayerOnlineState.online)) {
+					List<QueryScope> scopes = QueryScope.scopesForState(pukeGameValueObject.getState(),
+							pukeGameValueObject.findPlayerState(otherPlayerId));
+					scopes.remove(QueryScope.panResult);
+					if (pukeGameValueObject.getState().name().equals(VoteNotPassWhenPlaying.name)
+							|| pukeGameValueObject.getState().name().equals(VoteNotPassWhenWaitingNextPan.name)
+							|| pukeGameValueObject.getState().name().equals(StartChaodi.name)) {
+						scopes.remove(QueryScope.gameFinishVote);
+					}
+					wsNotifier.notifyToQuery(otherPlayerId, scopes);
 				}
-				wsNotifier.notifyToQuery(otherPlayerId, scopes);
 			}
 		}
 
@@ -425,16 +431,19 @@ public class GameController {
 		// 通知其他玩家
 		for (String otherPlayerId : pukeGameValueObject.allPlayerIds()) {
 			if (!otherPlayerId.equals(playerId)) {
-				List<QueryScope> scopes = QueryScope.scopesForState(pukeGameValueObject.getState(),
-						pukeGameValueObject.findPlayerState(otherPlayerId));
-				if (!pukeGameValueObject.getState().name().equals(Finished.name)) {
-					scopes.remove(QueryScope.panResult);
+				GamePlayerOnlineState onlineState = pukeGameValueObject.findPlayerOnlineState(otherPlayerId);
+				if (onlineState.equals(GamePlayerOnlineState.online)) {
+					List<QueryScope> scopes = QueryScope.scopesForState(pukeGameValueObject.getState(),
+							pukeGameValueObject.findPlayerState(otherPlayerId));
+					if (!pukeGameValueObject.getState().name().equals(Finished.name)) {
+						scopes.remove(QueryScope.panResult);
+					}
+					if (pukeGameValueObject.getState().name().equals(VoteNotPassWhenPlaying.name)
+							|| pukeGameValueObject.getState().name().equals(VoteNotPassWhenWaitingNextPan.name)) {
+						scopes.remove(QueryScope.gameFinishVote);
+					}
+					wsNotifier.notifyToQuery(otherPlayerId, scopes);
 				}
-				if (pukeGameValueObject.getState().name().equals(VoteNotPassWhenPlaying.name)
-						|| pukeGameValueObject.getState().name().equals(VoteNotPassWhenWaitingNextPan.name)) {
-					scopes.remove(QueryScope.gameFinishVote);
-				}
-				wsNotifier.notifyToQuery(otherPlayerId, scopes);
 			}
 		}
 
@@ -487,14 +496,17 @@ public class GameController {
 		// 通知其他人
 		for (String otherPlayerId : pukeGameValueObject.allPlayerIds()) {
 			if (!otherPlayerId.equals(playerId)) {
-				List<QueryScope> scopes = QueryScope.scopesForState(pukeGameValueObject.getState(),
-						pukeGameValueObject.findPlayerState(otherPlayerId));
-				scopes.remove(QueryScope.panResult);
-				if (pukeGameValueObject.getState().name().equals(VoteNotPassWhenPlaying.name)
-						|| pukeGameValueObject.getState().name().equals(VoteNotPassWhenWaitingNextPan.name)) {
-					scopes.remove(QueryScope.gameFinishVote);
+				GamePlayerOnlineState onlineState = pukeGameValueObject.findPlayerOnlineState(otherPlayerId);
+				if (onlineState.equals(GamePlayerOnlineState.online)) {
+					List<QueryScope> scopes = QueryScope.scopesForState(pukeGameValueObject.getState(),
+							pukeGameValueObject.findPlayerState(otherPlayerId));
+					scopes.remove(QueryScope.panResult);
+					if (pukeGameValueObject.getState().name().equals(VoteNotPassWhenPlaying.name)
+							|| pukeGameValueObject.getState().name().equals(VoteNotPassWhenWaitingNextPan.name)) {
+						scopes.remove(QueryScope.gameFinishVote);
+					}
+					wsNotifier.notifyToQuery(otherPlayerId, scopes);
 				}
-				wsNotifier.notifyToQuery(otherPlayerId, scopes);
 			}
 		}
 		String token = playerAuthService.newSessionForPlayer(playerId);
@@ -560,9 +572,13 @@ public class GameController {
 		// 通知其他人
 		for (String otherPlayerId : readyForGameResult.getPukeGame().allPlayerIds()) {
 			if (!otherPlayerId.equals(playerId)) {
-				wsNotifier.notifyToQuery(otherPlayerId,
-						QueryScope.scopesForState(readyForGameResult.getPukeGame().getState(),
-								readyForGameResult.getPukeGame().findPlayerState(otherPlayerId)));
+				GamePlayerOnlineState onlineState = readyForGameResult.getPukeGame()
+						.findPlayerOnlineState(otherPlayerId);
+				if (onlineState.equals(GamePlayerOnlineState.online)) {
+					wsNotifier.notifyToQuery(otherPlayerId,
+							QueryScope.scopesForState(readyForGameResult.getPukeGame().getState(),
+									readyForGameResult.getPukeGame().findPlayerState(otherPlayerId)));
+				}
 			}
 		}
 
@@ -617,10 +633,14 @@ public class GameController {
 		// 通知其他人
 		for (String otherPlayerId : readyForGameResult.getPukeGame().allPlayerIds()) {
 			if (!otherPlayerId.equals(playerId)) {
-				wsNotifier.notifyToQuery(otherPlayerId,
-						QueryScope.scopesForState(readyForGameResult.getPukeGame().getState(),
-								readyForGameResult.getPukeGame().findPlayerState(otherPlayerId)));
+				GamePlayerOnlineState onlineState = readyForGameResult.getPukeGame()
+						.findPlayerOnlineState(otherPlayerId);
+				if (onlineState.equals(GamePlayerOnlineState.online)) {
+					wsNotifier.notifyToQuery(otherPlayerId,
+							QueryScope.scopesForState(readyForGameResult.getPukeGame().getState(),
+									readyForGameResult.getPukeGame().findPlayerState(otherPlayerId)));
 
+				}
 			}
 		}
 

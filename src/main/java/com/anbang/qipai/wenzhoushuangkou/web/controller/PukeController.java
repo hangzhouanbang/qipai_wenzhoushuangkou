@@ -41,6 +41,7 @@ import com.anbang.qipai.wenzhoushuangkou.websocket.GamePlayWsNotifier;
 import com.anbang.qipai.wenzhoushuangkou.websocket.QueryScope;
 import com.anbang.qipai.wenzhoushuangkou.websocket.WatchQueryScope;
 import com.dml.mpgame.game.Playing;
+import com.dml.mpgame.game.player.GamePlayerOnlineState;
 import com.dml.shuangkou.pan.PanActionFrame;
 
 @RestController
@@ -216,8 +217,12 @@ public class PukeController {
 		// 通知其他人
 		for (String otherPlayerId : chaodiResult.getPukeGame().allPlayerIds()) {
 			if (!otherPlayerId.equals(playerId)) {
-				wsNotifier.notifyToQuery(otherPlayerId, QueryScope.scopesForState(chaodiResult.getPukeGame().getState(),
-						chaodiResult.getPukeGame().findPlayerState(otherPlayerId)));
+				GamePlayerOnlineState onlineState = chaodiResult.getPukeGame().findPlayerOnlineState(otherPlayerId);
+				if (onlineState.equals(GamePlayerOnlineState.online)) {
+					wsNotifier.notifyToQuery(otherPlayerId,
+							QueryScope.scopesForState(chaodiResult.getPukeGame().getState(),
+									chaodiResult.getPukeGame().findPlayerState(otherPlayerId)));
+				}
 			}
 		}
 		long endTime = System.currentTimeMillis();
@@ -304,9 +309,12 @@ public class PukeController {
 		// 通知其他人
 		for (String otherPlayerId : pukeActionResult.getPukeGame().allPlayerIds()) {
 			if (!otherPlayerId.equals(playerId)) {
-				wsNotifier.notifyToQuery(otherPlayerId,
-						QueryScope.scopesForState(pukeActionResult.getPukeGame().getState(),
-								pukeActionResult.getPukeGame().findPlayerState(otherPlayerId)));
+				GamePlayerOnlineState onlineState = pukeActionResult.getPukeGame().findPlayerOnlineState(otherPlayerId);
+				if (onlineState.equals(GamePlayerOnlineState.online)) {
+					wsNotifier.notifyToQuery(otherPlayerId,
+							QueryScope.scopesForState(pukeActionResult.getPukeGame().getState(),
+									pukeActionResult.getPukeGame().findPlayerState(otherPlayerId)));
+				}
 			}
 		}
 
@@ -369,9 +377,12 @@ public class PukeController {
 		// 通知其他人
 		for (String otherPlayerId : pukeActionResult.getPukeGame().allPlayerIds()) {
 			if (!otherPlayerId.equals(playerId)) {
-				wsNotifier.notifyToQuery(otherPlayerId,
-						QueryScope.scopesForState(pukeActionResult.getPukeGame().getState(),
-								pukeActionResult.getPukeGame().findPlayerState(otherPlayerId)));
+				GamePlayerOnlineState onlineState = pukeActionResult.getPukeGame().findPlayerOnlineState(otherPlayerId);
+				if (onlineState.equals(GamePlayerOnlineState.online)) {
+					wsNotifier.notifyToQuery(otherPlayerId,
+							QueryScope.scopesForState(pukeActionResult.getPukeGame().getState(),
+									pukeActionResult.getPukeGame().findPlayerState(otherPlayerId)));
+				}
 			}
 		}
 
@@ -417,10 +428,14 @@ public class PukeController {
 		// 通知其他人
 		for (String otherPlayerId : readyToNextPanResult.getPukeGame().allPlayerIds()) {
 			if (!otherPlayerId.equals(playerId)) {
-				List<QueryScope> scopes = QueryScope.scopesForState(readyToNextPanResult.getPukeGame().getState(),
-						readyToNextPanResult.getPukeGame().findPlayerState(otherPlayerId));
-				scopes.remove(QueryScope.panResult);
-				wsNotifier.notifyToQuery(otherPlayerId, scopes);
+				GamePlayerOnlineState onlineState = readyToNextPanResult.getPukeGame()
+						.findPlayerOnlineState(otherPlayerId);
+				if (onlineState.equals(GamePlayerOnlineState.online)) {
+					List<QueryScope> scopes = QueryScope.scopesForState(readyToNextPanResult.getPukeGame().getState(),
+							readyToNextPanResult.getPukeGame().findPlayerState(otherPlayerId));
+					scopes.remove(QueryScope.panResult);
+					wsNotifier.notifyToQuery(otherPlayerId, scopes);
+				}
 			}
 		}
 
