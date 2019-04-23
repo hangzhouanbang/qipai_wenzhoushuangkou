@@ -18,6 +18,10 @@ public interface GameCmdService {
 			BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean bxfd, Boolean jxfd, Boolean sxfd,
 			Boolean gxjb, ChaPai chapai, FaPai fapai);
 
+	PukeGameValueObject newMajiangGamePlayerLeaveAndQuit(String gameId, String playerId, Integer panshu, Integer renshu,
+			BianXingWanFa bx, Boolean chaodi, Boolean shuangming, Boolean bxfd, Boolean jxfd, Boolean sxfd,
+			Boolean gxjb, ChaPai chapai, FaPai fapai);
+
 	PukeGameValueObject joinGame(String playerId, String gameId) throws Exception;
 
 	PukeGameValueObject leaveGame(String playerId) throws Exception;

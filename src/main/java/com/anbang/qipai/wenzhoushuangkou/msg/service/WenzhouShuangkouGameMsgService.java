@@ -90,4 +90,13 @@ public class WenzhouShuangkouGameMsgService {
 		mo.setData(data);
 		wenzhouShuangkouGameSource.wenzhouShuangkouGame().send(MessageBuilder.withPayload(mo).build());
 	}
+
+	public void start(String gameId) {
+		CommonMO mo = new CommonMO();
+		mo.setMsg("game start");
+		Map data = new HashMap();
+		data.put("gameId", gameId);
+		mo.setData(data);
+		wenzhouShuangkouGameSource.wenzhouShuangkouGame().send(MessageBuilder.withPayload(mo).build());
+	}
 }
